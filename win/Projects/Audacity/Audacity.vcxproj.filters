@@ -365,9 +365,6 @@
     <ClCompile Include="..\..\..\src\effects\LoadEffects.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\Paulstretch.cpp">
-      <Filter>src\effects</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\effects\Repeat.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
@@ -1289,9 +1286,6 @@
       <Filter>src\effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\effects\LoadEffects.h">
-      <Filter>src\effects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\Paulstretch.h">
       <Filter>src\effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\effects\Repeat.h">

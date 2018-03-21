@@ -23,7 +23,6 @@
 #include "ChangeSpeed.h"
 #include "ClickRemoval.h"
 #include "DtmfGen.h"
-#include "Paulstretch.h"
 #include "Invert.h"
 #include "Phaser.h"
 #include "Repeat.h"
@@ -50,8 +49,7 @@
    EFFECT( STEREOTOMONO,      EffectStereoToMono, () )     \
    EFFECT( TRUNCATESILENCE,   EffectTruncSilence, () )     \
    EFFECT( FINDCLIPPING,      EffectFindClipping, () )     \
-   EFFECT( AUTODUCK,          EffectAutoDuck, () )         \
-   EFFECT( PAULSTRETCH,       EffectPaulstretch, () )      
+   EFFECT( AUTODUCK,          EffectAutoDuck, () )            
 
 //
 // Define the list of effects that do not get autoregistered
