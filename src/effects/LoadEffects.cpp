@@ -19,9 +19,7 @@
 
 #include "EffectManager.h"
 
-#include "Amplify.h"
 #include "AutoDuck.h"
-#include "BassTreble.h"
 #include "ChangeSpeed.h"
 #include "ClickRemoval.h"
 #include "DtmfGen.h"
@@ -111,8 +109,6 @@
    EFFECT( NOISE,             EffectNoise, () )            \
    EFFECT( SILENCE,           EffectSilence, () )          \
    EFFECT( TONE,              EffectToneGen, (false) )     \
-   EFFECT( AMPLIFY,           EffectAmplify, () )          \
-   EFFECT( BASSTREBLE,        EffectBassTreble, () )       \
    EFFECT( CHANGESPEED,       EffectChangeSpeed, () )      \
    EFFECT( CLICKREMOVAL,      EffectClickRemoval, () )     \
    EFFECT( ECHO,              EffectEcho, () )             \
