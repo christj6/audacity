@@ -23,16 +23,12 @@
 #include "ChangeSpeed.h"
 #include "ClickRemoval.h"
 #include "DtmfGen.h"
-#include "Echo.h"
 #include "Paulstretch.h"
 #include "Invert.h"
 #include "Noise.h"
-#include "Normalize.h"
 #include "Phaser.h"
 #include "Repair.h"
 #include "Repeat.h"
-#include "Reverb.h"
-#include "Reverse.h"
 #include "StereoToMono.h"
 #include "ToneGen.h"
 #include "TruncSilence.h"
@@ -51,14 +47,10 @@
    EFFECT( TONE,              EffectToneGen, (false) )     \
    EFFECT( CHANGESPEED,       EffectChangeSpeed, () )      \
    EFFECT( CLICKREMOVAL,      EffectClickRemoval, () )     \
-   EFFECT( ECHO,              EffectEcho, () )             \
    EFFECT( INVERT,            EffectInvert, () )           \
-   EFFECT( NORMALIZE,         EffectNormalize, () )        \
    EFFECT( PHASER,            EffectPhaser, () )           \
    EFFECT( REPAIR,            EffectRepair, () )           \
    EFFECT( REPEAT,            EffectRepeat, () )           \
-   EFFECT( REVERB,            EffectReverb, () )           \
-   EFFECT( REVERSE,           EffectReverse, () )          \
    EFFECT( STEREOTOMONO,      EffectStereoToMono, () )     \
    EFFECT( TRUNCATESILENCE,   EffectTruncSilence, () )     \
    EFFECT( FINDCLIPPING,      EffectFindClipping, () )     \

@@ -296,7 +296,6 @@
     <ClCompile Include="..\..\..\src\effects\ClickRemoval.cpp" />
     <ClCompile Include="..\..\..\src\effects\Contrast.cpp" />
     <ClCompile Include="..\..\..\src\effects\DtmfGen.cpp" />
-    <ClCompile Include="..\..\..\src\effects\Echo.cpp" />
     <ClCompile Include="..\..\..\src\effects\Effect.cpp" />
     <ClCompile Include="..\..\..\src\effects\EffectManager.cpp" />
     <ClCompile Include="..\..\..\src\effects\FindClipping.cpp" />
@@ -304,12 +303,9 @@
     <ClCompile Include="..\..\..\src\effects\Invert.cpp" />
     <ClCompile Include="..\..\..\src\effects\LoadEffects.cpp" />
     <ClCompile Include="..\..\..\src\effects\Noise.cpp" />
-    <ClCompile Include="..\..\..\src\effects\Normalize.cpp" />
     <ClCompile Include="..\..\..\src\effects\Paulstretch.cpp" />
     <ClCompile Include="..\..\..\src\effects\Repair.cpp" />
     <ClCompile Include="..\..\..\src\effects\Repeat.cpp" />
-    <ClCompile Include="..\..\..\src\effects\Reverb.cpp" />
-    <ClCompile Include="..\..\..\src\effects\Reverse.cpp" />
     <ClCompile Include="..\..\..\src\effects\ScoreAlignDialog.cpp" />
     <ClCompile Include="..\..\..\src\effects\SimpleMono.cpp" />
     <ClCompile Include="..\..\..\src\effects\SoundTouchEffect.cpp" />
@@ -632,7 +628,6 @@
     <ClInclude Include="..\..\..\src\effects\ClickRemoval.h" />
     <ClInclude Include="..\..\..\src\effects\Contrast.h" />
     <ClInclude Include="..\..\..\src\effects\DtmfGen.h" />
-    <ClInclude Include="..\..\..\src\effects\Echo.h" />
     <ClInclude Include="..\..\..\src\effects\Effect.h" />
     <ClInclude Include="..\..\..\src\effects\EffectManager.h" />
     <ClInclude Include="..\..\..\src\effects\FindClipping.h" />
@@ -640,13 +635,9 @@
     <ClInclude Include="..\..\..\src\effects\Invert.h" />
     <ClInclude Include="..\..\..\src\effects\LoadEffects.h" />
     <ClInclude Include="..\..\..\src\effects\Noise.h" />
-    <ClInclude Include="..\..\..\src\effects\Normalize.h" />
     <ClInclude Include="..\..\..\src\effects\Paulstretch.h" />
     <ClInclude Include="..\..\..\src\effects\Repair.h" />
     <ClInclude Include="..\..\..\src\effects\Repeat.h" />
-    <ClInclude Include="..\..\..\src\effects\Reverb.h" />
-    <ClInclude Include="..\..\..\src\effects\Reverb_libSoX.h" />
-    <ClInclude Include="..\..\..\src\effects\Reverse.h" />
     <ClInclude Include="..\..\..\src\effects\SimpleMono.h" />
     <ClInclude Include="..\..\..\src\effects\SoundTouchEffect.h" />
     <ClInclude Include="..\..\..\src\effects\StereoToMono.h" />
