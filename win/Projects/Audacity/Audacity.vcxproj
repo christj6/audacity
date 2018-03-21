@@ -289,7 +289,6 @@
     <ClCompile Include="..\..\..\src\widgets\wxPanelWrapper.cpp" />
     <ClCompile Include="..\..\..\src\widgets\PopupMenuTable.cpp" />
     <ClCompile Include="..\..\..\src\WrappedType.cpp" />
-    <ClCompile Include="..\..\..\src\effects\Biquad.cpp" />
     <ClCompile Include="..\..\..\src\effects\Effect.cpp" />
     <ClCompile Include="..\..\..\src\effects\EffectManager.cpp" />
     <ClCompile Include="..\..\..\src\effects\Generator.cpp" />
@@ -606,7 +605,6 @@
     <ClInclude Include="..\..\..\src\WaveClip.h" />
     <ClInclude Include="..\..\..\src\WaveTrack.h" />
     <ClInclude Include="..\..\..\src\WrappedType.h" />
-    <ClInclude Include="..\..\..\src\effects\Biquad.h" />
     <ClInclude Include="..\..\..\src\effects\Effect.h" />
     <ClInclude Include="..\..\..\src\effects\EffectManager.h" />
     <ClInclude Include="..\..\..\src\effects\Generator.h" />
