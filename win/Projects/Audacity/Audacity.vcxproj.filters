@@ -335,31 +335,16 @@
     <ClCompile Include="..\..\..\src\effects\Biquad.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\ClickRemoval.cpp">
-      <Filter>src\effects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\DtmfGen.cpp">
-      <Filter>src\effects</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\effects\Effect.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\effects\EffectManager.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\FindClipping.cpp">
-      <Filter>src\effects</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\effects\Generator.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\Invert.cpp">
-      <Filter>src\effects</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\effects\LoadEffects.cpp">
-      <Filter>src\effects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\Repeat.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\effects\ScoreAlignDialog.cpp">
@@ -371,13 +356,7 @@
     <ClCompile Include="..\..\..\src\effects\SoundTouchEffect.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\StereoToMono.cpp">
-      <Filter>src\effects</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\effects\TimeWarper.cpp">
-      <Filter>src\effects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\TruncSilence.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\effects\TwoPassSimpleMono.cpp">
@@ -1246,31 +1225,16 @@
     <ClInclude Include="..\..\..\src\effects\Biquad.h">
       <Filter>src\effects</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\ClickRemoval.h">
-      <Filter>src\effects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\DtmfGen.h">
-      <Filter>src\effects</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\effects\Effect.h">
       <Filter>src\effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\effects\EffectManager.h">
       <Filter>src\effects</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\FindClipping.h">
-      <Filter>src\effects</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\effects\Generator.h">
       <Filter>src\effects</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\Invert.h">
-      <Filter>src\effects</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\effects\LoadEffects.h">
-      <Filter>src\effects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\Repeat.h">
       <Filter>src\effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\effects\SimpleMono.h">
@@ -1279,13 +1243,7 @@
     <ClInclude Include="..\..\..\src\effects\SoundTouchEffect.h">
       <Filter>src\effects</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\StereoToMono.h">
-      <Filter>src\effects</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\effects\TimeWarper.h">
-      <Filter>src\effects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\TruncSilence.h">
       <Filter>src\effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\effects\TwoPassSimpleMono.h">

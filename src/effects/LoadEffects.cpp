@@ -20,14 +20,6 @@
 #include "EffectManager.h"
 
 #include "AutoDuck.h"
-#include "ClickRemoval.h"
-#include "DtmfGen.h"
-#include "Invert.h"
-#include "Repeat.h"
-#include "StereoToMono.h"
-#include "TruncSilence.h"
-
-#include "FindClipping.h"
 
 #include "../Experimental.h"
 
@@ -35,13 +27,6 @@
 // Define the list of effects that will be autoregistered and how to instantiate each
 //
 #define EFFECT_LIST \
-   EFFECT( DTMFTONES,         EffectDtmf, () )             \
-   EFFECT( CLICKREMOVAL,      EffectClickRemoval, () )     \
-   EFFECT( INVERT,            EffectInvert, () )           \
-   EFFECT( REPEAT,            EffectRepeat, () )           \
-   EFFECT( STEREOTOMONO,      EffectStereoToMono, () )     \
-   EFFECT( TRUNCATESILENCE,   EffectTruncSilence, () )     \
-   EFFECT( FINDCLIPPING,      EffectFindClipping, () )     \
    EFFECT( AUTODUCK,          EffectAutoDuck, () )            
 
 //
