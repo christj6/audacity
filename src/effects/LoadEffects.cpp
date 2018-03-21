@@ -48,23 +48,9 @@
 
 #include "FindClipping.h"
 
-#ifdef USE_SOUNDTOUCH
-#include "ChangePitch.h"
-#include "ChangeTempo.h"
-#endif
-
 #include "../Experimental.h"
 
-//
-// Include the SoundTouch effects, if requested
-//
-#if defined(USE_SOUNDTOUCH)
-#define SOUNDTOUCH_EFFECTS \
-   EFFECT( CHANGEPITCH, EffectChangePitch, () ) \
-   EFFECT( CHANGETEMPO, EffectChangeTempo, () )
-#else
 #define SOUNDTOUCH_EFFECTS
-#endif
 
 //
 // Select the desired Noise Reduction/Removal effect

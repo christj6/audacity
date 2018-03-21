@@ -293,9 +293,7 @@
     <ClCompile Include="..\..\..\src\WrappedType.cpp" />
     <ClCompile Include="..\..\..\src\effects\AutoDuck.cpp" />
     <ClCompile Include="..\..\..\src\effects\Biquad.cpp" />
-    <ClCompile Include="..\..\..\src\effects\ChangePitch.cpp" />
     <ClCompile Include="..\..\..\src\effects\ChangeSpeed.cpp" />
-    <ClCompile Include="..\..\..\src\effects\ChangeTempo.cpp" />
     <ClCompile Include="..\..\..\src\effects\ClickRemoval.cpp" />
     <ClCompile Include="..\..\..\src\effects\Contrast.cpp" />
     <ClCompile Include="..\..\..\src\effects\DtmfGen.cpp" />
@@ -637,9 +635,7 @@
     <ClInclude Include="..\..\..\src\WrappedType.h" />
     <ClInclude Include="..\..\..\src\effects\AutoDuck.h" />
     <ClInclude Include="..\..\..\src\effects\Biquad.h" />
-    <ClInclude Include="..\..\..\src\effects\ChangePitch.h" />
     <ClInclude Include="..\..\..\src\effects\ChangeSpeed.h" />
-    <ClInclude Include="..\..\..\src\effects\ChangeTempo.h" />
     <ClInclude Include="..\..\..\src\effects\ClickRemoval.h" />
     <ClInclude Include="..\..\..\src\effects\Contrast.h" />
     <ClInclude Include="..\..\..\src\effects\DtmfGen.h" />
