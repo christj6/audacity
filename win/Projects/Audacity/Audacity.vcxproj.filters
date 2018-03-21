@@ -407,9 +407,6 @@
     <ClCompile Include="..\..\..\src\effects\ScoreAlignDialog.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\Silence.cpp">
-      <Filter>src\effects</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\effects\SimpleMono.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
@@ -1376,9 +1373,6 @@
       <Filter>src\effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\effects\SBSMSEffect.h">
-      <Filter>src\effects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\Silence.h">
       <Filter>src\effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\effects\SimpleMono.h">

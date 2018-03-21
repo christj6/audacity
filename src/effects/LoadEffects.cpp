@@ -38,7 +38,6 @@
 #include "Repeat.h"
 #include "Reverb.h"
 #include "Reverse.h"
-#include "Silence.h"
 #include "StereoToMono.h"
 #ifdef USE_SBSMS
 #include "TimeScale.h"
@@ -95,7 +94,6 @@
    EFFECT( CHIRP,             EffectToneGen, (true) )      \
    EFFECT( DTMFTONES,         EffectDtmf, () )             \
    EFFECT( NOISE,             EffectNoise, () )            \
-   EFFECT( SILENCE,           EffectSilence, () )          \
    EFFECT( TONE,              EffectToneGen, (false) )     \
    EFFECT( CHANGESPEED,       EffectChangeSpeed, () )      \
    EFFECT( CLICKREMOVAL,      EffectClickRemoval, () )     \
