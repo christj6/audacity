@@ -413,9 +413,6 @@
     <ClCompile Include="..\..\..\src\effects\TwoPassSimpleMono.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\Wahwah.cpp">
-      <Filter>src\effects</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\effects\VST\VSTEffect.cpp">
       <Filter>src\effects\VST</Filter>
     </ClCompile>
@@ -1358,9 +1355,6 @@
       <Filter>src\effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\effects\TwoPassSimpleMono.h">
-      <Filter>src\effects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\Wahwah.h">
       <Filter>src\effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\effects\VST\VSTEffect.h">

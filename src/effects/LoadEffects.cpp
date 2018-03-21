@@ -36,7 +36,6 @@
 #include "StereoToMono.h"
 #include "ToneGen.h"
 #include "TruncSilence.h"
-#include "Wahwah.h"
 
 #include "FindClipping.h"
 
@@ -62,7 +61,6 @@
    EFFECT( REVERSE,           EffectReverse, () )          \
    EFFECT( STEREOTOMONO,      EffectStereoToMono, () )     \
    EFFECT( TRUNCATESILENCE,   EffectTruncSilence, () )     \
-   EFFECT( WAHWAH,            EffectWahwah, () )           \
    EFFECT( FINDCLIPPING,      EffectFindClipping, () )     \
    EFFECT( AUTODUCK,          EffectAutoDuck, () )         \
    EFFECT( PAULSTRETCH,       EffectPaulstretch, () )      

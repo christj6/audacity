@@ -318,7 +318,6 @@
     <ClCompile Include="..\..\..\src\effects\ToneGen.cpp" />
     <ClCompile Include="..\..\..\src\effects\TruncSilence.cpp" />
     <ClCompile Include="..\..\..\src\effects\TwoPassSimpleMono.cpp" />
-    <ClCompile Include="..\..\..\src\effects\Wahwah.cpp" />
     <ClCompile Include="..\..\..\src\effects\VST\VSTEffect.cpp" />
     <ClCompile Include="..\..\..\src\export\Export.cpp" />
     <ClCompile Include="..\..\..\src\export\ExportCL.cpp" />
@@ -655,7 +654,6 @@
     <ClInclude Include="..\..\..\src\effects\ToneGen.h" />
     <ClInclude Include="..\..\..\src\effects\TruncSilence.h" />
     <ClInclude Include="..\..\..\src\effects\TwoPassSimpleMono.h" />
-    <ClInclude Include="..\..\..\src\effects\Wahwah.h" />
     <ClInclude Include="..\..\..\src\effects\VST\VSTEffect.h" />
     <ClInclude Include="..\..\..\src\export\Export.h" />
     <ClInclude Include="..\..\..\src\export\ExportCL.h" />
