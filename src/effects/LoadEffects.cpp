@@ -24,7 +24,6 @@
 #include "BassTreble.h"
 #include "ChangeSpeed.h"
 #include "ClickRemoval.h"
-#include "Compressor.h"
 #include "Distortion.h"
 #include "DtmfGen.h"
 #include "Echo.h"
@@ -117,7 +116,6 @@
    EFFECT( BASSTREBLE,        EffectBassTreble, () )       \
    EFFECT( CHANGESPEED,       EffectChangeSpeed, () )      \
    EFFECT( CLICKREMOVAL,      EffectClickRemoval, () )     \
-   EFFECT( COMPRESSOR,        EffectCompressor, () )       \
    EFFECT( DISTORTION,        EffectDistortion, () )       \
    EFFECT( ECHO,              EffectEcho, () )             \
    EFFECT( EQUALIZATION,      EffectEqualization, () )     \

@@ -353,9 +353,6 @@
     <ClCompile Include="..\..\..\src\effects\ClickRemoval.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\Compressor.cpp">
-      <Filter>src\effects</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\effects\Contrast.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
@@ -1343,9 +1340,6 @@
       <Filter>src\effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\effects\ClickRemoval.h">
-      <Filter>src\effects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\Compressor.h">
       <Filter>src\effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\effects\Contrast.h">
