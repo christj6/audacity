@@ -25,9 +25,7 @@
 #include "DtmfGen.h"
 #include "Paulstretch.h"
 #include "Invert.h"
-#include "Noise.h"
 #include "Phaser.h"
-#include "Repair.h"
 #include "Repeat.h"
 #include "StereoToMono.h"
 #include "ToneGen.h"
@@ -43,13 +41,11 @@
 #define EFFECT_LIST \
    EFFECT( CHIRP,             EffectToneGen, (true) )      \
    EFFECT( DTMFTONES,         EffectDtmf, () )             \
-   EFFECT( NOISE,             EffectNoise, () )            \
    EFFECT( TONE,              EffectToneGen, (false) )     \
    EFFECT( CHANGESPEED,       EffectChangeSpeed, () )      \
    EFFECT( CLICKREMOVAL,      EffectClickRemoval, () )     \
    EFFECT( INVERT,            EffectInvert, () )           \
    EFFECT( PHASER,            EffectPhaser, () )           \
-   EFFECT( REPAIR,            EffectRepair, () )           \
    EFFECT( REPEAT,            EffectRepeat, () )           \
    EFFECT( STEREOTOMONO,      EffectStereoToMono, () )     \
    EFFECT( TRUNCATESILENCE,   EffectTruncSilence, () )     \

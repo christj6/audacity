@@ -302,9 +302,7 @@
     <ClCompile Include="..\..\..\src\effects\Generator.cpp" />
     <ClCompile Include="..\..\..\src\effects\Invert.cpp" />
     <ClCompile Include="..\..\..\src\effects\LoadEffects.cpp" />
-    <ClCompile Include="..\..\..\src\effects\Noise.cpp" />
     <ClCompile Include="..\..\..\src\effects\Paulstretch.cpp" />
-    <ClCompile Include="..\..\..\src\effects\Repair.cpp" />
     <ClCompile Include="..\..\..\src\effects\Repeat.cpp" />
     <ClCompile Include="..\..\..\src\effects\ScoreAlignDialog.cpp" />
     <ClCompile Include="..\..\..\src\effects\SimpleMono.cpp" />
@@ -634,9 +632,7 @@
     <ClInclude Include="..\..\..\src\effects\Generator.h" />
     <ClInclude Include="..\..\..\src\effects\Invert.h" />
     <ClInclude Include="..\..\..\src\effects\LoadEffects.h" />
-    <ClInclude Include="..\..\..\src\effects\Noise.h" />
     <ClInclude Include="..\..\..\src\effects\Paulstretch.h" />
-    <ClInclude Include="..\..\..\src\effects\Repair.h" />
     <ClInclude Include="..\..\..\src\effects\Repeat.h" />
     <ClInclude Include="..\..\..\src\effects\SimpleMono.h" />
     <ClInclude Include="..\..\..\src\effects\SoundTouchEffect.h" />
