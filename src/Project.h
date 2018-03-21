@@ -66,7 +66,6 @@ class Tags;
 
 class TrackPanel;
 class FreqWindow;
-class ContrastDialog;
 class MeterPanel;
 
 // toolbar classes
@@ -687,7 +686,6 @@ private:
    MixerBoard* mMixerBoard{};
 
    Destroy_ptr<FreqWindow> mFreqWindow;
-   Destroy_ptr<ContrastDialog> mContrastDialog;
 
    // dialog for missing alias warnings
    wxDialog            *mAliasMissingWarningDialog{};

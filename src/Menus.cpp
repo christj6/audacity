@@ -52,7 +52,6 @@ simplifies construction of menu items.
 #include <wx/utils.h>
 
 #include "FreqWindow.h"
-#include "effects/Contrast.h"
 #include "TrackPanel.h"
 
 #include "effects/EffectManager.h"
@@ -7020,21 +7019,7 @@ void AudacityProject::OnPlotSpectrum(const CommandContext &WXUNUSED(context) )
 
 void AudacityProject::OnContrast(const CommandContext &WXUNUSED(context) )
 {
-   // All of this goes away when the Contrast Dialog is converted to a module
-   if(!mContrastDialog)
-   {
-      wxPoint where;
-      where.x = 150;
-      where.y = 150;
-
-      mContrastDialog.reset( safenew ContrastDialog(
-         this, -1, _("Contrast Analysis (WCAG 2 compliance)"), where ) );
-   }
-
-   mContrastDialog->CentreOnParent();
-   if( ScreenshotCommand::MayCapture( mContrastDialog.get() ) )
-      return;
-   mContrastDialog->Show();
+   // Empty until we figure out how to remove this function without crashing on startup.
 }
 
 

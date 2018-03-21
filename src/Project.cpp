@@ -90,7 +90,6 @@ scroll information.  It also has some status flags.
 
 #include "AudacityException.h"
 #include "FreqWindow.h"
-#include "effects/Contrast.h"
 #include "AutoRecovery.h"
 #include "AudacityApp.h"
 #include "AColor.h"
@@ -2493,7 +2492,6 @@ void AudacityProject::OnCloseWindow(wxCloseEvent & event)
    // makes sense to stop any recording before putting up the dialog.
 
    mFreqWindow.reset();
-   mContrastDialog.reset();
 
    // Check to see if we were playing or recording
    // audio, and if so, make sure Audio I/O is completely finished.
