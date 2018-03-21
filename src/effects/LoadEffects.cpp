@@ -27,10 +27,6 @@
 #include "Paulstretch.h"
 #include "Invert.h"
 #include "Noise.h"
-#ifdef EXPERIMENTAL_NOISE_REDUCTION
-#include "NoiseReduction.h"
-#endif
-#include "NoiseRemoval.h"
 #include "Normalize.h"
 #include "Phaser.h"
 #include "Repair.h"
@@ -45,17 +41,6 @@
 #include "FindClipping.h"
 
 #include "../Experimental.h"
-
-//
-// Select the desired Noise Reduction/Removal effect
-//
-#if defined(EXPERIMENTAL_NOISE_REDUCTION)
-#define NOISEREDUCTION_EFFECT \
-   EFFECT( NOISEREDUCTION, EffectNoiseReduction, () )
-#else
-#define NOISEREDUCTION_EFFECT \
-   EFFECT( NOISEREMOVAL, EffectNoiseRemoval, () )
-#endif
 
 //
 // Define the list of effects that will be autoregistered and how to instantiate each
@@ -79,7 +64,6 @@
    EFFECT( TRUNCATESILENCE,   EffectTruncSilence, () )     \
    EFFECT( WAHWAH,            EffectWahwah, () )           \
    EFFECT( FINDCLIPPING,      EffectFindClipping, () )     \
-   NOISEREDUCTION_EFFECT                                   \
    EFFECT( AUTODUCK,          EffectAutoDuck, () )         \
    EFFECT( PAULSTRETCH,       EffectPaulstretch, () )      
 

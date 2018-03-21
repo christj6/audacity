@@ -371,9 +371,6 @@
     <ClCompile Include="..\..\..\src\effects\Noise.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\NoiseRemoval.cpp">
-      <Filter>src\effects</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\effects\Normalize.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
@@ -777,9 +774,6 @@
       <Filter>src\widgets</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\effects\Phaser.cpp">
-      <Filter>src\effects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\NoiseReduction.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\DeviceChange.cpp">
@@ -1324,9 +1318,6 @@
     <ClInclude Include="..\..\..\src\effects\Noise.h">
       <Filter>src\effects</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\NoiseRemoval.h">
-      <Filter>src\effects</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\effects\Normalize.h">
       <Filter>src\effects</Filter>
     </ClInclude>
@@ -1775,9 +1766,6 @@
       <Filter>includes\audacity</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\effects\Phaser.h">
-      <Filter>src\effects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\NoiseReduction.h">
       <Filter>src\effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\DeviceChange.h">

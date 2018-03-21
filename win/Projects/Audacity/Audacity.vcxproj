@@ -155,7 +155,6 @@
     <ClCompile Include="..\..\..\src\DirManager.cpp" />
     <ClCompile Include="..\..\..\src\Dither.cpp" />
     <ClCompile Include="..\..\..\src\effects\EffectRack.cpp" />
-    <ClCompile Include="..\..\..\src\effects\NoiseReduction.cpp" />
     <ClCompile Include="..\..\..\src\effects\Phaser.cpp" />
     <ClCompile Include="..\..\..\src\effects\VST\VSTControlMSW.cpp" />
     <ClCompile Include="..\..\..\src\Envelope.cpp" />
@@ -305,7 +304,6 @@
     <ClCompile Include="..\..\..\src\effects\Invert.cpp" />
     <ClCompile Include="..\..\..\src\effects\LoadEffects.cpp" />
     <ClCompile Include="..\..\..\src\effects\Noise.cpp" />
-    <ClCompile Include="..\..\..\src\effects\NoiseRemoval.cpp" />
     <ClCompile Include="..\..\..\src\effects\Normalize.cpp" />
     <ClCompile Include="..\..\..\src\effects\Paulstretch.cpp" />
     <ClCompile Include="..\..\..\src\effects\Repair.cpp" />
@@ -481,7 +479,6 @@
     <ClInclude Include="..\..\..\src\DeviceChange.h" />
     <ClInclude Include="..\..\..\src\Diags.h" />
     <ClInclude Include="..\..\..\src\effects\EffectRack.h" />
-    <ClInclude Include="..\..\..\src\effects\NoiseReduction.h" />
     <ClInclude Include="..\..\..\src\effects\Phaser.h" />
     <ClInclude Include="..\..\..\src\effects\VST\VSTControlMSW.h" />
     <ClInclude Include="..\..\..\src\FileException.h" />
@@ -644,7 +641,6 @@
     <ClInclude Include="..\..\..\src\effects\Invert.h" />
     <ClInclude Include="..\..\..\src\effects\LoadEffects.h" />
     <ClInclude Include="..\..\..\src\effects\Noise.h" />
-    <ClInclude Include="..\..\..\src\effects\NoiseRemoval.h" />
     <ClInclude Include="..\..\..\src\effects\Normalize.h" />
     <ClInclude Include="..\..\..\src\effects\Paulstretch.h" />
     <ClInclude Include="..\..\..\src\effects\Repair.h" />
