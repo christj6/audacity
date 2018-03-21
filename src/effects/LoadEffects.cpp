@@ -23,7 +23,6 @@
 #include "ClickRemoval.h"
 #include "DtmfGen.h"
 #include "Invert.h"
-#include "Phaser.h"
 #include "Repeat.h"
 #include "StereoToMono.h"
 #include "TruncSilence.h"
@@ -39,7 +38,6 @@
    EFFECT( DTMFTONES,         EffectDtmf, () )             \
    EFFECT( CLICKREMOVAL,      EffectClickRemoval, () )     \
    EFFECT( INVERT,            EffectInvert, () )           \
-   EFFECT( PHASER,            EffectPhaser, () )           \
    EFFECT( REPEAT,            EffectRepeat, () )           \
    EFFECT( STEREOTOMONO,      EffectStereoToMono, () )     \
    EFFECT( TRUNCATESILENCE,   EffectTruncSilence, () )     \

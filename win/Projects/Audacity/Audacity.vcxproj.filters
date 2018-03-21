@@ -740,9 +740,6 @@
     <ClCompile Include="..\..\..\src\widgets\NumericTextCtrl.cpp">
       <Filter>src\widgets</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\Phaser.cpp">
-      <Filter>src\effects</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\DeviceChange.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -1695,9 +1692,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\audacity\EffectAutomationParameters.h">
       <Filter>includes\audacity</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\Phaser.h">
-      <Filter>src\effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\DeviceChange.h">
       <Filter>src</Filter>
