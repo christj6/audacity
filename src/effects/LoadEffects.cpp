@@ -25,7 +25,6 @@
 #include "DtmfGen.h"
 #include "Echo.h"
 #include "Paulstretch.h"
-#include "Equalization.h"
 #include "Fade.h"
 #include "Invert.h"
 #include "Noise.h"
@@ -40,7 +39,6 @@
 #include "Reverb.h"
 #include "Reverse.h"
 #include "Silence.h"
-#include "ScienFilter.h"
 #include "StereoToMono.h"
 #ifdef USE_SBSMS
 #include "TimeScale.h"
@@ -81,16 +79,6 @@
 #endif
 
 //
-// Include the Classic Filters effect, if requested
-//
-#if defined(EXPERIMENTAL_SCIENCE_FILTERS)
-#define CLASSICFILTER_EFFECT \
-   EFFECT( CLASSICFILTERS, EffectScienFilter, () )
-#else
-#define CLASSICFILTER_EFFECT
-#endif
-
-//
 // Include the SBSMS effect, if requested
 //
 #if defined(USE_SBSMS)
@@ -112,7 +100,6 @@
    EFFECT( CHANGESPEED,       EffectChangeSpeed, () )      \
    EFFECT( CLICKREMOVAL,      EffectClickRemoval, () )     \
    EFFECT( ECHO,              EffectEcho, () )             \
-   EFFECT( EQUALIZATION,      EffectEqualization, () )     \
    EFFECT( FADEIN,            EffectFade, (true) )         \
    EFFECT( FADEOUT,           EffectFade, (false) )        \
    EFFECT( INVERT,            EffectInvert, () )           \
@@ -164,14 +151,6 @@ enum
 static const wxChar *kEffectNames[] =
 {
    EFFECT_LIST
-};
-
-//
-// Create the effect name array of excluded effects
-//
-static const wxChar *kExcludedNames[] =
-{
-   EXCLUDE_LIST
 };
 
 //
@@ -263,16 +242,6 @@ wxString BuiltinEffectsModule::GetDescription()
 
 bool BuiltinEffectsModule::Initialize()
 {
-   for (size_t i = 0; i < WXSIZEOF(kEffectNames); i++)
-   {
-      mNames.Add(wxString(BUILTIN_EFFECT_PREFIX) + kEffectNames[i]);
-   }
-
-   for (size_t i = 0; i < WXSIZEOF(kExcludedNames); i++)
-   {
-      mNames.Add(wxString(BUILTIN_EFFECT_PREFIX) + kExcludedNames[i]);
-   }
-
    return true;
 }
 
@@ -357,7 +326,6 @@ std::unique_ptr<Effect> BuiltinEffectsModule::Instantiate(const wxString & path)
    switch (mNames.Index(path))
    {
       EFFECT_LIST;
-      EXCLUDE_LIST;
    }
 
    return nullptr;

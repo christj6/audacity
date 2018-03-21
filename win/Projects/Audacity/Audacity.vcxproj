@@ -155,7 +155,6 @@
     <ClCompile Include="..\..\..\src\DirManager.cpp" />
     <ClCompile Include="..\..\..\src\Dither.cpp" />
     <ClCompile Include="..\..\..\src\effects\EffectRack.cpp" />
-    <ClCompile Include="..\..\..\src\effects\Equalization48x.cpp" />
     <ClCompile Include="..\..\..\src\effects\NoiseReduction.cpp" />
     <ClCompile Include="..\..\..\src\effects\Phaser.cpp" />
     <ClCompile Include="..\..\..\src\effects\VST\VSTControlMSW.cpp" />
@@ -303,7 +302,6 @@
     <ClCompile Include="..\..\..\src\effects\Echo.cpp" />
     <ClCompile Include="..\..\..\src\effects\Effect.cpp" />
     <ClCompile Include="..\..\..\src\effects\EffectManager.cpp" />
-    <ClCompile Include="..\..\..\src\effects\Equalization.cpp" />
     <ClCompile Include="..\..\..\src\effects\Fade.cpp" />
     <ClCompile Include="..\..\..\src\effects\FindClipping.cpp" />
     <ClCompile Include="..\..\..\src\effects\Generator.cpp" />
@@ -318,7 +316,6 @@
     <ClCompile Include="..\..\..\src\effects\Reverb.cpp" />
     <ClCompile Include="..\..\..\src\effects\Reverse.cpp" />
     <ClCompile Include="..\..\..\src\effects\SBSMSEffect.cpp" />
-    <ClCompile Include="..\..\..\src\effects\ScienFilter.cpp" />
     <ClCompile Include="..\..\..\src\effects\ScoreAlignDialog.cpp" />
     <ClCompile Include="..\..\..\src\effects\Silence.cpp" />
     <ClCompile Include="..\..\..\src\effects\SimpleMono.cpp" />
@@ -490,7 +487,6 @@
     <ClInclude Include="..\..\..\src\DeviceChange.h" />
     <ClInclude Include="..\..\..\src\Diags.h" />
     <ClInclude Include="..\..\..\src\effects\EffectRack.h" />
-    <ClInclude Include="..\..\..\src\effects\Equalization48x.h" />
     <ClInclude Include="..\..\..\src\effects\NoiseReduction.h" />
     <ClInclude Include="..\..\..\src\effects\Phaser.h" />
     <ClInclude Include="..\..\..\src\effects\VST\VSTControlMSW.h" />
@@ -651,7 +647,6 @@
     <ClInclude Include="..\..\..\src\effects\Echo.h" />
     <ClInclude Include="..\..\..\src\effects\Effect.h" />
     <ClInclude Include="..\..\..\src\effects\EffectManager.h" />
-    <ClInclude Include="..\..\..\src\effects\Equalization.h" />
     <ClInclude Include="..\..\..\src\effects\Fade.h" />
     <ClInclude Include="..\..\..\src\effects\FindClipping.h" />
     <ClInclude Include="..\..\..\src\effects\Generator.h" />
@@ -667,7 +662,6 @@
     <ClInclude Include="..\..\..\src\effects\Reverb_libSoX.h" />
     <ClInclude Include="..\..\..\src\effects\Reverse.h" />
     <ClInclude Include="..\..\..\src\effects\SBSMSEffect.h" />
-    <ClInclude Include="..\..\..\src\effects\ScienFilter.h" />
     <ClInclude Include="..\..\..\src\effects\Silence.h" />
     <ClInclude Include="..\..\..\src\effects\SimpleMono.h" />
     <ClInclude Include="..\..\..\src\effects\SoundTouchEffect.h" />
