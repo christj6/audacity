@@ -19,15 +19,7 @@
 
 #include "EffectManager.h"
 
-#include "AutoDuck.h"
-
-#include "../Experimental.h"
-
-//
-// Define the list of effects that will be autoregistered and how to instantiate each
-//
-#define EFFECT_LIST \
-   EFFECT( AUTODUCK,          EffectAutoDuck, () )            
+#include "../Experimental.h"   
 
 //
 // Define the EFFECT() macro to generate enum names
@@ -35,26 +27,10 @@
 #define EFFECT(n, i, args) ENUM_ ## n,
 
 //
-// Create the enum for the list of effects (will be used in a switch statement)
-//
-enum
-{
-   EFFECT_LIST
-};
-
-//
 // Redefine EFFECT() to add the effect's name to an array
 //
 #undef EFFECT
 #define EFFECT(n, i, args) n ## _PLUGIN_SYMBOL,
-
-//
-// Create the effect name array
-//
-static const wxChar *kEffectNames[] =
-{
-   EFFECT_LIST
-};
 
 //
 // Redefine EFFECT() to generate a case statement for the lookup switch
@@ -156,19 +132,6 @@ void BuiltinEffectsModule::Terminate()
 
 bool BuiltinEffectsModule::AutoRegisterPlugins(PluginManagerInterface & pm)
 {
-   wxString ignoredErrMsg;
-   for (size_t i = 0; i < WXSIZEOF(kEffectNames); i++)
-   {
-      wxString path(wxString(BUILTIN_EFFECT_PREFIX) + kEffectNames[i]);
-
-      if (!pm.IsPluginRegistered(path))
-      {
-         // No checking of error ?
-         DiscoverPluginsAtPath(path, ignoredErrMsg,
-            PluginManagerInterface::DefaultRegistrationCallback);
-      }
-   }
-
    // We still want to be called during the normal registration process
    return false;
 }
@@ -225,11 +188,6 @@ std::unique_ptr<Effect> BuiltinEffectsModule::Instantiate(const wxString & path)
 {
    wxASSERT(path.StartsWith(BUILTIN_EFFECT_PREFIX));
    wxASSERT(mNames.Index(path) != wxNOT_FOUND);
-
-   switch (mNames.Index(path))
-   {
-      EFFECT_LIST;
-   }
 
    return nullptr;
 }

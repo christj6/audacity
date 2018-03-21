@@ -329,9 +329,6 @@
     <ClCompile Include="..\..\..\src\WrappedType.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\AutoDuck.cpp">
-      <Filter>src\effects</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\effects\Biquad.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
@@ -1218,9 +1215,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\WrappedType.h">
       <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\AutoDuck.h">
-      <Filter>src\effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\effects\Biquad.h">
       <Filter>src\effects</Filter>
