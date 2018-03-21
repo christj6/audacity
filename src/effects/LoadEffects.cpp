@@ -39,9 +39,6 @@
 #include "Reverb.h"
 #include "Reverse.h"
 #include "StereoToMono.h"
-#ifdef USE_SBSMS
-#include "TimeScale.h"
-#endif
 #include "ToneGen.h"
 #include "TruncSilence.h"
 #include "Wahwah.h"
@@ -49,8 +46,6 @@
 #include "FindClipping.h"
 
 #include "../Experimental.h"
-
-#define SOUNDTOUCH_EFFECTS
 
 //
 // Select the desired Noise Reduction/Removal effect
@@ -61,16 +56,6 @@
 #else
 #define NOISEREDUCTION_EFFECT \
    EFFECT( NOISEREMOVAL, EffectNoiseRemoval, () )
-#endif
-
-//
-// Include the SBSMS effect, if requested
-//
-#if defined(USE_SBSMS)
-#define SBSMS_EFFECTS \
-   EFFECT( TIMESCALE, EffectTimeScale, () )
-#else
-#define SBSMS_EFFECTS
 #endif
 
 //
@@ -97,11 +82,9 @@
    EFFECT( TRUNCATESILENCE,   EffectTruncSilence, () )     \
    EFFECT( WAHWAH,            EffectWahwah, () )           \
    EFFECT( FINDCLIPPING,      EffectFindClipping, () )     \
-   NOISEREDUCTION_EFFECT                                 \
-   SOUNDTOUCH_EFFECTS                                    \
+   NOISEREDUCTION_EFFECT                                   \
    EFFECT( AUTODUCK,          EffectAutoDuck, () )         \
-   EFFECT( PAULSTRETCH,       EffectPaulstretch, () )      \
-   SBSMS_EFFECTS
+   EFFECT( PAULSTRETCH,       EffectPaulstretch, () )      
 
 //
 // Define the list of effects that do not get autoregistered

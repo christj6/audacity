@@ -313,12 +313,10 @@
     <ClCompile Include="..\..\..\src\effects\Repeat.cpp" />
     <ClCompile Include="..\..\..\src\effects\Reverb.cpp" />
     <ClCompile Include="..\..\..\src\effects\Reverse.cpp" />
-    <ClCompile Include="..\..\..\src\effects\SBSMSEffect.cpp" />
     <ClCompile Include="..\..\..\src\effects\ScoreAlignDialog.cpp" />
     <ClCompile Include="..\..\..\src\effects\SimpleMono.cpp" />
     <ClCompile Include="..\..\..\src\effects\SoundTouchEffect.cpp" />
     <ClCompile Include="..\..\..\src\effects\StereoToMono.cpp" />
-    <ClCompile Include="..\..\..\src\effects\TimeScale.cpp" />
     <ClCompile Include="..\..\..\src\effects\TimeWarper.cpp" />
     <ClCompile Include="..\..\..\src\effects\ToneGen.cpp" />
     <ClCompile Include="..\..\..\src\effects\TruncSilence.cpp" />
@@ -656,11 +654,9 @@
     <ClInclude Include="..\..\..\src\effects\Reverb.h" />
     <ClInclude Include="..\..\..\src\effects\Reverb_libSoX.h" />
     <ClInclude Include="..\..\..\src\effects\Reverse.h" />
-    <ClInclude Include="..\..\..\src\effects\SBSMSEffect.h" />
     <ClInclude Include="..\..\..\src\effects\SimpleMono.h" />
     <ClInclude Include="..\..\..\src\effects\SoundTouchEffect.h" />
     <ClInclude Include="..\..\..\src\effects\StereoToMono.h" />
-    <ClInclude Include="..\..\..\src\effects\TimeScale.h" />
     <ClInclude Include="..\..\..\src\effects\TimeWarper.h" />
     <ClInclude Include="..\..\..\src\effects\ToneGen.h" />
     <ClInclude Include="..\..\..\src\effects\TruncSilence.h" />

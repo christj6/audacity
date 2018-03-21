@@ -395,9 +395,6 @@
     <ClCompile Include="..\..\..\src\effects\Reverse.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\SBSMSEffect.cpp">
-      <Filter>src\effects</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\effects\ScoreAlignDialog.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
@@ -408,9 +405,6 @@
       <Filter>src\effects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\effects\StereoToMono.cpp">
-      <Filter>src\effects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\TimeScale.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\effects\TimeWarper.cpp">
@@ -1360,9 +1354,6 @@
     <ClInclude Include="..\..\..\src\effects\Reverse.h">
       <Filter>src\effects</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\SBSMSEffect.h">
-      <Filter>src\effects</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\effects\SimpleMono.h">
       <Filter>src\effects</Filter>
     </ClInclude>
@@ -1370,9 +1361,6 @@
       <Filter>src\effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\effects\StereoToMono.h">
-      <Filter>src\effects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\TimeScale.h">
       <Filter>src\effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\effects\TimeWarper.h">
