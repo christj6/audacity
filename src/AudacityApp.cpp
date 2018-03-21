@@ -109,10 +109,6 @@ It handles initialization and termination by subclassing wxApp.
 #include <wx/textdlg.h>
 #endif
 
-#ifdef EXPERIMENTAL_SCOREALIGN
-#include "effects/ScoreAlignDialog.h"
-#endif
-
 #if 0
 #ifdef _DEBUG
     #ifdef _MSC_VER
@@ -170,10 +166,6 @@ It handles initialization and termination by subclassing wxApp.
 
 #  if defined(EXPERIMENTAL_MIDI_OUT)
 #     pragma comment(lib, "portmidi")
-#  endif
-
-#  if defined(EXPERIMENTAL_SCOREALIGN)
-#     pragma comment(lib, "libscorealign")
 #  endif
 
 #  if defined(USE_NYQUIST)
@@ -311,9 +303,6 @@ void QuitAudacity(bool bForce)
 
    ModuleManager::Get().Dispatch(AppQuiting);
 
-#ifdef EXPERIMENTAL_SCOREALIGN
-   CloseScoreAlignDialog();
-#endif
    CloseScreenshotTools();
 
    //release ODManager Threads

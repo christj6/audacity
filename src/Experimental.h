@@ -151,11 +151,6 @@
 //#define EXPERIMENTAL_MIDI_STRETCHING
 #endif
 
-// USE_MIDI must be defined in order for EXPERIMENTAL_SCOREALIGN to work
-#ifdef USE_MIDI
-//#define EXPERIMENTAL_SCOREALIGN
-#endif
-
 //If you want any of these files, ask JKC.  They are not
 //yet checked in to Audacity SVN as of 12-Feb-2010
 #ifdef EXPERIMENTAL_NOTEBOOK

@@ -457,10 +457,6 @@ void OnAlign(const CommandContext &context );
 void HandleAlign(int index, bool moveSel);
 size_t mAlignLabelsCount;
 
-#ifdef EXPERIMENTAL_SCOREALIGN
-void OnScoreAlign(const CommandContext &context );
-#endif // EXPERIMENTAL_SCOREALIGN
-
 // Tracks menu
 void OnNewWaveTrack(const CommandContext &context );
 void OnNewStereoTrack(const CommandContext &context );

@@ -341,9 +341,6 @@
     <ClCompile Include="..\..\..\src\effects\LoadEffects.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\ScoreAlignDialog.cpp">
-      <Filter>src\effects</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\effects\SimpleMono.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>

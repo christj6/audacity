@@ -293,7 +293,6 @@
     <ClCompile Include="..\..\..\src\effects\EffectManager.cpp" />
     <ClCompile Include="..\..\..\src\effects\Generator.cpp" />
     <ClCompile Include="..\..\..\src\effects\LoadEffects.cpp" />
-    <ClCompile Include="..\..\..\src\effects\ScoreAlignDialog.cpp" />
     <ClCompile Include="..\..\..\src\effects\SimpleMono.cpp" />
     <ClCompile Include="..\..\..\src\effects\SoundTouchEffect.cpp" />
     <ClCompile Include="..\..\..\src\effects\TimeWarper.cpp" />
