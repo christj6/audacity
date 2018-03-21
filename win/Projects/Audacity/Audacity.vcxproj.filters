@@ -383,9 +383,6 @@
     <ClCompile Include="..\..\..\src\effects\TimeWarper.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\ToneGen.cpp">
-      <Filter>src\effects</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\effects\TruncSilence.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
@@ -1301,9 +1298,6 @@
       <Filter>src\effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\effects\TimeWarper.h">
-      <Filter>src\effects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\ToneGen.h">
       <Filter>src\effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\effects\TruncSilence.h">

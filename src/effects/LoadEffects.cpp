@@ -27,7 +27,6 @@
 #include "Phaser.h"
 #include "Repeat.h"
 #include "StereoToMono.h"
-#include "ToneGen.h"
 #include "TruncSilence.h"
 
 #include "FindClipping.h"
@@ -38,9 +37,7 @@
 // Define the list of effects that will be autoregistered and how to instantiate each
 //
 #define EFFECT_LIST \
-   EFFECT( CHIRP,             EffectToneGen, (true) )      \
    EFFECT( DTMFTONES,         EffectDtmf, () )             \
-   EFFECT( TONE,              EffectToneGen, (false) )     \
    EFFECT( CHANGESPEED,       EffectChangeSpeed, () )      \
    EFFECT( CLICKREMOVAL,      EffectClickRemoval, () )     \
    EFFECT( INVERT,            EffectInvert, () )           \
@@ -50,12 +47,6 @@
    EFFECT( TRUNCATESILENCE,   EffectTruncSilence, () )     \
    EFFECT( FINDCLIPPING,      EffectFindClipping, () )     \
    EFFECT( AUTODUCK,          EffectAutoDuck, () )            
-
-//
-// Define the list of effects that do not get autoregistered
-//
-#define EXCLUDE_LIST \
-   CLASSICFILTER_EFFECT
 
 //
 // Define the EFFECT() macro to generate enum names
