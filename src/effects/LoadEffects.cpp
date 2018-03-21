@@ -20,7 +20,6 @@
 #include "EffectManager.h"
 
 #include "AutoDuck.h"
-#include "ChangeSpeed.h"
 #include "ClickRemoval.h"
 #include "DtmfGen.h"
 #include "Invert.h"
@@ -38,7 +37,6 @@
 //
 #define EFFECT_LIST \
    EFFECT( DTMFTONES,         EffectDtmf, () )             \
-   EFFECT( CHANGESPEED,       EffectChangeSpeed, () )      \
    EFFECT( CLICKREMOVAL,      EffectClickRemoval, () )     \
    EFFECT( INVERT,            EffectInvert, () )           \
    EFFECT( PHASER,            EffectPhaser, () )           \
@@ -59,7 +57,6 @@
 enum
 {
    EFFECT_LIST
-   EXCLUDE_LIST
 };
 
 //

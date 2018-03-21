@@ -335,9 +335,6 @@
     <ClCompile Include="..\..\..\src\effects\Biquad.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\ChangeSpeed.cpp">
-      <Filter>src\effects</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\effects\ClickRemoval.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
@@ -1253,9 +1250,6 @@
       <Filter>src\effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\effects\Biquad.h">
-      <Filter>src\effects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\ChangeSpeed.h">
       <Filter>src\effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\effects\ClickRemoval.h">
