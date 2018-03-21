@@ -300,7 +300,6 @@
     <ClCompile Include="..\..\..\src\effects\Echo.cpp" />
     <ClCompile Include="..\..\..\src\effects\Effect.cpp" />
     <ClCompile Include="..\..\..\src\effects\EffectManager.cpp" />
-    <ClCompile Include="..\..\..\src\effects\Fade.cpp" />
     <ClCompile Include="..\..\..\src\effects\FindClipping.cpp" />
     <ClCompile Include="..\..\..\src\effects\Generator.cpp" />
     <ClCompile Include="..\..\..\src\effects\Invert.cpp" />
@@ -640,7 +639,6 @@
     <ClInclude Include="..\..\..\src\effects\Echo.h" />
     <ClInclude Include="..\..\..\src\effects\Effect.h" />
     <ClInclude Include="..\..\..\src\effects\EffectManager.h" />
-    <ClInclude Include="..\..\..\src\effects\Fade.h" />
     <ClInclude Include="..\..\..\src\effects\FindClipping.h" />
     <ClInclude Include="..\..\..\src\effects\Generator.h" />
     <ClInclude Include="..\..\..\src\effects\Invert.h" />

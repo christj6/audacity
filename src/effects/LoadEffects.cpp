@@ -25,7 +25,6 @@
 #include "DtmfGen.h"
 #include "Echo.h"
 #include "Paulstretch.h"
-#include "Fade.h"
 #include "Invert.h"
 #include "Noise.h"
 #ifdef EXPERIMENTAL_NOISE_REDUCTION
@@ -69,8 +68,6 @@
    EFFECT( CHANGESPEED,       EffectChangeSpeed, () )      \
    EFFECT( CLICKREMOVAL,      EffectClickRemoval, () )     \
    EFFECT( ECHO,              EffectEcho, () )             \
-   EFFECT( FADEIN,            EffectFade, (true) )         \
-   EFFECT( FADEOUT,           EffectFade, (false) )        \
    EFFECT( INVERT,            EffectInvert, () )           \
    EFFECT( NORMALIZE,         EffectNormalize, () )        \
    EFFECT( PHASER,            EffectPhaser, () )           \
