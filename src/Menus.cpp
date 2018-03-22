@@ -1151,10 +1151,6 @@ void AudacityProject::CreateMenusAndCommands()
       c->AddSeparator();
 #endif
 
-
-      c->AddItem(wxT("ContrastAnalyser"), XXO("Contrast..."), FN(OnContrast), wxT("Ctrl+Shift+T"),
-         AudioIONotBusyFlag | WaveTracksSelectedFlag | TimeSelectedFlag,
-         AudioIONotBusyFlag | WaveTracksSelectedFlag | TimeSelectedFlag);
       c->AddItem(wxT("PlotSpectrum"), XXO("Plot Spectrum..."), FN(OnPlotSpectrum),
          AudioIONotBusyFlag | WaveTracksSelectedFlag | TimeSelectedFlag,
          AudioIONotBusyFlag | WaveTracksSelectedFlag | TimeSelectedFlag);
@@ -6998,12 +6994,6 @@ void AudacityProject::OnPlotSpectrum(const CommandContext &WXUNUSED(context) )
    mFreqWindow->Raise();
    mFreqWindow->SetFocus();
 }
-
-void AudacityProject::OnContrast(const CommandContext &WXUNUSED(context) )
-{
-   // Empty until we figure out how to remove this function without crashing on startup.
-}
-
 
 void AudacityProject::OnShowTransportToolBar(const CommandContext &WXUNUSED(context) )
 {

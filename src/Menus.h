@@ -367,7 +367,6 @@ void OnKaraoke(const CommandContext &context );
 void OnMixerBoard(const CommandContext &context );
 
 void OnPlotSpectrum(const CommandContext &context );
-void OnContrast(const CommandContext &context );
 
 void OnShowTransportToolBar(const CommandContext &context );
 void OnShowDeviceToolBar(const CommandContext &context );
