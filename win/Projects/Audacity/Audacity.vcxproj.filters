@@ -341,16 +341,10 @@
     <ClCompile Include="..\..\..\src\effects\LoadEffects.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\SimpleMono.cpp">
-      <Filter>src\effects</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\effects\SoundTouchEffect.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\effects\TimeWarper.cpp">
-      <Filter>src\effects</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\TwoPassSimpleMono.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\effects\VST\VSTEffect.cpp">
@@ -1222,16 +1216,10 @@
     <ClInclude Include="..\..\..\src\effects\LoadEffects.h">
       <Filter>src\effects</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\SimpleMono.h">
-      <Filter>src\effects</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\effects\SoundTouchEffect.h">
       <Filter>src\effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\effects\TimeWarper.h">
-      <Filter>src\effects</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\TwoPassSimpleMono.h">
       <Filter>src\effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\effects\VST\VSTEffect.h">
