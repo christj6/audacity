@@ -293,7 +293,6 @@
     <ClCompile Include="..\..\..\src\effects\EffectManager.cpp" />
     <ClCompile Include="..\..\..\src\effects\Generator.cpp" />
     <ClCompile Include="..\..\..\src\effects\LoadEffects.cpp" />
-    <ClCompile Include="..\..\..\src\effects\SoundTouchEffect.cpp" />
     <ClCompile Include="..\..\..\src\effects\TimeWarper.cpp" />
     <ClCompile Include="..\..\..\src\effects\VST\VSTEffect.cpp" />
     <ClCompile Include="..\..\..\src\export\Export.cpp" />
@@ -606,7 +605,6 @@
     <ClInclude Include="..\..\..\src\effects\EffectManager.h" />
     <ClInclude Include="..\..\..\src\effects\Generator.h" />
     <ClInclude Include="..\..\..\src\effects\LoadEffects.h" />
-    <ClInclude Include="..\..\..\src\effects\SoundTouchEffect.h" />
     <ClInclude Include="..\..\..\src\effects\TimeWarper.h" />
     <ClInclude Include="..\..\..\src\effects\VST\VSTEffect.h" />
     <ClInclude Include="..\..\..\src\export\Export.h" />
