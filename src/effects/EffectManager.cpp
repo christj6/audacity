@@ -27,10 +27,6 @@ effects.
 #include "../Experimental.h"
 #include "../widgets/ErrorDialog.h"
 
-#if defined(EXPERIMENTAL_EFFECTS_RACK)
-#include "EffectRack.h"
-#endif
-
 #include "EffectManager.h"
 #include "../commands/Command.h"
 #include "../commands/CommandContext.h"
@@ -55,18 +51,10 @@ EffectManager::EffectManager()
    mRealtimeLatency = 0;
    mRealtimeLock.Leave();
    mSkipStateFlag = false;
-
-#if defined(EXPERIMENTAL_EFFECTS_RACK)
-   mRack = NULL;
-#endif
 }
 
 EffectManager::~EffectManager()
 {
-#if defined(EXPERIMENTAL_EFFECTS_RACK)
-   // wxWidgets has already destroyed the rack since it was derived from wxFrame. So
-   // no need to DELETE it here.
-#endif
 }
 
 // Here solely for the purpose of Nyquist Workbench until
@@ -105,13 +93,6 @@ bool EffectManager::DoEffect(const PluginID & ID,
    {
       return false;
    }
-
-#if defined(EXPERIMENTAL_EFFECTS_RACK)
-   if (effect->SupportsRealtime())
-   {
-      GetRack()->Add(effect);
-   }
-#endif
 
    bool res = effect->DoEffect(parent,
                                projectRate,
@@ -471,82 +452,6 @@ void EffectManager::SetBatchProcessing(const PluginID & ID, bool start)
    }
 
 }
-
-#if defined(EXPERIMENTAL_EFFECTS_RACK)
-EffectRack *EffectManager::GetRack()
-{
-   if (!mRack)
-   {
-      // EffectRack is constructed with the current project as owner, so safenew is OK
-      mRack = safenew EffectRack();
-      // Make sure what I just commented remains true:
-      wxASSERT(mRack->GetParent());
-      mRack->CenterOnParent();
-   }
-
-   return mRack;
-}
-
-void EffectManager::ShowRack()
-{
-   GetRack()->Show(!GetRack()->IsShown());
-}
-
-void EffectManager::RealtimeSetEffects(const EffectArray & effects)
-{
-   // Block RealtimeProcess()
-   RealtimeSuspend();
-
-   // Tell any effects no longer in the chain to clean up
-   for (auto e: mRealtimeEffects)
-   {
-      // Scan the NEW chain for the effect
-      for (auto e1: effects)
-      {
-         // Found it so we're done
-         if (e == e1)
-         {
-            e = NULL;
-            break;
-         }
-      }
-
-      // Must not have been in the NEW chain, so tell it to cleanup
-      if (e && mRealtimeActive)
-      {
-         e->RealtimeFinalize();
-      }
-   }
-      
-   // Tell any NEW effects to get ready
-   for (auto e : effects)
-   {
-      // Scan the old chain for the effect
-      for (auto e1 : mRealtimeEffects)
-      {
-         // Found it so tell effect to get ready
-         if (e == e1)
-         {
-            e = NULL;
-            break;
-         }
-      }
-
-      // Must not have been in the old chain, so tell it to initialize
-      if (e && mRealtimeActive)
-      {
-         e->RealtimeInitialize();
-      }
-   }
-
-   // Get rid of the old chain
-   // And install the NEW one
-   mRealtimeEffects = effects;
-
-   // Allow RealtimeProcess() to, well, process 
-   RealtimeResume();
-}
-#endif
 
 bool EffectManager::RealtimeIsActive()
 {

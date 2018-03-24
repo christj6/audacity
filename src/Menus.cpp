@@ -810,9 +810,6 @@ void AudacityProject::CreateMenusAndCommands()
          gPrefs->Read(wxT("/GUI/ShowExtraMenus"), 0L), AlwaysEnabledFlag, AlwaysEnabledFlag);
       c->AddCheck(wxT("ShowClipping"), XXO("&Show Clipping (on/off)"), FN(OnShowClipping),
          gPrefs->Read(wxT("/GUI/ShowClipping"), 0L), AlwaysEnabledFlag, AlwaysEnabledFlag);
-#if defined(EXPERIMENTAL_EFFECTS_RACK)
-      c->AddCheck(wxT("ShowEffectsRack"), XXO("Show Effects Rack"), FN(OnShowEffectsRack), 0, AlwaysEnabledFlag, AlwaysEnabledFlag);
-#endif
 
 
       c->EndMenu();
@@ -7087,13 +7084,6 @@ void AudacityProject::OnResetToolBars(const CommandContext &WXUNUSED(context) )
    mToolManager->Reset();
    ModifyToolbarMenus();
 }
-
-#if defined(EXPERIMENTAL_EFFECTS_RACK)
-void AudacityProject::OnShowEffectsRack(const CommandContext &WXUNUSED(context) )
-{
-   EffectManager::Get().ShowRack();
-}
-#endif
 
 //
 // Project Menu

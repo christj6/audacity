@@ -384,10 +384,6 @@ void OnShowToolsToolBar(const CommandContext &context );
 void OnShowTranscriptionToolBar(const CommandContext &context );
 void OnResetToolBars(const CommandContext &context );
 
-#if defined(EXPERIMENTAL_EFFECTS_RACK)
-void OnShowEffectsRack(const CommandContext &context );
-#endif
-
         // Transport Menu
 
 void OnSoundActivated(const CommandContext &context );

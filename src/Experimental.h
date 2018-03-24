@@ -175,9 +175,6 @@
 // Define to allow realtime processing in Audacity effects that have been converted.
 #define EXPERIMENTAL_REALTIME_AUDACITY_EFFECTS
 
-// Define to include the effects rack (such as it is).
-//#define EXPERIMENTAL_EFFECTS_RACK
-
 // Define to make the meters look like a row of LEDs
 //#define EXPERIMENTAL_METER_LED_STYLE
 
