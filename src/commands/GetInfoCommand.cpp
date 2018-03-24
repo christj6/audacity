@@ -24,7 +24,6 @@ This class now lists
 #include "GetInfoCommand.h"
 #include "../Project.h"
 #include "CommandManager.h"
-#include "../effects/EffectManager.h"
 #include "../widgets/Overlay.h"
 #include "../widgets/OverlayPanel.h"
 #include "../TrackPanel.h"
@@ -43,8 +42,6 @@ This class now lists
 #include "../ShuttleGui.h"
 
 enum {
-   kCommands,
-   kCommandsPlus,
    kMenus,
    kPreferences,
    kTracks,
@@ -57,8 +54,6 @@ enum {
 
 static const wxString kTypes[nTypes] =
 {
-   XO("Commands"),
-   XO("Commands+"),
    XO("Menus"),
    XO("Preferences"),
    XO("Tracks"),
@@ -135,8 +130,6 @@ bool GetInfoCommand::Apply(const CommandContext &context)
 bool GetInfoCommand::ApplyInner(const CommandContext &context)
 {
    switch( mInfoType  ){
-      case kCommands     : return SendCommands( context, 0 );
-      case kCommandsPlus : return SendCommands( context, 1 );
       case kMenus        : return SendMenus( context );
       case kPreferences  : return SendPreferences( context );
       case kTracks       : return SendTracks( context );
@@ -186,29 +179,6 @@ bool GetInfoCommand::SendPreferences(const CommandContext &context)
    wxWindow * pWin = context.GetProject();
    ShuttleGuiGetDefinition S(pWin, *((context.pOutput)->mStatusTarget) );
    dialog.ShuttleAll( S );
-   context.EndArray();
-   return true;
-}
-
-/**
- Send the list of commands.
- */
-bool GetInfoCommand::SendCommands(const CommandContext &context, int flags )
-{
-   context.StartArray();
-   PluginManager & pm = PluginManager::Get();
-   EffectManager & em = EffectManager::Get();
-   {
-      const PluginDescriptor *plug = pm.GetFirstPlugin(PluginTypeEffect | PluginTypeAudacityCommand);
-      while (plug)
-      {
-         auto command = em.GetCommandIdentifier(plug->GetID());
-         if (!command.IsEmpty()){
-            em.GetCommandDefinition( plug->GetID(), context, flags );
-         }
-         plug = pm.GetNextPlugin(PluginTypeEffect | PluginTypeAudacityCommand );
-      }
-   }
    context.EndArray();
    return true;
 }
