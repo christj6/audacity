@@ -410,8 +410,6 @@
     <ClCompile Include="..\..\..\src\ondemand\ODTask.cpp" />
     <ClCompile Include="..\..\..\src\ondemand\ODTaskThread.cpp" />
     <ClCompile Include="..\..\..\src\ondemand\ODWaveTrackTaskQueue.cpp" />
-    <ClCompile Include="..\..\..\src\effects\lv2\LoadLV2.cpp" />
-    <ClCompile Include="..\..\..\src\effects\lv2\LV2Effect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\audacity\ConfigInterface.h" />
@@ -728,8 +726,6 @@
     <ClInclude Include="..\..\..\src\ondemand\ODTask.h" />
     <ClInclude Include="..\..\..\src\ondemand\ODTaskThread.h" />
     <ClInclude Include="..\..\..\src\ondemand\ODWaveTrackTaskQueue.h" />
-    <ClInclude Include="..\..\..\src\effects\lv2\LoadLV2.h" />
-    <ClInclude Include="..\..\..\src\effects\lv2\LV2Effect.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\audacity.ico" />

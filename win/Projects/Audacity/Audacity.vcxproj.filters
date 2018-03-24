@@ -57,9 +57,6 @@
     <Filter Include="src\effects\ladspa">
       <UniqueIdentifier>{ab8cc474-825f-462e-a5da-d2055f6235ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\effects\lv2">
-      <UniqueIdentifier>{cfbc5496-9828-4c04-8e02-35a5e81cf092}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\effects\nyquist">
       <UniqueIdentifier>{bcfcf79a-6a8d-4768-8ee1-cf503eaecbf9}</UniqueIdentifier>
     </Filter>
@@ -664,12 +661,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\ondemand\ODWaveTrackTaskQueue.cpp">
       <Filter>src\ondemand</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\lv2\LoadLV2.cpp">
-      <Filter>src\effects\lv2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\lv2\LV2Effect.cpp">
-      <Filter>src\effects\lv2</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\SseMathFuncs.cpp">
       <Filter>src</Filter>
@@ -1554,12 +1545,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\ondemand\ODWaveTrackTaskQueue.h">
       <Filter>src\ondemand</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\lv2\LoadLV2.h">
-      <Filter>src\effects\lv2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\lv2\LV2Effect.h">
-      <Filter>src\effects\lv2</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\SseMathFuncs.h">
       <Filter>src</Filter>
