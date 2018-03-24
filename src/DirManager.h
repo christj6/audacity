@@ -104,11 +104,6 @@ class PROFILE_DLL_API DirManager final : public XMLTagHandler {
    BlockFile *LoadBlockFile(const wxChar **attrs, sampleFormat format);
    void SaveBlockFile(BlockFile *f, int depth, FILE *fp);
 
-#if LEGACY_PROJECT_FILE_SUPPORT
-   BlockFile *LoadBlockFile(wxTextFile * in, sampleFormat format);
-   void SaveBlockFile(BlockFile * f, wxTextFile * out);
-#endif
-
    std::pair<bool, wxString> CopyToNewProjectDirectory(BlockFile *f);
 
    bool EnsureSafeFilename(const wxFileName &fName);

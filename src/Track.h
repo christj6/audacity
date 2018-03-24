@@ -750,12 +750,6 @@ class TrackList final : public wxEvtHandler, public ListOfTracks
    double GetMinOffset() const;
    int GetHeight() const;
 
-#if LEGACY_PROJECT_FILE_SUPPORT
-   // File I/O
-   bool Load(wxTextFile * in, DirManager * dirManager) override;
-   bool Save(wxTextFile * out, bool overwrite) override;
-#endif
-
 private:
    bool isNull(TrackNodePointer p) const
    { return (p.second == this && p.first == ListOfTracks::end())
