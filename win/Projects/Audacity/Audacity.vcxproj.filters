@@ -9,9 +9,6 @@
     <Filter Include="Resources">
       <UniqueIdentifier>{67e0ccd0-e2da-46a1-80b9-b27e85475080}</UniqueIdentifier>
     </Filter>
-    <Filter Include="plug-ins">
-      <UniqueIdentifier>{cfc19d3c-fac3-4724-b677-d446d9dd10a5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="nyquist">
       <UniqueIdentifier>{df132fc5-4e81-4e57-a754-f9d639179bca}</UniqueIdentifier>
     </Filter>
@@ -1982,86 +1979,6 @@
     <CustomBuild Include="..\..\..\nyquist\test.lsp">
       <Filter>nyquist</Filter>
     </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <copy Include="..\..\..\plug-ins\adjustable-fade.ny">
-      <Filter>plug-ins</Filter>
-    </copy>
-    <copy Include="..\..\..\plug-ins\beat.ny">
-      <Filter>plug-ins</Filter>
-    </copy>
-    <copy Include="..\..\..\plug-ins\clipfix.ny">
-      <Filter>plug-ins</Filter>
-    </copy>
-    <copy Include="..\..\..\plug-ins\delay.ny">
-      <Filter>plug-ins</Filter>
-    </copy>
-    <copy Include="..\..\..\plug-ins\equalabel.ny">
-      <Filter>plug-ins</Filter>
-    </copy>
-    <copy Include="..\..\..\plug-ins\highpass.ny">
-      <Filter>plug-ins</Filter>
-    </copy>
-    <copy Include="..\..\..\plug-ins\lowpass.ny">
-      <Filter>plug-ins</Filter>
-    </copy>
-    <copy Include="..\..\..\plug-ins\notch.ny">
-      <Filter>plug-ins</Filter>
-    </copy>
-    <copy Include="..\..\..\plug-ins\pluck.ny">
-      <Filter>plug-ins</Filter>
-    </copy>
-    <copy Include="..\..\..\plug-ins\rissetdrum.ny">
-      <Filter>plug-ins</Filter>
-    </copy>
-    <copy Include="..\..\..\plug-ins\sample-data-export.ny">
-      <Filter>plug-ins</Filter>
-    </copy>
-    <copy Include="..\..\..\plug-ins\sample-data-import.ny">
-      <Filter>plug-ins</Filter>
-    </copy>
-    <copy Include="..\..\..\plug-ins\SilenceMarker.ny">
-      <Filter>plug-ins</Filter>
-    </copy>
-    <copy Include="..\..\..\plug-ins\SoundFinder.ny">
-      <Filter>plug-ins</Filter>
-    </copy>
-    <copy Include="..\..\..\plug-ins\StudioFadeOut.ny">
-      <Filter>plug-ins</Filter>
-    </copy>
-    <copy Include="..\..\..\plug-ins\tremolo.ny">
-      <Filter>plug-ins</Filter>
-    </copy>
-    <copy Include="..\..\..\plug-ins\vocalremover.ny">
-      <Filter>plug-ins</Filter>
-    </copy>
-    <copy Include="..\..\..\plug-ins\vocoder.ny">
-      <Filter>plug-ins</Filter>
-    </copy>
-    <copy Include="..\..\..\plug-ins\crossfadetracks.ny">
-      <Filter>plug-ins</Filter>
-    </copy>
-    <copy Include="..\..\..\plug-ins\SpectralEditMulti.ny">
-      <Filter>plug-ins</Filter>
-    </copy>
-    <copy Include="..\..\..\plug-ins\SpectralEditParametricEQ.ny">
-      <Filter>plug-ins</Filter>
-    </copy>
-    <copy Include="..\..\..\plug-ins\SpectralEditShelves.ny">
-      <Filter>plug-ins</Filter>
-    </copy>
-    <copy Include="..\..\..\plug-ins\crossfadeclips.ny">
-      <Filter>plug-ins</Filter>
-    </copy>
-    <copy Include="..\..\..\plug-ins\limiter.ny">
-      <Filter>plug-ins</Filter>
-    </copy>
-    <copy Include="..\..\..\plug-ins\vocalrediso.ny">
-      <Filter>plug-ins</Filter>
-    </copy>
-    <copy Include="..\..\..\plug-ins\rhythmtrack.ny">
-      <Filter>plug-ins</Filter>
-    </copy>
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="..\..\Audacity.exe.manifest">
