@@ -90,7 +90,6 @@ CommandManager.  It holds the callback for one command.
 #include "../AudacityException.h"
 #include "../Prefs.h"
 #include "../Project.h"
-#include "../Lyrics.h"
 
 #include "Keyboard.h"
 #include "../PluginManager.h"
@@ -1470,9 +1469,9 @@ bool CommandManager::FilterKeyEvent(AudacityProject *project, const wxKeyEvent &
       wxWindow * pWnd = wxWindow::FindFocus();
       wxWindow * pTrackPanel = (wxWindow*)GetActiveProject()->GetTrackPanel();
       bool bIntercept = pWnd !=  pTrackPanel;
-      // Intercept keys from windows that are NOT the Lyrics panel
+      // Intercept keys from windows
       if( bIntercept ){
-         bIntercept = pWnd && ( dynamic_cast<LyricsPanel*>(pWnd) == NULL );
+		  bIntercept = pWnd;
       }
       //wxLogDebug("Focus: %p TrackPanel: %p", pWnd, pTrackPanel );
       // We allow the keystrokes below to be handled by wxWidgets controls IF we are 

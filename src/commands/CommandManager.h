@@ -283,7 +283,7 @@ class AUDACITY_DLL_API CommandManager final : public XMLTagHandler
    //
 
    // "permit" allows filtering even if the active window isn't a child of the project.
-   // Lyrics and MixerTrackCluster classes use it.
+   // MixerTrackCluster classes use it.
    bool FilterKeyEvent(AudacityProject *project, const wxKeyEvent & evt, bool permit = false);
    bool HandleMenuID(int id, CommandFlag flags, CommandMask mask);
    bool HandleTextualCommand(const wxString & Str, const CommandContext & context, CommandFlag flags, CommandMask mask);

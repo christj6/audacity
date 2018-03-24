@@ -188,12 +188,6 @@
     <ClCompile Include="..\..\..\src\Legacy.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\Lyrics.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\LyricsWindow.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\Matrix.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -1016,12 +1010,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\Legacy.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\Lyrics.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\LyricsWindow.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\MacroMagic.h">

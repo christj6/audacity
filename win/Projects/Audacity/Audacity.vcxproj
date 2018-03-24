@@ -177,8 +177,6 @@
     <ClCompile Include="..\..\..\src\LangChoice.cpp" />
     <ClCompile Include="..\..\..\src\Languages.cpp" />
     <ClCompile Include="..\..\..\src\Legacy.cpp" />
-    <ClCompile Include="..\..\..\src\Lyrics.cpp" />
-    <ClCompile Include="..\..\..\src\LyricsWindow.cpp" />
     <ClCompile Include="..\..\..\src\Matrix.cpp" />
     <ClCompile Include="..\..\..\src\Menus.cpp" />
     <ClCompile Include="..\..\..\src\Mix.cpp" />
@@ -544,8 +542,6 @@
     <ClInclude Include="..\..\..\src\LangChoice.h" />
     <ClInclude Include="..\..\..\src\Languages.h" />
     <ClInclude Include="..\..\..\src\Legacy.h" />
-    <ClInclude Include="..\..\..\src\Lyrics.h" />
-    <ClInclude Include="..\..\..\src\LyricsWindow.h" />
     <ClInclude Include="..\..\..\src\MacroMagic.h" />
     <ClInclude Include="..\..\..\src\Matrix.h" />
     <ClInclude Include="..\..\..\src\Menus.h" />

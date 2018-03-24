@@ -86,7 +86,6 @@ class TranscriptionToolBar;
 class AdornedRulerPanel;
 class HistoryWindow;
 class MacrosWindow;
-class LyricsWindow;
 class MixerBoard;
 class MixerBoardFrame;
 
@@ -510,7 +509,6 @@ public:
    MeterPanel *GetCaptureMeter();
    void SetCaptureMeter(MeterPanel *capture);
 
-   LyricsWindow* GetLyricsWindow() { return mLyricsWindow; }
    MixerBoard* GetMixerBoard() { return mMixerBoard; }
 
    wxStatusBar* GetStatusBar() { return mStatusBar; }
@@ -588,7 +586,6 @@ public:
  private:
    void PopState(const UndoState &state);
 
-   void UpdateLyrics();
    void UpdateMixerBoard();
 
    void GetRegionsByLabel( Regions &regions );
@@ -681,7 +678,6 @@ private:
 
    MacrosWindow *mMacrosWindow{};
    HistoryWindow *mHistoryWindow{};
-   LyricsWindow* mLyricsWindow{};
    MixerBoardFrame* mMixerBoardFrame{};
    MixerBoard* mMixerBoard{};
 

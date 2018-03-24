@@ -72,7 +72,6 @@ simplifies construction of menu items.
 #include "prefs/PlaybackPrefs.h"
 #include "ShuttleGui.h"
 #include "HistoryWindow.h"
-#include "LyricsWindow.h"
 #include "MixerBoard.h"
 #include "Internat.h"
 #include "FileFormats.h"
@@ -762,7 +761,6 @@ void AudacityProject::CreateMenusAndCommands()
          AudioIONotBusyFlag,
          AudioIONotBusyFlag);
 
-      c->AddItem(wxT("Karaoke"), XXO("&Karaoke..."), FN(OnKaraoke), LabelTracksExistFlag, LabelTracksExistFlag);
       c->AddItem(wxT("MixerBoard"), XXO("&Mixer Board..."), FN(OnMixerBoard), PlayableTracksExistFlag, PlayableTracksExistFlag);
 
       c->AddSeparator();
@@ -2124,11 +2122,7 @@ CommandFlag AudacityProject::GetFocusedFrame()
       if (w == mTrackPanel) {
          return TrackPanelHasFocus;
       }
-      // LIE if LyricsPanel window has focus.
-      // we want to act as if TrackPanel has focus.
-      if (w== mLyricsWindow) {
-         return TrackPanelHasFocus;
-      }
+
       if (w == mToolManager->GetBotDock()) {
          return BotDockHasFocus;
       }
@@ -6951,14 +6945,6 @@ void AudacityProject::OnHistory(const CommandContext &WXUNUSED(context) )
    mHistoryWindow->Show();
    mHistoryWindow->Raise();
    mHistoryWindow->UpdateDisplay();
-}
-void AudacityProject::OnKaraoke(const CommandContext &WXUNUSED(context) )
-{
-   if (!mLyricsWindow)
-      mLyricsWindow = safenew LyricsWindow(this);
-   mLyricsWindow->Show();
-   UpdateLyrics();
-   mLyricsWindow->Raise();
 }
 
 void AudacityProject::OnMixerBoard(const CommandContext &WXUNUSED(context) )

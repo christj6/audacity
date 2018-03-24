@@ -363,7 +363,6 @@ void OnShowExtraMenus(const CommandContext &context );
 
 void OnHistory(const CommandContext &context );
 
-void OnKaraoke(const CommandContext &context );
 void OnMixerBoard(const CommandContext &context );
 
 void OnPlotSpectrum(const CommandContext &context );
