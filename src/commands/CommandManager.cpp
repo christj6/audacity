@@ -94,7 +94,6 @@ CommandManager.  It holds the callback for one command.
 
 #include "Keyboard.h"
 #include "../PluginManager.h"
-#include "../effects/EffectManager.h"
 #include "../widgets/LinkingHtmlWindow.h"
 #include "../widgets/ErrorDialog.h"
 #include "../widgets/HelpSystem.h"
@@ -1630,19 +1629,7 @@ bool CommandManager::HandleTextualCommand(const wxString & Str, const CommandCon
       return false;
    }
 
-   PluginManager & pm = PluginManager::Get();
-   EffectManager & em = EffectManager::Get();
-   const PluginDescriptor *plug = pm.GetFirstPlugin(PluginTypeEffect);
-   while (plug)
-   {
-      if (em.GetCommandIdentifier(plug->GetID()).IsSameAs(Str, false))
-      {
-         return proj->DoEffect(plug->GetID(), context, AudacityProject::OnEffectFlags::kConfigured);
-      }
-      plug = pm.GetNextPlugin(PluginTypeEffect);
-   }
-
-   return false;
+   return false; // ???
 }
 
 void CommandManager::GetCategories(wxArrayString &cats)
@@ -1696,11 +1683,6 @@ void CommandManager::GetAllCommandLabels(wxArrayString &names,
    vHasDialog.clear();
    for(const auto &entry : mCommandList) {
       // This is fetching commands from the menus, for use as batch commands.
-      // Until we have properly merged EffectManager and CommandManager
-      // we explicitly exclude effects, as they are already handled by the 
-      // effects Manager.
-      if ( entry->isEffect )
-         continue;
       if (!entry->multi)
          names.Add(entry->longLabel), vHasDialog.push_back(entry->hasDialog);
       else if( includeMultis )

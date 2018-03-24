@@ -19,7 +19,6 @@ modelled on BuiltinEffectsModule
 #include "LoadCommands.h"
 #include "../MemoryX.h"
 
-#include "../effects/EffectManager.h"
 #include "Demo.h"
 #include "../Experimental.h"
 #include "../commands/MessageCommand.h"
