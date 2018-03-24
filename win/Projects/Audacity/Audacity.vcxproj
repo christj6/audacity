@@ -290,7 +290,6 @@
     <ClCompile Include="..\..\..\src\WrappedType.cpp" />
     <ClCompile Include="..\..\..\src\effects\Effect.cpp" />
     <ClCompile Include="..\..\..\src\effects\EffectManager.cpp" />
-    <ClCompile Include="..\..\..\src\effects\Generator.cpp" />
     <ClCompile Include="..\..\..\src\effects\LoadEffects.cpp" />
     <ClCompile Include="..\..\..\src\effects\TimeWarper.cpp" />
     <ClCompile Include="..\..\..\src\export\Export.cpp" />
@@ -593,7 +592,6 @@
     <ClInclude Include="..\..\..\src\WrappedType.h" />
     <ClInclude Include="..\..\..\src\effects\Effect.h" />
     <ClInclude Include="..\..\..\src\effects\EffectManager.h" />
-    <ClInclude Include="..\..\..\src\effects\Generator.h" />
     <ClInclude Include="..\..\..\src\effects\LoadEffects.h" />
     <ClInclude Include="..\..\..\src\effects\TimeWarper.h" />
     <ClInclude Include="..\..\..\src\export\Export.h" />
