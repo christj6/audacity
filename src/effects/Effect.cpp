@@ -52,7 +52,6 @@ greater use in future.
 #include "../widgets/ProgressDialog.h"
 #include "../ondemand/ODManager.h"
 #include "TimeWarper.h"
-#include "nyquist/Nyquist.h"
 #include "../widgets/HelpSystem.h"
 #include "../widgets/LinkingHtmlWindow.h"
 #include "../widgets/ErrorDialog.h"
