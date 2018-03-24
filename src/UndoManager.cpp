@@ -30,7 +30,6 @@ UndoManager
 #include "Project.h"
 #include "Sequence.h"
 #include "WaveTrack.h"          // temp
-#include "NoteTrack.h"  // for Sonify* function declarations
 #include "Diags.h"
 #include "Tags.h"
 
@@ -230,7 +229,6 @@ void UndoManager::ModifyState(const TrackList * l,
       return;
    }
 
-   SonifyBeginModifyState();
    // Delete current -- not necessary, but let's reclaim space early
    stack[current]->state.tracks.reset();
 
@@ -248,7 +246,6 @@ void UndoManager::ModifyState(const TrackList * l,
    stack[current]->state.tags = tags;
 
    stack[current]->state.selectedRegion = selectedRegion;
-   SonifyEndModifyState();
 }
 
 void UndoManager::PushState(const TrackList * l,

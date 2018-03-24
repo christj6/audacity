@@ -16,34 +16,10 @@
 #include "Audacity.h"
 #include "Experimental.h"
 #include "Track.h"
-#include "effects/TimeWarper.h"
 
 #if defined(USE_MIDI)
 
 #include "../lib-src/header-substitutes/allegro.h"
-
-// define this switch to play MIDI during redisplay to sonify run times
-// Note that if SONIFY is defined, the default MIDI device will be opened
-// and may block normal MIDI playback.
-//#define SONIFY 1
-
-#ifdef SONIFY
-
-#define SONFNS(name) \
-   void Begin ## name(); \
-   void End ## name();
-
-SONFNS(NoteBackground)
-SONFNS(NoteForeground)
-SONFNS(Measures)
-SONFNS(Serialize)
-SONFNS(Unserialize)
-SONFNS(ModifyState)
-SONFNS(AutoSave)
-
-#undef SONFNS
-
-#endif
 
 class wxDC;
 class wxRect;
@@ -87,9 +63,6 @@ class AUDACITY_DLL_API NoteTrack final
    void DoSetHeight(int h) override;
 
    Alg_seq &GetSeq() const;
-
-   void WarpAndTransposeNotes(double t0, double t1,
-                              const TimeWarper &warper, double semitones);
 
    static void DrawLabelControls
       ( const NoteTrack *pTrack, wxDC & dc, const wxRect &rect,
@@ -274,26 +247,6 @@ protected:
 };
 
 #endif // USE_MIDI
-
-#ifndef SONIFY
-// no-ops:
-#define SonifyBeginSonification()
-#define SonifyEndSonification()
-#define SonifyBeginNoteBackground()
-#define SonifyEndNoteBackground()
-#define SonifyBeginNoteForeground()
-#define SonifyEndNoteForeground()
-#define SonifyBeginMeasures()
-#define SonifyEndMeasures()
-#define SonifyBeginSerialize()
-#define SonifyEndSerialize()
-#define SonifyBeginUnserialize()
-#define SonifyEndUnserialize()
-#define SonifyBeginAutoSave()
-#define SonifyEndAutoSave()
-#define SonifyBeginModifyState()
-#define SonifyEndModifyState()
-#endif
 
 
 #endif

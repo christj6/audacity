@@ -5257,8 +5257,6 @@ void AudacityProject::GetPlayRegion(double* playRegionStart,
 
 void AudacityProject::AutoSave()
 {
-   //    SonifyBeginAutoSave(); // part of RBD's r10680 stuff now backed out
-
    // To minimize the possibility of race conditions, we first write to a
    // file with the extension ".tmp", then rename the file to .autosave
    wxString projName;
@@ -5306,9 +5304,6 @@ void AudacityProject::AutoSave()
    }
 
    mAutoSaveFileName += fn + wxT(".autosave");
-   // no-op cruft that's not #ifdefed for NoteTrack
-   // See above for further comments.
-   //   SonifyEndAutoSave();
 }
 
 void AudacityProject::DeleteCurrentAutoSaveFile()

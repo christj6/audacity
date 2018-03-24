@@ -1132,11 +1132,7 @@ void SelectHandle::StartSelection( AudacityProject *pProject )
 
    viewInfo.selectedRegion.setTimes(mSelStart, mSelStart);
 
-   // PRL:  commented out the Sonify stuff with the TrackPanel refactor.
-   // It was no-op anyway.
-   //SonifyBeginModifyState();
    pProject->ModifyState(false);
-   //SonifyEndModifyState();
 }
 
 /// Extend or contract the existing selection

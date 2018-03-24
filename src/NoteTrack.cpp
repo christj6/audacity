@@ -32,75 +32,11 @@
 #include "DirManager.h"
 #include "Internat.h"
 #include "Prefs.h"
-#include "effects/TimeWarper.h"
 
 #include "InconsistencyException.h"
 
 #include "TrackPanel.h" // For TrackInfo
 #include "AllThemeResources.h"
-
-#ifdef SONIFY
-#include "../lib-src/portmidi/pm_common/portmidi.h"
-
-#define SON_PROGRAM 0
-#define SON_AutoSave 67
-#define SON_ModifyState 60
-#define SON_NoteBackground 72
-#define SON_NoteForeground 74
-#define SON_Measures 76 /* "bar line" */
-#define SON_Serialize 77
-#define SON_Unserialize 79
-#define SON_VEL 100
-
-
-PmStream *sonMidiStream;
-bool sonificationStarted = false;
-
-void SonifyBeginSonification()
-{
-   PmError err = Pm_OpenOutput(&sonMidiStream, Pm_GetDefaultOutputDeviceID(),
-                               NULL, 0, NULL, NULL, 0);
-   if (err) sonMidiStream = NULL;
-   if (sonMidiStream)
-      Pm_WriteShort(sonMidiStream, 0, Pm_Message(0xC0, SON_PROGRAM, 0));
-   sonificationStarted = true;
-}
-
-
-void SonifyEndSonification()
-{
-   if (sonMidiStream) Pm_Close(sonMidiStream);
-   sonificationStarted = false;
-}
-
-
-
-
-void SonifyNoteOnOff(int p, int v)
-{
-   if (!sonificationStarted)
-      SonifyBeginSonification();
-   if (sonMidiStream)
-      Pm_WriteShort(sonMidiStream, 0, Pm_Message(0x90, p, v));
-}
-
-#define SONFNS(name) \
-   void SonifyBegin ## name() { SonifyNoteOnOff(SON_ ## name, SON_VEL); } \
-   void SonifyEnd ## name() { SonifyNoteOnOff(SON_ ## name, 0); }
-
-SONFNS(NoteBackground)
-SONFNS(NoteForeground)
-SONFNS(Measures)
-SONFNS(Serialize)
-SONFNS(Unserialize)
-SONFNS(ModifyState)
-SONFNS(AutoSave)
-
-#undef SONFNS
-
-#endif
-
-
 
 NoteTrack::Holder TrackFactory::NewNoteTrack()
 {
@@ -161,14 +97,12 @@ Track::Holder NoteTrack::Duplicate() const
    // pushed on the Undo stack.  Then we want to un-serialize it (or a further
    // copy) only on demand after an Undo.
    if (mSeq) {
-      SonifyBeginSerialize();
       wxASSERT(!mSerializationBuffer);
       // serialize from this to duplicate's mSerializationBuffer
       void *buffer;
       mSeq->serialize(&buffer,
                       &duplicate->mSerializationLength);
       duplicate->mSerializationBuffer.reset( (char*)buffer );
-      SonifyEndSerialize();
    }
    else if (mSerializationBuffer) {
       // Copy already serialized data.
@@ -223,43 +157,6 @@ void NoteTrack::DoSetHeight(int h)
            std::max(1, oldHeight - 2 * oldMargin),
       false
    );
-}
-
-
-void NoteTrack::WarpAndTransposeNotes(double t0, double t1,
-                                      const TimeWarper &warper,
-                                      double semitones)
-{
-   double offset = this->GetOffset(); // track is shifted this amount
-   auto &seq = GetSeq();
-   seq.convert_to_seconds(); // make sure time units are right
-   t1 -= offset; // adjust time range to compensate for track offset
-   t0 -= offset;
-   if (t1 > seq.get_dur()) { // make sure t0, t1 are within sequence
-      t1 = seq.get_dur();
-      if (t0 >= t1) return;
-   }
-   Alg_iterator iter(mSeq.get(), false);
-   iter.begin();
-   Alg_event_ptr event;
-   while (0 != (event = iter.next()) && event->time < t1) {
-      if (event->is_note() && event->time >= t0) {
-         event->set_pitch(event->get_pitch() + semitones);
-      }
-   }
-   iter.end();
-   // now, use warper to warp the tempo map
-   seq.convert_to_beats(); // beats remain the same
-   Alg_time_map_ptr map = seq.get_time_map();
-   map->insert_beat(t0, map->time_to_beat(t0));
-   map->insert_beat(t1, map->time_to_beat(t1));
-   int i, len = map->length();
-   for (i = 0; i < len; i++) {
-      Alg_beat &beat = map->beats[i];
-      beat.time = warper.Warp(beat.time + offset) - offset;
-   }
-   // about to redisplay, so might as well convert back to time now
-   seq.convert_to_seconds();
 }
 
 // Draws the midi channel toggle buttons within the given rect.

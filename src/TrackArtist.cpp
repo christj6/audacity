@@ -2896,7 +2896,6 @@ void TrackArtist::DrawNoteTrack(const NoteTrack *track,
                                 const ZoomInfo &zoomInfo,
                                 bool muted)
 {
-   SonifyBeginNoteBackground();
    double sel0 = selectedRegion.t0();
    double sel1 = selectedRegion.t1();
 
@@ -2970,8 +2969,6 @@ void TrackArtist::DrawNoteTrack(const NoteTrack *track,
                       selectedWhiteKeyBrush, selectedWhiteKeyPen,
                       selectedBlackKeyBrush, selectedBlackKeyPen,
                       selectedBarLinePen);
-   SonifyEndNoteBackground();
-   SonifyBeginNoteForeground();
    int marg = track->GetNoteMargin(rect.height);
 
    // NOTE: it would be better to put this in some global initialization
@@ -3245,7 +3242,6 @@ void TrackArtist::DrawNoteTrack(const NoteTrack *track,
    }
 
    dc.DestroyClippingRegion();
-   SonifyEndNoteForeground();
 }
 #endif // USE_MIDI
 
