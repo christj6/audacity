@@ -79,11 +79,6 @@ void EffectsPrefs::PopulateOrExchange(ShuttleGui & S)
                     wxT("/LV2/Enable"),
                     true);
 #endif
-#if USE_NYQUIST
-      S.TieCheckBox(wxT("N&yquist"),
-                    wxT("/Nyquist/Enable"),
-                    true);
-#endif
 
 #if USE_VAMP
       S.TieCheckBox(wxT("&Vamp"),

@@ -23,7 +23,6 @@
 //#define USE_GSTREAMER 1
 #define USE_LIBTWOLAME 1
 #define USE_LIBVORBIS 1
-#define USE_NYQUIST 1
 #define USE_PORTMIXER 1
 #define USE_SBSMS 1
 #define USE_SOUNDTOUCH 1

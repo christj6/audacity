@@ -549,14 +549,6 @@ void AboutDialog::PopulateInformationPage( ShuttleGui & S )
    AddBuildinfoRow(&informationStr, wxT("Theme"), _("Dark Theme Extras"), disabled);
 #endif
 
-   # if USE_NYQUIST
-   AddBuildinfoRow(&informationStr, wxT("Nyquist"), _("Plug-in support"),
-         enabled);
-   # else
-   AddBuildinfoRow(&informationStr, wxT("Nyquist"), _("Plug-in support"),
-         disabled);
-   # endif
-
    # if USE_LADSPA
    AddBuildinfoRow(&informationStr, wxT("LADSPA"), _("Plug-in support"),
          enabled);
