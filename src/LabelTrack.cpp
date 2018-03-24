@@ -250,21 +250,6 @@ double LabelTrack::AdjustTimeStampOnScale(double t, double b, double e, double c
    }
 }
 
-// Move the labels in the track according to the given TimeWarper.
-// (If necessary this could be optimised by ignoring labels that occur before a
-// specified time, as in most cases they don't need to move.)
-void LabelTrack::WarpLabels(const TimeWarper &warper) {
-   for (auto &labelStruct: mLabels) {
-      labelStruct.selectedRegion.setTimes(
-         warper.Warp(labelStruct.getT0()),
-         warper.Warp(labelStruct.getT1()));
-   }
-
-   // This should not be needed, assuming the warper is nondecreasing, but
-   // let's not assume too much.
-   SortLabels();
-}
-
 void LabelTrack::ResetFlags()
 {
    mInitialCursorPos = 1;
