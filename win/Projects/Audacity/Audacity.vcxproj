@@ -155,7 +155,8 @@
     <ClCompile Include="..\..\..\src\DirManager.cpp" />
     <ClCompile Include="..\..\..\src\Dither.cpp" />
     <ClCompile Include="..\..\..\src\effects\EffectRack.cpp" />
-    <ClCompile Include="..\..\..\src\effects\VST\VSTControlMSW.cpp" />
+    <ClCompile Include="..\..\..\src\effects\nyquist\LoadNyquist.cpp" />
+    <ClCompile Include="..\..\..\src\effects\nyquist\Nyquist.cpp" />
     <ClCompile Include="..\..\..\src\Envelope.cpp" />
     <ClCompile Include="..\..\..\src\FFmpeg.cpp" />
     <ClCompile Include="..\..\..\src\FFT.cpp" />
@@ -294,7 +295,6 @@
     <ClCompile Include="..\..\..\src\effects\Generator.cpp" />
     <ClCompile Include="..\..\..\src\effects\LoadEffects.cpp" />
     <ClCompile Include="..\..\..\src\effects\TimeWarper.cpp" />
-    <ClCompile Include="..\..\..\src\effects\VST\VSTEffect.cpp" />
     <ClCompile Include="..\..\..\src\export\Export.cpp" />
     <ClCompile Include="..\..\..\src\export\ExportCL.cpp" />
     <ClCompile Include="..\..\..\src\export\ExportFFmpeg.cpp" />
@@ -358,8 +358,6 @@
     <ClCompile Include="..\..\..\src\xml\XMLFileReader.cpp" />
     <ClCompile Include="..\..\..\src\xml\XMLTagHandler.cpp" />
     <ClCompile Include="..\..\..\src\xml\XMLWriter.cpp" />
-    <ClCompile Include="..\..\..\src\effects\nyquist\LoadNyquist.cpp" />
-    <ClCompile Include="..\..\..\src\effects\nyquist\Nyquist.cpp" />
     <ClCompile Include="..\..\..\src\commands\AppCommandEvent.cpp" />
     <ClCompile Include="..\..\..\src\commands\BatchEvalCommand.cpp" />
     <ClCompile Include="..\..\..\src\commands\Command.cpp" />
@@ -388,7 +386,6 @@
     <ClCompile Include="..\..\..\src\blockfile\PCMAliasBlockFile.cpp" />
     <ClCompile Include="..\..\..\src\blockfile\SilentBlockFile.cpp" />
     <ClCompile Include="..\..\..\src\blockfile\SimpleBlockFile.cpp" />
-    <ClCompile Include="..\..\..\src\effects\ladspa\LadspaEffect.cpp" />
     <ClCompile Include="..\..\..\src\toolbars\ControlToolBar.cpp" />
     <ClCompile Include="..\..\..\src\toolbars\DeviceToolBar.cpp" />
     <ClCompile Include="..\..\..\src\toolbars\EditToolBar.cpp" />
@@ -400,8 +397,6 @@
     <ClCompile Include="..\..\..\src\toolbars\ToolManager.cpp" />
     <ClCompile Include="..\..\..\src\toolbars\ToolsToolBar.cpp" />
     <ClCompile Include="..\..\..\src\toolbars\TranscriptionToolBar.cpp" />
-    <ClCompile Include="..\..\..\src\effects\vamp\LoadVamp.cpp" />
-    <ClCompile Include="..\..\..\src\effects\vamp\VampEffect.cpp" />
     <ClCompile Include="..\..\..\src\ondemand\ODComputeSummaryTask.cpp" />
     <ClCompile Include="..\..\..\src\ondemand\ODDecodeFFmpegTask.cpp" />
     <ClCompile Include="..\..\..\src\ondemand\ODDecodeFlacTask.cpp" />
@@ -452,7 +447,8 @@
     <ClInclude Include="..\..\..\src\DeviceChange.h" />
     <ClInclude Include="..\..\..\src\Diags.h" />
     <ClInclude Include="..\..\..\src\effects\EffectRack.h" />
-    <ClInclude Include="..\..\..\src\effects\VST\VSTControlMSW.h" />
+    <ClInclude Include="..\..\..\src\effects\nyquist\LoadNyquist.h" />
+    <ClInclude Include="..\..\..\src\effects\nyquist\Nyquist.h" />
     <ClInclude Include="..\..\..\src\FileException.h" />
     <ClInclude Include="..\..\..\src\HitTestResult.h" />
     <ClInclude Include="..\..\..\src\import\FormatClassifier.h" />
@@ -604,7 +600,6 @@
     <ClInclude Include="..\..\..\src\effects\Generator.h" />
     <ClInclude Include="..\..\..\src\effects\LoadEffects.h" />
     <ClInclude Include="..\..\..\src\effects\TimeWarper.h" />
-    <ClInclude Include="..\..\..\src\effects\VST\VSTEffect.h" />
     <ClInclude Include="..\..\..\src\export\Export.h" />
     <ClInclude Include="..\..\..\src\export\ExportCL.h" />
     <ClInclude Include="..\..\..\src\export\ExportFFmpeg.h" />
@@ -670,8 +665,6 @@
     <ClInclude Include="..\..\..\src\xml\XMLFileReader.h" />
     <ClInclude Include="..\..\..\src\xml\XMLTagHandler.h" />
     <ClInclude Include="..\..\..\src\xml\XMLWriter.h" />
-    <ClInclude Include="..\..\..\src\effects\nyquist\LoadNyquist.h" />
-    <ClInclude Include="..\..\..\src\effects\nyquist\Nyquist.h" />
     <ClInclude Include="..\..\..\src\commands\AppCommandEvent.h" />
     <ClInclude Include="..\..\..\src\commands\BatchEvalCommand.h" />
     <ClInclude Include="..\..\..\src\commands\Command.h" />
@@ -703,8 +696,6 @@
     <ClInclude Include="..\..\..\src\blockfile\PCMAliasBlockFile.h" />
     <ClInclude Include="..\..\..\src\blockfile\SilentBlockFile.h" />
     <ClInclude Include="..\..\..\src\blockfile\SimpleBlockFile.h" />
-    <ClInclude Include="..\..\..\src\effects\ladspa\ladspa.h" />
-    <ClInclude Include="..\..\..\src\effects\ladspa\LadspaEffect.h" />
     <ClInclude Include="..\..\..\src\toolbars\ControlToolBar.h" />
     <ClInclude Include="..\..\..\src\toolbars\DeviceToolBar.h" />
     <ClInclude Include="..\..\..\src\toolbars\EditToolBar.h" />
@@ -716,8 +707,6 @@
     <ClInclude Include="..\..\..\src\toolbars\ToolManager.h" />
     <ClInclude Include="..\..\..\src\toolbars\ToolsToolBar.h" />
     <ClInclude Include="..\..\..\src\toolbars\TranscriptionToolBar.h" />
-    <ClInclude Include="..\..\..\src\effects\vamp\LoadVamp.h" />
-    <ClInclude Include="..\..\..\src\effects\vamp\VampEffect.h" />
     <ClInclude Include="..\..\..\src\ondemand\ODComputeSummaryTask.h" />
     <ClInclude Include="..\..\..\src\ondemand\ODDecodeFFmpegTask.h" />
     <ClInclude Include="..\..\..\src\ondemand\ODDecodeFlacTask.h" />

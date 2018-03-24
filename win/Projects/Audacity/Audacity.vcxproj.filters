@@ -54,18 +54,6 @@
     <Filter Include="src\xml">
       <UniqueIdentifier>{b2dffd13-d86c-4502-833b-3fa052e447a5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\effects\ladspa">
-      <UniqueIdentifier>{ab8cc474-825f-462e-a5da-d2055f6235ed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\effects\nyquist">
-      <UniqueIdentifier>{bcfcf79a-6a8d-4768-8ee1-cf503eaecbf9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\effects\vamp">
-      <UniqueIdentifier>{1cd73294-06e2-42be-b7c0-2d620f621ec2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\effects\VST">
-      <UniqueIdentifier>{99325e00-3930-4e03-a599-999f275db78e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\tracks">
       <UniqueIdentifier>{7b403d1f-de11-43d5-becc-d9d118d06f18}</UniqueIdentifier>
     </Filter>
@@ -101,6 +89,9 @@
     </Filter>
     <Filter Include="src\tracks\playabletrack\ui">
       <UniqueIdentifier>{1af54030-3637-42e2-8339-b48bf05b8564}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\effects\nyquist">
+      <UniqueIdentifier>{9513f4ca-462e-49ce-8506-806068331ed7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -341,9 +332,6 @@
     <ClCompile Include="..\..\..\src\effects\TimeWarper.cpp">
       <Filter>src\effects</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\VST\VSTEffect.cpp">
-      <Filter>src\effects\VST</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\export\Export.cpp">
       <Filter>src\export</Filter>
     </ClCompile>
@@ -533,12 +521,6 @@
     <ClCompile Include="..\..\..\src\xml\XMLWriter.cpp">
       <Filter>src\xml</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\nyquist\LoadNyquist.cpp">
-      <Filter>src\effects\nyquist</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\nyquist\Nyquist.cpp">
-      <Filter>src\effects\nyquist</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\commands\AppCommandEvent.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
@@ -596,9 +578,6 @@
     <ClCompile Include="..\..\..\src\blockfile\SimpleBlockFile.cpp">
       <Filter>src\blockfile</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\ladspa\LadspaEffect.cpp">
-      <Filter>src\effects\ladspa</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\toolbars\ControlToolBar.cpp">
       <Filter>src\toolbars</Filter>
     </ClCompile>
@@ -631,12 +610,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\toolbars\TranscriptionToolBar.cpp">
       <Filter>src\toolbars</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\vamp\LoadVamp.cpp">
-      <Filter>src\effects\vamp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\vamp\VampEffect.cpp">
-      <Filter>src\effects\vamp</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\ondemand\ODComputeSummaryTask.cpp">
       <Filter>src\ondemand</Filter>
@@ -712,9 +685,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\prefs\WaveformSettings.cpp">
       <Filter>src\prefs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\VST\VSTControlMSW.cpp">
-      <Filter>src\effects\VST</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\RealFFTf48x.cpp">
       <Filter>src</Filter>
@@ -949,6 +919,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\commands\DragCommand.cpp">
       <Filter>src\commands</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\effects\nyquist\LoadNyquist.cpp">
+      <Filter>src\effects\nyquist</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\effects\nyquist\Nyquist.cpp">
+      <Filter>src\effects\nyquist</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1207,9 +1183,6 @@
     <ClInclude Include="..\..\..\src\effects\TimeWarper.h">
       <Filter>src\effects</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\VST\VSTEffect.h">
-      <Filter>src\effects\VST</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\export\Export.h">
       <Filter>src\export</Filter>
     </ClInclude>
@@ -1405,12 +1378,6 @@
     <ClInclude Include="..\..\..\src\xml\XMLWriter.h">
       <Filter>src\xml</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\nyquist\LoadNyquist.h">
-      <Filter>src\effects\nyquist</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\nyquist\Nyquist.h">
-      <Filter>src\effects\nyquist</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\commands\AppCommandEvent.h">
       <Filter>src\commands</Filter>
     </ClInclude>
@@ -1477,12 +1444,6 @@
     <ClInclude Include="..\..\..\src\blockfile\SimpleBlockFile.h">
       <Filter>src\blockfile</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\ladspa\ladspa.h">
-      <Filter>src\effects\ladspa</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\ladspa\LadspaEffect.h">
-      <Filter>src\effects\ladspa</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\toolbars\ControlToolBar.h">
       <Filter>src\toolbars</Filter>
     </ClInclude>
@@ -1515,12 +1476,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\toolbars\TranscriptionToolBar.h">
       <Filter>src\toolbars</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\vamp\LoadVamp.h">
-      <Filter>src\effects\vamp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\vamp\VampEffect.h">
-      <Filter>src\effects\vamp</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\ondemand\ODComputeSummaryTask.h">
       <Filter>src\ondemand</Filter>
@@ -1638,9 +1593,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\prefs\GUISettings.h">
       <Filter>src\prefs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\VST\VSTControlMSW.h">
-      <Filter>src\effects\VST</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\TranslatableStringArray.h">
       <Filter>src</Filter>
@@ -1896,6 +1848,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\commands\DragCommand.h">
       <Filter>src\commands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\effects\nyquist\LoadNyquist.h">
+      <Filter>src\effects\nyquist</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\effects\nyquist\Nyquist.h">
+      <Filter>src\effects\nyquist</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
