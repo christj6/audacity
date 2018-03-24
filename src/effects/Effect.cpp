@@ -2512,7 +2512,6 @@ void Effect::Preview(bool dryOnly)
    wxWindow *FocusDialog = wxWindow::FindFocus();
 
    double previewDuration;
-   bool isNyquist = false;
    bool isGenerator = GetType() == EffectTypeGenerate;
 
    // Mix a few seconds of audio from all of the tracks
@@ -2521,16 +2520,11 @@ void Effect::Preview(bool dryOnly)
 
    const double rate = mProjectRate;
 
-   if (isNyquist && isGenerator) {
-      previewDuration = CalcPreviewInputLength(previewLen);
-   }
-   else {
-      previewDuration = wxMin(mDuration, CalcPreviewInputLength(previewLen));
-   }
+   previewDuration = wxMin(mDuration, CalcPreviewInputLength(previewLen));
 
    double t1 = mT0 + previewDuration;
 
-   if ((t1 > mT1) && !(isNyquist && isGenerator)) {
+   if (t1 > mT1) {
       t1 = mT1;
    }
 
