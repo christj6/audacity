@@ -74,16 +74,6 @@ wxDECLARE_EXPORTED_EVENT(AUDACITY_DLL_API,
 wxDECLARE_EXPORTED_EVENT(AUDACITY_DLL_API,
                          EVT_AUDIOIO_MONITOR, wxCommandEvent);
 
-// PRL:
-// If we always run a portaudio output stream (even just to produce silence)
-// whenever we play Midi, then we might use just one thread for both.
-// I thought this would improve MIDI synch problems on Linux/ALSA, but RBD
-// convinced me it was neither a necessary nor sufficient fix.  Perhaps too the
-// MIDI thread might block in some error situations but we should then not
-// also block the audio thread.
-// So leave the separate thread ENABLED.
-#define USE_MIDI_THREAD
-
 struct ScrubbingOptions;
 
 // To avoid growing the argument list of StartStream, add fields here

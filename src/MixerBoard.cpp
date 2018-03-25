@@ -25,10 +25,6 @@
 #include "AllThemeResources.h"
 #include "AudioIO.h"
 
-#ifdef USE_MIDI
-#include "NoteTrack.h"
-#endif
-
 #include "Project.h"
 #include "TrackPanel.h" // for EVT_TRACK_PANEL_TIMER
 #include "UndoManager.h"

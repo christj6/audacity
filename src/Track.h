@@ -52,10 +52,6 @@ using WaveTrackArray = std::vector < std::shared_ptr< WaveTrack > > ;
 using WaveTrackConstArray = std::vector < std::shared_ptr < const WaveTrack > >;
 using NoteTrackArray  = std::vector < std::shared_ptr < NoteTrack > >;
 
-#if defined(USE_MIDI)
-class NoteTrack;
-#endif
-
 class TrackList;
 
 using ListOfTracks = std::list< std::shared_ptr< Track > >;
@@ -243,9 +239,6 @@ public:
    {
       None,
       Wave,
-#if defined(USE_MIDI)
-      Note,
-#endif
       Label,
       Time,
       All
@@ -720,10 +713,6 @@ class TrackList final : public wxEvtHandler, public ListOfTracks
    WaveTrackArray GetWaveTrackArray(bool selectionOnly, bool includeMuted = true);
    WaveTrackConstArray GetWaveTrackConstArray(bool selectionOnly, bool includeMuted = true) const;
 
-#if defined(USE_MIDI)
-   NoteTrackArray GetNoteTrackArray(bool selectionOnly);
-#endif
-
    /// Mainly a test function. Uses a linear search, so could be slow.
    bool Contains(const Track * t) const;
 
@@ -875,9 +864,6 @@ class AUDACITY_DLL_API TrackFactory
                            double rate = 0);
    std::unique_ptr<LabelTrack> NewLabelTrack();
    std::unique_ptr<TimeTrack> NewTimeTrack();
-#if defined(USE_MIDI)
-   std::unique_ptr<NoteTrack> NewNoteTrack();
-#endif
 };
 
 #endif

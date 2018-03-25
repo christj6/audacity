@@ -425,15 +425,6 @@ void LOFImportFileHandle::lofOpenFiles(wxString* ln)
                // all tracks failed, in which case it will be null. In that
                // case we return because we cannot offset a non-existent track.
                if (t == NULL) return;
-#ifdef USE_MIDI
-               if (targetfile.AfterLast(wxT('.')).IsSameAs(wxT("mid"), false) ||
-                   targetfile.AfterLast(wxT('.')).IsSameAs(wxT("midi"), false))
-               {
-                  AudacityMessageBox(_("MIDI tracks cannot be offset individually, only audio files can be."),
-                               _("LOF Error"), wxOK | wxCENTRE);
-               }
-               else
-#endif
                {
                   if (CountNumTracks(mProject) == 1)
                      t->SetOffset(offset);

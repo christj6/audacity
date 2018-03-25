@@ -917,9 +917,6 @@ Track *TrackList::Add(std::unique_ptr<TrackKind> &&t)
 
 // Make instantiations for the linker to find
 template Track *TrackList::Add<TimeTrack>(std::unique_ptr<TimeTrack> &&);
-#if defined(USE_MIDI)
-template Track *TrackList::Add<NoteTrack>(std::unique_ptr<NoteTrack> &&);
-#endif
 template Track *TrackList::Add<WaveTrack>(std::unique_ptr<WaveTrack> &&);
 template Track *TrackList::Add<LabelTrack>(std::unique_ptr<LabelTrack> &&);
 template Track *TrackList::Add<Track>(std::unique_ptr<Track> &&);
@@ -1350,22 +1347,6 @@ WaveTrackConstArray TrackList::GetWaveTrackConstArray(bool selectionOnly, bool i
    return GetWaveTracks<WaveTrackConstArray>(
       list->begin(), list->end(), selectionOnly, includeMuted);
 }
-
-#if defined(USE_MIDI)
-NoteTrackArray TrackList::GetNoteTrackArray(bool selectionOnly)
-{
-   NoteTrackArray noteTrackArray;
-
-   for(const auto &track : *this) {
-      if (track->GetKind() == Track::Note &&
-         (track->GetSelected() || !selectionOnly)) {
-         noteTrackArray.push_back( Track::Pointer<NoteTrack>(track) );
-      }
-   }
-
-   return noteTrackArray;
-}
-#endif
 
 int TrackList::GetHeight() const
 {

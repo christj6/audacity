@@ -153,13 +153,6 @@ void SnapManager::Reinit()
             CondListAdd(clip->GetEndTime(), waveTrack);
          }
       }
-#ifdef USE_MIDI
-      else if (track->GetKind() == Track::Note)
-      {
-         CondListAdd(track->GetStartTime(), track);
-         CondListAdd(track->GetEndTime(), track);
-      }
-#endif
    }
 
    // Sort all by time

@@ -77,9 +77,6 @@ simplifies construction of menu items.
 #include "PluginManager.h"
 #include "Prefs.h"
 #include "Printing.h"
-#ifdef USE_MIDI
-#include "NoteTrack.h"
-#endif // USE_MIDI
 #include "Tags.h"
 #include "TimeTrack.h"
 #include "Mix.h"
@@ -365,11 +362,6 @@ void AudacityProject::CreateMenusAndCommands()
       c->AddItem(wxT("ExportMultiple"), XXO("Export &Multiple..."), FN(OnExportMultiple), wxT("Ctrl+Shift+L"),
          AudioIONotBusyFlag | WaveTracksExistFlag,
          AudioIONotBusyFlag | WaveTracksExistFlag);
-#if defined(USE_MIDI)
-      c->AddItem(wxT("ExportMIDI"), XXO("Export MI&DI..."), FN(OnExportMIDI),
-         AudioIONotBusyFlag | NoteTracksExistFlag,
-         AudioIONotBusyFlag | NoteTracksExistFlag);
-#endif
 #ifdef USE_LIBVORBIS
       c->AddSeparator();
       c->AddItem(wxT("SaveCompressed"), XXO("&Save Compressed Copy of Project..."), FN(OnSaveCompressed));
@@ -2195,19 +2187,6 @@ CommandFlag AudacityProject::GetUpdateFlags(bool checkActive)
          if( t->GetEndTime() > t->GetStartTime() )
             flags |= HasWaveDataFlag;
       }
-#if defined(USE_MIDI)
-      else if (t->GetKind() == Track::Note) {
-         NoteTrack *nt = (NoteTrack *) t;
-
-         flags |= NoteTracksExistFlag;
-
-         if (nt->GetSelected()) {
-            flags |= TracksSelectedFlag;
-            flags |= NoteTracksSelectedFlag;
-            flags |= AudioTracksSelectedFlag; // even if not EXPERIMENTAL_MIDI_OUT
-         }
-      }
-#endif
       t = iter.Next();
    }
 
@@ -4753,97 +4732,6 @@ void AudacityProject::OnExportLabels(const CommandContext &WXUNUSED(context) )
    f.Close();
 }
 
-
-#ifdef USE_MIDI
-void AudacityProject::OnExportMIDI(const CommandContext &WXUNUSED(context) ){
-   TrackListIterator iter(GetTracks());
-   Track *t = iter.First();
-   int numNoteTracksSelected = 0;
-   NoteTrack *nt = NULL;
-
-   // Iterate through once to make sure that there is
-   // exactly one NoteTrack selected.
-   while (t) {
-      if (t->GetSelected()) {
-         if(t->GetKind() == Track::Note) {
-            numNoteTracksSelected++;
-            nt = (NoteTrack *) t;
-         }
-      }
-      t = iter.Next();
-   }
-
-   if(numNoteTracksSelected > 1) {
-      AudacityMessageBox(_(
-         "Please select only one Note Track at a time."));
-      return;
-   }
-   else if(numNoteTracksSelected < 1) {
-      AudacityMessageBox(_(
-         "Please select a Note Track."));
-      return;
-   }
-
-   wxASSERT(nt);
-   if (!nt)
-      return;
-
-   while(true){
-
-      wxString fName = wxT("");
-
-      fName = FileNames::SelectFile(FileNames::Operation::Export,
-         _("Export MIDI As:"),
-         wxEmptyString,
-         fName,
-         wxT(".mid|.gro"),
-         _("MIDI file (*.mid)|*.mid|Allegro file (*.gro)|*.gro"),
-         wxFD_SAVE | wxFD_OVERWRITE_PROMPT | wxRESIZE_BORDER,
-         this);
-
-      if (fName == wxT(""))
-         return;
-
-      if(!fName.Contains(wxT("."))) {
-         fName = fName + wxT(".mid");
-      }
-
-      // Move existing files out of the way.  Otherwise wxTextFile will
-      // append to (rather than replace) the current file.
-
-      if (wxFileExists(fName)) {
-#ifdef __WXGTK__
-         wxString safetyFileName = fName + wxT("~");
-#else
-         wxString safetyFileName = fName + wxT(".bak");
-#endif
-
-         if (wxFileExists(safetyFileName))
-            wxRemoveFile(safetyFileName);
-
-         wxRename(fName, safetyFileName);
-      }
-
-      if(fName.EndsWith(wxT(".mid")) || fName.EndsWith(wxT(".midi"))) {
-         nt->ExportMIDI(fName);
-      } else if(fName.EndsWith(wxT(".gro"))) {
-         nt->ExportAllegro(fName);
-      } else {
-         wxString msg = _("You have selected a filename with an unrecognized file extension.\nDo you want to continue?");
-         wxString title = _("Export MIDI");
-         int id = AudacityMessageBox(msg, title, wxYES_NO);
-         if (id == wxNO) {
-            continue;
-         } else if (id == wxYES) {
-            nt->ExportMIDI(fName);
-         }
-      }
-      break;
-   }
-}
-#endif // USE_MIDI
-
-
 void AudacityProject::OnExport(const wxString & Format )
 {
    Exporter e;
@@ -5068,13 +4956,6 @@ void AudacityProject::OnCut(const CommandContext &WXUNUSED(context) )
    while (n) {
       if (n->GetSelected()) {
          Track::Holder dest;
-#if defined(USE_MIDI)
-         if (n->GetKind() == Track::Note)
-            // Since portsmf has a built-in cut operator, we use that instead
-            dest = n->Cut(mViewInfo.selectedRegion.t0(),
-                   mViewInfo.selectedRegion.t1());
-         else
-#endif
             dest = n->Copy(mViewInfo.selectedRegion.t0(),
                     mViewInfo.selectedRegion.t1());
 
@@ -5095,11 +4976,6 @@ void AudacityProject::OnCut(const CommandContext &WXUNUSED(context) )
       if (n->GetSelected() || n->IsSyncLockSelected()) {
          switch (n->GetKind())
          {
-#if defined(USE_MIDI)
-            case Track::Note:
-               //if NoteTrack, it was cut, so do not clear anything
-            break;
-#endif
             case Track::Wave:
                if (gPrefs->Read(wxT("/GUI/EnableCutLines"), (long)0)) {
                   ((WaveTrack*)n)->ClearAndAddCutLine(
@@ -5527,14 +5403,6 @@ bool AudacityProject::HandlePasteNothingSelected()
                pNewTrack = uNewTrack.get();
             }
             break;
-
-         #ifdef USE_MIDI
-         case Track::Note:
-            uNewTrack = mTrackFactory->NewNoteTrack(),
-            pNewTrack = uNewTrack.get();
-            break;
-         #endif // USE_MIDI
-
          case Track::Label:
             uNewTrack = mTrackFactory->NewLabelTrack(),
             pNewTrack = uNewTrack.get();
@@ -5687,13 +5555,6 @@ void AudacityProject::OnTrim(const CommandContext &WXUNUSED(context) )
       if (n->GetSelected()) {
          switch (n->GetKind())
          {
-#if defined(USE_MIDI)
-            case Track::Note:
-               ((NoteTrack*)n)->Trim(mViewInfo.selectedRegion.t0(),
-                                     mViewInfo.selectedRegion.t1());
-            break;
-#endif
-
             case Track::Wave:
                //Delete the section before the left selector
                ((WaveTrack*)n)->Trim(mViewInfo.selectedRegion.t0(),

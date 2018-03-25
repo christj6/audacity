@@ -348,15 +348,6 @@ bool Importer::Import(const wxString &fName,
 
    wxString extension = fName.AfterLast(wxT('.'));
 
-   // Always refuse to import MIDI, even though the FFmpeg plugin pretends to know how (but makes very bad renderings)
-#ifdef USE_MIDI
-   // MIDI files must be imported, not opened
-   if (IsMidi(fName)) {
-      errorMessage.Printf(_("\"%s\" \nis a MIDI file, not an audio file. \nAudacity cannot open this type of file for playing, but you can\nedit it by clicking File > Import > MIDI."), fName);
-      return false;
-   }
-#endif
-
    using ImportPluginPtrs = std::vector< ImportPlugin* >;
 
    // This list is used to call plugins in correct order

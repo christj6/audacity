@@ -60,9 +60,6 @@ class MeterPanel;
 class MixerBoard;
 
 class Track;
-#ifdef USE_MIDI
-class NoteTrack;
-#endif
 class PlayableTrack;
 
 class WaveTrack;

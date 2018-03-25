@@ -138,11 +138,6 @@
 // Paul Licameli (PRL) 29 Nov 2014
 // #define EXPERIMENTAL_IMPROVED_SEEKING
 
-#ifdef USE_MIDI
-// RBD, 1 Sep 2008
-// Enables MIDI Output of NoteTrack (MIDI) data during playback
-#endif
-
 //If you want any of these files, ask JKC.  They are not
 //yet checked in to Audacity SVN as of 12-Feb-2010
 #ifdef EXPERIMENTAL_NOTEBOOK

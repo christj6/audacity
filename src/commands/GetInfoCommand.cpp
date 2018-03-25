@@ -482,12 +482,6 @@ void GetInfoCommand::ExploreTrackPanel( const CommandContext &context,
          {
             break;
          }
-#ifdef USE_MIDI
-         case Track::Note:
-         {
-            break;
-         }
-#endif // USE_MIDI
          case Track::Label:
             break;
          case Track::Time:

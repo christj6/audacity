@@ -109,19 +109,6 @@ class AUDACITY_DLL_API TrackArtist {
    void DrawSpectrum(const WaveTrack *track,
                      wxDC & dc, const wxRect & rect,
                      const SelectedRegion &selectedRegion, const ZoomInfo &zoomInfo);
-#ifdef USE_MIDI
-   int GetBottom(NoteTrack *t, const wxRect &rect);
-   void DrawNoteBackground(const NoteTrack *track, wxDC &dc,
-                           const wxRect &rect, const wxRect &sel,
-                           const ZoomInfo &zoomInfo,
-                           const wxBrush &wb, const wxPen &wp,
-                           const wxBrush &bb, const wxPen &bp,
-                           const wxPen &mp);
-   void DrawNoteTrack(const NoteTrack *track,
-                      wxDC & dc, const wxRect & rect,
-                      const SelectedRegion &selectedRegion, const ZoomInfo &zoomInfo,
-                      bool muted);
-#endif // USE_MIDI
 
    void DrawLabelTrack(TrackPanelDrawingContext &context,
                        const LabelTrack *track,

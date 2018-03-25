@@ -181,12 +181,6 @@ public:
    static void GetSyncLockHorizontalBounds( const wxRect &rect, wxRect &dest );
    static void GetSyncLockIconRect(const wxRect & rect, wxRect &dest);
 
-#ifdef USE_MIDI
-   static void GetMidiControlsHorizontalBounds
-      ( const wxRect &rect, wxRect &dest );
-   static void GetMidiControlsRect(const wxRect & rect, wxRect &dest);
-#endif
-
    static bool HideTopItem( const wxRect &rect, const wxRect &subRect,
                                int allowance = 0 );
 
@@ -549,12 +543,5 @@ enum : int {
    kTrackInfoSliderAllowance = 5,
    kTrackInfoSliderExtra = 5,
 };
-
-#ifdef USE_MIDI
-enum : int {
-   kMidiCellWidth = (kTrackInfoWidth / 4) - 2,
-   kMidiCellHeight = kTrackInfoBtnSize
-};
-#endif
 
 #endif

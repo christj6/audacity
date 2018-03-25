@@ -88,20 +88,6 @@ void ImportExportPrefs::PopulateOrExchange(ShuttleGui & S)
       //    S.AddFixedText(_("Note: Export quality options can be chosen by clicking the Options\nbutton in the Export dialog."));
    }
    S.EndStatic();
-#ifdef USE_MIDI
-   S.StartStatic(_("Exported Allegro (.gro) files save time as:"));
-   {
-      S.StartRadioButtonGroup(wxT("/FileFormats/AllegroStyle"), true);
-      {
-         S.TieRadioButton(_("&Seconds"),
-                          true);
-         S.TieRadioButton(_("&Beats"),
-                          false);
-      }
-      S.EndRadioButtonGroup();
-   }
-   S.EndStatic();
-#endif
    S.EndScroller();
 }
 

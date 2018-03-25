@@ -160,14 +160,6 @@ It handles initialization and termination by subclassing wxApp.
 #     pragma comment(lib, "lv2")
 #  endif
 
-#  if defined(USE_MIDI)
-#     pragma comment(lib, "portsmf")
-#     endif
-
-#  if defined(EXPERIMENTAL_MIDI_OUT)
-#     pragma comment(lib, "portmidi")
-#  endif
-
 #     pragma comment(lib, "libnyquist")
 
 #  if defined(USE_PORTMIXER)

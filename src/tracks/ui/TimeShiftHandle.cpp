@@ -128,13 +128,6 @@ namespace
          for (unsigned int ii = 0; newClip && ii < capturedClipArray.size(); ++ii)
             newClip = (capturedClipArray[ii].track != pTrack);
          if (newClip) {
-#ifdef USE_MIDI
-            // do not add NoteTrack if the data is outside of time bounds
-            if (pTrack->GetKind() == Track::Note) {
-               if (pTrack->GetEndTime() < t0 || pTrack->GetStartTime() > t1)
-                  return;
-            }
-#endif
             capturedClipArray.push_back(TrackClip(pTrack, NULL));
          }
       }
@@ -193,13 +186,6 @@ namespace
          }
 
          if (newClip) {
-   #ifdef USE_MIDI
-            // do not add NoteTrack if the data is outside of time bounds
-            if (t->GetKind() == Track::Note) {
-               if (t->GetEndTime() < t0 || t->GetStartTime() > t1)
-                  return;
-            }
-   #endif
             state.capturedClipArray.push_back(TrackClip(t, NULL));
          }
       }
@@ -324,21 +310,6 @@ void TimeShiftHandle::CreateListOfCapturedClips
                   state.trackExclusions.push_back(t);
             }
          }
-#ifdef USE_MIDI
-         // Capture additional clips from NoteTracks
-         Track *nt = state.capturedClipArray[i].track;
-         if (nt->GetKind() == Track::Note) {
-            // Iterate over sync-lock group tracks.
-            SyncLockedTracksIterator git( &trackList );
-            for (Track *t = git.StartWith(nt); t; t = git.Next())
-            {
-               AddClipsToCaptured
-                  ( state, t, nt->GetStartTime(), nt->GetEndTime() );
-               if (t->GetKind() != Track::Wave)
-                  state.trackExclusions.push_back(t);
-            }
-         }
-#endif
       }
    }
 }
@@ -346,11 +317,7 @@ void TimeShiftHandle::CreateListOfCapturedClips
 void TimeShiftHandle::DoSlideHorizontal
    ( ClipMoveState &state, TrackList &trackList, Track &capturedTrack )
 {
-#ifdef USE_MIDI
-   if ( state.capturedClipArray.size() )
-#else
    if ( state.capturedClip )
-#endif
    {
       double allowed;
       double initialAllowed;
@@ -450,17 +417,8 @@ UIHandle::Result TimeShiftHandle::Click
    WaveTrack *wt = pTrack->GetKind() == Track::Wave
       ? static_cast<WaveTrack*>(pTrack.get()) : nullptr;
 
-   if ((wt
-#ifdef USE_MIDI
-      || pTrack->GetKind() == Track::Note
-#endif
-      ) && !event.ShiftDown())
+   if ((wt) && !event.ShiftDown())
    {
-#ifdef USE_MIDI
-      if (!wt)
-         mClipMoveState.capturedClip = nullptr;
-      else
-#endif
       {
          mClipMoveState.capturedClip = wt->GetClipAtX(event.m_x);
          if (mClipMoveState.capturedClip == NULL)
@@ -539,11 +497,7 @@ UIHandle::Result TimeShiftHandle::Drag
    // Start by undoing the current slide amount; everything
    // happens relative to the original horizontal position of
    // each clip...
-#ifdef USE_MIDI
-   if (mClipMoveState.capturedClipArray.size())
-#else
    if (mClipMoveState.capturedClip)
-#endif
    {
       for (unsigned ii = 0; ii < mClipMoveState.capturedClipArray.size(); ++ii) {
          if (mClipMoveState.capturedClipArray[ii].clip)
@@ -578,29 +532,6 @@ UIHandle::Result TimeShiftHandle::Drag
          viewInfo.PositionToTime(mMouseClickX);
       bool trySnap = false;
       double clipLeft = 0, clipRight = 0;
-#ifdef USE_MIDI
-      if (pTrack->GetKind() == Track::Wave) {
-         WaveTrack *const mtw = static_cast<WaveTrack*>(pTrack.get());
-         const double rate = mtw->GetRate();
-         // set it to a sample point
-         desiredSlideAmount = rint(desiredSlideAmount * rate) / rate;
-      }
-
-      // Adjust desiredSlideAmount using SnapManager
-      if (mSnapManager.get() && mClipMoveState.capturedClipArray.size()) {
-         trySnap = true;
-         if (mClipMoveState.capturedClip) {
-            clipLeft = mClipMoveState.capturedClip->GetStartTime()
-               + desiredSlideAmount;
-            clipRight = mClipMoveState.capturedClip->GetEndTime()
-               + desiredSlideAmount;
-         }
-         else {
-            clipLeft = mCapturedTrack->GetStartTime() + desiredSlideAmount;
-            clipRight = mCapturedTrack->GetEndTime() + desiredSlideAmount;
-         }
-      }
-#else
       {
          trySnap = true;
          if (pTrack->GetKind() == Track::Wave) {
@@ -616,7 +547,6 @@ UIHandle::Result TimeShiftHandle::Drag
             }
          }
       }
-#endif
       if (trySnap)
       {
          auto results =

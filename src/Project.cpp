@@ -3580,12 +3580,6 @@ XMLTagHandler *AudacityProject::HandleXMLChild(const wxChar *tag)
       return mTracks->Add(mTrackFactory->NewWaveTrack());
    }
 
-   #ifdef USE_MIDI
-   if (!wxStrcmp(tag, wxT("notetrack"))) {
-      return mTracks->Add(mTrackFactory->NewNoteTrack());
-   }
-   #endif // USE_MIDI
-
    if (!wxStrcmp(tag, wxT("labeltrack"))) {
       return mTracks->Add(mTrackFactory->NewLabelTrack());
    }

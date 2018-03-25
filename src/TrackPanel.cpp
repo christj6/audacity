@@ -1230,11 +1230,6 @@ int totalTCPLines( const TCPLines &lines, bool omitLastExtra )
 
 const TCPLines &getTCPLines( const Track &track )
 {
-#ifdef USE_MIDI
-   if ( track.GetKind() == Track::Note )
-      return noteTrackTCPLines;
-#endif
-
    if ( track.GetKind() == Track::Wave )
       return waveTrackTCPLines;
 
@@ -3034,26 +3029,6 @@ void TrackInfo::GetSyncLockIconRect(const wxRect & rect, wxRect &dest)
    dest.y = rect.y + results.first;
    dest.height = results.second;
 }
-
-#ifdef USE_MIDI
-void TrackInfo::GetMidiControlsHorizontalBounds
-( const wxRect &rect, wxRect &dest )
-{
-   dest.x = rect.x + 1; // To center slightly
-   // PRL: TODO: kMidiCellWidth is defined in terms of the other constant
-   // kTrackInfoWidth but I am trying to avoid use of that constant.
-   // Can cell width be computed from dest.width instead?
-   dest.width = kMidiCellWidth * 4;
-}
-
-void TrackInfo::GetMidiControlsRect(const wxRect & rect, wxRect & dest)
-{
-   GetMidiControlsHorizontalBounds( rect, dest );
-   auto results = CalcItemY( noteTrackTCPLines, kItemMidiControlsRect );
-   dest.y = rect.y + results.first;
-   dest.height = results.second;
-}
-#endif
 
 wxFont TrackInfo::gFont;
 
