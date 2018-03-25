@@ -236,13 +236,6 @@
     <ClCompile Include="..\..\..\src\tracks\labeltrack\ui\LabelTrackControls.cpp" />
     <ClCompile Include="..\..\..\src\tracks\labeltrack\ui\LabelTrackUI.cpp" />
     <ClCompile Include="..\..\..\src\tracks\labeltrack\ui\LabelTrackVRulerControls.cpp" />
-    <ClCompile Include="..\..\..\src\tracks\playabletrack\notetrack\ui\NoteTrackButtonHandle.cpp" />
-    <ClCompile Include="..\..\..\src\tracks\playabletrack\notetrack\ui\NoteTrackControls.cpp" />
-    <ClCompile Include="..\..\..\src\tracks\playabletrack\notetrack\ui\NoteTrackSliderHandles.cpp" />
-    <ClCompile Include="..\..\..\src\tracks\playabletrack\notetrack\ui\NoteTrackUI.cpp" />
-    <ClCompile Include="..\..\..\src\tracks\playabletrack\notetrack\ui\NoteTrackVRulerControls.cpp" />
-    <ClCompile Include="..\..\..\src\tracks\playabletrack\notetrack\ui\NoteTrackVZoomHandle.cpp" />
-    <ClCompile Include="..\..\..\src\tracks\playabletrack\notetrack\ui\StretchHandle.cpp" />
     <ClCompile Include="..\..\..\src\tracks\playabletrack\ui\PlayableTrackButtonHandles.cpp" />
     <ClCompile Include="..\..\..\src\tracks\playabletrack\wavetrack\ui\CutlineHandle.cpp" />
     <ClCompile Include="..\..\..\src\tracks\playabletrack\wavetrack\ui\SampleHandle.cpp" />
@@ -316,7 +309,6 @@
     <ClCompile Include="..\..\..\src\prefs\ImportExportPrefs.cpp" />
     <ClCompile Include="..\..\..\src\prefs\KeyConfigPrefs.cpp" />
     <ClCompile Include="..\..\..\src\prefs\LibraryPrefs.cpp" />
-    <ClCompile Include="..\..\..\src\prefs\MidiIOPrefs.cpp" />
     <ClCompile Include="..\..\..\src\prefs\ModulePrefs.cpp" />
     <ClCompile Include="..\..\..\src\prefs\MousePrefs.cpp" />
     <ClCompile Include="..\..\..\src\prefs\PlaybackPrefs.cpp" />
@@ -469,12 +461,6 @@
     <ClInclude Include="..\..\..\src\TrackPanelDrawingContext.h" />
     <ClInclude Include="..\..\..\src\TrackPanelListener.h" />
     <ClInclude Include="..\..\..\src\TrackPanelMouseEvent.h" />
-    <ClInclude Include="..\..\..\src\tracks\playabletrack\notetrack\ui\NoteTrackButtonHandle.h" />
-    <ClInclude Include="..\..\..\src\tracks\playabletrack\notetrack\ui\NoteTrackControls.h" />
-    <ClInclude Include="..\..\..\src\tracks\playabletrack\notetrack\ui\NoteTrackSliderHandles.h" />
-    <ClInclude Include="..\..\..\src\tracks\playabletrack\notetrack\ui\NoteTrackVRulerControls.h" />
-    <ClInclude Include="..\..\..\src\tracks\playabletrack\notetrack\ui\NoteTrackVZoomHandle.h" />
-    <ClInclude Include="..\..\..\src\tracks\playabletrack\notetrack\ui\StretchHandle.h" />
     <ClInclude Include="..\..\..\src\tracks\playabletrack\ui\PlayableTrackButtonHandles.h" />
     <ClInclude Include="..\..\..\src\tracks\playabletrack\wavetrack\ui\CutlineHandle.h" />
     <ClInclude Include="..\..\..\src\tracks\playabletrack\wavetrack\ui\SampleHandle.h" />
@@ -616,7 +602,6 @@
     <ClInclude Include="..\..\..\src\prefs\ImportExportPrefs.h" />
     <ClInclude Include="..\..\..\src\prefs\KeyConfigPrefs.h" />
     <ClInclude Include="..\..\..\src\prefs\LibraryPrefs.h" />
-    <ClInclude Include="..\..\..\src\prefs\MidiIOPrefs.h" />
     <ClInclude Include="..\..\..\src\prefs\ModulePrefs.h" />
     <ClInclude Include="..\..\..\src\prefs\MousePrefs.h" />
     <ClInclude Include="..\..\..\src\prefs\PlaybackPrefs.h" />
