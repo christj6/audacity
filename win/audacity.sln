@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2002
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Audacity", "Projects\Audacity\Audacity.vcxproj", "{1D64095C-F936-4FCF-B609-56E9DDF941FA}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -37,13 +37,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvamp", "Projects\libvamp
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "twolame", "Projects\twolame\twolame.vcxproj", "{8C69F7B6-684F-48D9-9057-8912CA3DAA8B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "portsmf", "Projects\portsmf\portsmf.vcxproj", "{8A1C2514-85DD-4AE2-9CF3-3183B66C537D}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sbsms", "Projects\sbsms\sbsms.vcxproj", "{A64FFB5D-0CF0-43EE-9DE3-C72260864BFF}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libscorealign", "Projects\libscorealign\libscorealign.vcxproj", "{C0FE933B-4AF7-4ACD-95E8-ACD3A73F1400}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "portmidi", "Projects\portmidi\portmidi.vcxproj", "{D5AB2D87-51DC-4277-A9AB-2A6018D0E947}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "help", "Projects\help\help.vcxproj", "{02F94A40-586A-4403-8464-13B50801FFEC}"
 EndProject
@@ -124,22 +118,10 @@ Global
 		{8C69F7B6-684F-48D9-9057-8912CA3DAA8B}.Debug|Win32.Build.0 = Debug|Win32
 		{8C69F7B6-684F-48D9-9057-8912CA3DAA8B}.Release|Win32.ActiveCfg = Release|Win32
 		{8C69F7B6-684F-48D9-9057-8912CA3DAA8B}.Release|Win32.Build.0 = Release|Win32
-		{8A1C2514-85DD-4AE2-9CF3-3183B66C537D}.Debug|Win32.ActiveCfg = Debug|Win32
-		{8A1C2514-85DD-4AE2-9CF3-3183B66C537D}.Debug|Win32.Build.0 = Debug|Win32
-		{8A1C2514-85DD-4AE2-9CF3-3183B66C537D}.Release|Win32.ActiveCfg = Release|Win32
-		{8A1C2514-85DD-4AE2-9CF3-3183B66C537D}.Release|Win32.Build.0 = Release|Win32
 		{A64FFB5D-0CF0-43EE-9DE3-C72260864BFF}.Debug|Win32.ActiveCfg = Debug|Win32
 		{A64FFB5D-0CF0-43EE-9DE3-C72260864BFF}.Debug|Win32.Build.0 = Debug|Win32
 		{A64FFB5D-0CF0-43EE-9DE3-C72260864BFF}.Release|Win32.ActiveCfg = Release|Win32
 		{A64FFB5D-0CF0-43EE-9DE3-C72260864BFF}.Release|Win32.Build.0 = Release|Win32
-		{C0FE933B-4AF7-4ACD-95E8-ACD3A73F1400}.Debug|Win32.ActiveCfg = Debug|Win32
-		{C0FE933B-4AF7-4ACD-95E8-ACD3A73F1400}.Debug|Win32.Build.0 = Debug|Win32
-		{C0FE933B-4AF7-4ACD-95E8-ACD3A73F1400}.Release|Win32.ActiveCfg = Release|Win32
-		{C0FE933B-4AF7-4ACD-95E8-ACD3A73F1400}.Release|Win32.Build.0 = Release|Win32
-		{D5AB2D87-51DC-4277-A9AB-2A6018D0E947}.Debug|Win32.ActiveCfg = Debug|Win32
-		{D5AB2D87-51DC-4277-A9AB-2A6018D0E947}.Debug|Win32.Build.0 = Debug|Win32
-		{D5AB2D87-51DC-4277-A9AB-2A6018D0E947}.Release|Win32.ActiveCfg = Release|Win32
-		{D5AB2D87-51DC-4277-A9AB-2A6018D0E947}.Release|Win32.Build.0 = Release|Win32
 		{02F94A40-586A-4403-8464-13B50801FFEC}.Debug|Win32.ActiveCfg = Debug|Win32
 		{02F94A40-586A-4403-8464-13B50801FFEC}.Release|Win32.ActiveCfg = Release|Win32
 		{AF9AD75C-4785-4432-BAC3-ADAB1E7F1192}.Debug|Win32.ActiveCfg = Debug|Win32

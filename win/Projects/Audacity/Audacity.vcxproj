@@ -1015,10 +1015,6 @@
       <Project>{a939aaf8-44f1-4ce7-9dd0-7a6e99814857}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\libscorealign\libscorealign.vcxproj">
-      <Project>{c0fe933b-4af7-4acd-95e8-acd3a73f1400}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
     <ProjectReference Include="..\libsndfile\libsndfile.vcxproj">
       <Project>{f4b4a272-4ed3-4951-a6ee-b7baac1c4952}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
@@ -1043,16 +1039,8 @@
       <Project>{7aba0f80-94ae-4e82-ab89-2e1258212d59}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\portmidi\portmidi.vcxproj">
-      <Project>{d5ab2d87-51dc-4277-a9ab-2a6018d0e947}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
     <ProjectReference Include="..\portmixer\portmixer.vcxproj">
       <Project>{3a76129b-55ab-4d54-baa7-08f63ed52569}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\portsmf\portsmf.vcxproj">
-      <Project>{8a1c2514-85dd-4ae2-9cf3-3183b66c537d}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\sbsms\sbsms.vcxproj">
