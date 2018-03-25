@@ -407,14 +407,6 @@ LWSlider::LWSlider(wxWindow *parent,
       maxValue = 3.0f;
       stepValue = STEP_CONTINUOUS;
       break;
-#ifdef EXPERIMENTAL_MIDI_OUT
-   case VEL_SLIDER:
-      minValue = VEL_MIN;
-      maxValue = VEL_MAX;
-      stepValue = 1.0f;
-      speed = 0.5;
-      break;
-#endif
    default:
       minValue = 0.0f;
       maxValue = 1.0f;
@@ -1004,17 +996,6 @@ wxString LWSlider::GetTip(float value) const
          /* i18n-hint: "x" suggests a multiplicative factor */
          val.Printf( wxT("%.2fx"), value );
          break;
-
-#ifdef EXPERIMENTAL_MIDI_OUT
-      case VEL_SLIDER:
-         if (value > 0.0f)
-            // Signed
-            val.Printf( wxT("%+d"), (int) value );
-         else
-            // Zero, or signed negative
-            val.Printf( wxT("%d"), (int) value );
-         break;
-#endif
       }
 
       label.Printf(_("%s: %s"), mName, val);
@@ -1056,12 +1037,6 @@ wxArrayString LWSlider::GetWidestTips() const
       case SPEED_SLIDER:
          results.push_back( GetTip( 9.99f ) );
          break;
-
-#ifdef EXPERIMENTAL_MIDI_OUT
-      case VEL_SLIDER:
-          results.push_back( GetTip( 999.f ) );
-          break;
-#endif
       }
    }
    else
@@ -1960,12 +1935,6 @@ wxAccStatus ASliderAx::GetValue(int childId, wxString* strValue)
          case SPEED_SLIDER:
             strValue->Printf( wxT("%.0f"), as->mLWSlider->mCurrentValue * 100 );
             break;
-#ifdef EXPERIMENTAL_MIDI_OUT
-         case VEL_SLIDER:
-            strValue->Printf( wxT("%.0f"), as->mLWSlider->mCurrentValue);
-            break;
-#endif
-
       }
 
       return wxACC_OK;

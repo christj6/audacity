@@ -135,9 +135,6 @@ enum {
    ID_BITMAPBUTTON_MUSICAL_INSTRUMENT = 13000,
    ID_SLIDER_PAN,
    ID_SLIDER_GAIN,
-#ifdef EXPERIMENTAL_MIDI_OUT
-   ID_SLIDER_VELOCITY,
-#endif
    ID_TOGGLEBUTTON_MUTE,
    ID_TOGGLEBUTTON_SOLO,
 };
@@ -149,9 +146,6 @@ BEGIN_EVENT_TABLE(MixerTrackCluster, wxPanelWrapper)
    EVT_BUTTON(ID_BITMAPBUTTON_MUSICAL_INSTRUMENT, MixerTrackCluster::OnButton_MusicalInstrument)
    EVT_SLIDER(ID_SLIDER_PAN, MixerTrackCluster::OnSlider_Pan)
    EVT_SLIDER(ID_SLIDER_GAIN, MixerTrackCluster::OnSlider_Gain)
-#ifdef EXPERIMENTAL_MIDI_OUT
-   EVT_SLIDER(ID_SLIDER_VELOCITY, MixerTrackCluster::OnSlider_Velocity)
-#endif
    //v EVT_COMMAND_SCROLL(ID_SLIDER_GAIN, MixerTrackCluster::OnSliderScroll_Gain)
    EVT_COMMAND(ID_TOGGLEBUTTON_MUTE, wxEVT_COMMAND_BUTTON_CLICKED, MixerTrackCluster::OnButton_Mute)
    EVT_COMMAND(ID_TOGGLEBUTTON_SOLO, wxEVT_COMMAND_BUTTON_CLICKED, MixerTrackCluster::OnButton_Solo)
@@ -209,19 +203,6 @@ MixerTrackCluster::MixerTrackCluster(wxWindow* parent,
                .Orientation( wxVERTICAL ));
    mSlider_Gain->SetName(_("Gain"));
    this->UpdateGain();
-#ifdef EXPERIMENTAL_MIDI_OUT
-   mSlider_Velocity =
-      safenew MixerTrackSlider(
-            this, ID_SLIDER_VELOCITY,
-            /* i18n-hint: title of the MIDI Velocity slider */
-            _("Velocity"),
-            ctrlPos, ctrlSize,
-            ASlider::Options{}
-               .Style( VEL_SLIDER )
-               .Orientation( wxVERTICAL ));
-   mSlider_Velocity->SetName(_("Velocity"));
-   this->UpdateVelocity();
-#endif
 
    // other controls and meter at right
 
@@ -340,13 +321,6 @@ WaveTrack *MixerTrackCluster::GetRight() const
       return nullptr;
 }
 
-#ifdef EXPERIMENTAL_MIDI_OUT
-NoteTrack *MixerTrackCluster::GetNote() const
-{
-   return dynamic_cast< NoteTrack * >( mTrack.get() );
-}
-#endif
-
 void MixerTrackCluster::UpdatePrefs()
 {
    this->SetBackgroundColour( theTheme.Colour( clrMedium ) );
@@ -374,9 +348,6 @@ void MixerTrackCluster::HandleResize() // For wxSizeEvents, update gain slider a
          TRACK_NAME_HEIGHT + kDoubleInset) - // mStaticText_TrackName + margin
       kQuadrupleInset; // margin below gain slider
    mSlider_Gain->SetSize(-1, nGainSliderHeight);
-#ifdef EXPERIMENTAL_MIDI_OUT
-   mSlider_Velocity->SetSize(-1, nGainSliderHeight);
-#endif
 
    bool bSoloNone = mProject->IsSoloNone();
 
@@ -408,20 +379,6 @@ void MixerTrackCluster::HandleSliderGain(const bool bWantPushState /*= false*/)
    if (bWantPushState)
       mProject->TP_PushState(_("Moved gain slider"), _("Gain"), UndoPush::CONSOLIDATE );
 }
-
-#ifdef EXPERIMENTAL_MIDI_OUT
-void MixerTrackCluster::HandleSliderVelocity(const bool bWantPushState /*= false*/)
-{
-   float fValue = mSlider_Velocity->Get();
-   if (GetNote())
-      GetNote()->SetVelocity(fValue);
-
-   // Update the TrackPanel correspondingly.
-   mProject->RefreshTPTrack(mTrack.get());
-   if (bWantPushState)
-      mProject->TP_PushState(_("Moved velocity slider"), _("Velocity"), UndoPush::CONSOLIDATE);
-}
-#endif
 
 void MixerTrackCluster::HandleSliderPan(const bool bWantPushState /*= false*/)
 {
@@ -505,17 +462,6 @@ void MixerTrackCluster::UpdateGain()
    mSlider_Gain->Set(GetWave()->GetGain());
 }
 
-#ifdef EXPERIMENTAL_MIDI_OUT
-void MixerTrackCluster::UpdateVelocity()
-{
-   if (!GetNote()) {
-      mSlider_Velocity->Hide();
-      return;
-   }
-   mSlider_Velocity->Set(GetNote()->GetVelocity());
-}
-#endif
-
 void MixerTrackCluster::UpdateMeter(const double t0, const double t1)
 {
    // NoteTracks do not (currently) register on meters. It would probably be
@@ -536,76 +482,6 @@ void MixerTrackCluster::UpdateMeter(const double t0, const double t1)
       this->ResetMeter(false);
       return;
    }
-
-   // Vaughan, 2010-11-27:
-   // This commented out code is flawed. Mistaken understanding of "frame" vs "window".
-   // Caused me to override MeterPanel::UpdateDisplay().
-   // But I think it's got a good idea, of calling WaveTracks' GetMinMax and GetRMS
-   // instead of passing in all the data and asking the meter to derive peak and rms.
-   // May be worth revisiting as I think it should perform better, because it uses the min/max/rms
-   // stored in blockfiles, rather than calculating them, but for now, changing it to use the
-   // original MeterPanel::UpdateDisplay(). New code is below the previous (now commented out).
-   //
-   //const size_t kFramesPerBuffer = 4;
-   //float min; // dummy, since it's not shown in meters
-   //Floats maxLeft{kFramesPerBuffer};
-   //Floats rmsLeft{kFramesPerBuffer};
-   //Floats maxRight{kFramesPerBuffer};
-   //Floats rmsRight{kFramesPerBuffer};
-   //
-   //#ifdef EXPERIMENTAL_MIDI_OUT
-   //   bool bSuccess = (GetWave() != nullptr);
-   //#else
-   //   bool bSuccess = true;
-   //#endif
-
-   //const double dFrameInterval = (t1 - t0) / (double)kFramesPerBuffer;
-   //double dFrameT0 = t0;
-   //double dFrameT1 = t0 + dFrameInterval;
-   //int i = 0;
-   //while (bSuccess && (i < kFramesPerBuffer))
-   //{
-   //   bSuccess &=
-   //      mTrack->GetMinMax(&min, &(maxLeft[i]), dFrameT0, dFrameT1) &&
-   //      mTrack->GetRMS(&(rmsLeft[i]), dFrameT0, dFrameT1);
-   //   if (bSuccess && mRightTrack)
-   //      bSuccess &=
-   //         mRightTrack->GetMinMax(&min, &(maxRight[i]), dFrameT0, dFrameT1) &&
-   //         mRightTrack->GetRMS(&(rmsRight[i]), dFrameT0, dFrameT1);
-   //   else
-   //   {
-   //      // Mono: Start with raw values same as left.
-   //      // To be modified by bWantPostFadeValues and channel pan/gain.
-   //      maxRight[i] = maxLeft[i];
-   //      rmsRight[i] = rmsLeft[i];
-   //   }
-   //   dFrameT0 += dFrameInterval;
-   //   dFrameT1 += dFrameInterval;
-   //   i++;
-   //}
-   //
-   //const bool bWantPostFadeValues = true; //v Turn this into a checkbox on MixerBoard? For now, always true.
-   //if (bSuccess && bWantPostFadeValues)
-   //if (bSuccess)
-   //{
-   //   for (i = 0; i < kFramesPerBuffer; i++)
-   //   {
-   //      float gain = mTrack->GetChannelGain(0);
-   //      maxLeft[i] *= gain;
-   //      rmsLeft[i] *= gain;
-   //      if (mRightTrack)
-   //         gain = mRightTrack->GetChannelGain(1);
-   //      maxRight[i] *= gain;
-   //      rmsRight[i] *= gain;
-   //   }
-   //   if ( mMeter ) mMeter->UpdateDisplay(
-   //      2, // If mono, show left track values in both meters, as in MeterToolBar, rather than nChannels.
-   //      kFramesPerBuffer,
-   //      maxLeft, rmsLeft,
-   //      maxRight, rmsRight,
-   //      mTrack->TimeToLongSamples(t1 - t0));
-   //}
-   //
 
    const auto pTrack = GetWave();
    auto startSample = (sampleCount)((pTrack->GetRate() * t0) + 0.5);
@@ -728,13 +604,6 @@ void MixerTrackCluster::OnSlider_Gain(wxCommandEvent& WXUNUSED(event))
 {
    this->HandleSliderGain();
 }
-
-#ifdef EXPERIMENTAL_MIDI_OUT
-void MixerTrackCluster::OnSlider_Velocity(wxCommandEvent& WXUNUSED(event))
-{
-   this->HandleSliderVelocity();
-}
-#endif
 
 //v void MixerTrackCluster::OnSliderScroll_Gain(wxScrollEvent& WXUNUSED(event))
 //{
@@ -963,10 +832,6 @@ void MixerBoard::UpdatePrefs()
 
 // Reassign mixer input strips (MixerTrackClusters) to Track Clusters
 // both have the same order.
-// If EXPERIMENTAL_MIDI_OUT, then Note Tracks appear in the
-// mixer, and we must be able to convert and reuse a MixerTrackCluster
-// from audio to midi or midi to audio. This task is handled by
-// UpdateForStateChange().
 //
 void MixerBoard::UpdateTrackClusters()
 {
@@ -1264,16 +1129,6 @@ void MixerBoard::UpdateGain(const PlayableTrack* pTrack)
    if (pMixerTrackCluster)
       pMixerTrackCluster->UpdateGain();
 }
-
-#ifdef EXPERIMENTAL_MIDI_OUT
-void MixerBoard::UpdateVelocity(const PlayableTrack* pTrack)
-{
-   MixerTrackCluster* pMixerTrackCluster;
-   FindMixerTrackCluster(pTrack, &pMixerTrackCluster);
-   if (pMixerTrackCluster)
-      pMixerTrackCluster->UpdateVelocity();
-}
-#endif
 
 void MixerBoard::UpdateMeters(const double t1, const bool bLoopedPlay)
 {

@@ -46,18 +46,10 @@ std::vector<UIHandlePtr> NoteTrackControls::HitTest
             mMuteHandle, state, rect, pProject, track)))
             return result;
 
-         if (NULL != (result = SoloButtonHandle::HitTest(
-            mSoloHandle, state, rect, pProject, track)))
+         if (NULL != (result = SoloButtonHandle::HitTest(mSoloHandle, state, rect, pProject, track)))
             return result;
-#ifdef EXPERIMENTAL_MIDI_OUT
-         if (NULL != (result = VelocitySliderHandle::HitTest(
-            mVelocityHandle, state, rect, track)))
-            return result;
-         if (NULL != (result = NoteTrackButtonHandle::HitTest(
-            mClickHandle, state, rect, track)))
-            return result;
-#endif
-         return result;
+
+         return result; // ???
       }();
       if (result) {
          results.push_back(result);

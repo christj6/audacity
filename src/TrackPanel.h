@@ -102,10 +102,6 @@ public:
       ( TrackPanelDrawingContext &context,
         const wxRect &rect, const Track *pTrack );
 
-   static void MidiControlsDrawFunction
-      ( TrackPanelDrawingContext &context,
-        const wxRect &rect, const Track *pTrack );
-
    template<typename TrackClass>
    static void SliderDrawFunction
       ( LWSlider *(*Selector)
@@ -121,12 +117,6 @@ public:
    static void GainSliderDrawFunction
       ( TrackPanelDrawingContext &context,
         const wxRect &rect, const Track *pTrack );
-
-#ifdef EXPERIMENTAL_MIDI_OUT
-   static void VelocitySliderDrawFunction
-      ( TrackPanelDrawingContext &context,
-        const wxRect &rect, const Track *pTrack );
-#endif
 
    static void MuteOrSoloDrawFunction
       ( wxDC *dc, const wxRect &rect, const Track *pTrack, bool down,
@@ -185,10 +175,6 @@ public:
 
    static void GetPanRect(const wxPoint & topLeft, wxRect &dest);
 
-#ifdef EXPERIMENTAL_MIDI_OUT
-   static void GetVelocityRect(const wxPoint & topLeft, wxRect &dest);
-#endif
-
    static void GetMinimizeHorizontalBounds( const wxRect &rect, wxRect &dest );
    static void GetMinimizeRect(const wxRect & rect, wxRect &dest);
 
@@ -214,12 +200,6 @@ public:
       (const wxRect &sliderRect, const WaveTrack *t, bool captured,
        wxWindow *pParent);
 
-#ifdef EXPERIMENTAL_MIDI_OUT
-   static LWSlider * VelocitySlider
-      (const wxRect &sliderRect, const NoteTrack *t, bool captured,
-       wxWindow *pParent);
-#endif
-
 private:
    void UpdatePrefs();
 
@@ -230,10 +210,6 @@ private:
    static std::unique_ptr<LWSlider> gPanCaptured;
    static std::unique_ptr<LWSlider> gGain;
    static std::unique_ptr<LWSlider> gPan;
-#ifdef EXPERIMENTAL_MIDI_OUT
-   static std::unique_ptr<LWSlider> gVelocityCaptured;
-   static std::unique_ptr<LWSlider> gVelocity;
-#endif
 
    friend class TrackPanel;
 };
@@ -437,9 +413,6 @@ public:
 
    LWSlider *GainSlider( const WaveTrack *wt );
    LWSlider *PanSlider( const WaveTrack *wt );
-#ifdef EXPERIMENTAL_MIDI_OUT
-   LWSlider *VelocitySlider( const NoteTrack *nt );
-#endif
 
    TrackInfo *GetTrackInfo() { return &mTrackInfo; }
    const TrackInfo *GetTrackInfo() const { return &mTrackInfo; }

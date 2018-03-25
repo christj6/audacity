@@ -141,14 +141,6 @@
 #ifdef USE_MIDI
 // RBD, 1 Sep 2008
 // Enables MIDI Output of NoteTrack (MIDI) data during playback
-// USE_MIDI must be defined in order for EXPERIMENTAL_MIDI_OUT to work
-#define EXPERIMENTAL_MIDI_OUT
-// JKC, 17 Aug 2017
-// Enables the MIDI note stretching feature, which currently
-// a) Is broken on Linux (Bug 1646)
-// b) Crashes with Sync-Lock (Bug 1719)
-// c) Needs UI design review.
-//#define EXPERIMENTAL_MIDI_STRETCHING
 #endif
 
 //If you want any of these files, ask JKC.  They are not

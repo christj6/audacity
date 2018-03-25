@@ -601,11 +601,7 @@ int ControlToolBar::PlayPlayRegion(const SelectedRegion &selectedRegion,
    bool hasaudio = false;
    TrackListIterator iter(t);
    for (Track *trk = iter.First(); trk; trk = iter.Next()) {
-      if (trk->GetKind() == Track::Wave
-#ifdef EXPERIMENTAL_MIDI_OUT
-         || (trk->GetKind() == Track::Note && useMidi)
-#endif
-         ) {
+      if (trk->GetKind() == Track::Wave) {
          hasaudio = true;
          break;
       }
@@ -982,9 +978,6 @@ void ControlToolBar::OnRecord(wxCommandEvent &evt)
       /* TODO: set up stereo tracks if that is how the user has set up
        * their preferences, and choose sample format based on prefs */
       WaveTrackConstArray playbackTracks;
-#ifdef EXPERIMENTAL_MIDI_OUT
-      NoteTrackArray midiTracks;
-#endif
       bool duplex;
 #ifdef EXPERIMENTAL_DA
       gPrefs->Read(wxT("/AudioIO/Duplex"), &duplex, false);
@@ -993,15 +986,9 @@ void ControlToolBar::OnRecord(wxCommandEvent &evt)
 #endif
       if(duplex){
          playbackTracks = trackList->GetWaveTrackConstArray(false);
-#ifdef EXPERIMENTAL_MIDI_OUT
-         midiTracks = trackList->GetNoteTrackArray(false);
-#endif
       }
       else {
          playbackTracks = WaveTrackConstArray();
-#ifdef EXPERIMENTAL_MIDI_OUT
-         midiTracks = NoteTrackArray();
-#endif
       }
 
       int recordingChannels = 0;
@@ -1271,12 +1258,7 @@ void ControlToolBar::SetupCutPreviewTracks(double WXUNUSED(playStart), double cu
       TrackListIterator it(p->GetTracks());
       for (Track *t = it.First(); t; t = it.Next())
       {
-         if (t->GetSelected() &&
-            (t->GetKind() == Track::Wave
-#ifdef EXPERIMENTAL_MIDI_OUT
-         || t->GetKind() == Track::Note
-#endif
-            ))
+         if (t->GetSelected() && (t->GetKind() == Track::Wave))
          {
             track1 = t;
             track2 = t->GetLink();

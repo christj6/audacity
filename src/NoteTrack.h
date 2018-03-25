@@ -27,13 +27,7 @@ class wxRect;
 class DirManager;
 class Alg_seq;   // from "allegro.h"
 
-using NoteTrackBase =
-#ifdef EXPERIMENTAL_MIDI_OUT
-   PlayableTrack
-#else
-   AudioTrack
-#endif
-   ;
+using NoteTrackBase = AudioTrack;
 
 using QuantizedTimeAndBeat = std::pair< double, double >;
 
@@ -86,11 +80,6 @@ class AUDACITY_DLL_API NoteTrack final
    void Silence(double t0, double t1) override;
    void InsertSilence(double t, double len) override;
    bool Shift(double t) /* not override */;
-
-#ifdef EXPERIMENTAL_MIDI_OUT
-   float GetVelocity() const { return mVelocity; }
-   void SetVelocity(float velocity) { mVelocity = velocity; }
-#endif
 
    QuantizedTimeAndBeat NearestBeatTime( double time ) const;
    bool StretchRegion
@@ -220,10 +209,6 @@ class AUDACITY_DLL_API NoteTrack final
    mutable std::unique_ptr<Alg_seq> mSeq;
    mutable std::unique_ptr<char[]> mSerializationBuffer;
    mutable long mSerializationLength;
-
-#ifdef EXPERIMENTAL_MIDI_OUT
-   float mVelocity; // velocity offset
-#endif
 
    // mBottom is the Y offset of pitch 0 (normally off screen)
    mutable int mBottom;

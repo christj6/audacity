@@ -53,10 +53,6 @@ NoteTrack::NoteTrack(const std::shared_ptr<DirManager> &projDirManager)
 
    mSeq = NULL;
    mSerializationLength = 0;
-
-#ifdef EXPERIMENTAL_MIDI_OUT
-   mVelocity = 0;
-#endif
    mBottomNote = 24;
    mPitchHeight = 5.0f;
 
@@ -121,9 +117,6 @@ Track::Holder NoteTrack::Duplicate() const
    duplicate->mPitchHeight = mPitchHeight;
    duplicate->mVisibleChannels = mVisibleChannels;
    duplicate->SetOffset(GetOffset());
-#ifdef EXPERIMENTAL_MIDI_OUT
-   duplicate->SetVelocity(GetVelocity());
-#endif
    // This std::move is needed to "upcast" the pointer type
    return std::move(duplicate);
 }
@@ -148,7 +141,7 @@ void NoteTrack::DoSetHeight(int h)
 {
    auto oldHeight = GetHeight();
    auto oldMargin = GetNoteMargin(oldHeight);
-   PlayableTrack::DoSetHeight(h);
+   AudioTrack::DoSetHeight(h);
    auto margin = GetNoteMargin(h);
    Zoom(
       wxRect{ 0, 0, 1, h }, // only height matters
@@ -792,12 +785,6 @@ bool NoteTrack::HandleXMLTag(const wxChar *tag, const wxChar **attrs)
          else if (!wxStrcmp(attr, wxT("isSelected")) &&
                   XMLValueChecker::IsGoodInt(strValue) && strValue.ToLong(&nValue))
             this->SetSelected(nValue != 0);
-#ifdef EXPERIMENTAL_MIDI_OUT
-         else if (!wxStrcmp(attr, wxT("velocity")) &&
-                  XMLValueChecker::IsGoodString(strValue) &&
-                  Internat::CompatibleToDouble(strValue, &dblValue))
-            mVelocity = (float) dblValue;
-#endif
          else if (!wxStrcmp(attr, wxT("bottomnote")) &&
                   XMLValueChecker::IsGoodInt(strValue) && strValue.ToLong(&nValue))
             SetBottomNote(nValue);
@@ -839,9 +826,6 @@ void NoteTrack::WriteXML(XMLWriter &xmlFile) const
    xmlFile.WriteAttr(wxT("minimized"), saveme->GetMinimized());
    xmlFile.WriteAttr(wxT("isSelected"), this->GetSelected());
 
-#ifdef EXPERIMENTAL_MIDI_OUT
-   xmlFile.WriteAttr(wxT("velocity"), (double) saveme->mVelocity);
-#endif
    xmlFile.WriteAttr(wxT("bottomnote"), saveme->mBottomNote);
    xmlFile.WriteAttr(wxT("data"), wxString(data.str().c_str(), wxConvUTF8));
    xmlFile.EndTag(wxT("notetrack"));

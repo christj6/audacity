@@ -505,9 +505,6 @@ void TrackArtist::DrawTrack(TrackPanelDrawingContext &context,
    {
       auto nt = static_cast<const NoteTrack *>(t);
       bool muted = false;
-#ifdef EXPERIMENTAL_MIDI_OUT
-      muted = (hasSolo || nt->GetMute()) && !nt->GetSolo();
-#endif
       DrawNoteTrack((NoteTrack *)t, dc, rect, selectedRegion, zoomInfo, muted);
       break;
    }

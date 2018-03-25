@@ -80,18 +80,12 @@ public:
 
    WaveTrack *GetWave() const;
    WaveTrack *GetRight() const;
-#ifdef EXPERIMENTAL_MIDI_OUT
-   NoteTrack *GetNote() const;
-#endif
 
    void UpdatePrefs();
 
    void HandleResize(); // For wxSizeEvents, update gain slider and meter.
 
    void HandleSliderGain(const bool bWantPushState = false);
-#ifdef EXPERIMENTAL_MIDI_OUT
-   void HandleSliderVelocity(const bool bWantPushState = false);
-#endif
    void HandleSliderPan(const bool bWantPushState = false);
 
    void ResetMeter(const bool bResetClipping);
@@ -103,9 +97,6 @@ public:
    void UpdateSolo();
    void UpdatePan();
    void UpdateGain();
-#ifdef EXPERIMENTAL_MIDI_OUT
-   void UpdateVelocity();
-#endif
    void UpdateMeter(const double t0, const double t1);
 
 private:
@@ -120,9 +111,6 @@ private:
 
    void OnButton_MusicalInstrument(wxCommandEvent& event);
    void OnSlider_Gain(wxCommandEvent& event);
-#ifdef EXPERIMENTAL_MIDI_OUT
-   void OnSlider_Velocity(wxCommandEvent& event);
-#endif
    void OnSlider_Pan(wxCommandEvent& event);
    void OnButton_Mute(wxCommandEvent& event);
    void OnButton_Solo(wxCommandEvent& event);
@@ -143,9 +131,6 @@ private:
    AButton* mToggleButton_Solo;
    MixerTrackSlider* mSlider_Pan;
    MixerTrackSlider* mSlider_Gain;
-#ifdef EXPERIMENTAL_MIDI_OUT
-   MixerTrackSlider* mSlider_Velocity;
-#endif
    MeterPanel* mMeter;
 
 public:
@@ -232,9 +217,6 @@ public:
    void UpdateSolo(const PlayableTrack* pTrack = NULL); // NULL means update for all tracks.
    void UpdatePan(const PlayableTrack* pTrack = NULL); // NULL means update for all tracks.
    void UpdateGain(const PlayableTrack* pTrack);
-#ifdef EXPERIMENTAL_MIDI_OUT
-   void UpdateVelocity(const PlayableTrack* pTrack);
-#endif
 
    void UpdateMeters(const double t1, const bool bLoopedPlay);
 

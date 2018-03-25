@@ -23,23 +23,6 @@
 #include <wx/atomic.h>
 #include <wx/weakref.h>
 
-#ifdef USE_MIDI
-
-// TODO: Put the relative paths into automake.
-
-#ifdef EXPERIMENTAL_MIDI_OUT
-#include "../lib-src/portmidi/pm_common/portmidi.h"
-#include "../lib-src/portmidi/porttime/porttime.h"
-#include <cstring> // Allegro include fails if this header isn't included do to no memcpy
-#include "../lib-src/header-substitutes/allegro.h"
-
-class NoteTrack;
-using NoteTrackArray = std::vector < std::shared_ptr< NoteTrack > >;
-
-#endif // EXPERIMENTAL_MIDI_OUT
-
-#endif // USE_MIDI
-
 #if USE_PORTMIXER
 #include "../lib-src/portmixer/include/portmixer.h"
 #endif
@@ -214,29 +197,6 @@ class AUDACITY_DLL_API AudioIO final {
    wxLongLong GetLastPlaybackTime() const { return mLastPlaybackTimeMillis; }
    AudacityProject *GetOwningProject() const { return mOwningProject; }
 
-#ifdef EXPERIMENTAL_MIDI_OUT
-   /** \brief Compute the current PortMidi timestamp time.
-    *
-    * This is used by PortMidi to synchronize midi time to audio samples
-    */
-   PmTimestamp MidiTime();
-
-   // Note: audio code solves the problem of soloing/muting tracks by scanning
-   // all playback tracks on every call to the audio buffer fill routine.
-   // We do the same for Midi, but it seems wasteful for at least two
-   // threads to be frequently polling to update status. This could be
-   // eliminated (also with a reduction in code I think) by updating mHasSolo
-   // each time a solo button is activated or deactivated. For now, I'm
-   // going to do this polling in the FillMidiBuffer routine to localize
-   // changes for midi to the midi code, but I'm declaring the variable
-   // here so possibly in the future, Audio code can use it too. -RBD
- private:
-   bool  mHasSolo; // is any playback solo button pressed?
- public:
-   bool SetHasSolo(bool hasSolo);
-   bool GetHasSolo() { return mHasSolo; }
-#endif
-
    /** \brief Returns true if the stream is active, or even if audio I/O is
     * busy cleaning up its data or writing to disk.
     *
@@ -379,11 +339,6 @@ class AUDACITY_DLL_API AudioIO final {
     */
    wxString GetDeviceInfo();
 
-#ifdef EXPERIMENTAL_MIDI_OUT
-   /** \brief Get diagnostic information on all the available MIDI I/O devices */
-   wxString GetMidiDeviceInfo();
-#endif
-
    /** \brief Ensure selected device names are valid
     *
     */
@@ -425,22 +380,6 @@ private:
                              unsigned int numCaptureChannels,
                              sampleFormat captureFormat);
    void FillBuffers();
-
-#ifdef EXPERIMENTAL_MIDI_OUT
-   void PrepareMidiIterator(bool send = true, double offset = 0);
-   bool StartPortMidiStream();
-
-   // Compute nondecreasing time stamps, accounting for pauses, but not the
-   // synth latency.
-   double UncorrectedMidiEventTime();
-
-   void OutputEvent();
-   void FillMidiBuffers();
-   void GetNextEvent();
-   double AudioTime() { return mT0 + mNumFrames / mRate; }
-   double PauseTime();
-   void AllNotesOff(bool looping = false);
-#endif
 
    /** \brief Get the number of audio samples free in all of the playback
    * buffers.
@@ -516,88 +455,7 @@ private:
      * If bOnlyBuffers is specified, it only cleans up the buffers. */
    void StartStreamCleanup(bool bOnlyBuffers = false);
 
-#ifdef EXPERIMENTAL_MIDI_OUT
-   //   MIDI_PLAYBACK:
-   PmStream        *mMidiStream;
-   PmError          mLastPmError;
-
-   /// Latency of MIDI synthesizer
-   long             mSynthLatency; // ms
-
-   // These fields are used to synchronize MIDI with audio:
-
-   /// PortAudio's clock time
-   volatile double  mAudioCallbackClockTime;
-
-   /// Number of frames output, including pauses
-   volatile long    mNumFrames;
-   /// How many frames of zeros were output due to pauses?
-   volatile long    mNumPauseFrames;
-   /// total of backward jumps
-   volatile int     mMidiLoopPasses;
-   inline double MidiLoopOffset() { return mMidiLoopPasses * (mT1 - mT0); }
-
-   volatile long    mAudioFramesPerBuffer;
-   /// Used by Midi process to record that pause has begun,
-   /// so that AllNotesOff() is only delivered once
-   volatile bool    mMidiPaused;
-   /// The largest timestamp written so far, used to delay
-   /// stream closing until last message has been delivered
-   PmTimestamp mMaxMidiTimestamp;
-
-   /// Offset from ideal sample computation time to system time,
-   /// where "ideal" means when we would get the callback if there
-   /// were no scheduling delays or computation time
-   double mSystemMinusAudioTime;
-   /// audio output latency reported by PortAudio
-   /// (initially; for Alsa, we adjust it to the largest "observed" value)
-   double mAudioOutLatency;
-
-   // Next two are used to adjust the previous two, if
-   // PortAudio does not provide the info (using ALSA):
-
-   /// time of first callback
-   /// used to find "observed" latency
-   double mStartTime;
-   /// number of callbacks since stream start
-   long mCallbackCount;
-
-   /// Make just one variable to communicate from audio to MIDI thread,
-   /// to avoid problems of atomicity of updates
-   volatile double mSystemMinusAudioTimePlusLatency;
-
-   Alg_seq_ptr      mSeq;
-   std::unique_ptr<Alg_iterator> mIterator;
-   /// The next event to play (or null)
-   Alg_event_ptr    mNextEvent;
-
-#ifdef AUDIO_IO_GB_MIDI_WORKAROUND
-   std::vector< std::pair< int, int > > mPendingNotesOff;
-#endif
-
-   /// Time at which the next event should be output, measured in seconds.
-   /// Note that this could be a note's time+duration for note offs.
-   double           mNextEventTime;
-   /// Track of next event
-   NoteTrack        *mNextEventTrack;
-   /// True when output reaches mT1
-   bool             mMidiOutputComplete{ true };
-   /// Is the next event a note-on?
-   bool             mNextIsNoteOn;
-   /// mMidiStreamActive tells when mMidiStream is open for output
-   bool             mMidiStreamActive;
-   /// when true, mSendMidiState means send only updates, not note-on's,
-   /// used to send state changes that precede the selected notes
-   bool             mSendMidiState;
-   NoteTrackArray   mMidiPlaybackTracks;
-#endif
-
    std::unique_ptr<AudioThread> mThread;
-#ifdef EXPERIMENTAL_MIDI_OUT
-#ifdef USE_MIDI_THREAD
-   std::unique_ptr<AudioThread> mMidiThread;
-#endif
-#endif
    ArrayOf<std::unique_ptr<Resample>> mResample;
    ArrayOf<std::unique_ptr<RingBuffer>> mCaptureBuffers;
    WaveTrackArray      mCaptureTracks;
@@ -649,11 +507,6 @@ private:
 
    wxLongLong          mLastPlaybackTimeMillis;
 
-#ifdef EXPERIMENTAL_MIDI_OUT
-   volatile bool       mMidiThreadFillBuffersLoopRunning;
-   volatile bool       mMidiThreadFillBuffersLoopActive;
-#endif
-
    volatile double     mLastRecordingOffset;
    PaError             mLastPaError;
 
@@ -694,9 +547,6 @@ private:
    AudioIOListener*    mListener;
 
    friend class AudioThread;
-#ifdef EXPERIMENTAL_MIDI_OUT
-   friend class MidiThread;
-#endif
 
    friend void InitAudioIO();
 

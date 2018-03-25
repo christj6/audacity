@@ -64,10 +64,6 @@
 #include "WaveformSettings.h"
 #include "ExtImportPrefs.h"
 
-#ifdef EXPERIMENTAL_MIDI_OUT
-#include "MidiIOPrefs.h"
-#endif
-
 #include "../Theme.h"
 #include "../widgets/HelpSystem.h"
 
@@ -155,9 +151,6 @@ PrefsDialog::Factories
    static DevicePrefsFactory devicePrefsFactory;
    static PlaybackPrefsFactory playbackPrefsFactory;
    static RecordingPrefsFactory recordingPrefsFactory;
-#ifdef EXPERIMENTAL_MIDI_OUT
-   static MidiIOPrefsFactory midiIOPrefsFactory;
-#endif
    static QualityPrefsFactory qualityPrefsFactory;
    static GUIPrefsFactory guiPrefsFactory;
    static TracksPrefsFactory tracksPrefsFactory;
@@ -187,9 +180,6 @@ PrefsDialog::Factories
       &devicePrefsFactory,
       &playbackPrefsFactory,
       &recordingPrefsFactory,
-#ifdef EXPERIMENTAL_MIDI_OUT
-      &midiIOPrefsFactory,
-#endif
       &qualityPrefsFactory,
       &guiPrefsFactory,
 
