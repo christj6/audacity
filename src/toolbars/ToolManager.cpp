@@ -55,7 +55,6 @@
 #include "EditToolBar.h"
 #include "MeterToolBar.h"
 #include "MixerToolBar.h"
-#include "ScrubbingToolBar.h"
 #include "SelectionBar.h"
 #include "SpectralSelectionBar.h"
 #include "ToolsToolBar.h"
@@ -426,7 +425,6 @@ ToolManager::ToolManager( AudacityProject *parent, wxWindow *topDockParent )
 #ifdef EXPERIMENTAL_SPECTRAL_EDITING
    mBars[SpectralSelectionBarID] =  ToolBar::Holder{ safenew SpectralSelectionBar() };
 #endif
-   mBars[ ScrubbingBarID ]     =  ToolBar::Holder{ safenew ScrubbingToolBar() };
 
    // We own the timer
    mTimer.SetOwner( this );
@@ -484,10 +482,6 @@ static struct DefaultConfigEntry {
 #else
    { TranscriptionBarID,     EditBarID,              NoBarID                },
 #endif
-
-   // start another top dock row
-   { ScrubbingBarID,         NoBarID,                TransportBarID         },
-   { DeviceBarID,            ScrubbingBarID,         TransportBarID         },
 
    // Hidden by default in top dock
    { MeterBarID,             NoBarID,                NoBarID                },
@@ -554,7 +548,6 @@ void ToolManager::Reset()
 #ifdef EXPERIMENTAL_SPECTRAL_EDITING
          || ndx == SpectralSelectionBarID
 #endif
-         || ndx == ScrubbingBarID
 // DA: Hides three more toolbars.
 #ifdef EXPERIMENTAL_DA
          || ndx == DeviceBarID
@@ -702,8 +695,6 @@ void ToolManager::ReadConfig()
       if( ndx == SelectionBarID )
          defaultDock = BotDockID;
       if( ndx == MeterBarID )
-         bShownByDefault = false;
-      if( ndx == ScrubbingBarID )
          bShownByDefault = false;
 
 #ifdef EXPERIMENTAL_SPECTRAL_EDITING
@@ -867,8 +858,7 @@ void ToolManager::ReadConfig()
              t->GetType() == DeviceBarID)
             continue;
 
-         if (someFound &&
-             t->GetType() == ScrubbingBarID) {
+         if (someFound) {
             // Special case code to put the NEW scrubbing toolbar where we
             // want it, when audacity.cfg is present from an older version
             ToolBar *lastRoot {};

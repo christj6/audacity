@@ -307,7 +307,6 @@ private:
     DECLARE_EVENT_TABLE()
 };
 
-class QuickPlayIndicatorOverlay;
 class QuickPlayRulerOverlay;
 
 // This is an Audacity Specific ruler panel.
@@ -349,20 +348,13 @@ public:
 
    enum class StatusChoice {
       EnteringQP,
-      EnteringScrubZone,
       Leaving,
       NoChange
    };
 
    void RegenerateTooltips(StatusChoice choice);
 
-   void ShowQuickPlayIndicator( bool repaint_all=false);
-   void HideQuickPlayIndicator( bool repaint_all=false);
    void UpdateQuickPlayPos(wxCoord &mousPosX);
-
-   bool ShowingScrubRuler() const { return mShowScrubbing; }
-   void OnToggleScrubRuler(/*wxCommandEvent& */);
-   void OnToggleScrubRulerFromMenu(wxCommandEvent& );
    void SetPanelSize();
 
 
@@ -376,8 +368,6 @@ private:
    void HandleQPDrag(wxMouseEvent &event, wxCoord mousePosX);
    void HandleQPRelease(wxMouseEvent &event);
    void StartQPPlay(bool looped, bool cutPreview);
-
-   void UpdateStatusBarAndTooltips(StatusChoice choice);
 
    void OnCaptureLost(wxMouseCaptureLostEvent &evt);
 
@@ -399,11 +389,9 @@ public:
    static TempAllowFocus TemporarilyAllowFocus();
 
 private:
-   QuickPlayIndicatorOverlay *GetOverlay();
-   void ShowOrHideQuickPlayIndicator(bool show, bool repaint_all=false);
    void DoDrawPlayRegion(wxDC * dc);
 
-   enum class MenuChoice { QuickPlay, Scrub };
+   enum class MenuChoice { QuickPlay };
    void ShowContextMenu( MenuChoice choice, const wxPoint *pPosition);
 
    double Pos2Time(int p, bool ignoreFisheye = false);
@@ -424,7 +412,6 @@ private:
    TrackList *mTracks;
 
    wxRect mOuter;
-   wxRect mScrubZone;
    wxRect mInner;
 
    int mLeftOffset;  // Number of pixels before we hit the 'zero position'.
@@ -449,7 +436,6 @@ private:
    // Pop-up menu
    //
    void ShowMenu(const wxPoint & pos);
-   void ShowScrubMenu(const wxPoint & pos);
    void DragSelection();
    void HandleSnapping();
    void OnToggleQuickPlay(wxCommandEvent &evt);
@@ -480,11 +466,9 @@ private:
    int mLastMouseX;  // Pixel position
    bool mIsDragging;
 
-   std::unique_ptr<QuickPlayIndicatorOverlay> mOverlay;
-
    StatusChoice mPrevZone { StatusChoice::NoChange };
 
-   bool mShowScrubbing { false };
+   bool mShowScrubbing{ false };
 
    DECLARE_EVENT_TABLE()
 

@@ -52,7 +52,6 @@
 #include "../AllThemeResources.h"
 #include "../ImageManipulation.h"
 #include "../Project.h"
-#include "../tracks/ui/Scrubbing.h"
 #include "../Theme.h"
 
 #include "../Experimental.h"

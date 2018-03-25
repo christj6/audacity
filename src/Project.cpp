@@ -146,7 +146,6 @@ scroll information.  It also has some status flags.
 #include "toolbars/EditToolBar.h"
 #include "toolbars/MeterToolBar.h"
 #include "toolbars/MixerToolBar.h"
-#include "toolbars/ScrubbingToolBar.h"
 #include "toolbars/SelectionBar.h"
 #include "toolbars/SpectralSelectionBar.h"
 #include "toolbars/ToolsToolBar.h"
@@ -155,7 +154,6 @@ scroll information.  It also has some status flags.
 #include "tracks/ui/BackgroundCell.h"
 #include "tracks/ui/EditCursorOverlay.h"
 #include "tracks/ui/PlayIndicatorOverlay.h"
-#include "tracks/ui/Scrubbing.h"
 
 #include "commands/ScriptCommandRelay.h"
 #include "commands/CommandTargets.h"
@@ -1074,11 +1072,6 @@ AudacityProject::AudacityProject(wxWindow * parent, wxWindowID id,
 
    mBackgroundCell = std::make_shared<BackgroundCell>(this);
 
-#ifdef EXPERIMENTAL_SCRUBBING_BASIC
-   mScrubOverlay = std::make_unique<ScrubbingOverlay>(this);
-   mScrubber = std::make_unique<Scrubber>(this);
-#endif
-
    // More order dependencies here...
    // This must follow construction of *mIndicatorOverlay, because it must
    // attach its timer event handler later (so that its handler is invoked
@@ -1096,9 +1089,6 @@ AudacityProject::AudacityProject(wxWindow * parent, wxWindowID id,
    // Add the overlays, in the sequence in which they will be painted
    mTrackPanel->AddOverlay(mIndicatorOverlay.get());
    mTrackPanel->AddOverlay(mCursorOverlay.get());
-#ifdef EXPERIMENTAL_SCRUBBING_BASIC
-   mTrackPanel->AddOverlay(mScrubOverlay.get());
-#endif
 
    CreateMenusAndCommands();
 
@@ -1241,9 +1231,6 @@ AudacityProject::~AudacityProject()
    }
 
    if(mTrackPanel) {
-#ifdef EXPERIMENTAL_SCRUBBING_BASIC
-      mTrackPanel->RemoveOverlay(mScrubOverlay.get());
-#endif
       mTrackPanel->RemoveOverlay(mCursorOverlay.get());
       mTrackPanel->RemoveOverlay(mIndicatorOverlay.get());
    }
@@ -1761,8 +1748,7 @@ bool AudacityProject::MayScrollBeyondZero() const
    if (mViewInfo.bScrollBeyondZero)
       return true;
 
-   if (GetScrubber().HasStartedScrubbing() ||
-       IsAudioActive()) {
+   if (IsAudioActive()) {
       if (mPlaybackScroller) {
          auto mode = mPlaybackScroller->GetMode();
          if (mode == PlaybackScroller::Mode::Centered ||
@@ -4788,14 +4774,6 @@ MixerToolBar *AudacityProject::GetMixerToolBar()
           (mToolManager ?
            mToolManager->GetToolBar(MixerBarID) :
            NULL);
-}
-
-ScrubbingToolBar *AudacityProject::GetScrubbingToolBar()
-{
-   return dynamic_cast<ScrubbingToolBar*>
-   (mToolManager ?
-    mToolManager->GetToolBar(ScrubbingBarID) :
-    nullptr);
 }
 
 SelectionBar *AudacityProject::GetSelectionBar()

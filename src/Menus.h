@@ -378,7 +378,6 @@ void OnShowSelectionToolBar(const CommandContext &context );
 #ifdef EXPERIMENTAL_SPECTRAL_EDITING
 void OnShowSpectralSelectionToolBar(const CommandContext &context );
 #endif
-void OnShowScrubbingToolBar(const CommandContext &context );
 void OnShowToolsToolBar(const CommandContext &context );
 void OnShowTranscriptionToolBar(const CommandContext &context );
 void OnResetToolBars(const CommandContext &context );

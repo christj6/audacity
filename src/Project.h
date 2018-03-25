@@ -74,8 +74,6 @@ class DeviceToolBar;
 class EditToolBar;
 class MeterToolBar;
 class MixerToolBar;
-class Scrubber;
-class ScrubbingToolBar;
 class SelectionBar;
 class SpectralSelectionBar;
 class ToolManager;
@@ -495,7 +493,6 @@ public:
    DeviceToolBar *GetDeviceToolBar();
    EditToolBar *GetEditToolBar();
    MixerToolBar *GetMixerToolBar();
-   ScrubbingToolBar *GetScrubbingToolBar();
    SelectionBar *GetSelectionBar();
 #ifdef EXPERIMENTAL_SPECTRAL_EDITING
    SpectralSelectionBar *GetSpectralSelectionBar();
@@ -788,14 +785,7 @@ private:
 
    std::shared_ptr<BackgroundCell> mBackgroundCell;
 
-#ifdef EXPERIMENTAL_SCRUBBING_BASIC
-   std::unique_ptr<Overlay> mScrubOverlay;
-   std::unique_ptr<Scrubber> mScrubber;
-public:
-   Scrubber &GetScrubber() { return *mScrubber; }
-   const Scrubber &GetScrubber() const { return *mScrubber; }
-#endif
-
+   public:
    class PlaybackScroller final : public wxEvtHandler
    {
    public:

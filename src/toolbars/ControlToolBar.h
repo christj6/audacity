@@ -63,7 +63,7 @@ class ControlToolBar final : public ToolBar {
 
    // Choice among the appearances of the play button:
    enum class PlayAppearance {
-      Straight, Looped, CutPreview, Scrub, Seek
+      Straight, Looped, CutPreview, Seek
    };
 
    //These allow buttons to be controlled externally:

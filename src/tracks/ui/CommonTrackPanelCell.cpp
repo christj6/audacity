@@ -10,7 +10,6 @@ Paul Licameli split from TrackPanel.cpp
 
 #include "../../Audacity.h"
 #include "CommonTrackPanelCell.h"
-#include "Scrubbing.h"
 
 #include "../../Experimental.h"
 #include "../../HitTestResult.h"
@@ -38,14 +37,9 @@ unsigned CommonTrackPanelCell::HandleWheelRotation
    unsigned result = RefreshAll;
    const wxMouseEvent &event = evt.event;
    ViewInfo &viewInfo = pProject->GetViewInfo();
-   Scrubber &scrubber = pProject->GetScrubber();
    const auto steps = evt.steps;
 
-   if (event.ShiftDown()
-       // Don't pan during smooth scrolling.  That would conflict with keeping
-       // the play indicator centered.
-       && !scrubber.IsScrollScrubbing()
-      )
+   if (event.ShiftDown())
    {
       // MM: Scroll left/right when used with Shift key down
       pProject->TP_ScrollWindow(
@@ -76,11 +70,8 @@ unsigned CommonTrackPanelCell::HandleWheelRotation
       double center_h;
       double mouse_h = viewInfo.PositionToTime(event.m_x, trackLeftEdge);
 
-      // Scrubbing? Expand or contract about the center, ignoring mouse position
-      if (scrubber.IsScrollScrubbing())
-         center_h = viewInfo.h + (pProject->GetScreenEndTime() - viewInfo.h) / 2.0;
       // Zooming out? Focus on mouse.
-      else if( steps <= 0 )
+      if( steps <= 0 )
          center_h = mouse_h;
       // No Selection? Focus on mouse.
       else if((viewInfo.selectedRegion.t1() - viewInfo.selectedRegion.t0() ) < 0.00001  )
@@ -130,22 +121,13 @@ unsigned CommonTrackPanelCell::HandleWheelRotation
    }
    else
    {
-#ifdef EXPERIMENTAL_SCRUBBING_SCROLL_WHEEL
-      if (scrubber.IsScrubbing()) {
-         scrubber.HandleScrollWheel(steps);
-         evt.event.Skip(false);
-      }
-      else
-#endif
-      {
-         // MM: Scroll up/down when used without modifier keys
-         double lines = steps * 4 + mVertScrollRemainder;
-         mVertScrollRemainder = lines - floor(lines);
-         lines = floor(lines);
-         auto didSomething = pProject->TP_ScrollUpDown((int)-lines);
-         if (!didSomething)
-            result |= Cancelled;
-      }
+		// MM: Scroll up/down when used without modifier keys
+		double lines = steps * 4 + mVertScrollRemainder;
+		mVertScrollRemainder = lines - floor(lines);
+		lines = floor(lines);
+		auto didSomething = pProject->TP_ScrollUpDown((int)-lines);
+		if (!didSomething)
+			result |= Cancelled;
    }
 
    return result;

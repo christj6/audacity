@@ -165,17 +165,6 @@
 // Define to enable Nyquist audio clip boundary control (Steve Daulton Dec 2014)
 #define EXPERIMENTAL_NYQUIST_SPLIT_CONTROL
 
-// Paul Licameli (PRL) 16 Apr 2015
-// Support for scrubbing in the AudioIO engine, without calls to it
-#define EXPERIMENTAL_SCRUBBING_SUPPORT
-#ifdef EXPERIMENTAL_SCRUBBING_SUPPORT
-   // The following enable parts of the scrubbing user interface.
-   #define EXPERIMENTAL_SCRUBBING_BASIC
-   #ifdef EXPERIMENTAL_SCRUBBING_BASIC
-      #define EXPERIMENTAL_SCRUBBING_SCROLL_WHEEL
-   #endif
-#endif
-
 // Paul Licameli (PRL) 24 May 2015
 // Allow scrolling up to one half of a screenful beyond either end of the project,
 // if you turn on the appropriate Tracks preference.

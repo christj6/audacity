@@ -222,7 +222,6 @@
     <ClCompile Include="..\..\..\src\TimeDialog.cpp" />
     <ClCompile Include="..\..\..\src\TimerRecordDialog.cpp" />
     <ClCompile Include="..\..\..\src\TimeTrack.cpp" />
-    <ClCompile Include="..\..\..\src\toolbars\ScrubbingToolBar.cpp" />
     <ClCompile Include="..\..\..\src\toolbars\SpectralSelectionBar.cpp" />
     <ClCompile Include="..\..\..\src\Track.cpp" />
     <ClCompile Include="..\..\..\src\TrackArtist.cpp" />
@@ -253,7 +252,6 @@
     <ClCompile Include="..\..\..\src\tracks\ui\EditCursorOverlay.cpp" />
     <ClCompile Include="..\..\..\src\tracks\ui\EnvelopeHandle.cpp" />
     <ClCompile Include="..\..\..\src\tracks\ui\PlayIndicatorOverlay.cpp" />
-    <ClCompile Include="..\..\..\src\tracks\ui\Scrubbing.cpp" />
     <ClCompile Include="..\..\..\src\tracks\ui\SelectHandle.cpp" />
     <ClCompile Include="..\..\..\src\tracks\ui\SliderHandle.cpp" />
     <ClCompile Include="..\..\..\src\tracks\ui\TimeShiftHandle.cpp" />
@@ -453,7 +451,6 @@
     <ClInclude Include="..\..\..\src\SelectedRegion.h" />
     <ClInclude Include="..\..\..\src\SelectionState.h" />
     <ClInclude Include="..\..\..\src\SseMathFuncs.h" />
-    <ClInclude Include="..\..\..\src\toolbars\ScrubbingToolBar.h" />
     <ClInclude Include="..\..\..\src\toolbars\SpectralSelectionBar.h" />
     <ClInclude Include="..\..\..\src\toolbars\SpectralSelectionBarListener.h" />
     <ClInclude Include="..\..\..\src\TrackPanelCell.h" />
@@ -483,7 +480,6 @@
     <ClInclude Include="..\..\..\src\tracks\ui\EditCursorOverlay.h" />
     <ClInclude Include="..\..\..\src\tracks\ui\EnvelopeHandle.h" />
     <ClInclude Include="..\..\..\src\tracks\ui\PlayIndicatorOverlay.h" />
-    <ClInclude Include="..\..\..\src\tracks\ui\Scrubbing.h" />
     <ClInclude Include="..\..\..\src\TranslatableStringArray.h" />
     <ClInclude Include="..\..\..\src\UserException.h" />
     <ClInclude Include="..\..\..\src\tracks\ui\SliderHandle.h" />

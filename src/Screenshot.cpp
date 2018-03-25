@@ -202,7 +202,6 @@ enum
    IdCaptureEdit,
    IdCaptureDevice,
    IdCaptureTranscription,
-   IdCaptureScrub,
 
    IdCaptureTrackPanel,
    IdCaptureRuler,
@@ -409,7 +408,6 @@ void ScreenFrame::PopulateOrExchange(ShuttleGui & S)
             S.Id(IdCaptureEdit).AddButton(_("Edit"));
             S.Id(IdCaptureDevice).AddButton(_("Device"));
             S.Id(IdCaptureTranscription).AddButton(_("Transcription"));
-            S.Id(IdCaptureScrub).AddButton(_("Scrub"));
          }
          S.EndHorizontalLay();
 

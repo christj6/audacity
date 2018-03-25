@@ -72,7 +72,6 @@ enum
    MixerBarID,
    EditBarID,
    TranscriptionBarID,
-   ScrubbingBarID,
    DeviceBarID,
    SelectionBarID,
 #ifdef EXPERIMENTAL_SPECTRAL_EDITING

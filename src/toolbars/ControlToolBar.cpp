@@ -71,7 +71,6 @@
 #include "../widgets/ErrorDialog.h"
 #include "../FileNames.h"
 
-#include "../tracks/ui/Scrubbing.h"
 #include "../prefs/TracksPrefs.h"
 #include "../toolbars/ToolManager.h"
 
@@ -179,8 +178,6 @@ void ControlToolBar::Populate()
    MakeAlternateImages(*mPlay, 1, bmpLoop, bmpLoop, bmpLoopDisabled);
    MakeAlternateImages(*mPlay, 2,
       bmpCutPreview, bmpCutPreview, bmpCutPreviewDisabled);
-   MakeAlternateImages(*mPlay, 3,
-                       bmpScrub, bmpScrub, bmpScrubDisabled);
    MakeAlternateImages(*mPlay, 4,
                        bmpSeek, bmpSeek, bmpSeekDisabled);
    mPlay->FollowModifierKeys();
@@ -710,9 +707,10 @@ int ControlToolBar::PlayPlayRegion(const SelectedRegion &selectedRegion,
    StartScrollingIfPreferred();
 
    // Let other UI update appearance
+   /*
    if (p)
       p->GetRulerPanel()->HideQuickPlayIndicator();
-
+	  */
    return token;
 }
 
@@ -815,11 +813,6 @@ void ControlToolBar::StopPlaying(bool stopStream /* = true*/)
 
    AudacityProject *project = GetActiveProject();
 
-   if(project) {
-      // Let scrubbing code do some appearance change
-      project->GetScrubber().StopScrubbing();
-   }
-
    if (!CanStopAudioStream())
       return;
 
@@ -854,9 +847,6 @@ void ControlToolBar::StopPlaying(bool stopStream /* = true*/)
          meter->Clear();
       }
    }
-
-   const auto toolbar = project->GetToolManager()->GetToolBar(ScrubbingBarID);
-   toolbar->EnableDisableButtons();
 }
 
 void ControlToolBar::Pause()
@@ -1188,14 +1178,7 @@ void ControlToolBar::OnPause(wxCommandEvent & WXUNUSED(evt))
       mPaused=true;
    }
 
-#ifdef EXPERIMENTAL_SCRUBBING_SUPPORT
-   if (gAudioIO->IsScrubbing())
-      GetActiveProject()->GetScrubber().Pause(mPaused);
-   else
-#endif
-   {
-      gAudioIO->SetPaused(mPaused);
-   }
+   gAudioIO->SetPaused(mPaused);
 
    UpdateStatusBar(GetActiveProject());
 }
@@ -1295,10 +1278,6 @@ int ControlToolBar::WidthForStatusBar(wxStatusBar* const sb)
    update(mStateStop);
    update(mStateRecord);
 
-   // Note that Scrubbing + Paused is not allowed.
-   for(const auto &state : Scrubber::GetAllUntranslatedStatusStrings())
-      update(state);
-
    return xMax + 30;    // added constant needed because xMax isn't large enough for some reason, plus some space.
 }
 
@@ -1307,11 +1286,8 @@ wxString ControlToolBar::StateForStatusBar()
    wxString state;
 
    auto pProject = GetActiveProject();
-   auto scrubState =
-      pProject ? pProject->GetScrubber().GetUntranslatedStateString() : wxString();
-   if (!scrubState.IsEmpty())
-      state = wxGetTranslation(scrubState);
-   else if (mPlay->IsDown())
+
+   if (mPlay->IsDown())
       state = wxGetTranslation(mStatePlay);
    else if (mRecord->IsDown())
       state = wxGetTranslation(mStateRecord);
@@ -1338,16 +1314,6 @@ void ControlToolBar::StartScrollingIfPreferred()
 {
    if (TracksPrefs::GetPinnedHeadPreference())
       StartScrolling();
-#ifdef __WXMAC__
-   else if (::GetActiveProject()->GetScrubber().HasStartedScrubbing()) {
-      // PRL:  cause many "unnecessary" refreshes.  For reasons I don't understand,
-      // doing this causes wheel rotation events (mapped from the double finger vertical
-      // swipe) to be delivered more uniformly to the application, so that speed control
-      // works better.
-      ::GetActiveProject()->GetPlaybackScroller().Activate
-         (AudacityProject::PlaybackScroller::Mode::Refresh);
-   }
-#endif
    else
       StopScrolling();
 }

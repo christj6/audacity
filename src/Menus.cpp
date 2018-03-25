@@ -120,7 +120,6 @@ simplifies construction of menu items.
 #include <wx/debugrpt.h>
 #endif
 
-#include "tracks/ui/Scrubbing.h"
 #include "prefs/TracksPrefs.h"
 
 #include "widgets/Meter.h"
@@ -776,8 +775,6 @@ void AudacityProject::CreateMenusAndCommands()
       c->AddCheck(wxT("ShowEditTB"), XXO("&Edit Toolbar"), FN(OnShowEditToolBar), 0, AlwaysEnabledFlag, AlwaysEnabledFlag);
       /* i18n-hint: Clicking this menu item shows the toolbar for transcription (currently just vary play speed)*/
       c->AddCheck(wxT("ShowTranscriptionTB"), XXO("Tra&nscription Toolbar"), FN(OnShowTranscriptionToolBar), 0, AlwaysEnabledFlag, AlwaysEnabledFlag);
-      /* i18n-hint: Clicking this menu item shows the toolbar that enables Scrub or Seek playback and Scrub Ruler*/
-      c->AddCheck(wxT("ShowScrubbingTB"), XXO("Scru&b Toolbar"), FN(OnShowScrubbingToolBar), 0, AlwaysEnabledFlag, AlwaysEnabledFlag);
       /* i18n-hint: Clicking this menu item shows the toolbar that manages devices*/
       c->AddCheck(wxT("ShowDeviceTB"), XXO("&Device Toolbar"), FN(OnShowDeviceToolBar), 0, AlwaysEnabledFlag, AlwaysEnabledFlag);
       /* i18n-hint: Clicking this menu item shows the toolbar for selecting a time range of audio*/
@@ -842,9 +839,6 @@ void AudacityProject::CreateMenusAndCommands()
       // in fact will use the same flags as in the previous registration.
       c->AddItem(wxT("Pause"), XXO("&Pause"), FN(OnPause), wxT("P"));
       c->EndSubMenu();
-
-      // Scrubbing sub-menu
-      GetScrubber().AddMenuItems();
 
       // JKC: ANSWER-ME: How is 'cursor to' different to 'Skip To' and how is it useful?
       // GA: 'Skip to' moves the viewpoint to center of the track and preserves the
@@ -2289,9 +2283,6 @@ void AudacityProject::ModifyToolbarMenus()
    if (!mToolManager) {
       return;
    }
-
-   mCommandManager.Check(wxT("ShowScrubbingTB"),
-                         mToolManager->IsVisible(ScrubbingBarID));
    mCommandManager.Check(wxT("ShowDeviceTB"),
                          mToolManager->IsVisible(DeviceBarID));
    mCommandManager.Check(wxT("ShowEditTB"),
@@ -2818,8 +2809,7 @@ bool AudacityProject::DoPlayStopSelect(bool click, bool shift)
    ControlToolBar *toolbar = GetControlToolBar();
 
    //If busy, stop playing, make sure everything is unpaused.
-   if (GetScrubber().HasStartedScrubbing() ||
-       gAudioIO->IsStreamActive(GetAudioIOToken())) {
+   if (gAudioIO->IsStreamActive(GetAudioIOToken())) {
       toolbar->SetPlay(false);        //Pops
       toolbar->SetStop(true);         //Pushes stop down
 
@@ -2895,10 +2885,6 @@ void AudacityProject::OnTogglePinnedHead(const CommandContext &WXUNUSED(context)
    if (ruler)
       // Update button image
       ruler->UpdateButtonStates();
-
-   auto &scrubber = GetScrubber();
-   if (scrubber.HasStartedScrubbing())
-      scrubber.SetScrollScrubbing(value);
 }
 
 void AudacityProject::OnTogglePlayRecording(const CommandContext &WXUNUSED(context) )
@@ -6856,12 +6842,6 @@ void AudacityProject::OnShowPlayMeterToolBar(const CommandContext &WXUNUSED(cont
 void AudacityProject::OnShowMixerToolBar(const CommandContext &WXUNUSED(context) )
 {
    mToolManager->ShowHide( MixerBarID );
-   ModifyToolbarMenus();
-}
-
-void AudacityProject::OnShowScrubbingToolBar(const CommandContext &WXUNUSED(context) )
-{
-   mToolManager->ShowHide( ScrubbingBarID );
    ModifyToolbarMenus();
 }
 

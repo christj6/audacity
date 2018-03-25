@@ -18,7 +18,6 @@ Paul Licameli split from TrackPanel.cpp
 #include "../../TrackPanelCell.h"
 #include "../../TrackPanelCellIterator.h"
 #include "../../widgets/Ruler.h"
-#include "Scrubbing.h"
 
 #include <wx/dc.h>
 
@@ -136,16 +135,6 @@ void PlayIndicatorOverlay::OnTimer(wxCommandEvent &event)
 
    if (!mProject->IsAudioActive()) {
       mNewIndicatorX = -1;
-      const auto &scrubber = mProject->GetScrubber();
-      if (scrubber.HasStartedScrubbing()) {
-         auto position = scrubber.GetScrubStartPosition();
-         int width;
-         trackPanel->GetTracksUsableArea(&width, nullptr);
-         const auto offset = trackPanel->GetLeftOffset();
-         if(position >= trackPanel->GetLeftOffset() &&
-            position < offset + width)
-            mNewIndicatorX = position;
-      }
    }
    else {
       ViewInfo &viewInfo = mProject->GetViewInfo();

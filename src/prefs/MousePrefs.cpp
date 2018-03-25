@@ -111,9 +111,6 @@ void MousePrefs::CreateList()
    AddItem(_("Left-Drag"),         _("Select"),   _("Set Selection Range"));
    AddItem(_("Shift-Left-Click"),  _("Select"),   _("Extend Selection Range"));
    AddItem(_("Left-Double-Click"), _("Select"),   _("Select Clip or Entire Track"));
-#ifdef EXPERIMENTAL_SCRUBBING_SCROLL_WHEEL
-   AddItem(_("Wheel-Rotate"),      _("Select"),   _("Change scrub speed"));
-#endif
 
 #ifdef EXPERIMENTAL_SPECTRAL_EDITING
    // JKC: Prompt is disabled for now.  It's a toggle rather than a drag modifier.

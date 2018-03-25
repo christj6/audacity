@@ -74,8 +74,6 @@ wxDECLARE_EXPORTED_EVENT(AUDACITY_DLL_API,
 wxDECLARE_EXPORTED_EVENT(AUDACITY_DLL_API,
                          EVT_AUDIOIO_MONITOR, wxCommandEvent);
 
-struct ScrubbingOptions;
-
 // To avoid growing the argument list of StartStream, add fields here
 struct AudioIOStartStreamOptions
 {
@@ -97,13 +95,6 @@ struct AudioIOStartStreamOptions
    double cutPreviewGapStart;
    double cutPreviewGapLen;
    double * pStartTime;
-
-#ifdef EXPERIMENTAL_SCRUBBING_SUPPORT
-   // Non-null value indicates that scrubbing will happen
-   // (do not specify a time track, looping, or recording, which
-   //  are all incompatible with scrubbing):
-   ScrubbingOptions *pScrubbingOptions {};
-#endif
 };
 
 // This workaround makes pause and stop work when output is to GarageBand,
@@ -148,26 +139,6 @@ class AUDACITY_DLL_API AudioIO final {
    /** \brief Move the playback / recording position of the current stream
     * by the specified amount from where it is now */
    void SeekStream(double seconds) { mSeek = seconds; }
-
-#ifdef EXPERIMENTAL_SCRUBBING_SUPPORT
-   bool IsScrubbing() { return IsBusy() && mScrubQueue != 0; }
-
-   /** \brief enqueue a NEW scrub play interval, using the last end as the NEW start,
-   * to be played over the same duration, as between this and the last
-   * enqueuing (or the starting of the stream).  Except, we do not exceed maximum
-   * scrub speed, so may need to adjust either the start or the end.
-   * If options.adjustStart is true, then when mouse movement exceeds maximum scrub speed,
-   * adjust the beginning of the scrub interval rather than the end, so that
-   * the scrub skips or "stutters" to stay near the cursor.
-   * Return true if some sound was really enqueued.
-   * But if the "stutter" is too short for the minimum, enqueue nothing and return false.
-   */
-   bool EnqueueScrub(double endTimeOrSpeed, const ScrubbingOptions &options);
-
-   /** \brief return the ending time of the last enqueued scrub interval.
-   */
-   double GetLastTimeInScrubQueue() const;
-#endif
 
    /** \brief  Returns true if audio i/o is busy starting, stopping, playing,
     * or recording.
@@ -525,9 +496,6 @@ private:
    volatile enum {
       PLAY_STRAIGHT,
       PLAY_LOOPED,
-#ifdef EXPERIMENTAL_SCRUBBING_SUPPORT
-      PLAY_SCRUB,
-#endif
    }                   mPlayMode;
    double              mCutPreviewGapStart;
    double              mCutPreviewGapLen;
@@ -584,14 +552,6 @@ private:
    // Serialize main thread and PortAudio thread's attempts to pause and change
    // the state used by the third, Audio thread.
    wxMutex mSuspendAudioThread;
-
-#ifdef EXPERIMENTAL_SCRUBBING_SUPPORT
-   struct ScrubQueue;
-   std::unique_ptr<ScrubQueue> mScrubQueue;
-
-   bool mSilentScrub;
-   sampleCount mScrubDuration;
-#endif
 
    // A flag tested and set in one thread, cleared in another.  Perhaps
    // this guarantee of atomicity is more cautious than necessary.
