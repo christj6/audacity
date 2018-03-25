@@ -163,9 +163,6 @@ class AUDACITY_DLL_API AudioIO final {
     * instance.  For use with IsStreamActive() below */
 
    int StartStream(const WaveTrackConstArray &playbackTracks, const WaveTrackArray &captureTracks,
-#ifdef EXPERIMENTAL_MIDI_OUT
-                   const NoteTrackArray &midiTracks,
-#endif
                    double t0, double t1,
                    const AudioIOStartStreamOptions &options);
 

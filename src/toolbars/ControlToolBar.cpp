@@ -687,11 +687,6 @@ int ControlToolBar::PlayPlayRegion(const SelectedRegion &selectedRegion,
             token = gAudioIO->StartStream(
                mCutPreviewTracks->GetWaveTrackConstArray(false),
                WaveTrackArray(),
-#ifdef EXPERIMENTAL_MIDI_OUT
-               useMidi
-                  ? mCutPreviewTracks->GetNoteTrackArray(false)
-                  : NoteTrackArray(),
-#endif
                tcp0, tcp1, myOptions);
          }
          else
@@ -707,11 +702,6 @@ int ControlToolBar::PlayPlayRegion(const SelectedRegion &selectedRegion,
          */
          token = gAudioIO->StartStream(t->GetWaveTrackConstArray(false),
                                        WaveTrackArray(),
-#ifdef EXPERIMENTAL_MIDI_OUT
-                                       useMidi
-                                          ? t->GetNoteTrackArray(false)
-                                          : NoteTrackArray(),
-#endif
                                        t0, t1, options);
       }
       if (token != 0) {
@@ -1191,9 +1181,6 @@ void ControlToolBar::OnRecord(wxCommandEvent &evt)
       AudioIOStartStreamOptions options(p->GetDefaultPlayOptions());
       int token = gAudioIO->StartStream(playbackTracks,
                                         recordingTracks,
-#ifdef EXPERIMENTAL_MIDI_OUT
-                                        midiTracks,
-#endif
                                         t0, t1, options);
 
       success = (token != 0);

@@ -1855,9 +1855,6 @@ void AudioIO::StartMonitoring(double sampleRate)
 
 int AudioIO::StartStream(const WaveTrackConstArray &playbackTracks,
                          const WaveTrackArray &captureTracks,
-#ifdef EXPERIMENTAL_MIDI_OUT
-                         const NoteTrackArray &midiPlaybackTracks,
-#endif
                          double t0, double t1,
                          const AudioIOStartStreamOptions &options)
 {
@@ -1923,9 +1920,6 @@ int AudioIO::StartStream(const WaveTrackConstArray &playbackTracks,
    mLastRecordingOffset = 0;
    mCaptureTracks = captureTracks;
    mPlaybackTracks = playbackTracks;
-#ifdef EXPERIMENTAL_MIDI_OUT
-   mMidiPlaybackTracks = midiPlaybackTracks;
-#endif
 
    bool commit = false;
    auto cleanupTracks = finally([&]{
@@ -2027,11 +2021,7 @@ int AudioIO::StartStream(const WaveTrackConstArray &playbackTracks,
    unsigned int captureChannels = 0;
    sampleFormat captureFormat = floatSample;
 
-   if (playbackTracks.size() > 0 
-#ifdef EXPERIMENTAL_MIDI_OUT
-      || midiPlaybackTracks.size() > 0
-#endif
-      )
+   if (playbackTracks.size() > 0)
       playbackChannels = 2;
 
    if (mSoftwarePlaythrough)

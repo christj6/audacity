@@ -2635,16 +2635,10 @@ void Effect::Preview(bool dryOnly)
       // than previewLen, so take the min.
       t1 = std::min(mT0 + previewLen, mT1);
 
-#ifdef EXPERIMENTAL_MIDI_OUT
-      NoteTrackArray empty;
-#endif
       // Start audio playing
       AudioIOStartStreamOptions options { rate };
       int token =
          gAudioIO->StartStream(playbackTracks, recordingTracks,
-#ifdef EXPERIMENTAL_MIDI_OUT
-                            empty,
-#endif
                             mT0, t1, options);
 
       if (token) {
