@@ -552,12 +552,6 @@ int ControlToolBar::PlayPlayRegion(const SelectedRegion &selectedRegion,
    if (!CanStopAudioStream())
       return -1;
 
-   bool useMidi = true;
-
-   // Remove these lines to experiment with scrubbing/seeking of note tracks
-   if (options.pScrubbingOptions)
-      useMidi = false;
-
    // Uncomment this for laughs!
    // backwards = true;
 
@@ -612,10 +606,6 @@ int ControlToolBar::PlayPlayRegion(const SelectedRegion &selectedRegion,
    if (!hasaudio)
       return -1;  // No need to continue without audio tracks
 
-#if defined(EXPERIMENTAL_SEEK_BEHIND_CURSOR)
-   double init_seek = 0.0;
-#endif
-
    if (t1 == t0) {
       if (looped) {
          // play selection if there is one, otherwise
@@ -639,12 +629,6 @@ int ControlToolBar::PlayPlayRegion(const SelectedRegion &selectedRegion,
          else if (t0 > t->GetEndTime()) {
             t0 = t->GetEndTime();
          }
-#if defined(EXPERIMENTAL_SEEK_BEHIND_CURSOR)
-         else {
-            init_seek = t0;         //AC: init_seek is where playback will 'start'
-            t0 = t->GetStartTime();
-         }
-#endif
       }
       t1 = t->GetEndTime();
    }
@@ -704,10 +688,6 @@ int ControlToolBar::PlayPlayRegion(const SelectedRegion &selectedRegion,
          success = true;
          p->SetAudioIOToken(token);
          mBusyProject = p;
-#if defined(EXPERIMENTAL_SEEK_BEHIND_CURSOR)
-         //AC: If init_seek was set, now's the time to make it happen.
-         gAudioIO->SeekStream(init_seek);
-#endif
       }
       else {
          // Bug1627 (part of it):

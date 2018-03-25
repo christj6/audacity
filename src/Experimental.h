@@ -119,10 +119,6 @@
 // A Frequency Grid for the Spectrum Log(f) & Find Notes modes
 //#define EXPERIMENTAL_FFT_Y_GRID
 
-// Andy Coder, 03.Mar 2009:
-// Allow keyboard seeking before initial playback position
-//#define EXPERIMENTAL_SEEK_BEHIND_CURSOR
-
 // Michael Chinen, 08.Oct 2009
 // Use on-demand importing for FLAC. Has issues with opening projects that
 // have not been fully imported in builds without FLAC support, so disabled for
