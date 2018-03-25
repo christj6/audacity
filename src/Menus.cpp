@@ -62,9 +62,7 @@ simplifies construction of menu items.
 #include "Dependencies.h"
 #include "float_cast.h"
 #include "LabelTrack.h"
-#ifdef USE_MIDI
-#include "import/ImportMIDI.h"
-#endif // USE_MIDI
+
 #include "import/ImportRaw.h"
 #include "export/Export.h"
 #include "export/ExportMultiple.h"
@@ -382,9 +380,6 @@ void AudacityProject::CreateMenusAndCommands()
 
       c->AddItem(wxT("ImportAudio"), XXO("&Audio..."), FN(OnImport), wxT("Ctrl+Shift+I"));
       c->AddItem(wxT("ImportLabels"), XXO("&Labels..."), FN(OnImportLabels));
-#ifdef USE_MIDI
-      c->AddItem(wxT("ImportMIDI"), XXO("&MIDI..."), FN(OnImportMIDI));
-#endif // USE_MIDI
       c->AddItem(wxT("ImportRaw"), XXO("&Raw Data..."), FN(OnImportRaw));
 
       c->EndSubMenu();
@@ -7157,53 +7152,6 @@ void AudacityProject::OnImportLabels(const CommandContext &WXUNUSED(context) )
       ZoomAfterImport(nullptr);
    }
 }
-
-#ifdef USE_MIDI
-void AudacityProject::OnImportMIDI(const CommandContext &WXUNUSED(context) )
-{
-   wxString fileName = FileNames::SelectFile(FileNames::Operation::Open,
-                                    _("Select a MIDI file"),
-                                    wxEmptyString,     // Path
-                                    wxT(""),       // Name
-                                    wxT(""),       // Extension
-                                    _("MIDI and Allegro files (*.mid;*.midi;*.gro)|*.mid;*.midi;*.gro|MIDI files (*.mid;*.midi)|*.mid;*.midi|Allegro files (*.gro)|*.gro|All files|*"),
-                                    wxRESIZE_BORDER,        // Flags
-                                    this);    // Parent
-
-   if (fileName != wxT(""))
-      AudacityProject::DoImportMIDI(this, fileName);
-}
-
-AudacityProject *AudacityProject::DoImportMIDI(
-   AudacityProject *pProject, const wxString &fileName)
-{
-   AudacityProject *pNewProject {};
-   if ( !pProject )
-      pProject = pNewProject = CreateNewAudacityProject();
-   auto cleanup = finally( [&] { if ( pNewProject ) pNewProject->Close(true); } );
-
-   auto newTrack = pProject->GetTrackFactory()->NewNoteTrack();
-
-   if (::ImportMIDI(fileName, newTrack.get())) {
-
-      pProject->SelectNone();
-      auto pTrack = pProject->mTracks->Add(std::move(newTrack));
-      pTrack->SetSelected(true);
-
-      pProject->PushState(wxString::Format(_("Imported MIDI from '%s'"),
-         fileName), _("Import MIDI"));
-
-      pProject->ZoomAfterImport(pTrack);
-      pNewProject = nullptr;
-
-      wxGetApp().AddFileToHistory(fileName);
-
-      return pProject;
-   }
-   else
-      return nullptr;
-}
-#endif // USE_MIDI
 
 void AudacityProject::OnImportRaw(const CommandContext &WXUNUSED(context) )
 {

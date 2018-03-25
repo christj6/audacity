@@ -359,9 +359,6 @@
     <ClCompile Include="..\..\..\src\import\ImportLOF.cpp">
       <Filter>src\import</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\import\ImportMIDI.cpp">
-      <Filter>src\import</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\import\ImportMP3.cpp">
       <Filter>src\import</Filter>
     </ClCompile>
@@ -1190,9 +1187,6 @@
       <Filter>src\import</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\import\ImportLOF.h">
-      <Filter>src\import</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\import\ImportMIDI.h">
       <Filter>src\import</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\import\ImportMP3.h">

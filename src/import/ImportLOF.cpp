@@ -78,9 +78,6 @@
 #include <wx/textfile.h>
 #include <wx/tokenzr.h>
 
-#ifdef USE_MIDI
-#include "ImportMIDI.h"
-#endif // USE_MIDI
 #include "../WaveTrack.h"
 #include "ImportPlugin.h"
 #include "Import.h"
@@ -384,22 +381,6 @@ void LOFImportFileHandle::lofOpenFiles(wxString* ln)
       }
 
       // Do recursive call to import
-
-#ifdef USE_MIDI
-      // If file is a midi
-      if (Importer::IsMidi(targetfile))
-      {
-         mProject = AudacityProject::DoImportMIDI(mProject, targetfile);
-      }
-
-      // If not a midi, open audio file
-      else
-
-#else // !USE_MIDI
-         /* if we don't have midi support, go straight on to opening as an
-          * audio file. TODO: Some sort of message here? */
-
-#endif // USE_MIDI
          mProject = AudacityProject::OpenProject( mProject, targetfile );
 
       // Set tok to right after filename

@@ -303,7 +303,6 @@
     <ClCompile Include="..\..\..\src\import\ImportFFmpeg.cpp" />
     <ClCompile Include="..\..\..\src\import\ImportFLAC.cpp" />
     <ClCompile Include="..\..\..\src\import\ImportLOF.cpp" />
-    <ClCompile Include="..\..\..\src\import\ImportMIDI.cpp" />
     <ClCompile Include="..\..\..\src\import\ImportMP3.cpp" />
     <ClCompile Include="..\..\..\src\import\ImportOGG.cpp" />
     <ClCompile Include="..\..\..\src\import\ImportPCM.cpp" />
@@ -602,7 +601,6 @@
     <ClInclude Include="..\..\..\src\import\ImportFFmpeg.h" />
     <ClInclude Include="..\..\..\src\import\ImportFLAC.h" />
     <ClInclude Include="..\..\..\src\import\ImportLOF.h" />
-    <ClInclude Include="..\..\..\src\import\ImportMIDI.h" />
     <ClInclude Include="..\..\..\src\import\ImportMP3.h" />
     <ClInclude Include="..\..\..\src\import\ImportOGG.h" />
     <ClInclude Include="..\..\..\src\import\ImportPCM.h" />
