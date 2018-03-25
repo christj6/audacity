@@ -183,9 +183,6 @@ public:
    virtual unsigned GetAudioInCount() = 0;
    virtual unsigned GetAudioOutCount() = 0;
 
-   virtual int GetMidiInCount() = 0;
-   virtual int GetMidiOutCount() = 0;
-
    virtual void SetSampleRate(double rate) = 0;
    virtual size_t SetBlockSize(size_t maxBlockSize) = 0;
 

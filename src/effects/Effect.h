@@ -107,9 +107,6 @@ class AUDACITY_DLL_API Effect /* not final */ : public wxEvtHandler,
    unsigned GetAudioInCount() override;
    unsigned GetAudioOutCount() override;
 
-   int GetMidiInCount() override;
-   int GetMidiOutCount() override;
-
    sampleCount GetLatency() override;
    size_t GetTailSize() override;
 

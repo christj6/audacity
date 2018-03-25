@@ -2508,9 +2508,6 @@ void AudioIO::StopStream()
 
    mPlaybackTracks.clear();
    mCaptureTracks.clear();
-#ifdef HAVE_MIDI
-   mMidiPlaybackTracks.clear();
-#endif
 
 #ifdef EXPERIMENTAL_SCRUBBING_SUPPORT
    mScrubQueue.reset();

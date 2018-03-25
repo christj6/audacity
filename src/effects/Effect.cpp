@@ -325,26 +325,6 @@ unsigned Effect::GetAudioOutCount()
    return 0;
 }
 
-int Effect::GetMidiInCount()
-{
-   if (mClient)
-   {
-      return mClient->GetMidiInCount();
-   }
-
-   return 0;
-}
-
-int Effect::GetMidiOutCount()
-{
-   if (mClient)
-   {
-      return mClient->GetMidiOutCount();
-   }
-
-   return 0;
-}
-
 void Effect::SetSampleRate(double rate)
 {
    if (mClient)
