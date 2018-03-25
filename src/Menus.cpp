@@ -921,13 +921,6 @@ void AudacityProject::CreateMenusAndCommands()
       c->AddCheck(wxT("SWPlaythrough"), XXO("So&ftware Playthrough (on/off)"), FN(OnToggleSWPlaythrough), 0,
                   AudioIONotBusyFlag | CanStopAudioStreamFlag,
                   AudioIONotBusyFlag | CanStopAudioStreamFlag);
-
-
-#ifdef EXPERIMENTAL_AUTOMATED_INPUT_LEVEL_ADJUSTMENT
-      c->AddCheck(wxT("AutomatedInputLevelAdjustmentOnOff"), XXO("A&utomated Recording Level Adjustment (on/off)"), FN(OnToggleAutomatedInputLevelAdjustment), 0,
-                  AudioIONotBusyFlag | CanStopAudioStreamFlag,
-                  AudioIONotBusyFlag | CanStopAudioStreamFlag);
-#endif
       c->EndSubMenu();
 
       c->EndMenu();
@@ -2363,10 +2356,6 @@ void AudacityProject::ModifyToolbarMenus()
    bool active;
    gPrefs->Read(wxT("/AudioIO/SoundActivatedRecord"),&active, false);
    mCommandManager.Check(wxT("SoundActivation"), active);
-#ifdef EXPERIMENTAL_AUTOMATED_INPUT_LEVEL_ADJUSTMENT
-   gPrefs->Read(wxT("/AudioIO/AutomatedInputLevelAdjustment"),&active, false);
-   mCommandManager.Check(wxT("AutomatedInputLevelAdjustmentOnOff"), active);
-#endif
 
    active = TracksPrefs::GetPinnedHeadPreference();
    mCommandManager.Check(wxT("PinnedHead"), active);
@@ -2962,17 +2951,6 @@ void AudacityProject::OnToggleSWPlaythrough(const CommandContext &WXUNUSED(conte
    gPrefs->Flush();
    ModifyAllProjectToolbarMenus();
 }
-
-#ifdef EXPERIMENTAL_AUTOMATED_INPUT_LEVEL_ADJUSTMENT
-void AudacityProject::OnToggleAutomatedInputLevelAdjustment()
-{
-   bool AVEnabled;
-   gPrefs->Read(wxT("/AudioIO/AutomatedInputLevelAdjustment"), &AVEnabled, false);
-   gPrefs->Write(wxT("/AudioIO/AutomatedInputLevelAdjustment"), !AVEnabled);
-   gPrefs->Flush();
-   ModifyAllProjectToolbarMenus();
-}
-#endif
 
 double AudacityProject::GetTime(const Track *t)
 {

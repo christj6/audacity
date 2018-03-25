@@ -390,9 +390,6 @@ void OnToggleSoundActivated(const CommandContext &context );
 void OnTogglePinnedHead(const CommandContext &context );
 void OnTogglePlayRecording(const CommandContext &context );
 void OnToggleSWPlaythrough(const CommandContext &context );
-#ifdef EXPERIMENTAL_AUTOMATED_INPUT_LEVEL_ADJUSTMENT
-   void OnToggleAutomatedInputLevelAdjustment(const CommandContext &context );
-#endif
 void OnRescanDevices(const CommandContext &context );
 
 // Import Submenu

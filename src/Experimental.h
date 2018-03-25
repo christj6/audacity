@@ -163,11 +163,6 @@
    #include "NyquistAdapter.h"
 #endif
 
-#if USE_PORTMIXER
-   //Automatically tries to find an acceptable input volume
-   //#define EXPERIMENTAL_AUTOMATED_INPUT_LEVEL_ADJUSTMENT
-#endif
-
 // Module prefs provides a panel in prefs where users can choose which modules
 // to enable.
 #define EXPERIMENTAL_MODULE_PREFS

@@ -177,53 +177,7 @@ void RecordingPrefs::PopulateOrExchange(ShuttleGui & S)
       S.EndMultiColumn();
    }
    S.EndStatic();
-
-   #ifdef EXPERIMENTAL_AUTOMATED_INPUT_LEVEL_ADJUSTMENT
-      S.StartStatic(_("Automated Recording Level Adjustment"));
-      {
-         S.TieCheckBox(_("Enable Automated Recording Level Adjustment."),
-                       wxT("/AudioIO/AutomatedInputLevelAdjustment"),
-                       false);
-
-         S.StartMultiColumn(2, wxEXPAND);
-         {
-            S.SetStretchyCol(1);
-
-            /* i18n-hint: Desired maximum (peak) volume for sound */
-            S.TieSlider(_("Target Peak:"),
-                        wxT("/AudioIO/TargetPeak"),
-                        AILA_DEF_TARGET_PEAK,
-                        100,
-                        0);
-
-            S.TieSlider(_("Within:"),
-                     wxT("/AudioIO/DeltaPeakVolume"),
-                     AILA_DEF_DELTA_PEAK,
-                     100,
-                     0);
-         }
-         S.EndMultiColumn();
-
-         S.StartThreeColumn();
-         {
-            S.TieNumericTextBox(_("Analysis Time:"),
-                                wxT("/AudioIO/AnalysisTime"),
-                                AILA_DEF_ANALYSIS_TIME,
-                                9);
-            S.AddUnits(_("milliseconds (time of one analysis)"));
-
-            S.TieNumericTextBox(_("Number of consecutive analysis:"),
-                                wxT("/AudioIO/NumberAnalysis"),
-                                AILA_DEF_NUMBER_ANALYSIS,
-                                2);
-            S.AddUnits(_("0 means endless"));
-          }
-          S.EndThreeColumn();
-      }
-      S.EndStatic();
-   #endif
    S.EndScroller();
-
 }
 
 bool RecordingPrefs::Commit()
@@ -236,25 +190,6 @@ bool RecordingPrefs::Commit()
    if (latencyDuration < 0) {
       gPrefs->Write(wxT("/AudioIO/LatencyDuration"), DEFAULT_LATENCY_DURATION);
    }
-
-   #ifdef EXPERIMENTAL_AUTOMATED_INPUT_LEVEL_ADJUSTMENT
-      double targetpeak, deltapeak;
-      gPrefs->Read(wxT("/AudioIO/TargetPeak"),  &targetpeak);
-      gPrefs->Read(wxT("/AudioIO/DeltaPeakVolume"), &deltapeak);
-      if (targetpeak + deltapeak > 100.0 || targetpeak - deltapeak < 0.0)
-      {
-         gPrefs->Write(wxT("/AudioIO/DeltaPeakVolume"), min(100.0 - targetpeak, targetpeak));
-      }
-
-      int value;
-      gPrefs->Read(wxT("/AudioIO/AnalysisTime"), &value);
-      if (value <= 0)
-         gPrefs->Write(wxT("/AudioIO/AnalysisTime"), AILA_DEF_ANALYSIS_TIME);
-
-      gPrefs->Read(wxT("/AudioIO/NumberAnalysis"), &value);
-      if (value < 0)
-         gPrefs->Write(wxT("/AudioIO/NumberAnalysis"), AILA_DEF_NUMBER_ANALYSIS);
-   #endif
    return true;
 }
 

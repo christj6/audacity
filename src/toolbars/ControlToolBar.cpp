@@ -865,10 +865,6 @@ void ControlToolBar::StopPlaying(bool stopStream /* = true*/)
    SetPlay(false);
    SetRecord(false);
 
-   #ifdef EXPERIMENTAL_AUTOMATED_INPUT_LEVEL_ADJUSTMENT
-      gAudioIO->AILADisable();
-   #endif
-
    mPause->PopUp();
    mPaused=false;
    //Make sure you tell gAudioIO to unpause
@@ -1191,11 +1187,6 @@ void ControlToolBar::OnRecord(wxCommandEvent &evt)
             recordingTracks.push_back( newTrack );
          }
       }
-
-      //Automated Input Level Adjustment Initialization
-      #ifdef EXPERIMENTAL_AUTOMATED_INPUT_LEVEL_ADJUSTMENT
-         gAudioIO->AILAInitialize();
-      #endif
 
       AudioIOStartStreamOptions options(p->GetDefaultPlayOptions());
       int token = gAudioIO->StartStream(playbackTracks,
