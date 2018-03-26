@@ -58,7 +58,6 @@
 #include "SelectionBar.h"
 #include "SpectralSelectionBar.h"
 #include "ToolsToolBar.h"
-#include "TranscriptionToolBar.h"
 
 #include "../AColor.h"
 #include "../AllThemeResources.h"
@@ -419,7 +418,6 @@ ToolManager::ToolManager( AudacityProject *parent, wxWindow *topDockParent )
    mBars[ MeterBarID ]         =  ToolBar::Holder{ safenew MeterToolBar( parent, MeterBarID ) };
    mBars[ EditBarID ]          =  ToolBar::Holder{ safenew EditToolBar() };
    mBars[ MixerBarID ]         =  ToolBar::Holder{ safenew MixerToolBar() };
-   mBars[ TranscriptionBarID ] =  ToolBar::Holder{ safenew TranscriptionToolBar() };
    mBars[ SelectionBarID ]     =  ToolBar::Holder{ safenew SelectionBar() };
    mBars[ DeviceBarID ]        =  ToolBar::Holder{ safenew DeviceToolBar() };
 #ifdef EXPERIMENTAL_SPECTRAL_EDITING
@@ -480,7 +478,7 @@ static struct DefaultConfigEntry {
 #ifdef EXPERIMENTAL_DA
    { TranscriptionBarID,     NoBarID,                NoBarID                },
 #else
-   { TranscriptionBarID,     EditBarID,              NoBarID                },
+   { NoBarID, EditBarID, NoBarID },
 #endif
 
    // Hidden by default in top dock

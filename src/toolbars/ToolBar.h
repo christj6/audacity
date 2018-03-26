@@ -71,7 +71,6 @@ enum
    PlayMeterBarID,
    MixerBarID,
    EditBarID,
-   TranscriptionBarID,
    DeviceBarID,
    SelectionBarID,
 #ifdef EXPERIMENTAL_SPECTRAL_EDITING

@@ -133,15 +133,6 @@ void OnOutputGainDec(const CommandContext &context );
 void OnInputGainInc(const CommandContext &context );
 void OnInputGainDec(const CommandContext &context );
 
-        // Transcription control
-
-void OnPlayAtSpeed(const CommandContext &context );
-void OnPlayAtSpeedLooped(const CommandContext &context );
-void OnPlayAtSpeedCutPreview(const CommandContext &context );
-void OnSetPlaySpeed(const CommandContext &context );
-void OnPlaySpeedInc(const CommandContext &context );
-void OnPlaySpeedDec(const CommandContext &context );
-
         // Moving track focus commands
 
 void OnPrevTrack( bool shift );
@@ -379,7 +370,6 @@ void OnShowSelectionToolBar(const CommandContext &context );
 void OnShowSpectralSelectionToolBar(const CommandContext &context );
 #endif
 void OnShowToolsToolBar(const CommandContext &context );
-void OnShowTranscriptionToolBar(const CommandContext &context );
 void OnResetToolBars(const CommandContext &context );
 
         // Transport Menu

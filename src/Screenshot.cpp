@@ -201,7 +201,6 @@ enum
    IdCaptureRecordMeter,
    IdCaptureEdit,
    IdCaptureDevice,
-   IdCaptureTranscription,
 
    IdCaptureTrackPanel,
    IdCaptureRuler,
@@ -407,7 +406,6 @@ void ScreenFrame::PopulateOrExchange(ShuttleGui & S)
          {
             S.Id(IdCaptureEdit).AddButton(_("Edit"));
             S.Id(IdCaptureDevice).AddButton(_("Device"));
-            S.Id(IdCaptureTranscription).AddButton(_("Transcription"));
          }
          S.EndHorizontalLay();
 
@@ -618,7 +616,6 @@ void ScreenFrame::OnCaptureSomething(wxCommandEvent &  event)
    Names.Add(wxT("Record_Meter"));
    Names.Add(wxT("Edit"));
    Names.Add(wxT("Device"));
-   Names.Add(wxT("Transcription"));
    Names.Add(wxT("Scrub"));
    Names.Add(wxT("Trackpanel"));
    Names.Add(wxT("Ruler"));

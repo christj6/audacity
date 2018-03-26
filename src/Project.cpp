@@ -149,7 +149,6 @@ scroll information.  It also has some status flags.
 #include "toolbars/SelectionBar.h"
 #include "toolbars/SpectralSelectionBar.h"
 #include "toolbars/ToolsToolBar.h"
-#include "toolbars/TranscriptionToolBar.h"
 
 #include "tracks/ui/BackgroundCell.h"
 #include "tracks/ui/EditCursorOverlay.h"
@@ -4808,14 +4807,6 @@ const ToolsToolBar *AudacityProject::GetToolsToolBar() const
       (mToolManager ?
       mToolManager->GetToolBar(ToolsBarID) :
       NULL);
-}
-
-TranscriptionToolBar *AudacityProject::GetTranscriptionToolBar()
-{
-   return (TranscriptionToolBar *)
-          (mToolManager ?
-           mToolManager->GetToolBar(TranscriptionBarID) :
-           NULL);
 }
 
 MeterPanel *AudacityProject::GetPlaybackMeter()

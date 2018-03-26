@@ -54,7 +54,6 @@
 #include <wx/tooltip.h>
 #include <wx/datetime.h>
 
-#include "TranscriptionToolBar.h"
 #include "MeterToolBar.h"
 
 #include "../AColor.h"
@@ -463,12 +462,6 @@ void ControlToolBar::EnableDisableButtons()
             break;
          }
       }
-   }
-
-   if (p) {
-      TranscriptionToolBar *const playAtSpeedTB = p->GetTranscriptionToolBar();
-      if (playAtSpeedTB)
-         playAtSpeedTB->SetEnabled(CanStopAudioStream() && tracks && !recording);
    }
 
    mPlay->SetEnabled(CanStopAudioStream() && tracks && !recording);

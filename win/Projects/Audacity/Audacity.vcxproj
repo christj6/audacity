@@ -379,7 +379,6 @@
     <ClCompile Include="..\..\..\src\toolbars\ToolDock.cpp" />
     <ClCompile Include="..\..\..\src\toolbars\ToolManager.cpp" />
     <ClCompile Include="..\..\..\src\toolbars\ToolsToolBar.cpp" />
-    <ClCompile Include="..\..\..\src\toolbars\TranscriptionToolBar.cpp" />
     <ClCompile Include="..\..\..\src\ondemand\ODComputeSummaryTask.cpp" />
     <ClCompile Include="..\..\..\src\ondemand\ODDecodeFFmpegTask.cpp" />
     <ClCompile Include="..\..\..\src\ondemand\ODDecodeFlacTask.cpp" />
@@ -673,7 +672,6 @@
     <ClInclude Include="..\..\..\src\toolbars\ToolDock.h" />
     <ClInclude Include="..\..\..\src\toolbars\ToolManager.h" />
     <ClInclude Include="..\..\..\src\toolbars\ToolsToolBar.h" />
-    <ClInclude Include="..\..\..\src\toolbars\TranscriptionToolBar.h" />
     <ClInclude Include="..\..\..\src\ondemand\ODComputeSummaryTask.h" />
     <ClInclude Include="..\..\..\src\ondemand\ODDecodeFFmpegTask.h" />
     <ClInclude Include="..\..\..\src\ondemand\ODDecodeFlacTask.h" />

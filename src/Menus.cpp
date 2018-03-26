@@ -95,7 +95,6 @@ simplifies construction of menu items.
 #include "toolbars/EditToolBar.h"
 #include "toolbars/DeviceToolBar.h"
 #include "toolbars/MixerToolBar.h"
-#include "toolbars/TranscriptionToolBar.h"
 
 #include "tracks/ui/SelectHandle.h"
 
@@ -773,8 +772,6 @@ void AudacityProject::CreateMenusAndCommands()
       c->AddCheck(wxT("ShowMixerTB"), XXO("Mi&xer Toolbar"), FN(OnShowMixerToolBar), 0, AlwaysEnabledFlag, AlwaysEnabledFlag);
       /* i18n-hint: Clicking this menu item shows the toolbar for editing*/
       c->AddCheck(wxT("ShowEditTB"), XXO("&Edit Toolbar"), FN(OnShowEditToolBar), 0, AlwaysEnabledFlag, AlwaysEnabledFlag);
-      /* i18n-hint: Clicking this menu item shows the toolbar for transcription (currently just vary play speed)*/
-      c->AddCheck(wxT("ShowTranscriptionTB"), XXO("Tra&nscription Toolbar"), FN(OnShowTranscriptionToolBar), 0, AlwaysEnabledFlag, AlwaysEnabledFlag);
       /* i18n-hint: Clicking this menu item shows the toolbar that manages devices*/
       c->AddCheck(wxT("ShowDeviceTB"), XXO("&Device Toolbar"), FN(OnShowDeviceToolBar), 0, AlwaysEnabledFlag, AlwaysEnabledFlag);
       /* i18n-hint: Clicking this menu item shows the toolbar for selecting a time range of audio*/
@@ -1352,26 +1349,6 @@ void AudacityProject::CreateMenusAndCommands()
       c->AddItem(wxT("DeleteKey2"), XXO("Delete Key&2"), FN(OnDelete), wxT("Delete"),
          AudioIONotBusyFlag | TracksSelectedFlag | TimeSelectedFlag | NoAutoSelect,
          AudioIONotBusyFlag | TracksSelectedFlag | TimeSelectedFlag);
-      c->EndSubMenu();
-
-      //////////////////////////////////////////////////////////////////////////
-
-      c->SetDefaultFlags(CaptureNotBusyFlag, CaptureNotBusyFlag);
-      c->BeginSubMenu(_("Transcri&ption"));
-
-      c->AddItem(wxT("PlayAtSpeed"), XXO("Pl&ay-at-Speed"), FN(OnPlayAtSpeed));
-      c->AddItem(wxT("PlayAtSpeedLooped"), XXO("&Loop Play-at-Speed"), FN(OnPlayAtSpeedLooped));
-      c->AddItem(wxT("PlayAtSpeedCutPreview"), XXO("Play C&ut Preview-at-Speed"), FN(OnPlayAtSpeedCutPreview));
-      c->AddItem(wxT("SetPlaySpeed"), XXO("Ad&just Playback Speed..."), FN(OnSetPlaySpeed));
-      c->AddItem(wxT("PlaySpeedInc"), XXO("&Increase Playback Speed"), FN(OnPlaySpeedInc));
-      c->AddItem(wxT("PlaySpeedDec"), XXO("&Decrease Playback Speed"), FN(OnPlaySpeedDec));
-
-      // These were on the original transcription toolbar.  But they are not on the
-      // shortened one.
-      c->AddItem(wxT("MoveToPrevLabel"), XXO("Move to &Previous Label"), FN(OnMoveToPrevLabel), wxT("Alt+Left"),
-         CaptureNotBusyFlag | TrackPanelHasFocus, CaptureNotBusyFlag | TrackPanelHasFocus);
-      c->AddItem(wxT("MoveToNextLabel"), XXO("Move to &Next Label"), FN(OnMoveToNextLabel), wxT("Alt+Right"),
-         CaptureNotBusyFlag | TrackPanelHasFocus, CaptureNotBusyFlag | TrackPanelHasFocus);
       c->EndSubMenu();
 
       //////////////////////////////////////////////////////////////////////////
@@ -2303,8 +2280,6 @@ void AudacityProject::ModifyToolbarMenus()
 #endif
    mCommandManager.Check(wxT("ShowToolsTB"),
                          mToolManager->IsVisible(ToolsBarID));
-   mCommandManager.Check(wxT("ShowTranscriptionTB"),
-                         mToolManager->IsVisible(TranscriptionBarID));
    mCommandManager.Check(wxT("ShowTransportTB"),
                          mToolManager->IsVisible(TransportBarID));
 
@@ -4208,54 +4183,6 @@ void AudacityProject::OnInputGainDec(const CommandContext &WXUNUSED(context) )
    MixerToolBar *tb = GetMixerToolBar();
    if (tb) {
       tb->AdjustInputGain(-1);
-   }
-}
-
-void AudacityProject::OnPlayAtSpeed(const CommandContext &WXUNUSED(context) )
-{
-   TranscriptionToolBar *tb = GetTranscriptionToolBar();
-   if (tb) {
-      tb->PlayAtSpeed(false, false);
-   }
-}
-
-void AudacityProject::OnPlayAtSpeedLooped(const CommandContext &WXUNUSED(context) )
-{
-   TranscriptionToolBar *tb = GetTranscriptionToolBar();
-   if (tb) {
-      tb->PlayAtSpeed(true, false);
-   }
-}
-
-void AudacityProject::OnPlayAtSpeedCutPreview(const CommandContext &WXUNUSED(context) )
-{
-   TranscriptionToolBar *tb = GetTranscriptionToolBar();
-   if (tb) {
-      tb->PlayAtSpeed(false, true);
-   }
-}
-
-void AudacityProject::OnSetPlaySpeed(const CommandContext &WXUNUSED(context) )
-{
-   TranscriptionToolBar *tb = GetTranscriptionToolBar();
-   if (tb) {
-      tb->ShowPlaySpeedDialog();
-   }
-}
-
-void AudacityProject::OnPlaySpeedInc(const CommandContext &WXUNUSED(context) )
-{
-   TranscriptionToolBar *tb = GetTranscriptionToolBar();
-   if (tb) {
-      tb->AdjustPlaySpeed(0.1f);
-   }
-}
-
-void AudacityProject::OnPlaySpeedDec(const CommandContext &WXUNUSED(context) )
-{
-   TranscriptionToolBar *tb = GetTranscriptionToolBar();
-   if (tb) {
-      tb->AdjustPlaySpeed(-0.1f);
    }
 }
 
@@ -6862,12 +6789,6 @@ void AudacityProject::OnShowSpectralSelectionToolBar(const CommandContext &WXUNU
 void AudacityProject::OnShowToolsToolBar(const CommandContext &WXUNUSED(context) )
 {
    mToolManager->ShowHide( ToolsBarID );
-   ModifyToolbarMenus();
-}
-
-void AudacityProject::OnShowTranscriptionToolBar(const CommandContext &WXUNUSED(context) )
-{
-   mToolManager->ShowHide( TranscriptionBarID );
    ModifyToolbarMenus();
 }
 

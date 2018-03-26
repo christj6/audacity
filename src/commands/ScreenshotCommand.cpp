@@ -39,7 +39,6 @@ small calculations of rectangles.
 #include "../toolbars/MixerToolBar.h"
 #include "../toolbars/SelectionBar.h"
 #include "../toolbars/ToolsToolBar.h"
-#include "../toolbars/TranscriptionToolBar.h"
 #include "../widgets/Ruler.h"
 #include "../Prefs.h"
 #include "../ShuttleGui.h"
@@ -66,7 +65,6 @@ enum kCaptureTypes
    krecordmeter,
    kedit,
    kdevice,
-   ktranscription,
    ktrackpanel,
    kruler,
    ktracks,
@@ -102,7 +100,6 @@ static const wxString kCaptureWhatStrings[nCaptureWhats] =
    XO("Record_Meter"),
    XO("Edit"),
    XO("Device"),
-   XO("Transcription"),
    XO("Trackpanel"),
    XO("Ruler"),
    XO("Tracks"),
@@ -884,8 +881,6 @@ bool ScreenshotCommand::Apply(const CommandContext & context)
       return CaptureToolbar(context, context.GetProject()->GetToolManager(), EditBarID, mFileName);
    else if (mCaptureMode.IsSameAs(wxT("Device")))
       return CaptureToolbar(context, context.GetProject()->GetToolManager(), DeviceBarID, mFileName);
-   else if (mCaptureMode.IsSameAs(wxT("Transcription")))
-      return CaptureToolbar(context, context.GetProject()->GetToolManager(), TranscriptionBarID, mFileName);
    else if (mCaptureMode.IsSameAs(wxT("Trackpanel")))
       return Capture(context, mFileName, panel, GetPanelRect(panel));
    else if (mCaptureMode.IsSameAs(wxT("Ruler")))

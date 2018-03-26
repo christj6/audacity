@@ -78,7 +78,6 @@ class SelectionBar;
 class SpectralSelectionBar;
 class ToolManager;
 class ToolsToolBar;
-class TranscriptionToolBar;
 
 // windows and frames
 class AdornedRulerPanel;
@@ -499,7 +498,6 @@ public:
 #endif
    ToolsToolBar *GetToolsToolBar();
    const ToolsToolBar *GetToolsToolBar() const;
-   TranscriptionToolBar *GetTranscriptionToolBar();
 
    MeterPanel *GetPlaybackMeter();
    void SetPlaybackMeter(MeterPanel *playback);
