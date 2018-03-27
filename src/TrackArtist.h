@@ -198,10 +198,6 @@ class AUDACITY_DLL_API TrackArtist {
    wxPen blankSelectedPen;
 
    std::unique_ptr<Ruler> vruler;
-
-#ifdef EXPERIMENTAL_FFT_Y_GRID
-   bool fftYGridOld;
-#endif //EXPERIMENTAL_FFT_Y_GRID
 };
 
 extern int GetWaveYPos(float value, float min, float max,

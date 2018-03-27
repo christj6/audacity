@@ -83,10 +83,6 @@
 // JKC Apr 2015, Menu item to manage effects.
 #define EXPERIMENTAL_EFFECT_MANAGEMENT
 
-// AM, 22.Nov 2007:
-// A Frequency Grid for the Spectrum Log(f) & Find Notes modes
-//#define EXPERIMENTAL_FFT_Y_GRID
-
 // Michael Chinen, 08.Oct 2009
 // Use on-demand importing for FLAC. Has issues with opening projects that
 // have not been fully imported in builds without FLAC support, so disabled for

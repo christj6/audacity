@@ -79,9 +79,6 @@ SpectrogramSettings::SpectrogramSettings(const SpectrogramSettings &other)
    , spectralSelection(other.spectralSelection)
 #endif
    , algorithm(other.algorithm)
-#ifdef EXPERIMENTAL_FFT_Y_GRID
-   , fftYGrid(other.fftYGrid)
-#endif
 
    // Do not copy these!
    , hFFT{}
@@ -110,9 +107,6 @@ SpectrogramSettings &SpectrogramSettings::operator= (const SpectrogramSettings &
       spectralSelection = other.spectralSelection;
 #endif
       algorithm = other.algorithm;
-#ifdef EXPERIMENTAL_FFT_Y_GRID
-      fftYGrid = other.fftYGrid;
-#endif
 
       // Invalidate the caches
       DestroyWindows();
@@ -265,10 +259,6 @@ void SpectrogramSettings::LoadPrefs()
 
    algorithm = Algorithm(gPrefs->Read(wxT("/Spectrum/Algorithm"), 0L));
 
-#ifdef EXPERIMENTAL_FFT_Y_GRID
-   fftYGrid = (gPrefs->Read(wxT("/Spectrum/FFTYGrid"), 0L) != 0);
-#endif //EXPERIMENTAL_FFT_Y_GRID
-
    // Enforce legal values
    Validate(true);
 
@@ -305,10 +295,6 @@ void SpectrogramSettings::SavePrefs()
 #endif
 
    gPrefs->Write(wxT("/Spectrum/Algorithm"), (int) algorithm);
-
-#ifdef EXPERIMENTAL_FFT_Y_GRID
-   gPrefs->Write(wxT("/Spectrum/FFTYGrid"), fftYGrid);
-#endif //EXPERIMENTAL_FFT_Y_GRID
 }
 
 void SpectrogramSettings::InvalidateCaches()
