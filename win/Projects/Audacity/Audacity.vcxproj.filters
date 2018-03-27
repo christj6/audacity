@@ -584,9 +584,6 @@
     <ClCompile Include="..\..\..\src\ondemand\ODComputeSummaryTask.cpp">
       <Filter>src\ondemand</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\ondemand\ODDecodeFFmpegTask.cpp">
-      <Filter>src\ondemand</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\ondemand\ODDecodeFlacTask.cpp">
       <Filter>src\ondemand</Filter>
     </ClCompile>
@@ -1388,9 +1385,6 @@
       <Filter>src\toolbars</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\ondemand\ODComputeSummaryTask.h">
-      <Filter>src\ondemand</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\ondemand\ODDecodeFFmpegTask.h">
       <Filter>src\ondemand</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\ondemand\ODDecodeFlacTask.h">

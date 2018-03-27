@@ -158,11 +158,6 @@ static const wxChar *exts[] =
 #include "../WaveTrack.h"
 #include "ImportPlugin.h"
 
-
-#ifdef EXPERIMENTAL_OD_FFMPEG
-#include "../ondemand/ODDecodeFFmpegTask.h"
-#endif
-
 extern FFmpegLibs *FFmpegLibsInst();
 
 class FFmpegImportFileHandle;
@@ -275,10 +270,6 @@ private:
    bool                  mStopped;       //!< True if importing was stopped by user
    wxString              mName;
    std::list<TrackHolders> mChannels;     //!< 2-dimentional array of WaveTrack's. First dimention - streams, second - channels of a stream. Length is mNumStreams
-#ifdef EXPERIMENTAL_OD_FFMPEG
-   bool                  mUsingOD;
-#endif
-
 };
 
 
@@ -578,68 +569,6 @@ ProgressResult FFmpegImportFileHandle::Import(TrackFactory *trackFactory,
    // The result of Import() to be returend. It will be something other than zero if user canceled or some error appears.
    auto res = ProgressResult::Success;
 
-#ifdef EXPERIMENTAL_OD_FFMPEG
-   mUsingOD = false;
-   gPrefs->Read(wxT("/Library/FFmpegOnDemand"), &mUsingOD);
-   //at this point we know the file is good and that we have to load the number of channels in mScs[s]->m_stream->codec->channels;
-   //so for OD loading we create the tracks and releasee the modal lock after starting the ODTask.
-   if (mUsingOD) {
-      std::vector<movable_ptr<ODDecodeFFmpegTask>> tasks;
-      //append blockfiles to each stream and add an individual ODDecodeTask for each one.
-      s = -1;
-      for (const auto &stream : mChannels) {
-         ++s;
-         auto odTask =
-            make_movable<ODDecodeFFmpegTask>(mScs, ODDecodeFFmpegTask::FromList(mChannels), mContext, s);
-         odTask->CreateFileDecoder(mFilename);
-
-         //each stream has different duration.  We need to know it if seeking is to be allowed.
-         sampleCount sampleDuration = 0;
-         auto sc = scs[s].get();
-         if (sc->m_stream->duration > 0)
-            sampleDuration = ((sampleCount)sc->m_stream->duration * sc->m_stream->time_base.num) * sc->m_stream->codec->sample_rate / sc->m_stream->time_base.den;
-         else
-            sampleDuration = ((sampleCount)mFormatContext->duration *sc->m_stream->codec->sample_rate) / AV_TIME_BASE;
-
-         //      wxPrintf(" OD duration samples %qi, sr %d, secs %d\n",sampleDuration, (int)sc->m_stream->codec->sample_rate, (int)sampleDuration/sc->m_stream->codec->sample_rate);
-
-         //for each wavetrack within the stream add coded blockfiles
-         for (int c = 0; c < sc->m_stream->codec->channels; c++) {
-            WaveTrack *t = stream[c].get();
-            odTask->AddWaveTrack(t);
-
-            auto maxBlockSize = t->GetMaxBlockSize();
-            //use the maximum blockfile size to divide the sections (about 11secs per blockfile at 44.1khz)
-
-            for (decltype(sampleDuration) i = 0; i < sampleDuration; i += maxBlockSize) {
-               const auto blockLen =
-                  limitSampleBufferSize( maxBlockSize, sampleDuration - i );
-
-               t->AppendCoded(mFilename, i, blockLen, c, ODTask::eODFFMPEG);
-
-               // This only works well for single streams since we assume
-               // each stream is of the same duration and channels
-               res = mProgress->Update(
-                  (i+sampleDuration * c +
-                      sampleDuration*sc->m_stream->codec->channels * s
-                  ).as_long_long(),
-                  (sampleDuration *
-                      sc->m_stream->codec->channels * mNumStreams
-                  ).as_long_long()
-               );
-               if (res != ProgressResult::Success)
-                  break;
-            }
-         }
-         tasks.push_back(std::move(odTask));
-      }
-      //Now we add the tasks and let them run, or DELETE them if the user cancelled
-      if (res == ProgressResult::Success)
-         for (int i = 0; i < (int)tasks.size(); i++)
-            ODManager::Instance()->AddNewTask(std::move(tasks[i]));
-   } else {
-#endif
-
    // Read next frame.
    for (streamContext *sc; (sc = ReadNextFrame()) != NULL && (res == ProgressResult::Success);)
    {
@@ -677,9 +606,6 @@ ProgressResult FFmpegImportFileHandle::Import(TrackFactory *trackFactory,
          }
       }
    }
-#ifdef EXPERIMENTAL_OD_FFMPEG
-   } // else -- !mUsingOD == true
-#endif   //EXPERIMENTAL_OD_FFMPEG
 
    // Something bad happened - destroy everything!
    if (res == ProgressResult::Cancelled || res == ProgressResult::Failed)
