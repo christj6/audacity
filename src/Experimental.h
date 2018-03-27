@@ -83,12 +83,6 @@
 // JKC Apr 2015, Menu item to manage effects.
 #define EXPERIMENTAL_EFFECT_MANAGEMENT
 
-// Andreas Micheler, 20.Nov 2007:
-// A spectrumLogF-like view mode with notes quantization.
-// Just select the "Find Notes" checkbox in the spectrum prefs
-// to activate it instead of the Spectrum log(f) mode.
-//#define EXPERIMENTAL_FIND_NOTES
-
 // AM, 22.Nov 2007:
 // A Frequency Grid for the Spectrum Log(f) & Find Notes modes
 //#define EXPERIMENTAL_FFT_Y_GRID

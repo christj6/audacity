@@ -258,34 +258,6 @@ void SpectrumPrefs::PopulateOrExchange(ShuttleGui & S)
             mTempSettings.fftYGrid);
 #endif //EXPERIMENTAL_FFT_Y_GRID
 
-#ifdef EXPERIMENTAL_FIND_NOTES
-      /* i18n-hint: FFT stands for Fast Fourier Transform and probably shouldn't be translated*/
-      S.StartStatic(_("FFT Find Notes"));
-      {
-         S.StartTwoColumn();
-         {
-            mFindNotesMinA =
-               S.TieNumericTextBox(_("Minimum Amplitude (dB):"),
-               mTempSettings.findNotesMinA,
-               8);
-
-            mFindNotesN =
-               S.TieNumericTextBox(_("Max. Number of Notes (1..128):"),
-               mTempSettings.numberOfMaxima,
-               8);
-         }
-         S.EndTwoColumn();
-
-         S.TieCheckBox(_("&Find Notes"),
-            mTempSettings.fftFindNotes);
-
-         S.TieCheckBox(_("&Quantize Notes"),
-            mTempSettings.findNotesQuantize);
-      }
-      S.EndStatic();
-#endif //EXPERIMENTAL_FIND_NOTES
-   // S.EndStatic();
-
 #ifdef SPECTRAL_SELECTION_GLOBAL_SWITCH
    S.StartStatic(_("Global settings"));
    {
@@ -339,24 +311,6 @@ bool SpectrumPrefs::Validate()
       AudacityMessageBox(_("The frequency gain must be an integer"));
       return false;
    }
-
-#ifdef EXPERIMENTAL_FIND_NOTES
-   long findNotesMinA;
-   if (!mFindNotesMinA->GetValue().ToLong(&findNotesMinA)) {
-      AudacityMessageBox(_("The minimum amplitude (dB) must be an integer"));
-      return false;
-   }
-
-   long findNotesN;
-   if (!mFindNotesN->GetValue().ToLong(&findNotesN)) {
-      AudacityMessageBox(_("The maximum number of notes must be an integer"));
-      return false;
-   }
-   if (findNotesN < 1 || findNotesN > 128) {
-      AudacityMessageBox(_("The maximum number of notes must be in the range 1..128"));
-      return false;
-   }
-#endif //EXPERIMENTAL_FIND_NOTES
 
    ShuttleGui S(this, eIsSavingToPrefs);
    PopulateOrExchange(S);

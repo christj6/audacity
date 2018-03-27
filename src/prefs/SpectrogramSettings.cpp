@@ -82,12 +82,6 @@ SpectrogramSettings::SpectrogramSettings(const SpectrogramSettings &other)
 #ifdef EXPERIMENTAL_FFT_Y_GRID
    , fftYGrid(other.fftYGrid)
 #endif
-#ifdef EXPERIMENTAL_FIND_NOTES
-   , fftFindNotes(other.fftFindNotes)
-   , findNotesMinA(other.findNotesMinA)
-   , numberOfMaxima(other.numberOfMaxima)
-   , findNotesQuantize(other.findNotesQuantize)
-#endif
 
    // Do not copy these!
    , hFFT{}
@@ -118,12 +112,6 @@ SpectrogramSettings &SpectrogramSettings::operator= (const SpectrogramSettings &
       algorithm = other.algorithm;
 #ifdef EXPERIMENTAL_FFT_Y_GRID
       fftYGrid = other.fftYGrid;
-#endif
-#ifdef EXPERIMENTAL_FIND_NOTES
-      fftFindNotes = other.fftFindNotes;
-      findNotesMinA = other.findNotesMinA;
-      numberOfMaxima = other.numberOfMaxima;
-      findNotesQuantize = other.findNotesQuantize;
 #endif
 
       // Invalidate the caches
@@ -281,13 +269,6 @@ void SpectrogramSettings::LoadPrefs()
    fftYGrid = (gPrefs->Read(wxT("/Spectrum/FFTYGrid"), 0L) != 0);
 #endif //EXPERIMENTAL_FFT_Y_GRID
 
-#ifdef EXPERIMENTAL_FIND_NOTES
-   fftFindNotes = (gPrefs->Read(wxT("/Spectrum/FFTFindNotes"), 0L) != 0);
-   findNotesMinA = gPrefs->Read(wxT("/Spectrum/FindNotesMinA"), -30.0);
-   numberOfMaxima = gPrefs->Read(wxT("/Spectrum/FindNotesN"), 5L);
-   findNotesQuantize = (gPrefs->Read(wxT("/Spectrum/FindNotesQuantize"), 0L) != 0);
-#endif //EXPERIMENTAL_FIND_NOTES
-
    // Enforce legal values
    Validate(true);
 
@@ -328,13 +309,6 @@ void SpectrogramSettings::SavePrefs()
 #ifdef EXPERIMENTAL_FFT_Y_GRID
    gPrefs->Write(wxT("/Spectrum/FFTYGrid"), fftYGrid);
 #endif //EXPERIMENTAL_FFT_Y_GRID
-
-#ifdef EXPERIMENTAL_FIND_NOTES
-   gPrefs->Write(wxT("/Spectrum/FFTFindNotes"), fftFindNotes);
-   gPrefs->Write(wxT("/Spectrum/FindNotesMinA"), findNotesMinA);
-   gPrefs->Write(wxT("/Spectrum/FindNotesN"), numberOfMaxima);
-   gPrefs->Write(wxT("/Spectrum/FindNotesQuantize"), findNotesQuantize);
-#endif //EXPERIMENTAL_FIND_NOTES
 }
 
 void SpectrogramSettings::InvalidateCaches()
