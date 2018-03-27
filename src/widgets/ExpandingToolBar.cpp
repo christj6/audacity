@@ -261,17 +261,6 @@ void ExpandingToolBar::TryAutoExpand()
    }
 }
 
-void ExpandingToolBar::TryAutoCollapse()
-{
-#ifdef EXPERIMENTAL_ROLL_UP_DIALOG
-   if (mIsAutoExpanded == true && mIsManualExpanded == false) {
-      mToggleButton->PopUp();
-      mIsAutoExpanded = false;
-      Fit();
-   }
-#endif
-}
-
 class ExpandingToolBarEvtHandler final : public wxEvtHandler
 {
  public:
@@ -354,11 +343,7 @@ bool ExpandingToolBar::Layout()
 
 void ExpandingToolBar::Fit()
 {
-#ifdef EXPERIMENTAL_ROLL_UP_DIALOG
-   mIsExpanded = (mIsAutoExpanded || mIsManualExpanded);
-#else
    mIsExpanded = true;// JKC - Wedge it open at all times.
-#endif
 
    int width = mButtonSize.x + mGrabberSize.x;
 
@@ -471,8 +456,6 @@ void ExpandingToolBar::OnTimer(wxTimerEvent & WXUNUSED(event))
    if (mAutoExpand && msNoAutoExpandStack==0 &&
        IsCursorInWindow())
       TryAutoExpand();
-   else if (!IsCursorInWindow())
-      TryAutoCollapse();
 
    if (mCurrentDrawerSize == mTargetDrawerSize)
       return;

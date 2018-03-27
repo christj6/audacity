@@ -348,7 +348,6 @@ public:
 
    void RebuildMenuBar();
    void RebuildOtherMenus();
-   void MayStartMonitoring();
 
 
    // Message Handlers

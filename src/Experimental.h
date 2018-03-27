@@ -71,15 +71,6 @@
 // This shows the zoom toggle button on the edit toolbar.
 #define EXPERIMENTAL_ZOOM_TOGGLE_BUTTON
 
-//Next line enables Mic monitoring at times when it was previously off.
-//More work is needed as after recording or playing it results in an
-//unwanted record-cursor on the wave track.
-//#define EXPERIMENTAL_EXTRA_MONITORING
-
-//#define EXPERIMENTAL_ROLL_UP_DIALOG
-//#define EXPERIMENTAL_RIGHT_ALIGNED_TEXTBOXES
-//#define EXPERIMENTAL_VOICE_DETECTION
-
 // Effect categorisation. Adds support for arranging effects in categories
 // and displaying those categories as submenus in the Effect menu.
 // This was a 2008 GSoC project that was making good progress at the half-way point

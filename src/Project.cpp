@@ -5224,22 +5224,6 @@ void AudacityProject::DeleteCurrentAutoSaveFile()
    }
 }
 
-
-void AudacityProject::MayStartMonitoring()
-{
-#ifdef EXPERIMENTAL_EXTRA_MONITORING
-   bool bAlwaysMonitor;
-   gPrefs->Read( wxT("GUI/AlwaysMonitor"), &bAlwaysMonitor, true );
-   if( !bAlwaysMonitor )
-      return;
-
-   MeterToolBar * pToolBar = GetMeterToolBar();
-   if( pToolBar == NULL )
-      return;
-   pToolBar->StartMonitoring();
-#endif
-}
-
 void AudacityProject::OnAudioIORate(int rate)
 {
    wxString display;

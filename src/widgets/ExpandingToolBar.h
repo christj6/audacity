@@ -90,7 +90,6 @@ class ExpandingToolBar final : public wxPanelWrapper
    wxBitmap GetToolbarBitmap();
 
    void TryAutoExpand();
-   void TryAutoCollapse();
 
    wxPanel *mMainPanel;
    wxPanel *mExtraPanel;
