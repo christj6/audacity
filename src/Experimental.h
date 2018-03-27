@@ -128,16 +128,6 @@
 // interpolating in frequency domain.
 #define EXPERIMENTAL_ZERO_PADDED_SPECTROGRAMS
 
-// PRL 11 Jul 2017
-// Highlight more things in TrackPanel when the mouse moves over them,
-// using delibrately ugly pens and brushes until there is better cooperation
-// with themes
-//#define EXPERIMENTAL_TRACK_PANEL_HIGHLIGHTING
-
-// Paul Licameli (PRL) 28 Dec 2017
-// Easy drag-and-drop to add Nyquist, LADSPA, and VST plug-ins
-// #define EXPERIMENTAL_DRAG_DROP_PLUG_INS
-
 // PRL 5 Jan 2018
 // Easy change of keystroke bindings for menu items
 #define EXPERIMENTAL_EASY_CHANGE_KEY_BINDINGS

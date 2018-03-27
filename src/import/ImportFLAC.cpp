@@ -357,28 +357,6 @@ FLACImportFileHandle::FLACImportFileHandle(const wxString & name)
 
 bool FLACImportFileHandle::Init()
 {
-#ifdef EXPERIMENTAL_OD_FLAC
-   mDecoderTask = make_movable<ODDecodeFlacTask>();
-
-   ODFlacDecoder* odDecoder = (ODFlacDecoder*)mDecoderTask->CreateFileDecoder(mFilename);
-   if(!odDecoder || !odDecoder->ReadHeader())
-   {
-      return false;
-   }
-   //copy the meta data over to the class
-
-   mSampleRate=odDecoder->mSampleRate;
-   mNumChannels=odDecoder->mNumChannels;
-   mBitsPerSample=odDecoder->mBitsPerSample;
-
-   mNumSamples=odDecoder->mNumSamples;
-   mBitsPerSample=odDecoder->mBitsPerSample;
-   mFormat=odDecoder->mFormat;
-   mStreamInfoDone=true;
-
-
-   return true;
-#endif
 #ifdef LEGACY_FLAC
    bool success = mFile->set_filename(OSINPUT(mFilename));
    if (!success) {
@@ -477,9 +455,6 @@ ProgressResult FLACImportFileHandle::Import(TrackFactory *trackFactory,
 
 //Start OD
    bool useOD = false;
-#ifdef EXPERIMENTAL_OD_FLAC
-   useOD=true;
-#endif
 
    // TODO: Vigilant Sentry: Variable res unused after assignment (error code DA1)
    //    Should check the result.
@@ -563,9 +538,7 @@ FLACImportFileHandle::~FLACImportFileHandle()
 {
    //don't finish *mFile if we are using OD,
    //because it was not initialized in Init().
-#ifndef EXPERIMENTAL_OD_FLAC
    mFile->finish();
-#endif
 }
 
 #endif /* USE_LIBFLAC */

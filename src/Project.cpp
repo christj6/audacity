@@ -128,9 +128,6 @@ scroll information.  It also has some status flags.
 #include "ondemand/ODManager.h"
 #include "ondemand/ODTask.h"
 #include "ondemand/ODComputeSummaryTask.h"
-#ifdef EXPERIMENTAL_OD_FLAC
-#include "ondemand/ODDecodeFlacTask.h"
-#endif
 #include "ModuleManager.h"
 
 #include "Theme.h"
@@ -2969,16 +2966,6 @@ void AudacityProject::OpenFile(const wxString &fileNameArg, bool addtohistory)
    // FIXME: //v Surely we could be smarter about this, like checking much earlier that this is a .aup file.
    if (temp.Mid(0, 6) != wxT("<?xml ")) {
       // If it's not XML, try opening it as any other form of audio
-
-#ifdef EXPERIMENTAL_DRAG_DROP_PLUG_INS
-      // Is it a plug-in?
-      if (PluginManager::Get().DropFile(fileName)) {
-         RebuildAllMenuBars();
-      }
-      else
-      // No, so import.
-#endif
-
       {
             Import(fileName);
 
@@ -3261,13 +3248,6 @@ void AudacityProject::EnqueueODTasks()
             while((odFlags|createdODTasks) != createdODTasks)
             {
                movable_ptr<ODTask> newTask;
-#ifdef EXPERIMENTAL_OD_FLAC
-               if(!(createdODTasks&ODTask::eODFLAC) && (odFlags & ODTask::eODFLAC)) {
-                  newTask = make_movable<ODDecodeFlacTask>();
-                  createdODTasks = createdODTasks | ODTask::eODFLAC;
-               }
-               else
-#endif
                if(!(createdODTasks&ODTask::eODPCMSummary) && (odFlags & ODTask::eODPCMSummary)) {
                   newTask = make_movable<ODComputeSummaryTask>();
                   createdODTasks= createdODTasks | ODTask::eODPCMSummary;
