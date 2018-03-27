@@ -1214,17 +1214,8 @@ void AudacityProject::CreateMenusAndCommands()
       c->BeginMenu(_("&Help"));
       c->SetDefaultFlags(AlwaysEnabledFlag, AlwaysEnabledFlag);
 
-// DA: Emphasise it is the Audacity Manual (No separate DA manual).
-#ifdef EXPERIMENTAL_DA
-      // 'Getting Started' rather than 'Quick Help' for DarkAudacity.
-      // At the moment the video tutorials are aspirational (aka do not exist yet).
-      // Emphasise that manual is for Audacity, not DarkAudacity.
-      c->AddItem(wxT("QuickHelp"), XXO("&Getting Started"), FN(OnQuickHelp));
-      c->AddItem(wxT("Manual"), XXO("Audacity &Manual"), FN(OnManual));
-#else
       c->AddItem(wxT("QuickHelp"), XXO("&Quick Help..."), FN(OnQuickHelp));
       c->AddItem(wxT("Manual"), XXO("&Manual..."), FN(OnManual));
-#endif
       c->AddSeparator();
 
       c->BeginSubMenu(_("&Diagnostics"));
@@ -1245,10 +1236,7 @@ void AudacityProject::CreateMenusAndCommands()
       c->AddSeparator();
 #endif
 
-// DA: Does not fully support update checking.
-#ifndef EXPERIMENTAL_DA
       c->AddItem(wxT("Updates"), XXO("&Check for Updates..."), FN(OnCheckForUpdates));
-#endif
       c->AddItem(wxT("About"), XXO("&About Audacity..."), FN(OnAbout));
 
       c->EndMenu();
@@ -1679,12 +1667,7 @@ void AudacityProject::PopulateEffectsMenu(CommandManager* c,
       if ( !plug->IsEnabled() ){
          ;// don't add to menus!
       }
-      else if (plug->IsEffectDefault()
-#ifdef EXPERIMENTAL_DA
-         // Move Nyquist prompt into nyquist group.
-         && (plug->GetName() != _("Nyquist Prompt"))
-#endif
-         )
+      else if (plug->IsEffectDefault())
          defplugs.push_back(plug);
       else
          optplugs.push_back(plug);
@@ -2297,11 +2280,7 @@ void AudacityProject::ModifyToolbarMenus()
    active = TracksPrefs::GetPinnedHeadPreference();
    mCommandManager.Check(wxT("PinnedHead"), active);
 
-#ifdef EXPERIMENTAL_DA
-   gPrefs->Read(wxT("/AudioIO/Duplex"),&active, false);
-#else
    gPrefs->Read(wxT("/AudioIO/Duplex"),&active, true);
-#endif
    mCommandManager.Check(wxT("Duplex"), active);
    gPrefs->Read(wxT("/AudioIO/SWPlaythrough"),&active, false);
    mCommandManager.Check(wxT("SWPlaythrough"), active);
@@ -2865,11 +2844,7 @@ void AudacityProject::OnTogglePinnedHead(const CommandContext &WXUNUSED(context)
 void AudacityProject::OnTogglePlayRecording(const CommandContext &WXUNUSED(context) )
 {
    bool Duplex;
-#ifdef EXPERIMENTAL_DA
-   gPrefs->Read(wxT("/AudioIO/Duplex"), &Duplex, false);
-#else
    gPrefs->Read(wxT("/AudioIO/Duplex"), &Duplex, true);
-#endif
    gPrefs->Write(wxT("/AudioIO/Duplex"), !Duplex);
    gPrefs->Flush();
    ModifyAllProjectToolbarMenus();

@@ -129,12 +129,7 @@ void GUIPrefs::PopulateOrExchange(ShuttleGui & S)
    {
       S.StartMultiColumn(2);
       {
-
-#ifdef EXPERIMENTAL_DA
-         const wxString defaultTheme = wxT("dark");
-#else
          const wxString defaultTheme = wxT("light");
-#endif
          const wxString defaultRange = wxString::Format(wxT("%d"), ENV_DB_RANGE);
 
          S.TieChoice(_("&Language:"),

@@ -661,10 +661,8 @@ void WaveTrackMenuTable::InitMenu(Menu *pMenu, void *pUserData)
    pMenu->Enable(OnSwapChannelsID, !isMono && !unsafe);
    pMenu->Enable(OnSplitStereoID, !isMono && !unsafe);
 
-#ifndef EXPERIMENTAL_DA
    // Can be achieved by split stereo and then dragging pan slider.
    pMenu->Enable(OnSplitStereoMonoID, !isMono && !unsafe);
-#endif
 
    // Several menu items no longer needed....
 #if 0
@@ -691,9 +689,7 @@ BEGIN_POPUP_MENU(WaveTrackMenuTable)
    POPUP_MENU_ITEM(OnSwapChannelsID, _("Swap Stereo &Channels"), OnSwapChannels)
    POPUP_MENU_ITEM(OnSplitStereoID, _("Spl&it Stereo Track"), OnSplitStereo)
 // DA: Uses split stereo track and then drag pan sliders for split-stereo-to-mono
-#ifndef EXPERIMENTAL_DA
    POPUP_MENU_ITEM(OnSplitStereoMonoID, _("Split Stereo to Mo&no"), OnSplitStereoMono)
-#endif
 
    WaveTrack *const pTrack = static_cast<WaveTrack*>(mpTrack);
    if( pTrack && pTrack->GetDisplay() != WaveTrack::Spectrum  ){

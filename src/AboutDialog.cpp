@@ -44,12 +44,7 @@ hold information about one contributor to Audacity.
 #include "Theme.h"
 #include "AllThemeResources.h"
 
-// DA: Logo for About box.
-#ifdef EXPERIMENTAL_DA
-#include "../images/DarkAudacityLogoWithName.xpm"
-#else
 #include "../images/AudacityLogoWithName.xpm"
-#endif
 #include "RevisionIdent.h"
 
 // RevisionIdent.h may contain #defines like these ones:
@@ -280,16 +275,9 @@ void AboutDialog::PopulateAudacityPage( ShuttleGui & S )
    CreateCreditsList();
 
    wxString par1Str = 
-// DA: Says that it is a customised version.
-#ifdef EXPERIMENTAL_DA
-      wxT(
-"Audacity, which this is a customised version of, is a free program written by a worldwide team of [[https://www.audacityteam.org/about/credits|volunteers]]. \
-Audacity is [[https://www.audacityteam.org/download|available]] for Windows, Mac, and GNU/Linux (and other Unix-like systems).");
-#else
       _(
 "Audacity is a free program written by a worldwide team of [[https://www.audacityteam.org/about/credits|volunteers]]. \
 Audacity is [[https://www.audacityteam.org/download|available]] for Windows, Mac, and GNU/Linux (and other Unix-like systems).");
-#endif
 
    // This trick here means that the English language version won't mention using
    // English, whereas all translated versions will.
@@ -318,30 +306,12 @@ visit our [[https://forum.audacityteam.org/|forum]].");
 
    wxString creditStr = FormatHtmlText(
       wxString( wxT("<center>") ) +
-// DA: Description and provenance in About box
-#ifdef EXPERIMENTAL_DA
-      #undef _
-      #define _(s) wxGetTranslation((s))
-      wxT("<h3>DarkAudacity ") + wxString(AUDACITY_VERSION_STRING) + wxT("</center></h3>") +
-      wxT("Customised version of the Audacity free, open source, cross-platform software " ) +
-      wxT("for recording and editing sounds.") +
-      wxT("<p><br>&nbsp; &nbsp; <b>Audacity<sup>&reg;</sup></b> software is copyright &copy; 1999-2018 Audacity Team.<br>") +
-      wxT("&nbsp; &nbsp; The name <b>Audacity</b> is a registered trademark of Dominic Mazzoni.<br><br>") +
-
-#else
       _("<h3>Audacity ") + wxString(AUDACITY_VERSION_STRING) + wxT("</center></h3>") +
       _("Audacity the free, open source, cross-platform software for recording and editing sounds.") +
-#endif
 
       //wxT("<p><br>") + par1Str +
       //wxT("<p>") + par2Str +
       wxT("<h3>") + _("Credits") + wxT("</h3>") + wxT("<p>") +
-
-// DA: Customisation credit
-#ifdef EXPERIMENTAL_DA
-      wxT("<p><b>") + wxString::Format(_("DarkAudacity Customisation")) + wxT("</b><br>") +
-      wxT("James Crook, art, coding &amp; design<br>") +
-#endif
 
       wxT("<p><b>") + _("Audacity Team Members") + wxT("</b><br>") +
       GetCreditsByRole(roleTeamMember) +
@@ -367,16 +337,11 @@ visit our [[https://forum.audacityteam.org/|forum]].");
 
       wxT("<p><br>") + _("Audacity website: ") + wxT("[[https://www.audacityteam.org/|https://www.audacityteam.org/]]") +
 
-// DA: Link for DA url too
-#ifdef EXPERIMENTAL_DA
-      wxT("<br>DarkAudacity website: [[http://www.darkaudacity.com/|https://www.darkaudacity.com/]]") +
-#else
       _("<p><br>&nbsp; &nbsp; <b>Audacity<sup>&reg;</sup></b> software is copyright &copy; 1999-2018 Audacity Team.<br>")
 
       +
 
       _("&nbsp; &nbsp; The name <b>Audacity</b> is a registered trademark of Dominic Mazzoni.<br><br>") +
-#endif
 
       wxT("</center>")
    );
@@ -543,11 +508,7 @@ void AboutDialog::PopulateInformationPage( ShuttleGui & S )
    informationStr += _("Features");
    informationStr += wxT("</h3>\n<table>");  // start table of features
 
-#ifdef EXPERIMENTAL_DA
-   AddBuildinfoRow(&informationStr, wxT("Theme"), _("Dark Theme Extras"), enabled);
-#else
    AddBuildinfoRow(&informationStr, wxT("Theme"), _("Dark Theme Extras"), disabled);
-#endif
 
    # if USE_LADSPA
    AddBuildinfoRow(&informationStr, wxT("LADSPA"), _("Plug-in support"),

@@ -1381,12 +1381,7 @@ void TrackArtist::DrawWaveform(TrackPanelDrawingContext &context,
             dc.SetPen( highlight ? AColor::uglyPen : *wxRED_PEN );
          }
          else {
-#ifdef EXPERIMENTAL_DA
-            // JKC Black does not show up enough.
-            dc.SetPen(highlight ? AColor::uglyPen : *wxWHITE_PEN);
-#else
             dc.SetPen(highlight ? AColor::uglyPen : *wxBLACK_PEN);
-#endif
          }
          AColor::Line(dc, (int) (rect.x + xx), rect.y, (int) (rect.x + xx), rect.y + rect.height);
          dc.SetPen( highlight ? AColor::uglyPen : *wxGREY_PEN );

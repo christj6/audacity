@@ -1160,23 +1160,6 @@ enum : unsigned {
    kHighestBottomItem = kItemMinimize,
 };
 
-
-#ifdef EXPERIMENTAL_DA
-
-   #define TITLE_ITEMS \
-      { kItemBarButtons, kTrackInfoBtnSize, 4, \
-        &TrackInfo::CloseTitleDrawFunction },
-   // DA: Has Mute and Solo on separate lines.
-   #define MUTE_SOLO_ITEMS(extra) \
-      { kItemMute, kTrackInfoBtnSize + 1, 1, \
-        &TrackInfo::WideMuteDrawFunction }, \
-      { kItemSolo, kTrackInfoBtnSize + 1, extra, \
-        &TrackInfo::WideSoloDrawFunction },
-   // DA: Does not have status information for a track.
-   #define STATUS_ITEMS
-
-#else
-
    #define TITLE_ITEMS \
       { kItemBarButtons, kTrackInfoBtnSize, 0, \
         &TrackInfo::CloseTitleDrawFunction },
@@ -1188,8 +1171,6 @@ enum : unsigned {
         &TrackInfo::Status1DrawFunction }, \
       { kItemStatusInfo2, 12, 0, \
         &TrackInfo::Status2DrawFunction },
-
-#endif
 
 #define COMMON_ITEMS \
    TITLE_ITEMS

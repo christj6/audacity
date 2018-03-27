@@ -916,9 +916,6 @@ AudacityProject::AudacityProject(wxWindow * parent, wxWindowID id,
 {
    mTracks = TrackList::Create();
 
-#ifdef EXPERIMENTAL_DA2
-   SetBackgroundColour(theTheme.Colour( clrMedium ));
-#endif
    // Note that the first field of the status bar is a dummy, and it's width is set
    // to zero latter in the code. This field is needed for wxWidgets 2.8.12 because
    // if you move to the menu bar, the first field of the menu bar is cleared, which
@@ -972,9 +969,6 @@ AudacityProject::AudacityProject(wxWindow * parent, wxWindowID id,
    };
    mTopPanel->SetName( "Top Panel" );// Not localised
    mTopPanel->SetAutoLayout(true);
-#ifdef EXPERIMENTAL_DA2
-   mTopPanel->SetBackgroundColour(theTheme.Colour( clrMedium ));
-#endif
 
    //
    // Create the ToolDock
@@ -1028,10 +1022,6 @@ AudacityProject::AudacityProject(wxWindow * parent, wxWindowID id,
    // being painted in background colour and not scroller background
    // colour, so suppress this for now.
    //pPage->SetBackgroundColour( theTheme.Colour( clrDark ));
-#endif
-
-#ifdef EXPERIMENTAL_DA2
-   pPage->SetBackgroundColour(theTheme.Colour( clrMedium ));
 #endif
 
    {
@@ -1212,9 +1202,6 @@ AudacityProject::AudacityProject(wxWindow * parent, wxWindowID id,
 
    //Initialize the last selection adjustment time.
    mLastSelectionAdjustment = ::wxGetLocalTimeMillis();
-#ifdef EXPERIMENTAL_DA2
-   ClearBackground();// For wxGTK.
-#endif
    mLastF0 = mLastF1 = SelectedRegion::UndefinedFrequency;
 }
 
@@ -1257,22 +1244,12 @@ void AudacityProject::UpdatePrefsVariables()
    gPrefs->Read(wxT("/AudioFiles/NormalizeOnLoad"),&mNormalizeOnLoad, false);
    gPrefs->Read(wxT("/GUI/AutoScroll"), &mViewInfo.bUpdateTrackIndicator, true);
    gPrefs->Read(wxT("/GUI/EmptyCanBeDirty"), &mEmptyCanBeDirty, true );
-// DA: Default for DA is manual from internet.
-#ifdef EXPERIMENTAL_DA
-   gPrefs->Read(wxT("/GUI/Help"), &mHelpPref, wxT("FromInternet") );
-#else
    gPrefs->Read(wxT("/GUI/Help"), &mHelpPref, wxT("Local") );
-#endif
    bool bSelectAllIfNone;
    gPrefs->Read(wxT("/GUI/SelectAllOnNone"), &bSelectAllIfNone, false);
    // 0 is grey out, 1 is Autoselect, 2 is Give warnings.
-#ifdef EXPERIMENTAL_DA
-   // DA warns or greys out.
-   mWhatIfNoSelection = bSelectAllIfNone ? 2 : 0;
-#else
    // Audacity autoselects or warns.
    mWhatIfNoSelection = bSelectAllIfNone ? 1 : 2;
-#endif
    mStopIfWasPaused = true;  // not configurable for now, but could be later.
    gPrefs->Read(wxT("/GUI/ShowSplashScreen"), &mShowSplashScreen, true);
    gPrefs->Read(wxT("/GUI/Solo"), &mSoloPref, wxT("Simple"));

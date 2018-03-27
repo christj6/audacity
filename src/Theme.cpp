@@ -236,12 +236,7 @@ void Theme::EnsureInitialised()
 
 bool ThemeBase::LoadPreferredTheme()
 {
-// DA: Default themes differ.
-#ifdef EXPERIMENTAL_DA
-   wxString theme = gPrefs->Read(wxT("/GUI/Theme"), wxT("dark"));
-#else
    wxString theme = gPrefs->Read(wxT("/GUI/Theme"), wxT("light"));
-#endif
 
    theTheme.LoadTheme( theTheme.ThemeTypeOfTypeName( theme ) );
    return true;
@@ -610,12 +605,7 @@ int SourceOutputStream::OpenFile(const wxString & Filename)
    bOk = File.Open( Filename, wxFile::write );
    if( bOk )
    {
-// DA: Naming of output sourcery
-#ifdef EXPERIMENTAL_DA
-      File.Write( wxT("//   DarkThemeAsCeeCode.h\r\n") );
-#else
       File.Write( wxT("//   ThemeAsCeeCode.h\r\n") );
-#endif
       File.Write( wxT("//\r\n") );
       File.Write( wxT("//   This file was Auto-Generated.\r\n") );
       File.Write( wxT("//   It is included by Theme.cpp.\r\n") );
@@ -910,11 +900,7 @@ void ThemeBase::WriteImageDefs( )
 teThemeType ThemeBase::GetFallbackThemeType(){
 // Fallback must be an internally supported type,
 // to guarantee it is found.
-#ifdef EXPERIMENTAL_DA
-   return themeDark;
-#else
    return themeLight;
-#endif
 }
 
 teThemeType ThemeBase::ThemeTypeOfTypeName( const wxString & Name )
