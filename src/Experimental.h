@@ -117,12 +117,6 @@
 // Define to allow realtime processing in Audacity effects that have been converted.
 #define EXPERIMENTAL_REALTIME_AUDACITY_EFFECTS
 
-// Define to make the meters look like a row of LEDs
-//#define EXPERIMENTAL_METER_LED_STYLE
-
-// Define to enable the device change handler
-//#define EXPERIMENTAL_DEVICE_CHANGE_HANDLER
-
 // Define for NEW noise reduction effect from Paul Licameli.
 #define EXPERIMENTAL_NOISE_REDUCTION
 

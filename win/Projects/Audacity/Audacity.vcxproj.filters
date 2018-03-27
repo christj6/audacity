@@ -632,9 +632,6 @@
     <ClCompile Include="..\..\..\src\widgets\NumericTextCtrl.cpp">
       <Filter>src\widgets</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\DeviceChange.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\SelectedRegion.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -1467,9 +1464,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\audacity\EffectAutomationParameters.h">
       <Filter>includes\audacity</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\DeviceChange.h">
-      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\AudioIOListener.h">
       <Filter>src</Filter>
