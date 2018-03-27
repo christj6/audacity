@@ -653,9 +653,6 @@
     <ClCompile Include="..\..\..\src\prefs\WaveformSettings.cpp">
       <Filter>src\prefs</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\RealFFTf48x.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\tracks\ui\EditCursorOverlay.cpp">
       <Filter>src\tracks\ui</Filter>
     </ClCompile>
@@ -1517,9 +1514,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\wxFileNameWrapper.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\RealFFTf48x.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\TrackPanelDrawingContext.h">
