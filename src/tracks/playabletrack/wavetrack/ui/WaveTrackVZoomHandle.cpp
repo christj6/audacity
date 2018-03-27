@@ -55,9 +55,6 @@ WaveTrackVZoomHandle::WaveTrackVZoomHandle
 
 void WaveTrackVZoomHandle::Enter(bool)
 {
-#ifdef EXPERIMENTAL_TRACK_PANEL_HIGHLIGHTING
-   mChangeHighlight = RefreshCode::RefreshCell;
-#endif
 }
 
 // ZoomKind says how to zoom.

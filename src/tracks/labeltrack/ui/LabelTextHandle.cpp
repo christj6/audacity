@@ -26,13 +26,6 @@ LabelTextHandle::LabelTextHandle
 {
 }
 
-void LabelTextHandle::Enter(bool)
-{
-#ifdef EXPERIMENTAL_TRACK_PANEL_HIGHLIGHTING
-   mChangeHighlight = RefreshCode::RefreshCell;
-#endif
-}
-
 HitTestPreview LabelTextHandle::HitPreview()
 {
    static auto ibeamCursor =

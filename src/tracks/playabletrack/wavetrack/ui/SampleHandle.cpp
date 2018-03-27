@@ -42,9 +42,6 @@ SampleHandle::SampleHandle( const std::shared_ptr<WaveTrack> &pTrack )
 
 void SampleHandle::Enter(bool)
 {
-#ifdef EXPERIMENTAL_TRACK_PANEL_HIGHLIGHTING
-   mChangeHighlight = RefreshCode::RefreshCell;
-#endif
 }
 
 HitTestPreview SampleHandle::HitPreview

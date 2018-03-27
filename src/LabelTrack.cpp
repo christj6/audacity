@@ -827,16 +827,8 @@ void LabelTrack::Draw
 
    // Draw the label boxes.
    {
-#ifdef EXPERIMENTAL_TRACK_PANEL_HIGHLIGHTING
-      bool highlightTrack = false;
-      auto target = dynamic_cast<LabelTextHandle*>(context.target.get());
-      highlightTrack = target && target->GetTrack().get() == this;
-#endif
       int i = -1; for (auto &labelStruct : mLabels) { ++i;
          bool highlight = false;
-#ifdef EXPERIMENTAL_TRACK_PANEL_HIGHLIGHTING
-         highlight = highlightTrack && target->GetLabelNum() == i;
-#endif
          bool selected = mSelIndex == i;
 
          if( selected )

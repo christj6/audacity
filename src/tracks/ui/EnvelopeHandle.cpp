@@ -33,9 +33,6 @@ EnvelopeHandle::EnvelopeHandle( Envelope *pEnvelope )
 
 void EnvelopeHandle::Enter(bool)
 {
-#ifdef EXPERIMENTAL_TRACK_PANEL_HIGHLIGHTING
-   mChangeHighlight = RefreshCode::RefreshCell;
-#endif
 }
 
 EnvelopeHandle::~EnvelopeHandle()

@@ -33,9 +33,6 @@ CutlineHandle::CutlineHandle
 
 void CutlineHandle::Enter(bool)
 {
-#ifdef EXPERIMENTAL_TRACK_PANEL_HIGHLIGHTING
-   mChangeHighlight = RefreshCode::RefreshCell;
-#endif
 }
 
 HitTestPreview CutlineHandle::HitPreview(bool cutline, bool unsafe)

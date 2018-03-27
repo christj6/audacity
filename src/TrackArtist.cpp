@@ -480,9 +480,6 @@ void TrackArtist::DrawVRuler
 {
    auto dc = &context.dc;
    bool highlight = false;
-#ifdef EXPERIMENTAL_TRACK_PANEL_HIGHLIGHTING
-   highlight = rect.Contains(context.lastState.GetPosition());
-#endif
 
    int kind = t->GetKind();
 
@@ -1344,11 +1341,6 @@ void TrackArtist::DrawWaveform(TrackPanelDrawingContext &context,
 
    bool highlight = false;
    bool gripHit = false;
-#ifdef EXPERIMENTAL_TRACK_PANEL_HIGHLIGHTING
-   auto target = dynamic_cast<TimeShiftHandle*>(context.target.get());
-   gripHit = target && target->IsGripHit();
-   highlight = target && target->GetTrack().get() == track;
-#endif
 
    const bool dB = !track->GetWaveformSettings().isLinear();
 
@@ -1363,16 +1355,8 @@ void TrackArtist::DrawWaveform(TrackPanelDrawingContext &context,
    // Update cache for locations, e.g. cutlines and merge points
    track->UpdateLocationsCache();
 
-#ifdef EXPERIMENTAL_TRACK_PANEL_HIGHLIGHTING
-   auto target2 = dynamic_cast<CutlineHandle*>(context.target.get());
-#endif
    for (const auto loc : track->GetCachedLocations()) {
       bool highlight = false;
-#ifdef EXPERIMENTAL_TRACK_PANEL_HIGHLIGHTING
-      highlight =
-         target2 && target2->GetTrack().get() == track &&
-         target2->GetLocation() == loc;
-#endif
       const int xx = zoomInfo.TimeToPosition(loc.pos);
       if (xx >= 0 && xx < rect.width) {
          dc.SetPen( highlight ? AColor::uglyPen : *wxGREY_PEN );
@@ -1629,10 +1613,6 @@ void TrackArtist::DrawClipWaveform(TrackPanelDrawingContext &context,
 #endif
 
    bool highlightEnvelope = false;
-#ifdef EXPERIMENTAL_TRACK_PANEL_HIGHLIGHTING
-   auto target = dynamic_cast<EnvelopeHandle*>(context.target.get());
-   highlightEnvelope = target && target->GetEnvelope() == clip->GetEnvelope();
-#endif
 
    const ClipParameters params(false, track, clip, rect, selectedRegion, zoomInfo);
    const wxRect &hiddenMid = params.hiddenMid;
@@ -1824,10 +1804,6 @@ void TrackArtist::DrawClipWaveform(TrackPanelDrawingContext &context,
          }
          else {
             bool highlight = false;
-#ifdef EXPERIMENTAL_TRACK_PANEL_HIGHLIGHTING
-            auto target = dynamic_cast<SampleHandle*>(context.target.get());
-            highlight = target && target->GetTrack().get() == track;
-#endif
             DrawIndividualSamples(dc, leftOffset, rect, zoomMin, zoomMax,
                dB, dBRange,
                clip, zoomInfo,

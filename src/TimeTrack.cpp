@@ -266,10 +266,6 @@ void TimeTrack::Draw
 {
    auto &dc = context.dc;
    bool highlight = false;
-#ifdef EXPERIMENTAL_TRACK_PANEL_HIGHLIGHTING
-   auto target = dynamic_cast<EnvelopeHandle*>(context.target.get());
-   highlight = target && target->GetEnvelope() == this->GetEnvelope();
-#endif
 
    double min = zoomInfo.PositionToTime(0);
    double max = zoomInfo.PositionToTime(r.width);
