@@ -994,18 +994,6 @@ AudacityProject::AudacityProject(wxWindow * parent, wxWindowID id,
    //
    wxWindow    * pPage;
 
-#ifdef EXPERIMENTAL_NOTEBOOK
-   // We are using a notebook (tabbed panel), so we create the notebook and add pages.
-   GuiFactory Factory;
-   wxNotebook  * pNotebook;
-   mMainPanel = Factory.AddPanel(
-      this, wxPoint( left, top ), wxSize( width, height ) );
-   pNotebook  = Factory.AddNotebook( mMainPanel );
-   /* i18n-hint: This is an experimental feature where the main panel in
-      Audacity is put on a notebook tab, and this is the name on that tab.
-      Other tabs in that notebook may have instruments, patch panels etc.*/
-   pPage = Factory.AddPage( pNotebook, _("Main Mix"));
-#else
    // Not using a notebook, so we place the track panel inside another panel,
    // this keeps the notebook code and normal code consistant and also
    // paves the way for adding additional windows inside the track panel.
@@ -1022,8 +1010,6 @@ AudacityProject::AudacityProject(wxWindow * parent, wxWindowID id,
    // being painted in background colour and not scroller background
    // colour, so suppress this for now.
    //pPage->SetBackgroundColour( theTheme.Colour( clrDark ));
-#endif
-
    {
       auto ubs = std::make_unique<wxBoxSizer>(wxVERTICAL);
       ubs->Add(mToolManager->GetTopDock(), 0, wxEXPAND | wxALIGN_TOP);
@@ -1135,10 +1121,6 @@ AudacityProject::AudacityProject(wxWindow * parent, wxWindowID id,
    // Lay it out
    pPage->SetAutoLayout(true);
    pPage->Layout();
-
-#ifdef EXPERIMENTAL_NOTEBOOK
-   AddPages(this, Factory, pNotebook);
-#endif
 
    mMainPanel->Layout();
 

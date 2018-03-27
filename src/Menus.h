@@ -489,9 +489,6 @@ void MayCheckForUpdates();
 void OnShowLog(const CommandContext &context );
 void OnHelpWelcome(const CommandContext &context );
 void OnBenchmark(const CommandContext &context );
-#if defined(EXPERIMENTAL_CRASH_REPORT)
-void OnCrashReport(const CommandContext &context );
-#endif
 void OnSimulateRecordingErrors(const CommandContext &context );
 void OnDetectUpstreamDropouts(const CommandContext &context );
 void OnScreenshot(const CommandContext &context );

@@ -102,12 +102,6 @@ It handles initialization and termination by subclassing wxApp.
 
 #include "Experimental.h"
 
-#if defined(EXPERIMENTAL_CRASH_REPORT)
-#include <wx/debugrpt.h>
-#include <wx/evtloop.h>
-#include <wx/textdlg.h>
-#endif
-
 #if 0
 #ifdef _DEBUG
     #ifdef _MSC_VER
@@ -190,9 +184,6 @@ It handles initialization and termination by subclassing wxApp.
 #     define V "28"
 #  endif
 
-#  if defined(EXPERIMENTAL_CRASH_REPORT)
-#     pragma comment(lib, "wxmsw" V "u" D "_qa")
-#  endif
 #  pragma comment(lib, "wxbase" V "u" D)
 #  pragma comment(lib, "wxbase" V "u" D "_net")
 #  pragma comment(lib, "wxmsw"  V "u" D "_adv")
@@ -1028,10 +1019,6 @@ wxString AudacityApp::InitLang( const wxString & lang )
 
 void AudacityApp::OnFatalException()
 {
-#if defined(EXPERIMENTAL_CRASH_REPORT)
-   GenerateCrashReport(wxDebugReport::Context_Exception);
-#endif
-
    exit(-1);
 }
 
@@ -1088,52 +1075,6 @@ bool AudacityApp::OnExceptionInMainLoop()
 #pragma warning( pop )
 #endif //_MSC_VER
 
-#if defined(EXPERIMENTAL_CRASH_REPORT)
-void AudacityApp::GenerateCrashReport(wxDebugReport::Context ctx)
-{
-   wxDebugReportCompress rpt;
-   rpt.AddAll(ctx);
-
-   wxFileName fn(FileNames::DataDir(), wxT("audacity.cfg"));
-   rpt.AddFile(fn.GetFullPath(), _TS("Audacity Configuration"));
-   rpt.AddFile(FileNames::PluginRegistry(), wxT("Plugin Registry"));
-   rpt.AddFile(FileNames::PluginSettings(), wxT("Plugin Settings"));
-
-   if (ctx == wxDebugReport::Context_Current)
-   {
-      rpt.AddText(wxT("audiodev.txt"), gAudioIO->GetDeviceInfo(), wxT("Audio Device Info"));
-   }
-
-   AudacityLogger *logger = GetLogger();
-   if (logger)
-   {
-      rpt.AddText(wxT("log.txt"), logger->GetLog(), _TS("Audacity Log"));
-   }
-
-   bool ok = wxDebugReportPreviewStd().Show(rpt);
-
-#if defined(__WXMSW__)
-   wxEventLoop::SetCriticalWindow(NULL);
-#endif
-
-   if (ok && rpt.Process())
-   {
-      AudacityTextEntryDialog dlg(NULL,
-                              _("Report generated to:"),
-                              _("Audacity Support Data"),
-                              rpt.GetCompressedFileName(),
-                              wxOK | wxCENTER);
-      dlg.SetName(dlg.GetTitle());
-      dlg.ShowModal();
-
-      wxLogMessage(wxT("Report generated to: %s"),
-                     rpt.GetCompressedFileName());
-
-      rpt.Reset();
-   }
-}
-#endif
-
 int AudacityApp::FilterEvent(wxEvent & event)
 {
    (void)event;// compiler food (stops unused parameter warning)
@@ -1180,14 +1121,6 @@ int AudacityApp::FilterEvent(wxEvent & event)
 
 AudacityApp::AudacityApp()
 {
-// Do not capture crashes in debug builds
-#if !defined(__WXDEBUG__)
-#if defined(EXPERIMENTAL_CRASH_REPORT)
-#if defined(wxUSE_ON_FATAL_EXCEPTION) && wxUSE_ON_FATAL_EXCEPTION
-   wxHandleFatalExceptions();
-#endif
-#endif
-#endif
 }
 
 AudacityApp::~AudacityApp()

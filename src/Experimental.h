@@ -95,17 +95,6 @@
 // Paul Licameli (PRL) 5 Oct 2014
 #define EXPERIMENTAL_SPECTRAL_EDITING
 
-// Paul Licameli (PRL) 29 Nov 2014
-// #define EXPERIMENTAL_IMPROVED_SEEKING
-
-//If you want any of these files, ask JKC.  They are not
-//yet checked in to Audacity SVN as of 12-Feb-2010
-#ifdef EXPERIMENTAL_NOTEBOOK
-   #include "widgets/GuiFactory.h"
-   #include "widgets/APanel.h"
-   extern void AddPages(   AudacityProject * pProj, GuiFactory & Factory,  wxNotebook  * pNotebook );
-#endif
-
 #ifdef EXPERIMENTAL_NYQUIST_INSPECTOR
    #include "NyquistAdapter.h"
 #endif
@@ -133,15 +122,6 @@
 // Draw negative numbers on the time ruler in a different color, when
 // scrolling past zero is enabled. Perhaps that lessens confusion.
 #define EXPERIMENTAL_TWO_TONE_TIME_RULER
-
-#ifndef IN_RC
-// Define to include crash reporting
-#include <wx/defs.h>
-#define EXPERIMENTAL_CRASH_REPORT
-#if !defined(wxUSE_DEBUGREPORT) || !wxUSE_DEBUGREPORT
-#undef EXPERIMENTAL_CRASH_REPORT
-#endif
-#endif
 
 // Paul Licameli (PRL) 31 May 2015
 // Zero-padding factor for spectrograms can smooth the display of spectrograms by

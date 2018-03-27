@@ -32,10 +32,6 @@
 #include "ondemand/ODTaskThread.h"
 #include "Experimental.h"
 
-#if defined(EXPERIMENTAL_CRASH_REPORT)
-#include <wx/debugrpt.h>
-#endif
-
 class IPCServ;
 class Importer;
 class CommandHandler;
@@ -157,10 +153,6 @@ class AudacityApp final : public wxApp {
    void SetWindowRectAlreadySaved(bool alreadySaved) {mWindowRectAlreadySaved = alreadySaved;}
 
    AudacityLogger *GetLogger();
-
-#if defined(EXPERIMENTAL_CRASH_REPORT)
-   void GenerateCrashReport(wxDebugReport::Context ctx);
-#endif
 
 #ifdef __WXMAC__
 

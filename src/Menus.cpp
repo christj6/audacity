@@ -115,10 +115,6 @@ simplifies construction of menu items.
 #include "UndoManager.h"
 #include "WaveTrack.h"
 
-#if defined(EXPERIMENTAL_CRASH_REPORT)
-#include <wx/debugrpt.h>
-#endif
-
 #include "prefs/TracksPrefs.h"
 
 #include "widgets/Meter.h"
@@ -1225,9 +1221,6 @@ void AudacityProject::CreateMenusAndCommands()
 
       c->AddItem(wxT("Log"), XXO("Show &Log..."), FN(OnShowLog));
 
-#if defined(EXPERIMENTAL_CRASH_REPORT)
-      c->AddItem(wxT("CrashReport"), XXO("&Generate Support Data..."), FN(OnCrashReport));
-#endif
       c->AddItem(wxT("CheckDeps"), XXO("Chec&k Dependencies..."), FN(OnCheckDependencies),
                  AudioIONotBusyFlag, AudioIONotBusyFlag);
       c->EndSubMenu();
@@ -8022,18 +8015,6 @@ void AudacityProject::OnBenchmark(const CommandContext &WXUNUSED(context) )
    ::RunBenchmark(this);
 }
 
-#if defined(EXPERIMENTAL_CRASH_REPORT)
-void AudacityProject::OnCrashReport(const CommandContext &WXUNUSED(context) )
-{
-// Change to "1" to test a real crash
-#if 0
-   char *p = 0;
-   *p = 1234;
-#endif
-   wxGetApp().GenerateCrashReport(wxDebugReport::Context_Current);
-}
-#endif
-
 void AudacityProject::OnSimulateRecordingErrors(const CommandContext &WXUNUSED(context) )
 {
    bool &setting = gAudioIO->mSimulateRecordingErrors;
@@ -8399,14 +8380,6 @@ void AudacityProject::SeekLeftOrRight
 
 void AudacityProject::SeekWhenAudioActive(double seekStep)
 {
-#ifdef EXPERIMENTAL_IMPROVED_SEEKING
-   if (gAudioIO->GetLastPlaybackTime() < mLastSelectionAdjustment) {
-      // Allow time for the last seek to output a buffer before
-      // discarding samples again
-      // Do not advance mLastSelectionAdjustment
-      return;
-   }
-#endif
    mLastSelectionAdjustment = ::wxGetLocalTimeMillis();
 
    gAudioIO->SeekStream(seekStep);
