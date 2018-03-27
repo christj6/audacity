@@ -166,9 +166,6 @@ PrefsDialog::Factories
    static DirectoriesPrefsFactory directoriesPrefsFactory;
    static WarningsPrefsFactory warningsPrefsFactory;
    static EffectsPrefsFactory effectsPrefsFactory;
-#ifdef EXPERIMENTAL_THEME_PREFS
-   static ThemePrefsFactory themePrefsFactory;
-#endif
    // static BatchPrefsFactory batchPrefsFactory;
    static KeyConfigPrefsFactory keyConfigPrefsFactory;
    static MousePrefsFactory mousePrefsFactory;
@@ -200,9 +197,6 @@ PrefsDialog::Factories
       &directoriesPrefsFactory,
       &warningsPrefsFactory,
       &effectsPrefsFactory,
-#ifdef EXPERIMENTAL_THEME_PREFS
-      &themePrefsFactory,
-#endif
       // &batchPrefsFactory,
       &keyConfigPrefsFactory,
       &mousePrefsFactory,

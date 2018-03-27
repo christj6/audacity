@@ -44,9 +44,6 @@
 // feature to link audio tracks to a label track
 #define EXPERIMENTAL_SYNC_LOCK
 
-// DA: Enables dark audacity theme and customisations.
-//#define EXPERIMENTAL_DA
-
 // These CFG macros allow easy distinction between Audacity and DA defaults.
 #define CFG_A( x ) x
 #define CFG_DA( x ) 
@@ -70,10 +67,6 @@
 // conceivably need.
 // TODO: Agree on and then tidy this code.
 #define EXPERIMENTAL_THEMING
-
-//August 2009 - Theming not locked down enough for a stable release.
-// This turns on the Theme panel in Prefs dialog. It is independent of EXPERIMENTAL_THEMING.
-//#define EXPERIMENTAL_THEME_PREFS
 
 // This shows the zoom toggle button on the edit toolbar.
 #define EXPERIMENTAL_ZOOM_TOGGLE_BUTTON

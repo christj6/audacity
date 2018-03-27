@@ -708,10 +708,6 @@ void ToolBar:: MakeButtonBackgroundsLarge()
 
    bool bUseAqua = false;
 
-#ifdef EXPERIMENTAL_THEME_PREFS
-   gPrefs->Read( wxT("/GUI/ShowMac"), &bUseAqua, false);
-#endif
-
 #ifdef USE_AQUA_THEME
    bUseAqua = !bUseAqua;
 #endif
@@ -733,10 +729,6 @@ void ToolBar::MakeButtonBackgroundsSmall()
 {
 
    bool bUseAqua = false;
-
-#ifdef EXPERIMENTAL_THEME_PREFS
-   gPrefs->Read( wxT("/GUI/ShowMac"), &bUseAqua, false);
-#endif
 
 #ifdef USE_AQUA_THEME
    bUseAqua = !bUseAqua;
