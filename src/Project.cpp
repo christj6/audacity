@@ -4267,6 +4267,9 @@ bool AudacityProject::SaveAs(const wxString & newFileName, bool bWantSaveCompres
 
 bool AudacityProject::SaveAs(bool bWantSaveCompressed /*= false*/)
 {
+	// this entire function can be commented out, and all that happens is:
+	// the Save Project and Save Project As buttons do nothing when you click on them.
+
    TitleRestorer Restorer(this); // RAII
    bool bHasPath = true;
    wxFileName filename(mFileName);
@@ -4279,27 +4282,27 @@ bool AudacityProject::SaveAs(bool bWantSaveCompressed /*= false*/)
    wxString sDialogTitle;
    if (bWantSaveCompressed)
    {
-      if (ShowWarningDialog(this, wxT("FirstProjectSave"),
-                           _("\
-'Save Compressed Project' is for an Audacity project, not an audio file.\n\
-For an audio file that will open in other apps, use 'Export'.\n\n\
-\
-Compressed project files are a good way to transmit your project online, \n\
-but they have some loss of fidelity.\n\n\
-\
-To open a compressed project takes longer than usual, as it imports \n\
-each compressed track.\n"),
-                           true) != wxID_OK)
+	   /*
+	   'Save Compressed Project' is for an Audacity project, not an audio file.
+	   For an audio file that will open in other apps, use 'Export'.
+
+	   Compressed project files are a good way to transmit your project online, 
+	   but they have some loss of fidelity.
+
+	   To open a compressed project takes longer than usual, as it imports
+	   each compressed track.
+	   */
+      if (ShowWarningDialog(this, wxT("FirstProjectSave"), _("insert text here"), true) != wxID_OK)
          return false;
       sDialogTitle.Printf(_("%sSave Compressed Project \"%s\" As..."), Restorer.sProjNumber,Restorer.sProjName);
    }
    else
    {
-      if (ShowWarningDialog(this, wxT("FirstProjectSave"),
-                           _("\
-'Save Project' is for an Audacity project, not an audio file.\n\
-For an audio file that will open in other apps, use 'Export'.\n"),
-                           true) != wxID_OK)
+	   /*
+	   'Save Project' is for an Audacity project, not an audio file.
+	   For an audio file that will open in other apps, use 'Export'.
+	   */
+      if (ShowWarningDialog(this, wxT("FirstProjectSave"), _("insert text here"), true) != wxID_OK)
          return false;
       sDialogTitle.Printf(_("%sSave Project \"%s\" As..."), Restorer.sProjNumber, Restorer.sProjName);
    }
@@ -4325,6 +4328,7 @@ For an audio file that will open in other apps, use 'Export'.\n"),
    fName = filename.GetFullPath();
 
    bool bOwnsNewAupName = mbLoadedFromAup && (mFileName==fName);
+
    //check to see if the NEW project file already exists.
    //We should only overwrite it if this project already has the same name, where the user
    //simply chose to use the save as command although the save command would have the effect.
