@@ -307,8 +307,6 @@ private:
     DECLARE_EVENT_TABLE()
 };
 
-class QuickPlayRulerOverlay;
-
 // This is an Audacity Specific ruler panel.
 class AUDACITY_DLL_API AdornedRulerPanel final : public OverlayPanel
 {
@@ -471,8 +469,6 @@ private:
    bool mShowScrubbing{ false };
 
    DECLARE_EVENT_TABLE()
-
-   friend QuickPlayRulerOverlay;
 
    wxWindow *mButtons[3];
    bool mNeedButtonUpdate { true };
