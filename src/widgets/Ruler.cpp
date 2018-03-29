@@ -1984,7 +1984,7 @@ void AdornedRulerPanel::OnPaint(wxPaintEvent & WXUNUSED(evt))
 
    DoDrawMarks(&backDC, true);
 
-   DoDrawPlayRegion(&backDC);
+   // DoDrawPlayRegion(&backDC); // draws the <===> arrow along the selected region
 
    DoDrawEdge(&backDC);
 
