@@ -269,8 +269,6 @@ private:
    void EnqueueODTasks();
 
 public:
-   bool WarnOfLegacyFile( );
-
    // If pNewTrackList is passed in non-NULL, it gets filled with the pointers to NEW tracks.
    bool Import(const wxString &fileName, WaveTrackArray *pTrackArray = NULL);
 

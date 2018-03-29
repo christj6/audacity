@@ -2828,42 +2828,17 @@ void AudacityProject::OpenFiles(AudacityProject *proj)
    }
 }
 
-// Most of this string was duplicated 3 places. Made the warning consistent in this global.
-// The %s is to be filled with the version string.
-// PRL:  Do not statically allocate a string in _() !
-static wxString gsLegacyFileWarning() { return
-_("This file was saved by Audacity version %s. The format has changed. \
-\n\nAudacity can try to open and save this file, but saving it in this \
-\nversion will then prevent any 1.2 or earlier version opening it. \
-\n\nAudacity might corrupt the file in opening it, so you should \
-back it up first. \
-\n\nOpen this file now?");
-}
-
-bool AudacityProject::WarnOfLegacyFile( )
-{
-   wxString msg;
-   msg.Printf(gsLegacyFileWarning(), _("1.0 or earlier"));
-
-   // Stop icon, and choose 'NO' by default.
-   int action =
-      AudacityMessageBox(msg,
-                   _("Warning - Opening Old Project File"),
-                   wxYES_NO | wxICON_STOP | wxNO_DEFAULT | wxCENTRE,
-                   this);
-   return (action != wxNO);
-}
-
-
 AudacityProject *AudacityProject::OpenProject(
    AudacityProject *pProject, const wxString &fileNameArg, bool addtohistory)
 {
    AudacityProject *pNewProject = nullptr;
+   /*
    if ( ! pProject )
       pProject = pNewProject = CreateNewAudacityProject();
    auto cleanup = finally( [&] { if( pNewProject ) pNewProject->Close(true); } );
    pProject->OpenFile( fileNameArg, addtohistory );
    pNewProject = nullptr;
+   */
    return pProject;
 }
 
@@ -2871,6 +2846,7 @@ AudacityProject *AudacityProject::OpenProject(
 //    See comment in AudacityApp::MRUOpen().
 void AudacityProject::OpenFile(const wxString &fileNameArg, bool addtohistory)
 {
+	/*
    // On Win32, we may be given a short (DOS-compatible) file name on rare
    // occassions (e.g. stuff like "C:\PROGRA~1\AUDACI~1\PROJEC~1.AUP"). We
    // convert these to long file name first.
@@ -2939,8 +2915,8 @@ void AudacityProject::OpenFile(const wxString &fileNameArg, bool addtohistory)
    if (temp == wxT("AudacityProject")) {
       // It's an Audacity 1.0 (or earlier) project file.
       // If they bail out, return and do no more.
-      if( !WarnOfLegacyFile() )
-         return;
+      // if( !WarnOfLegacyFile() )
+      //    return;
       // Convert to the NEW format.
       bool success = ConvertLegacyProjectFile(wxFileName{ fileName });
       if (!success) {
@@ -3135,14 +3111,14 @@ void AudacityProject::OpenFile(const wxString &fileNameArg, bool addtohistory)
             // It then failed in SetProject, saying it cannot find the files,
             // then never go through ProjectFSCK to give more info.
             // Going through OnClose() may be overkill, but it's safe.
-            /*
+
                // There was an error in the load/check and the user
                // explictly opted to close the project.
-               mTracks->Clear(true);
-               mFileName = wxT("");
-               SetProjectTitle();
-               mTrackPanel->Refresh(true);
-               */
+               // mTracks->Clear(true);
+               // mFileName = wxT("");
+               // SetProjectTitle();
+               // mTrackPanel->Refresh(true);
+
             closed = true;
             this->OnClose(*this);
             return;
@@ -3205,6 +3181,7 @@ void AudacityProject::OpenFile(const wxString &fileNameArg, bool addtohistory)
                    _("Error Opening Project"),
                    wxOK | wxCENTRE, this);
    }
+   */
 }
 
 void AudacityProject::EnqueueODTasks()
@@ -3451,7 +3428,7 @@ bool AudacityProject::HandleXMLTag(const wxChar *tag, const wxChar **attrs)
    // Specifically detect older versions of Audacity
    if ( bIsOld | bIsVeryOld ) {
       wxString msg;
-      msg.Printf(gsLegacyFileWarning(), audacityVersion);
+      // msg.Printf(gsLegacyFileWarning(), audacityVersion);
 
       int icon_choice = wxICON_EXCLAMATION;
       if( bIsVeryOld )
