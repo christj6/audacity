@@ -2001,19 +2001,8 @@ wxAccStatus NumericTextCtrlAx::GetFocus(int *childId, wxAccessible **child)
 // Returns help text for this object or a child, similar to tooltip text.
 wxAccStatus NumericTextCtrlAx::GetHelpText(int WXUNUSED(childId), wxString *helpText)
 {
-// removed help text, as on balance it's more of an irritation than useful
-#if 0    // was #if wxUSE_TOOLTIPS
-   wxToolTip *pTip = mCtrl->GetToolTip();
-   if (pTip) {
-      *helpText = pTip->GetTip();
-   }
-
-   return wxACC_OK;
-#else
    helpText->Clear();
-
    return wxACC_NOT_SUPPORTED;
-#endif
 }
 
 // Returns the keyboard shortcut for this object or child.

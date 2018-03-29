@@ -15,12 +15,6 @@ It handles initialization and termination by subclassing wxApp.
 
 *//*******************************************************************/
 
-#if 0
-// This may be used to debug memory leaks.
-// See: Visual Leak Dectector @ http://vld.codeplex.com/
-#include <vld.h>
-#endif
-
 #include "Audacity.h" // This should always be included first
 #include "AudacityApp.h"
 #include "TranslatableStringArray.h"
@@ -101,16 +95,6 @@ It handles initialization and termination by subclassing wxApp.
 #include "import/Import.h"
 
 #include "Experimental.h"
-
-#if 0
-#ifdef _DEBUG
-    #ifdef _MSC_VER
-        #undef THIS_FILE
-        static char*THIS_FILE= __FILE__;
-        #define new new(_NORMAL_BLOCK, THIS_FILE, __LINE__)
-    #endif
-#endif
-#endif
 
 // Windows specific linker control...only needed once so
 // this is a good place (unless we want to add another file).
@@ -208,25 +192,6 @@ It handles initialization and termination by subclassing wxApp.
 
 DEFINE_EVENT_TYPE(EVT_OPEN_AUDIO_FILE);
 wxDEFINE_EVENT(EVT_LANGUAGE_CHANGE, wxCommandEvent);
-
-#if 0
-#ifdef __WXGTK__
-static void wxOnAssert(const wxChar *fileName, int lineNumber, const wxChar *msg)
-{
-   if (msg)
-      wxPrintf("ASSERTION FAILED: %s\n%s: %d\n", (const char *)wxString(msg).mb_str(), (const char *)wxString(fileName).mb_str(), lineNumber);
-   else
-      wxPrintf("ASSERTION FAILED!\n%s: %d\n", (const char *)wxString(fileName).mb_str(), lineNumber);
-
-   // Force core dump
-   int *i = 0;
-   if (*i)
-      exit(1);
-
-   exit(0);
-}
-#endif
-#endif
 
 static bool gInited = false;
 bool gIsQuitting = false;
@@ -2231,29 +2196,6 @@ void AudacityApp::AssociateFileTypes()
                   associateFileTypes.Create(true);
                   associateFileTypes = (wxString)argv[0] + (wxString)wxT(" \"%1\"");
                }
-
-#if 0
-               // These can be use later to support more startup messages
-               // like maybe "Import into existing project" or some such.
-               // Leaving here for an example...
-               associateFileTypes.SetName(root_key + wxT("Audacity.Project\\shell\\open\\ddeexec"));
-               if(!associateFileTypes.Exists()) {
-                  associateFileTypes.Create(true);
-                  associateFileTypes = wxT("%1");
-               }
-
-               associateFileTypes.SetName(root_key + wxT("Audacity.Project\\shell\\open\\ddeexec\\Application"));
-               if(!associateFileTypes.Exists()) {
-                  associateFileTypes.Create(true);
-                  associateFileTypes = IPC_APPL;
-               }
-
-               associateFileTypes.SetName(root_key + wxT("Audacity.Project\\shell\\open\\ddeexec\\Topic"));
-               if(!associateFileTypes.Exists()) {
-                  associateFileTypes.Create(true);
-                  associateFileTypes = IPC_TOPIC;
-               }
-#endif
             }
          } else {
             // User said no. Set a pref so we don't keep asking.

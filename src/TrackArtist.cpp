@@ -1918,29 +1918,6 @@ static inline float findValue
 {
    float value;
 
-
-#if 0
-   // Averaging method
-   if ((int)(bin1) == (int)(bin0)) {
-      value = spectrum[(int)(bin0)];
-   } else {
-      float binwidth= bin1 - bin0;
-      value = spectrum[(int)(bin0)] * (1.f - bin0 + (int)bin0);
-
-      bin0 = 1 + (int)(bin0);
-      while (bin0 < (int)(bin1)) {
-         value += spectrum[(int)(bin0)];
-         bin0 += 1.0;
-      }
-      // Do not reference past end of freq array.
-      if ((int)(bin1) >= (int)nBins) {
-         bin1 -= 1.0;
-      }
-
-      value += spectrum[(int)(bin1)] * (bin1 - (int)(bin1));
-      value /= binwidth;
-   }
-#else
    // Maximum method, and no apportionment of any single bins over multiple pixel rows
    // See Bug971
    int index, limitIndex;
@@ -1961,7 +1938,6 @@ static inline float findValue
    value = spectrum[index];
    while (++index < limitIndex)
       value = std::max(value, spectrum[index]);
-#endif
    if (!autocorrelation) {
       // Last step converts dB to a 0.0-1.0 range
       value = (value + range + gain) / (double)range;

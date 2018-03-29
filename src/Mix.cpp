@@ -204,18 +204,6 @@ void MixAndRender(TrackList *tracks, TrackFactory *trackFactory,
    else {
       uLeft = std::move(mixLeft),
          uRight = std::move(mixRight);
-#if 0
-   int elapsedMS = wxGetElapsedTime();
-   double elapsedTime = elapsedMS * 0.001;
-   double maxTracks = totalTime / (elapsedTime / numWaves);
-
-   // Note: these shouldn't be translated - they're for debugging
-   // and profiling only.
-   wxPrintf("      Tracks: %d\n", numWaves);
-   wxPrintf("  Mix length: %f sec\n", totalTime);
-   wxPrintf("Elapsed time: %f sec\n", elapsedTime);
-   wxPrintf("Max number of tracks to mix in real time: %f\n", maxTracks);
-#endif
    }
 }
 

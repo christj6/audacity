@@ -2042,19 +2042,6 @@ void PluginManager::LoadGroup(wxFileConfig *pRegistry, PluginType type)
       }
       plug.SetVendor(strVal);
 
-#if 0
-      // This was done before version 2.2.2, but the value was not really used
-      // But absence of a value will cause early versions to skip the group
-      // Therefore we still write a blank to keep pluginregistry.cfg
-      // backwards-compatible
-
-      // Get the description and bypass group if not found
-      if (!pRegistry->Read(KEY_DESCRIPTION, &strVal))
-      {
-         continue;
-      }
-#endif
-
       // Is it enabled...default to no if not found
       pRegistry->Read(KEY_ENABLED, &boolVal, false);
       plug.SetEnabled(boolVal);

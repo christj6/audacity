@@ -72,18 +72,6 @@ static const std::pair<const wxChar*, const wxChar*> SpecialCommands[] = {
 
    /* i18n-hint: FLAC names an audio file format */
    { XO("Export as FLAC"),          wxT("ExportFLAC") },
-
-// MP3 OGG and WAV already handled by menu items.
-#if 0
-   /* i18n-hint: MP3 names an audio file format */
-   { XO("Export as MP3"),           wxT("ExportMP3") },
-
-   /* i18n-hint: Ogg names an audio file format */
-   { XO("Export as Ogg"),           wxT("ExportOgg") },
-
-   /* i18n-hint: WAV names an audio file format */
-   { XO("Export as WAV"),           wxT("ExportWAV") },
-#endif
 };
 // end CLEANSPEECH remnant
 

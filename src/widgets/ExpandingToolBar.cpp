@@ -577,18 +577,6 @@ void ExpandingToolBar::UpdateMoving()
       r.Inflate(4, 4);
       mTargetPanel->SetSize(r);
 
-      #if 0
-      wxClientDC dc(mAreaParent);
-      dc.DestroyClippingRegion();
-      dc.SetLogicalFunction(wxINVERT);
-      wxRect r = prevTarget;
-      r.Inflate(4, 4);
-      dc.DrawRectangle(r);
-      r = mDropTarget;
-      r.Inflate(4, 4);
-      dc.DrawRectangle(r);
-      #endif
-
       // This gives time for wx to finish redrawing the window that way.
       // HACK: why do we need to do it so many times???
       for(i=0; i<500; i++)
@@ -652,21 +640,6 @@ ToolBarGrabber::ToolBarGrabber(wxWindow *parent,
    wxPanelWrapper(parent, id, pos, size),
    mOwnerToolBar(ownerToolbar)
 {
-#if 0
-   wxImage grabberImages = theTheme.Image(bmpToolBarGrabber);
-   wxColour magicColor = wxColour(0, 255, 255);
-   ImageArray images = ImageRoll::SplitH(grabberImages, magicColor);
-
-   mImageRoll[0] = ImageRoll(ImageRoll::VerticalRoll,
-                             images[0],
-                             magicColor);
-   mImageRoll[1] = ImageRoll(ImageRoll::VerticalRoll,
-                             images[1],
-                             magicColor);
-
-   SetSizeHints(mImageRoll[0].GetMinSize(),
-                mImageRoll[1].GetMaxSize());
-#endif
    mState = 0;
 }
 
@@ -931,15 +904,6 @@ void ToolBarArea::LayoutOne(int childIndex)
       mChildArray[childIndex]->SetSize(0, 0, childMin.x, childMin.y);
       ExpandRow(0);
 
-      #if 0
-      wxPoint p = mChildArray[childIndex]->GetPosition();
-      wxSize s = mChildArray[childIndex]->GetSize();
-
-      wxPrintf("ToolBar %d moved to row %d at (%d, %d), size (%d x %d)\n",
-             childIndex, mRowArray[childIndex],
-             p.x, p.y, s.x, s.y);
-      #endif
-
       mLastLayoutSize = area;
 
       return;
@@ -982,15 +946,6 @@ void ToolBarArea::LayoutOne(int childIndex)
    // preserve the layout.  If the user does a major resize, we're
    // allowed to redo the layout.
    mLastLayoutSize = area;
-
-   #if 0
-   wxPoint p = mChildArray[childIndex]->GetPosition();
-   wxSize s = mChildArray[childIndex]->GetSize();
-
-   wxPrintf("ToolBar %d moved to row %d at (%d, %d), size (%d x %d)\n",
-          childIndex, mRowArray[childIndex],
-          p.x, p.y, s.x, s.y);
-   #endif
 }
 
 bool ToolBarArea::Layout()

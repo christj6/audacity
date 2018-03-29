@@ -663,13 +663,6 @@ void WaveTrackMenuTable::InitMenu(Menu *pMenu, void *pUserData)
 
    // Can be achieved by split stereo and then dragging pan slider.
    pMenu->Enable(OnSplitStereoMonoID, !isMono && !unsafe);
-
-   // Several menu items no longer needed....
-#if 0
-   pMenu->Enable(OnChannelMonoID, isMono);
-   pMenu->Enable(OnChannelLeftID, isMono);
-   pMenu->Enable(OnChannelRightID, isMono);
-#endif
 }
 
 BEGIN_POPUP_MENU(WaveTrackMenuTable)

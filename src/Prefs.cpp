@@ -72,67 +72,6 @@ std::unique_ptr<wxFileConfig> ugPrefs {};
 wxFileConfig *gPrefs = NULL;
 int gMenusDirty = 0;
 
-#if 0
-// Copy one entry from one wxConfig object to another
-static void CopyEntry(wxString path, wxConfigBase *src, wxConfigBase *dst, wxString entry)
-{
-   switch(src->GetEntryType(entry)) {
-   case wxConfigBase::Type_Unknown:
-   case wxConfigBase::Type_String: {
-      wxString value = src->Read(entry, wxT(""));
-      dst->Write(path + entry, value);
-      break;
-   }
-   case wxConfigBase::Type_Boolean: {
-      bool value = false;
-      src->Read(entry, &value, value);
-      dst->Write(path + entry, value);
-      break;
-   }
-   case wxConfigBase::Type_Integer: {
-      long value = false;
-      src->Read(entry, &value, value);
-      dst->Write(path + entry, value);
-      break;
-   }
-   case wxConfigBase::Type_Float: {
-      double value = false;
-      src->Read(entry, &value, value);
-      dst->Write(path + entry, value);
-      break;
-   }
-   }
-}
-
-
-// Recursive routine to copy all groups and entries from one wxConfig object to another
-static void CopyEntriesRecursive(wxString path, wxConfigBase *src, wxConfigBase *dst)
-{
-   wxString entryName;
-   long entryIndex;
-   bool entryKeepGoing;
-
-   entryKeepGoing = src->GetFirstEntry(entryName, entryIndex);
-   while (entryKeepGoing) {
-      CopyEntry(path, src, dst, entryName);
-      entryKeepGoing = src->GetNextEntry(entryName, entryIndex);
-   }
-
-   wxString groupName;
-   long groupIndex;
-   bool groupKeepGoing;
-
-   groupKeepGoing = src->GetFirstGroup(groupName, groupIndex);
-   while (groupKeepGoing) {
-      wxString subPath = path+groupName+wxT("/");
-      src->SetPath(subPath);
-      CopyEntriesRecursive(subPath, src, dst);
-      src->SetPath(path);
-      groupKeepGoing = src->GetNextGroup(groupName, groupIndex);
-   }
-}
-#endif
-
 void InitPreferences()
 {
    wxString appName = wxTheApp->GetAppName();

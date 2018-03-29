@@ -384,8 +384,6 @@ public:
    static TempAllowFocus TemporarilyAllowFocus();
 
 private:
-   void DoDrawPlayRegion(wxDC * dc);
-
    enum class MenuChoice { QuickPlay };
    void ShowContextMenu( MenuChoice choice, const wxPoint *pPosition);
 

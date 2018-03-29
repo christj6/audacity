@@ -2698,15 +2698,6 @@ wxArrayString AudacityProject::ShowOpenDialog(const wxString &extraformat, const
    all.RemoveLast(1);
    filter.RemoveLast(1);
 
-   // For testing long filters
-#if 0
-   wxString test = wxT("*.aaa;*.bbb;*.ccc;*.ddd;*.eee");
-   all = test + wxT(';') + test + wxT(';') + test + wxT(';') +
-         test + wxT(';') + test + wxT(';') + test + wxT(';') +
-         test + wxT(';') + test + wxT(';') + test + wxT(';') +
-         all;
-#endif
-
    /* i18n-hint: The vertical bars and * are essential here.*/
    wxString mask = _("All files|*|All supported files|") +
                    all + wxT("|"); // "all" and "all supported" entries
@@ -3647,37 +3638,6 @@ void AudacityProject::WriteXML(XMLWriter &xmlFile, bool bWantSaveCompressed)
 
 }
 
-#if 0
-// I added this to "fix" bug #334.  At that time, we were on wxWidgets 2.8.12 and
-// there was a window between the closing of the "Save" progress dialog and the
-// end of the actual save where the user was able to close the project window and
-// recursively enter the Save code (where they could inadvertently cause the issue
-// described in #334).
-//
-// When we converted to wx3, this "disabler" caused focus problems when returning
-// to the project after the save (bug #1172) because the focus and activate events
-// weren't being dispatched and the focus would get lost.
-//
-// After some testing, it looks like the window described above no longer exists,
-// so I've disabled the disabler.  However, I'm leaving it here in case we run
-// into the problem in the future.  (even though it can't be used as-is)
-class ProjectDisabler
-{
-public:
-   ProjectDisabler(wxWindow *w)
-   :  mWindow(w)
-   {
-      mWindow->GetEventHandler()->SetEvtHandlerEnabled(false);
-   }
-   ~ProjectDisabler()
-   {
-      mWindow->GetEventHandler()->SetEvtHandlerEnabled(true);
-   }
-private:
-   wxWindow *mWindow;
-};
-#endif
-
 bool AudacityProject::Save()
 {
    if ( !IsProjectSaved() )
@@ -3685,7 +3645,6 @@ bool AudacityProject::Save()
 
    return DoSave(false, false);
 }
-
 
 // Assumes AudacityProject::mFileName has been set to the desired path.
 bool AudacityProject::DoSave

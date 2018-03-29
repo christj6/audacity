@@ -1008,18 +1008,6 @@ void AudacityProject::CreateMenusAndCommands()
          AlwaysEnabledFlag, AlwaysEnabledFlag);
       c->EndSubMenu();
 
-#if 0
-      // TODO: Can these labels be made clearer? Do we need this sub-menu at all?
-      c->BeginSubMenu(_("Move Sele&ction and Tracks"));
-
-      c->AddItemList(wxT("AlignMove"), alignLabels, mAlignLabelsCount, FN(OnAlignMoveSel));
-      c->SetCommandFlags(wxT("AlignMove"),
-         AudioIONotBusyFlag | TracksSelectedFlag,
-         AudioIONotBusyFlag | TracksSelectedFlag);
-
-      c->EndSubMenu();
-#endif
-
       c->SetDefaultFlags(AudioIONotBusyFlag, AudioIONotBusyFlag);
 
       c->BeginSubMenu(_("S&ort Tracks"));
@@ -2355,13 +2343,6 @@ void AudacityProject::UpdateMenus(bool checkActive)
          mCommandManager.Enable(wxT("Trim"), false);
       }
    }
-
-#if 0
-   if (flags & CutCopyAvailableFlag) {
-      mCommandManager.Enable(wxT("Copy"), true);
-      mCommandManager.Enable(wxT("Cut"), true);
-   }
-#endif
 
    ModifyToolbarMenus();
 }
@@ -5763,55 +5744,6 @@ void AudacityProject::OnSplit(const CommandContext &WXUNUSED(context) )
 
    PushState(_("Split"), _("Split"));
    mTrackPanel->Refresh(false);
-#if 0
-//ANSWER-ME: Do we need to keep this commented out OnSplit() code?
-// This whole section no longer used...
-   /*
-    * Previous (pre-multiclip) implementation of "Split" command
-    * This does work only when a range is selected!
-    *
-   TrackListIterator iter(mTracks);
-
-   Track *n = iter.First();
-   Track *dest;
-
-   TrackList newTracks;
-
-   while (n) {
-      if (n->GetSelected()) {
-         double sel0 = mViewInfo.selectedRegion.t0();
-         double sel1 = mViewInfo.selectedRegion.t1();
-
-         dest = n->Copy(sel0, sel1);
-         dest->Init(*n);
-         dest->SetOffset(wxMax(sel0, n->GetOffset()));
-
-         if (sel1 >= n->GetEndTime())
-            n->Clear(sel0, sel1);
-         else if (sel0 <= n->GetOffset()) {
-            n->Clear(sel0, sel1);
-            n->SetOffset(sel1);
-         } else
-            n->Silence(sel0, sel1);
-
-         newTracks.Add(dest);
-      }
-      n = iter.Next();
-   }
-
-   TrackListIterator nIter(&newTracks);
-   n = nIter.First();
-   while (n) {
-      mTracks->Add(n);
-      n = nIter.Next();
-   }
-
-   PushState(_("Split"), _("Split"));
-
-   FixScrollbars();
-   mTrackPanel->Refresh(false);
-   */
-#endif
 }
 
 void AudacityProject::OnSplitNew(const CommandContext &WXUNUSED(context) )
@@ -5832,14 +5764,7 @@ void AudacityProject::OnSplitNew(const CommandContext &WXUNUSED(context) )
             newt1 = wt->LongSamplesToTime(wt->TimeToLongSamples(mViewInfo.selectedRegion.t1()));
             dest = wt->SplitCut(newt0, newt1);
          }
-#if 0
-         // LL:  For now, just skip all non-wave tracks since the other do not
-         //      yet support proper splitting.
-         else {
-            dest = n->Cut(mViewInfo.selectedRegion.t0(),
-                   mViewInfo.selectedRegion.t1());
-         }
-#endif
+
          if (dest) {
             dest->SetOffset(wxMax(newt0, offset));
             FinishCopy(n, std::move(dest), *mTracks);

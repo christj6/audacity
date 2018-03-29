@@ -468,49 +468,6 @@ void GetInfoCommand::ExploreTrackPanel( const CommandContext &context,
       trackRect.y = t->GetY() - pTP->mViewInfo->vpos;
       trackRect.height = t->GetHeight();
 
-#if 0
-      // Work in progress on getting the TCP button positions and sizes.
-      wxRect rect = trackRect;
-      Track *l = t->GetLink();
-
-      if (t->GetLinked()) {
-         rect.height += l->GetHeight();
-      }
-
-      switch (t->GetKind()) {
-         case Track::Wave:
-         {
-            break;
-         }
-         case Track::Label:
-            break;
-         case Track::Time:
-            break;
-      }
-      {
-         // Start with whole track rect
-         wxRect R = trackRect;
-
-         // Now exclude left, right, and top insets
-         R.x += kLeftInset;
-         R.y += kTopInset;
-         R.width -= kLeftInset * 2;
-         R.height -= kTopInset;
-
-         int labelw = pTP->GetLabelWidth();
-         int vrul = pTP->GetVRulerOffset();
-         bool bIsWave = true;
-         //mTrackInfo.DrawBackground(dc, R, t->GetSelected(), bIsWave, labelw, vrul);
-
-
-         for (Overlay * pOverlay : pTP->mOverlays) {
-            auto R2(pOverlay->GetRectangle(trackRect.GetSize()).first);
-            context.Status( wxString::Format("  [ %2i, %3i, %3i, %3i, %3i, \"%s\" ],", 
-               depth, R2.GetLeft(), R2.GetTop(), R2.GetRight(), R2.GetBottom(), "Overthing" )); 
-         }
-      }
-#endif
-
       // The VRuler.
       {  
          wxRect R = trackRect;

@@ -121,30 +121,6 @@ size_t RingBuffer::Put(samplePtr buffer, sampleFormat format,
 #endif
 }
 
-#if 0
-// not used
-size_t RingBuffer::Clear(sampleFormat format, size_t samplesToClear)
-{
-   samplesToClear = std::min( samplesToClear, AvailForPut() );
-   size_t cleared = 0;
-   auto pos = mEnd;
-
-   while(samplesToClear) {
-      auto block = std::min( samplesToClear, mBufferSize - pos );
-
-      ClearSamples(mBuffer.ptr(), format, pos, block);
-
-      pos = (pos + block) % mBufferSize;
-      samplesToClear -= block;
-      cleared += block;
-   }
-
-   mEnd = pos;
-
-   return cleared;
-}
-#endif
-
 //
 // For the reader only:
 //

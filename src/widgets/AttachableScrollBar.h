@@ -36,9 +36,6 @@ public:
    void OnScroll(wxScrollEvent & event);
    void SetViewInfo( ViewInfo * view );
 
-   void SetScrollBarFromViewInfo();
-   void SetViewInfoFromScrollBar();
-
    ViewInfo * mpViewInfo;
    DECLARE_EVENT_TABLE()
 };

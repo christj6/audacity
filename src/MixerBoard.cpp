@@ -803,27 +803,6 @@ MixerBoard::MixerBoard(AudacityProject* pProject,
 void MixerBoard::UpdatePrefs()
 {
    mProject->RecreateMixerBoard();
-
-// Old approach modified things in situ.
-// However with a theme change there is so much to modify, it is easier
-// to recreate.
-#if 0
-   mScrolledWindow->SetBackgroundColour( theTheme.Colour( clrMedium ) );
-   if( mImageMuteUp ){
-      mImageMuteUp.reset();
-      mImageMuteOver.reset();
-      mImageMuteDown.reset();
-      mImageMuteDownWhileSolo.reset();
-      mImageMuteDisabled.reset();
-      mImageSoloUp.reset();
-      mImageSoloOver.reset();
-      mImageSoloDown.reset();
-      mImageSoloDisabled.reset();
-   }
-   for (unsigned int nClusterIndex = 0; nClusterIndex < mMixerTrackClusters.GetCount(); nClusterIndex++)
-      mMixerTrackClusters[nClusterIndex]->UpdatePrefs();
-   Refresh();
-#endif
 }
 
 // Reassign mixer input strips (MixerTrackClusters) to Track Clusters

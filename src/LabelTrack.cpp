@@ -171,31 +171,6 @@ void LabelTrack::Clear(double b, double e)
    }
 }
 
-#if 0
-//used when we want to use clear only on the labels
-bool LabelTrack::SplitDelete(double b, double e)
-{
-   // May DELETE labels, so use subscripts to iterate
-   for (size_t i = 0, len = mLabels.size(); i < len; ++i) {
-      auto &labelStruct = mLabels[i];
-      LabelStruct::TimeRelations relation =
-                        labelStruct.RegionRelation(b, e, this);
-      if (relation == LabelStruct::SURROUNDS_LABEL) {
-         DeleteLabel(i);
-         --i;
-      }
-      else if (relation == LabelStruct::WITHIN_LABEL)
-         labelStruct.selectedRegion.moveT1( - (e-b));
-      else if (relation == LabelStruct::ENDS_IN_LABEL)
-         labelStruct.selectedRegion.setT0(e);
-      else if (relation == LabelStruct::BEGINS_IN_LABEL)
-         labelStruct.selectedRegion.setT1(b);
-   }
-
-   return true;
-}
-#endif
-
 void LabelTrack::ShiftLabelsOnInsert(double length, double pt)
 {
    for (auto &labelStruct: mLabels) {
@@ -1517,22 +1492,6 @@ void LabelTrack::HandleTextDragRelease(const wxMouseEvent & evt)
 {
    if(evt.LeftUp())
    {
-#if 0
-      // AWD: Due to wxWidgets bug #7491 (fix not ported to 2.8 branch) we
-      // should never write the primary selection. We can enable this block
-      // when we move to the 3.0 branch (or if a fixed 2.8 version is released
-      // and we can do a runtime version check)
-#if defined (__WXGTK__) && defined (HAVE_GTK)
-      // On GTK, if we just dragged out a text selection, set the primary
-      // selection
-      if (mInitialCursorPos != mCurrentCursorPos) {
-         wxTheClipboard->UsePrimarySelection(true);
-         CopySelectedText();
-         wxTheClipboard->UsePrimarySelection(false);
-      }
-#endif
-#endif
-
       return;
    }
 
@@ -1718,26 +1677,6 @@ bool LabelTrack::DoCaptureKey(wxKeyEvent & event)
       gPrefs->Read(wxT("/GUI/TypeToCreateLabel"), &typeToCreateLabel, true);
       if (IsGoodLabelFirstKey(event) && typeToCreateLabel) {
          AudacityProject * pProj = GetActiveProject();
-
-
-// The commented out code can prevent label creation, causing bug 1551
-// We should only be in DoCaptureKey IF this label track has focus,
-// and in that case creating a Label is the expected/intended thing.
-#if 0
-         // If we're playing, don't capture if the selection is the same as the
-         // playback region (this helps prevent label track creation from
-         // stealing unmodified kbd. shortcuts)
-         if (pProj->GetAudioIOToken() > 0 &&
-               gAudioIO->IsStreamActive(pProj->GetAudioIOToken()))
-         {
-            double t0, t1;
-            pProj->GetPlayRegion(&t0, &t1);
-            if (pProj->mViewInfo.selectedRegion.t0() == t0 &&
-                pProj->mViewInfo.selectedRegion.t1() == t1) {
-               return false;
-            }
-         }
-#endif
 
          // If there's a label there already don't capture
          if( GetLabelIndex(pProj->mViewInfo.selectedRegion.t0(),
@@ -2393,20 +2332,6 @@ Track::Holder LabelTrack::Cut(double t0, double t1)
 
    return tmp;
 }
-
-#if 0
-Track::Holder LabelTrack::SplitCut(double t0, double t1)
-{
-   // SplitCut() == Copy() + SplitDelete()
-
-   Track::Holder tmp = Copy(t0, t1);
-
-   if (!SplitDelete(t0, t1))
-      return {};
-
-   return tmp;
-}
-#endif
 
 Track::Holder LabelTrack::Copy(double t0, double t1, bool) const
 {

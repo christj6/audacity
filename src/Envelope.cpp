@@ -292,19 +292,6 @@ void Envelope::CopyRange(const Envelope &orig, size_t begin, size_t end)
       AddPointAtEnd( mTrackLen, orig.GetValue(mOffset + mTrackLen));
 }
 
-#if 0
-/// Limit() limits a double value to a range.
-/// TODO: Move to a general utilities source file.
-static double Limit( double Lo, double Value, double Hi )
-{
-   if( Value < Lo )
-      return Lo;
-   if( Value > Hi )
-      return Hi;
-   return Value;
-}
-#endif
-
 /// TODO: This should probably move to track artist.
 static void DrawPoint(wxDC & dc, const wxRect & r, int x, int y, bool top)
 {

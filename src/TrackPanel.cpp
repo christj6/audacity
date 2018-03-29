@@ -1344,17 +1344,6 @@ void TrackPanel::OnCaptureKey(wxCommandEvent & event)
       event.Skip(kevent->GetSkipped());
    }
 
-#if 0
-   // Special TAB key handling, but only if the track didn't capture it
-   if ( !(t && !kevent->GetSkipped()) &&
-        WXK_TAB == code && HasRotation() ) {
-      // Override TAB navigation in wxWidgets, by not skipping
-      event.Skip(false);
-      mEnableTab = true;
-      return;
-   }
-   else
-#endif
    if (!t)
       event.Skip();
 }
@@ -1389,17 +1378,6 @@ void TrackPanel::OnKeyDown(wxKeyEvent & event)
    case WXK_PAGEDOWN:
       HandlePageDownKey();
       return;
-
-#if 0
-   case WXK_TAB:
-      if ( mEnableTab && HasRotation() ) {
-         ChangeTarget( !event.ShiftDown(), true );
-         HandleCursorForPresentMouseState(false);
-         return;
-      }
-      else
-         break;
-#endif
    }
 
    Track *const t = GetFocusedTrack();
@@ -2147,28 +2125,6 @@ void TrackInfo::MuteOrSoloDrawFunction
    bool selected = pTrack ? pTrack->GetSelected() : true;
    auto pt = dynamic_cast<const PlayableTrack *>(pTrack);
    bool value = pt ? (solo ? pt->GetSolo() : pt->GetMute()) : false;
-
-#if 0
-   AColor::MediumTrackInfo( dc, t->GetSelected());
-   if( solo )
-   {
-      if( pt && pt->GetSolo() )
-      {
-         AColor::Solo(dc, pt->GetSolo(), t->GetSelected());
-      }
-   }
-   else
-   {
-      if( pt && pt->GetMute() )
-      {
-         AColor::Mute(dc, pt->GetMute(), t->GetSelected(), pt->GetSolo());
-      }
-   }
-   //(solo) ? AColor::Solo(dc, t->GetSolo(), t->GetSelected()) :
-   //    AColor::Mute(dc, t->GetMute(), t->GetSelected(), t->GetSolo());
-   dc->SetPen( *wxTRANSPARENT_PEN );//No border!
-   dc->DrawRectangle(bev);
-#endif
 
    wxCoord textWidth, textHeight;
    wxString str = (solo) ?

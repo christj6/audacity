@@ -48,18 +48,6 @@ unsigned CommonTrackPanelCell::HandleWheelRotation
    }
    else if (event.CmdDown())
    {
-#if 0
-         // JKC: Alternative scroll wheel zooming code
-         // using AudacityProject zooming, which is smarter,
-         // it keeps selections on screen and centred if it can,
-         // also this ensures mousewheel and zoom buttons give same result.
-         double ZoomFactor = pow(2.0, steps);
-         AudacityProject *p = GetProject();
-         if( steps > 0 )
-            p->ZoomInByFactor( ZoomFactor );
-         else
-            p->ZoomOutByFactor( ZoomFactor );
-#endif
       // MM: Zoom in/out when used with Control key down
       // We're converting pixel positions to times,
       // counting pixels from the left edge of the track.
@@ -90,20 +78,6 @@ unsigned CommonTrackPanelCell::HandleWheelRotation
 
       // Time corresponding to last (most far right) audio.
       double audioEndTime = pProject->GetTracks()->GetEndTime();
-
-// Disabled this code to fix Bug 1923 (tricky to wheel-zoom right of waveform).
-#if 0
-      // When zooming in in empty space, it's easy to 'lose' the waveform.
-      // This prevents it.
-      // IF zooming in
-      if (steps > 0)
-      {
-         // IF mouse is to right of audio
-         if (center_h > audioEndTime)
-            // Zooming brings far right of audio to mouse.
-            center_h = audioEndTime;
-      }
-#endif
 
       wxCoord xTrackEnd = viewInfo.TimeToPosition( audioEndTime );
       viewInfo.ZoomBy(pow(2.0, steps));

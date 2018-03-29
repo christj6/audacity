@@ -245,9 +245,6 @@ public:
    void Update(const wxString &message) override
    {
       mBuffer += message;
-#if 0
-         mResponseQueue.AddResponse(message);
-#endif
    }
 };
 

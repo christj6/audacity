@@ -28,16 +28,6 @@ public:
    void swap(wxFileNameWrapper &that)
    {
       if (this != &that) {
-#if 0
-         // Awful hack number 1 makes gcc 5 choke
-         enum : size_t { Size = sizeof(*this) };
-         // Do it bitwise.
-         // std::aligned_storage<Size>::type buffer;
-         char buffer[Size];
-         memcpy(&buffer, this, Size);
-         memcpy(this, &that, Size);
-         memcpy(&that, &buffer, Size);
-#else
          // Awful hack number 2 relies on knowing the class layout
          // This is the less evil one but watch out for redefinition of the base class
          struct Contents
@@ -62,7 +52,6 @@ public:
 
          reinterpret_cast<Contents*>(this)->swap
             (*reinterpret_cast<Contents*>(&that));
-#endif
       }
    }
 

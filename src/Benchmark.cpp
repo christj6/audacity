@@ -488,14 +488,6 @@ void BenchmarkDialog::OnRun( wxCommandEvent & WXUNUSED(event))
    FlushPrint();
    wxTheApp->Yield();
 
-
-#if 0
-   Printf(_("Checking file pointer leaks:\n"));
-   Printf(_("Track # blocks: %d\n"), t->GetBlockArray()->Count());
-   Printf(_("Disk # blocks: \n"));
-   system("ls .audacity_temp/* | wc --lines");
-#endif
-
    Printf(_("Doing correctness check...\n"));
    FlushPrint();
    wxTheApp->Yield();

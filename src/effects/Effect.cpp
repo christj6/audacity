@@ -2010,16 +2010,6 @@ void Effect::GetSamples(
    double t0 = mT0 < trackStart ? trackStart : mT0;
    double t1 = mT1 > trackEnd ? trackEnd : mT1;
 
-#if 0
-   if (GetType() & INSERT_EFFECT) {
-      t1 = t0 + mDuration;
-      if (mT0 == mT1) {
-         // Not really part of the calculation, but convenient to put here
-         track->InsertSilence(t0, t1);
-      }
-   }
-#endif
-
    if (t1 > t0) {
       *start = track->TimeToLongSamples(t0);
       auto end = track->TimeToLongSamples(t1);

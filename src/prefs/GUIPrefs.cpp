@@ -105,12 +105,6 @@ void GUIPrefs::Populate()
 
    GetRangeChoices(&mRangeChoices, &mRangeCodes);
 
-#if 0
-   // only for testing...
-   mLangCodes.Add("kg");   mLangNames.Add("Klingon");
-   mLangCodes.Add("ep");   mLangNames.Add("Esperanto");
-#endif
-
    //------------------------- Main section --------------------
    // Now construct the GUI itself.
    // Use 'eIsCreatingFromPrefs' so that the GUI is

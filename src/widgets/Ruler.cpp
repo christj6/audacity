@@ -699,28 +699,6 @@ wxString Ruler::LabelString(double d, bool major)
             s += t;
          }
          else {
-// Commented out old and incorrect code for avoiding the 40mins and 60 seconds problem
-// It was causing Bug 463 - Incorrect Timeline numbering (where at high zoom and long tracks,
-// numbers did not change.
-#if 0
-            // The casting to float is working around an issue where 59 seconds
-            // would show up as 60 when using g++ (Ubuntu 4.3.3-5ubuntu4) 4.3.3.
-            int secs = (int)(float)(d);
-            wxString t1, t2, format;
-
-            if (secs >= 3600)
-               t1.Printf(wxT("%d:%02d:"), secs/3600, (secs/60)%60);
-            else if (secs >= 60)
-               t1.Printf(wxT("%d:"), secs/60);
-
-            if (secs >= 60)
-               format.Printf(wxT("%%0%d.%dlf"), mDigits+3, mDigits);
-            else
-               format.Printf(wxT("%%%d.%dlf"), mDigits+3, mDigits);
-            // The casting to float is working around an issue where 59 seconds
-            // would show up as 60 when using g++ (Ubuntu 4.3.3-5ubuntu4) 4.3.3.
-            t2.Printf(format, fmod((float)d, (float)60.0));
-#else
             // For d in the range of hours, d is just very slightly below the value it should 
             // have, because of using a double, which in turn yields values like 59:59:999999 
             // mins:secs:nanosecs when we want 1:00:00:000000
@@ -745,7 +723,6 @@ wxString Ruler::LabelString(double d, bool major)
             double multiplier = pow( 10, mDigits);
             dd = ((int)(dd * multiplier))/multiplier;
             t2.Printf(format, dd);
-#endif
             s += t1 + t2;
          }
       }
@@ -1984,8 +1961,6 @@ void AdornedRulerPanel::OnPaint(wxPaintEvent & WXUNUSED(evt))
 
    DoDrawMarks(&backDC, true);
 
-   // DoDrawPlayRegion(&backDC); // draws the <===> arrow along the selected region
-
    DoDrawEdge(&backDC);
 
    DisplayBitmap(dc);
@@ -2393,64 +2368,6 @@ void AdornedRulerPanel::OnLockPlayRegion(wxCommandEvent&)
       mProject->OnLockPlayRegion(*mProject);
 }
 
-
-// Draws the horizontal <===>
-void AdornedRulerPanel::DoDrawPlayRegion(wxDC * dc)
-{
-   double start, end;
-   GetPlayRegion(&start, &end);
-
-   if (start >= 0)
-   {
-      const int x1 = Time2Pos(start);
-      const int x2 = Time2Pos(end)-2;
-      int y = mInner.y - TopMargin + mInner.height/2;
-
-      bool isLocked = mProject->IsPlayRegionLocked();
-      AColor::PlayRegionColor(dc, isLocked);
-
-      wxPoint tri[3];
-      wxRect r;
-
-      tri[0].x = x1;
-      tri[0].y = y + PLAY_REGION_GLOBAL_OFFSET_Y;
-      tri[1].x = x1 + PLAY_REGION_TRIANGLE_SIZE;
-      tri[1].y = y - PLAY_REGION_TRIANGLE_SIZE + PLAY_REGION_GLOBAL_OFFSET_Y;
-      tri[2].x = x1 + PLAY_REGION_TRIANGLE_SIZE;
-      tri[2].y = y + PLAY_REGION_TRIANGLE_SIZE + PLAY_REGION_GLOBAL_OFFSET_Y;
-      dc->DrawPolygon(3, tri);
-
-      r.x = x1;
-      r.y = y - PLAY_REGION_TRIANGLE_SIZE + PLAY_REGION_GLOBAL_OFFSET_Y;
-      r.width = PLAY_REGION_RECT_WIDTH;
-      r.height = PLAY_REGION_TRIANGLE_SIZE*2 + 1;
-      dc->DrawRectangle(r);
-
-      if (end != start)
-      {
-         tri[0].x = x2;
-         tri[0].y = y + PLAY_REGION_GLOBAL_OFFSET_Y;
-         tri[1].x = x2 - PLAY_REGION_TRIANGLE_SIZE;
-         tri[1].y = y - PLAY_REGION_TRIANGLE_SIZE + PLAY_REGION_GLOBAL_OFFSET_Y;
-         tri[2].x = x2 - PLAY_REGION_TRIANGLE_SIZE;
-         tri[2].y = y + PLAY_REGION_TRIANGLE_SIZE + PLAY_REGION_GLOBAL_OFFSET_Y;
-         dc->DrawPolygon(3, tri);
-
-         r.x = x2 - PLAY_REGION_RECT_WIDTH + 1;
-         r.y = y - PLAY_REGION_TRIANGLE_SIZE + PLAY_REGION_GLOBAL_OFFSET_Y;
-         r.width = PLAY_REGION_RECT_WIDTH;
-         r.height = PLAY_REGION_TRIANGLE_SIZE*2 + 1;
-         dc->DrawRectangle(r);
-
-         r.x = x1 + PLAY_REGION_TRIANGLE_SIZE;
-         r.y = y - PLAY_REGION_RECT_HEIGHT/2 + PLAY_REGION_GLOBAL_OFFSET_Y;
-         r.width = std::max(0, x2-x1 - PLAY_REGION_TRIANGLE_SIZE*2);
-         r.height = PLAY_REGION_RECT_HEIGHT;
-         dc->DrawRectangle(r);
-      }
-   }
-}
-
 void AdornedRulerPanel::ShowContextMenu( MenuChoice choice, const wxPoint *pPosition)
 {
    wxPoint position;
@@ -2604,19 +2521,6 @@ void AdornedRulerPanel::DoDrawIndicator
       );
       const int IndicatorHalfWidth = bmp.GetWidth() / 2;
       dc->DrawBitmap( bmp, xx - IndicatorHalfWidth -1, mInner.y );
-#if 0
-
-      // Down pointing triangle
-      auto height = IndicatorHeightForWidth(width);
-      const int IndicatorHalfWidth = width / 2;
-      tri[ 0 ].x = xx - IndicatorHalfWidth;
-      tri[ 0 ].y = mInner.y;
-      tri[ 1 ].x = xx + IndicatorHalfWidth;
-      tri[ 1 ].y = mInner.y;
-      tri[ 2 ].x = xx;
-      tri[ 2 ].y = mInner.y + height;
-      dc->DrawPolygon( 3, tri );
-#endif
    }
 }
 

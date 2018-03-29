@@ -529,13 +529,6 @@ void ToolManager::Reset()
       bar->ReCreateButtons();
       bar->EnableDisableButtons();
 
-#if 0
-      if( bar->IsResizable() )
-      {
-         bar->SetSize(bar->GetBestFittingSize());
-      }
-#endif
-
       // Hide some bars.
       if( ndx == MeterBarID
 #ifdef EXPERIMENTAL_SPECTRAL_EDITING
@@ -1020,18 +1013,6 @@ bool ToolManager::IsVisible( int type )
    ToolBar *t = mBars[ type ].get();
 
    return t->IsVisible();
-
-#if 0
-   // If toolbar is floating
-   if( !t->IsDocked() )
-   {
-      // Must return state of floater window
-      return t->GetParent()->IsShown();
-   }
-
-   // Return state of docked toolbar
-   return t->IsShown();
-#endif
 }
 
 //

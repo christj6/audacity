@@ -1015,13 +1015,6 @@ void AudioIO::HandleDeviceChange()
 
    Pa_CloseStream(stream);
 
-
-   #if 0
-   wxPrintf("PortMixer: Playback: %s Recording: %s\n",
-          mEmulateMixerOutputVol? "emulated": "native",
-          mInputMixerWorks? "hardware": "no control");
-   #endif
-
    mMixerOutputVol = 1.0;
 
 #endif   // USE_PORTMIXER
@@ -3573,30 +3566,6 @@ int audacityAudioCallback(const void *inputBuffer, void *outputBuffer,
       // Record the reported latency from PortAudio.
       // TODO: Don't recalculate this with every callback?
 
-      // 01/21/2009:  Disabled until a better solution presents itself.
-     #if 0
-      // As of 06/17/2006, portaudio v19 returns inputBufferAdcTime set to
-      // zero.  It is being worked on, but for now we just can't do much
-      // but follow the leader.
-      //
-      // 08/27/2006: too inconsistent for now...just leave it a zero.
-      //
-      // 04/16/2008: Looks like si->inputLatency comes back with something useful though.
-      // This rearranged logic uses si->inputLatency, but if PortAudio fixes inputBufferAdcTime,
-      // this code won't have to be modified to use it.
-      // Also avoids setting mLastRecordingOffset except when simultaneously playing and recording.
-      //
-      if (numCaptureChannels > 0 && numPlaybackChannels > 0) // simultaneously playing and recording
-      {
-         if (timeInfo->inputBufferAdcTime > 0)
-            gAudioIO->mLastRecordingOffset = timeInfo->inputBufferAdcTime - timeInfo->outputBufferDacTime;
-         else if (gAudioIO->mLastRecordingOffset == 0.0)
-         {
-            const PaStreamInfo* si = Pa_GetStreamInfo( gAudioIO->mPortStreamV19 );
-            gAudioIO->mLastRecordingOffset = -si->inputLatency;
-         }
-      }
-     #endif
    } // if mStreamToken > 0
    else {
       // No tracks to play, but we should clear the output, and

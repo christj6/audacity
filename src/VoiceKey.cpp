@@ -674,9 +674,6 @@ bool VoiceKey::AboveThreshold(
          testThreshold++;
          erg = TestEnergy(t, start,len);
          tests +=(int)(erg > mThresholdEnergy);
-#if 0
-         std::cout << "Energy: " << erg << " " <<mThresholdEnergy << std::endl;
-#endif
       }
 
    if(mUseSignChangesLow)
@@ -684,20 +681,12 @@ bool VoiceKey::AboveThreshold(
          testThreshold++;
          sc  = TestSignChanges(t,start,len);
          tests += (int)(sc < mThresholdSignChangesLower);
-#if 0
-         std::cout << "SignChanges: " << sc << " " <<mThresholdSignChangesLower<< " < " << mThresholdSignChangesUpper << std::endl;
-#endif
-
       }
    if(mUseSignChangesHigh)
       {
          testThreshold++;
          sc  = TestSignChanges(t,start,len);
          tests += (int)(sc > mThresholdSignChangesUpper);
-#if 0
-         std::cout << "SignChanges: " << sc << " " <<mThresholdSignChangesLower<< " < " << mThresholdSignChangesUpper << std::endl;
-#endif
-
       }
 
 
@@ -706,18 +695,12 @@ bool VoiceKey::AboveThreshold(
          testThreshold++;
          dc  = TestDirectionChanges(t,start,len);
          tests += (int)(dc < mThresholdDirectionChangesLower);
-#if 0
-         std::cout << "DirectionChanges: " << dc << " " <<mThresholdDirectionChangesLower<< " < " << mThresholdDirectionChangesUpper << std::endl;
-#endif
       }
    if(mUseDirectionChangesHigh)
       {
          testThreshold++;
          dc  = TestDirectionChanges(t,start,len);
          tests += (int)(dc > mThresholdDirectionChangesUpper);
-#if 0
-         std::cout << "DirectionChanges: " << dc << " " <<mThresholdDirectionChangesLower<< " < " << mThresholdDirectionChangesUpper << std::endl;
-#endif
       }
 
    //Test whether we are above threshold (the number of stats)

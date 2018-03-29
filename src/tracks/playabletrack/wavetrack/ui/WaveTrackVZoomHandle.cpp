@@ -423,14 +423,6 @@ WaveformVRulerMenuTable &WaveformVRulerMenuTable::Instance()
 void WaveformVRulerMenuTable::InitMenu(Menu *pMenu, void *pUserData)
 {
    WaveTrackVRulerMenuTable::InitMenu(pMenu, pUserData);
-
-// DB setting is already on track drop down.
-#if 0 
-   WaveTrack *const wt = mpData->pTrack;
-   const int id =
-      OnFirstWaveformScaleID + (int)(wt->GetWaveformSettings().scaleType);
-   pMenu->Check(id, true);
-#endif
 }
 
 BEGIN_POPUP_MENU(WaveformVRulerMenuTable)
@@ -448,16 +440,6 @@ BEGIN_POPUP_MENU(WaveformVRulerMenuTable)
    POPUP_MENU_ITEM(OnZoomOutVerticalID, _("Zoom Out\tShift-Left-Click"),     OnZoomOutVertical)
 // The log and linear options are already available as waveform db.
 // So don't repeat them here.
-#if 0
-   POPUP_MENU_SEPARATOR()
-   {
-      const wxArrayString & names = WaveformSettings::GetScaleNames();
-      for (int ii = 0, nn = names.size(); ii < nn; ++ii) {
-         POPUP_MENU_RADIO_ITEM(OnFirstWaveformScaleID + ii, names[ii],
-            OnWaveformScaleType);
-      }
-   }
-#endif
 END_POPUP_MENU()
 
 void WaveformVRulerMenuTable::OnWaveformScaleType(wxCommandEvent &evt)

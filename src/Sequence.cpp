@@ -1230,17 +1230,6 @@ void Sequence::SetSamples(samplePtr buffer, sampleFormat format,
                                 len );
       wxASSERT(blen == 0 || bstart + blen <= fileLength);
 
-#if 0
-      // PRL:  This inconsistency (too-big file) has been seen in "the wild"
-      // in 2.2.0.  It is the least problematic kind of inconsistency.
-      // We will tolerate it for 2.2.1.
-      // Not known whether it is only in projects saved in earlier versions.
-      // After 2.2.1, we should detect and correct it at file loading time.
-      if (fileLength > mMaxSamples) {
-         THROW_INCONSISTENCY_EXCEPTION;
-      }
-#endif
-
       ensureSampleBufferSize(scratch, mSampleFormat, tempSize, fileLength,
                              &temp);
 

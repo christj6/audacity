@@ -1311,30 +1311,6 @@ void ControlToolBar::StartScrolling()
    const auto project = GetActiveProject();
    if (project) {
       auto mode = Mode::Centered;
-
-#if 0
-      // Enable these lines to pin the playhead right instead of center,
-      // when recording but not overdubbing.
-      if (gAudioIO->GetNumCaptureChannels() > 0) {
-         // recording
-
-         // Display a fixed recording head while scrolling the waves continuously.
-         // If you overdub, you may want to anticipate some context in existing tracks,
-         // so center the head.  If not, put it rightmost to display as much wave as we can.
-         bool duplex;
-         gPrefs->Read(wxT("/AudioIO/Duplex"), &duplex, true);
-         if (duplex) {
-            // See if there is really anything being overdubbed
-            if (gAudioIO->GetNumPlaybackChannels() == 0)
-               // No.
-               duplex = false;
-         }
-
-         if (!duplex)
-            mode = Mode::Right;
-      }
-#endif
-
       project->GetPlaybackScroller().Activate(mode);
    }
 }

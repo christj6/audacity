@@ -946,21 +946,6 @@ HitTestPreview SelectHandle::Preview
          }
       }
 
-#if 0
-      // This is a vestige of an idea in the prototype version.
-      // Center would snap without mouse button down, click would pin the center
-      // and drag width.
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-      if ((mFreqSelMode == FREQ_SEL_SNAPPING_CENTER) &&
-         isSpectralSelectionTrack(pTrack)) {
-         // Not shift-down, but center frequency snapping toggle is on
-         tip = _("Click and drag to set frequency bandwidth.");
-         pCursor = &*envelopeCursor;
-         return {};
-      }
-#endif
-#endif
-
       if (!pTrack->GetSelected() || !viewInfo.bAdjustSelectionEdges)
          ;
       else {
@@ -1461,76 +1446,3 @@ void SelectHandle::SnapCenterOnce
    viewInfo.selectedRegion.setFrequencies
       (snappedFrequency / ratio, snappedFrequency * ratio);
 }
-
-#if 0
-// unused
-void SelectHandle::ResetFreqSelectionPin
-   (const ViewInfo &viewInfo, double hintFrequency, bool logF)
-{
-   switch (mFreqSelMode) {
-   case FREQ_SEL_INVALID:
-   case FREQ_SEL_SNAPPING_CENTER:
-      mFreqSelPin = -1.0;
-      break;
-
-   case FREQ_SEL_PINNED_CENTER:
-      mFreqSelPin = viewInfo.selectedRegion.fc();
-      break;
-
-   case FREQ_SEL_DRAG_CENTER:
-   {
-      // Re-pin the width
-      const double f0 = viewInfo.selectedRegion.f0();
-      const double f1 = viewInfo.selectedRegion.f1();
-      if (f0 >= 0 && f1 >= 0)
-         mFreqSelPin = sqrt(f1 / f0);
-      else
-         mFreqSelPin = -1.0;
-   }
-   break;
-
-   case FREQ_SEL_FREE:
-      // Pin which?  Farther from the hint which is the presumed
-      // mouse position.
-   {
-      // If this function finds use again, the following should be
-      // generalized using NumberScale
-
-      const double f0 = viewInfo.selectedRegion.f0();
-      const double f1 = viewInfo.selectedRegion.f1();
-      if (logF) {
-         if (f1 < 0)
-            mFreqSelPin = f0;
-         else {
-            const double logf1 = log(std::max(1.0, f1));
-            const double logf0 = log(std::max(1.0, f0));
-            const double logHint = log(std::max(1.0, hintFrequency));
-            if (std::abs(logHint - logf1) < std::abs(logHint - logf0))
-               mFreqSelPin = f0;
-            else
-               mFreqSelPin = f1;
-         }
-      }
-      else {
-         if (f1 < 0 ||
-            std::abs(hintFrequency - f1) < std::abs(hintFrequency - f0))
-            mFreqSelPin = f0;
-         else
-            mFreqSelPin = f1;
-      }
-   }
-   break;
-
-   case FREQ_SEL_TOP_FREE:
-      mFreqSelPin = viewInfo.selectedRegion.f0();
-      break;
-
-   case FREQ_SEL_BOTTOM_FREE:
-      mFreqSelPin = viewInfo.selectedRegion.f1();
-      break;
-
-   default:
-      wxASSERT(false);
-   }
-}
-#endif

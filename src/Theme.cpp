@@ -125,16 +125,6 @@ can't be.
 #include "../images/Aqua/Hilite.xpm"
 #include "../images/Aqua/Up.xpm"
 
-#if 0
-// These ones aren't used...
-#include "../images/Aqua/DownButtonStripes.xpm"
-#include "../images/Aqua/DownButtonWhite.xpm"
-#include "../images/Aqua/HiliteButtonStripes.xpm"
-#include "../images/Aqua/HiliteButtonWhite.xpm"
-#include "../images/Aqua/UpButtonStripes.xpm"
-#include "../images/Aqua/UpButtonWhite.xpm"
-#endif
-
 #undef DownButton
 #undef UpButton
 #undef HiliteButton
@@ -299,26 +289,6 @@ void ThemeBase::LoadTheme( teThemeType Theme )
    {
       // THEN get the default set.
       ReadImageCache( GetFallbackThemeType(), !cbOkIfNotFound );
-
-      // JKC: Now we could go on and load the individual images
-      // on top of the default images using the commented out
-      // code that follows...
-      //
-      // However, I think it is better to get the user to
-      // build a NEW image cache, which they can do easily
-      // from the Theme preferences tab.
-#if 0
-      // and now add any available component images.
-      LoadComponents( cbOkIfNotFound );
-
-      // JKC: I'm usure about doing this next step automatically.
-      // Suppose the disk is write protected?
-      // Is having the image cache created automatically
-      // going to confuse users?  Do we need version specific names?
-      // and now save the combined image as a cache for later use.
-      // We should load the images a little faster in future as a result.
-      CreateImageCache();
-#endif
    }
 
    RotateImageInto( bmpRecordBeside, bmpRecordBelow, false );
@@ -734,28 +704,6 @@ void ThemeBase::CreateImageCache( bool bBinarySave )
    if( bBinarySave )
    {
       const wxString &FileName = FileNames::ThemeCachePng();
-
-      // Perhaps we should prompt the user if they are overwriting
-      // an existing theme cache?
-#if 0
-      if( wxFileExist( FileName ))
-      {
-         AudacityMessageBox(
-            wxString::Format(
-//            _("Theme cache file:\n  %s\nalready exists.\nAre you sure you want to replace it?"),
-               FileName )
-                            );
-         return;
-      }
-#endif
-#if 0
-      // Deliberate policy to use the fast/cheap blocky pixel-multiplication
-      // algorithm, as this introduces no artifacts on repeated scale up/down.
-      ImageCache.Rescale( 
-         ImageCache.GetWidth()*4,
-         ImageCache.GetHeight()*4,
-         wxIMAGE_QUALITY_NEAREST );
-#endif
       if( !ImageCache.SaveFile( FileName, wxBITMAP_TYPE_PNG ))
       {
          AudacityMessageBox(
@@ -1230,27 +1178,6 @@ wxSize  ThemeBase::ImageSize( int iIndex )
    wxImage & Image = mImages[iIndex];
    return wxSize( Image.GetWidth(), Image.GetHeight());
 }
-
-// The next two functions are for future use.
-#if 0
-wxCursor & ThemeBase::Cursor( int iIndex )
-{
-   wxASSERT( iIndex >= 0 );
-   EnsureInitialised();
-   // Purposeful null deref.  Function is for future use.
-   // If anyone tries to use it now they will get an error.
-   return *(wxCursor*)NULL;
-}
-
-wxFont   & ThemeBase::Font( int iIndex )
-{
-   wxASSERT( iIndex >= 0 );
-   EnsureInitialised();
-   // Purposeful null deref.  Function is for future use.
-   // If anyone tries to use it now they will get an error.
-   return *(wxFont*)NULL;
-}
-#endif
 
 /// Replaces both the image and the bitmap.
 void ThemeBase::ReplaceImage( int iIndex, wxImage * pImage )

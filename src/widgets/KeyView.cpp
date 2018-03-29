@@ -354,15 +354,6 @@ KeyView::SetView(ViewByType type)
       SelectNode(index);
    }
 
-#if 0
-   // JKC: Optional code to list commants and shortcuts to debug console.
-   int nLines = mLines.GetCount();
-   int flags = 8;
-   for(int i=0;i<nLines;i++){
-      wxLogDebug("T.Add( %2i, %2i,  0, \"%s¬%s\" );", mLines[i]->depth-1, flags, mLines[i]->label,mLines[i]->key ); 
-   }
-#endif
-
    return;
 }
 
@@ -702,26 +693,6 @@ KeyView::RefreshBindings(const wxArrayString & names,
       mCommandWidth = wxMax(mCommandWidth, x);
    }
 
-#if 0
-   // For debugging
-   for (int j = 0; j < mNodes.GetCount(); j++)
-   {
-      KeyNode & node = mNodes[j];
-      wxLogDebug(wxT("NODE line %4d index %4d depth %1d open %1d parent %1d cat %1d pfx %1d name %s STR %s | %s | %s"),
-         node.line,
-         node.index,
-         node.depth,
-         node.isopen,
-         node.isparent,
-         node.iscat,
-         node.ispfx,
-         node.name,
-         node.category,
-         node.prefix,
-         node.label);
-   }
-#endif
-
    // Update horizontal scrollbar
    UpdateHScroll();
 
@@ -955,26 +926,6 @@ KeyView::RefreshLines(bool bSort)
    {
       mLines[i]->line = i;
    }
-
-#if 0
-   // For debugging
-   for (int j = 0; j < mLines.GetCount(); j++)
-   {
-      KeyNode & node = *mLines[j];
-      wxLogDebug(wxT("LINE line %4d index %4d depth %1d open %1d parent %1d cat %1d pfx %1d name %s STR %s | %s | %s"),
-         node.line,
-         node.index,
-         node.depth,
-         node.isopen,
-         node.isparent,
-         node.iscat,
-         node.ispfx,
-         node.name,
-         node.category,
-         node.prefix,
-         node.label);
-   }
-#endif
 
    // Tell listbox the NEW count and refresh the entire view
    SetItemCount(mLines.size());
@@ -2189,21 +2140,6 @@ KeyViewAx::GetValue(int childId, wxString *strValue)
 wxAccStatus
 KeyViewAx::Select(int childId, wxAccSelectionFlags selectFlags)
 {
-#if 0
-   int row;
-   int col;
-
-   if (GetRowCol(childId, row, col))
-   {
-
-      if (selectFlags & wxACC_SEL_TAKESELECTION)
-      {
-         mGrid->SetGridCursor(row, col);
-      }
-
-      mGrid->SelectBlock(row, col, row, col, selectFlags & wxACC_SEL_ADDSELECTION);
-   }
-#endif
    return wxACC_OK;
 }
 #endif

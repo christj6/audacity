@@ -151,17 +151,6 @@ void ShuttleGuiBase::Init()
 
    mpSizer = mpParent->GetSizer();
 
-#if 0
-   if( mpSizer == NULL )
-   {
-      wxWindow * pGrandParent = mpParent->GetParent();
-      if( pGrandParent )
-      {
-         mpSizer = pGrandParent->GetSizer();
-      }
-   }
-#endif
-
    if( !mpSizer )
    {
       mpParent->SetSizer(mpSizer = safenew wxBoxSizer(wxVERTICAL));
