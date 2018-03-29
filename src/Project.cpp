@@ -2777,10 +2777,11 @@ bool AudacityProject::IsAlreadyOpen(const wxString & projPathName)
 // static method, can be called outside of a project
 void AudacityProject::OpenFiles(AudacityProject *proj)
 {
-   /* i18n-hint: This string is a label in the file type filter in the open
-    * and save dialogues, for the option that only shows project files created
-    * with Audacity. Do not include pipe symbols or .aup (this extension will
-    * now be added automatically for the Save Projects dialogues).*/
+	/*
+   // i18n-hint: This string is a label in the file type filter in the open
+   // and save dialogues, for the option that only shows project files created
+   // with Audacity. Do not include pipe symbols or .aup (this extension will
+   // now be added automatically for the Save Projects dialogues).
    wxArrayString selectedFiles = ShowOpenDialog(_("Audacity projects"), wxT("*.aup"));
    if (selectedFiles.GetCount() == 0) {
       gPrefs->Write(wxT("/LastOpenType"),wxT(""));
@@ -2826,6 +2827,7 @@ void AudacityProject::OpenFiles(AudacityProject *proj)
       // and it's okay to open a NEW project inside this window.
       proj = AudacityProject::OpenProject( proj, fileName );
    }
+   */
 }
 
 AudacityProject *AudacityProject::OpenProject(
@@ -3627,6 +3629,7 @@ bool AudacityProject::Save()
 bool AudacityProject::DoSave
    (const bool fromSaveAs, const bool bWantSaveCompressed)
 {
+	/*
    // See explanation above
    // ProjectDisabler disabler(this);
 
@@ -3876,7 +3879,7 @@ bool AudacityProject::DoSave
 
    mStatusBar->SetStatusText(wxString::Format(_("Saved %s"),
                                               mFileName), mainStatusBarField);
-
+	*/
    return true;
 }
 
@@ -4086,6 +4089,8 @@ void AudacityProject::ZoomAfterImport(Track *pTrack)
 // If pNewTrackList is passed in non-NULL, it gets filled with the pointers to NEW tracks.
 bool AudacityProject::Import(const wxString &fileName, WaveTrackArray* pTrackArray /*= NULL*/)
 {
+	// goal: I want this to function as the new "Open File"
+
    TrackHolders newTracks;
    wxString errorMessage = wxEmptyString;
 
@@ -4205,7 +4210,7 @@ bool AudacityProject::SaveAs(bool bWantSaveCompressed /*= false*/)
 {
 	// this entire function can be commented out, and all that happens is:
 	// the Save Project and Save Project As buttons do nothing when you click on them.
-
+/*
    TitleRestorer Restorer(this); // RAII
    bool bHasPath = true;
    wxFileName filename(mFileName);
@@ -4218,26 +4223,23 @@ bool AudacityProject::SaveAs(bool bWantSaveCompressed /*= false*/)
    wxString sDialogTitle;
    if (bWantSaveCompressed)
    {
-	   /*
-	   'Save Compressed Project' is for an Audacity project, not an audio file.
-	   For an audio file that will open in other apps, use 'Export'.
+	   // 'Save Compressed Project' is for an Audacity project, not an audio file.
+	   // For an audio file that will open in other apps, use 'Export'.
 
-	   Compressed project files are a good way to transmit your project online, 
-	   but they have some loss of fidelity.
+	   // Compressed project files are a good way to transmit your project online, 
+	   // but they have some loss of fidelity.
 
-	   To open a compressed project takes longer than usual, as it imports
-	   each compressed track.
-	   */
+	   // To open a compressed project takes longer than usual, as it imports
+	   // each compressed track.
+
       if (ShowWarningDialog(this, wxT("FirstProjectSave"), _("insert text here"), true) != wxID_OK)
          return false;
       sDialogTitle.Printf(_("%sSave Compressed Project \"%s\" As..."), Restorer.sProjNumber,Restorer.sProjName);
    }
    else
    {
-	   /*
-	   'Save Project' is for an Audacity project, not an audio file.
-	   For an audio file that will open in other apps, use 'Export'.
-	   */
+	   // 'Save Project' is for an Audacity project, not an audio file.
+	   // For an audio file that will open in other apps, use 'Export'.
       if (ShowWarningDialog(this, wxT("FirstProjectSave"), _("insert text here"), true) != wxID_OK)
          return false;
       sDialogTitle.Printf(_("%sSave Project \"%s\" As..."), Restorer.sProjNumber, Restorer.sProjName);
@@ -4307,6 +4309,8 @@ bool AudacityProject::SaveAs(bool bWantSaveCompressed /*= false*/)
 
 
    return(success);
+   */
+   return true;
 }
 
 //
