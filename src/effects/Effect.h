@@ -650,41 +650,6 @@ private:
    DECLARE_EVENT_TABLE()
 };
 
-// Utility functions
-
-inline float TrapFloat(float x, float min, float max)
-{
-   if (x <= min)
-      return min;
-
-   if (x >= max)
-      return max;
-
-   return x;
-}
-
-inline double TrapDouble(double x, double min, double max)
-{
-   if (x <= min)
-      return min;
-
-   if (x >= max)
-      return max;
-
-   return x;
-}
-
-inline long TrapLong(long x, long min, long max)
-{
-   if (x <= min)
-      return min;
-
-   if (x >= max)
-      return max;
-
-   return x;
-}
-
 // Helper macros for defining, reading and verifying effect parameters
 
 #define Param(name, type, key, def, min, max, scale) \
