@@ -40,7 +40,6 @@ greater use in future.
 
 #include "../AudacityException.h"
 #include "../AudioIO.h"
-#include "../LabelTrack.h"
 #include "../Mix.h"
 #include "../Prefs.h"
 #include "../Project.h"

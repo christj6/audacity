@@ -47,7 +47,6 @@ class AudacityCommand;
 #define BUILTIN_EFFECT_PREFIX wxT("Built-in Effect: ")
 
 class AudacityProject;
-class LabelTrack;
 class SelectedRegion;
 class EffectUIHost;
 class Track;
