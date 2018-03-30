@@ -418,9 +418,6 @@ protected:
 
       LabelTrack *get() const { return mpTrack; }
 
-      // Call this to indicate successful completion of the analyzer.
-      void Commit();
-
       // Destructor undoes the modification of the analysis track if not committed.
       ~ModifiedAnalysisTrack();
 

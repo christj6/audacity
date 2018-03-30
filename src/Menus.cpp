@@ -917,7 +917,6 @@ void AudacityProject::CreateMenusAndCommands()
 
       c->AddItem(wxT("NewMonoTrack"), XXO("&Mono Track"), FN(OnNewWaveTrack), wxT("Ctrl+Shift+N"));
       c->AddItem(wxT("NewStereoTrack"), XXO("&Stereo Track"), FN(OnNewStereoTrack));
-      // c->AddItem(wxT("NewLabelTrack"), XXO("&Label Track"), FN(OnNewLabelTrack));
       c->AddItem(wxT("NewTimeTrack"), XXO("&Time Track"), FN(OnNewTimeTrack));
 
       c->EndSubMenu();
@@ -7563,20 +7562,6 @@ void AudacityProject::OnNewStereoTrack(const CommandContext &WXUNUSED(context) )
    t->SetSelected(true);
 
    PushState(_("Created new stereo audio track"), _("New Track"));
-
-   RedrawProject();
-   mTrackPanel->EnsureVisible(t);
-}
-
-void AudacityProject::OnNewLabelTrack(const CommandContext &WXUNUSED(context) )
-{
-   auto t = mTracks->Add(GetTrackFactory()->NewLabelTrack());
-
-   SelectNone();
-
-   t->SetSelected(true);
-
-   PushState(_("Created new label track"), _("New Track"));
 
    RedrawProject();
    mTrackPanel->EnsureVisible(t);

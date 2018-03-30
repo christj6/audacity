@@ -2132,12 +2132,6 @@ Effect::ModifiedAnalysisTrack::ModifiedAnalysisTrack(ModifiedAnalysisTrack &&tha
    mpEffect = that.mpEffect;
    mpTrack = that.mpTrack;
    mpOrigTrack = std::move(that.mpOrigTrack);
-   that.Commit();
-}
-
-void Effect::ModifiedAnalysisTrack::Commit()
-{
-   mpEffect = nullptr;
 }
 
 Effect::ModifiedAnalysisTrack::~ModifiedAnalysisTrack()
