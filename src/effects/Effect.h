@@ -401,36 +401,6 @@ protected:
    // Set name to given value if that is not empty, else use default name
    std::shared_ptr<AddedAnalysisTrack> AddAnalysisTrack(const wxString &name = wxString());
 
-   // For the use of analyzers, which don't need to make output wave tracks,
-   // but may need to modify label tracks.
-   class ModifiedAnalysisTrack {
-      friend Effect;
-      ModifiedAnalysisTrack
-         (Effect *pEffect, const LabelTrack *pOrigTrack, const wxString &name);
-      ModifiedAnalysisTrack(const ModifiedAnalysisTrack&) PROHIBITED;
-
-   public:
-
-      ModifiedAnalysisTrack();
-
-      // So you can have a vector of them
-      ModifiedAnalysisTrack(ModifiedAnalysisTrack &&that);
-
-      LabelTrack *get() const { return mpTrack; }
-
-      // Destructor undoes the modification of the analysis track if not committed.
-      ~ModifiedAnalysisTrack();
-
-   private:
-      Effect *mpEffect{};
-      LabelTrack *mpTrack{};
-      std::shared_ptr<Track> mpOrigTrack{};
-   };
-
-   // Set name to given value if that is not empty, else use default name
-   ModifiedAnalysisTrack ModifyAnalysisTrack
-      (const LabelTrack *pOrigTrack, const wxString &name = wxString());
-
    // If bGoodResult, replace mWaveTracks tracks in mTracks with successfully processed
    // mOutputTracks copies, get rid of old mWaveTracks, and set mWaveTracks to mOutputTracks.
    // Else clear and DELETE mOutputTracks copies.
