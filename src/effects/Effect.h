@@ -94,7 +94,6 @@ class AUDACITY_DLL_API Effect /* not final */ : public wxEvtHandler,
    wxString GetFamilyId() override;
    wxString GetFamilyName() override;
    bool IsDefault() override;
-   bool IsLegacy() override;
    bool SupportsRealtime() override;
    bool SupportsAutomation() override;
 

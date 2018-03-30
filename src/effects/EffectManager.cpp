@@ -744,7 +744,7 @@ Effect *EffectManager::GetEffect(const PluginID & ID)
    {
       // This will instantiate the effect client if it hasn't already been done
       EffectDefinitionInterface *ident = dynamic_cast<EffectDefinitionInterface *>(PluginManager::Get().GetInstance(ID));
-      if (ident && ident->IsLegacy())
+      if (ident)
       {
          auto effect = dynamic_cast<Effect *>(ident);
          if (effect && effect->Startup(NULL))
@@ -800,31 +800,6 @@ AudacityCommand *EffectManager::GetAudacityCommand(const PluginID & ID)
          return command;
       }
 
-         /*
-      if (ident && ident->IsLegacy())
-      {
-         auto command = dynamic_cast<AudacityCommand *>(ident);
-         if (commandt && command->Startup(NULL))
-         {
-            mCommands[ID] = command;
-            return command;
-         }
-      }
-
-
-      auto command = std::make_shared<AudacityCommand>(); // TODO: use make_unique and store in std::unordered_map
-      if (command)
-      {
-         AudacityCommand *client = dynamic_cast<AudacityCommand *>(ident);
-         if (client && command->Startup(client))
-         {
-            auto pCommand = command.get();
-            mEffects[ID] = pCommand;
-            mHostEffects[ID] = std::move(effect);
-            return pEffect;
-         }
-      }
-*/
       AudacityMessageBox(wxString::Format(_("Attempting to initialize the following command failed:\n\n%s\n\nMore information may be available in Help->Show Log"),
                                     GetCommandName(ID)),
                    _("Command failed to initialize"));

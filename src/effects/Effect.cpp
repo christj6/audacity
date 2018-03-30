@@ -252,16 +252,6 @@ bool Effect::IsDefault()
    return true;
 }
 
-bool Effect::IsLegacy() 
-{
-   if (mClient)
-   {
-      return false;
-   }
-
-   return true;
-}
-
 bool Effect::SupportsRealtime()
 {
    if (mClient)
