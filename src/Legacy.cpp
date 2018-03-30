@@ -195,39 +195,6 @@ static bool ConvertLegacyTrack(wxTextFile *f, XMLFileWriter &xmlFile)
       return true;
    }
    else if (kind == wxT("LabelTrack")) {
-      line = f->GetNextLine();
-      if (line != wxT("NumMLabels"))
-         return false;
-
-      long numLabels, l;
-
-      line = f->GetNextLine();
-      line.ToLong(&numLabels);
-      if (numLabels < 0 || numLabels > 1000000)
-         return false;
-
-      xmlFile.StartTag(wxT("labeltrack"));
-      xmlFile.WriteAttr(wxT("name"), wxT("Labels"));
-      xmlFile.WriteAttr(wxT("numlabels"), numLabels);
-
-      for(l=0; l<numLabels; l++) {
-         wxString t, title;
-
-         t = f->GetNextLine();
-         title = f->GetNextLine();
-
-         xmlFile.StartTag(wxT("label"));
-         xmlFile.WriteAttr(wxT("t"), t);
-         xmlFile.WriteAttr(wxT("title"), title);
-         xmlFile.EndTag(wxT("label"));
-      }
-
-      xmlFile.EndTag(wxT("labeltrack"));
-
-      line = f->GetNextLine();
-      if (line != wxT("MLabelsEnd"))
-         return false;
-
       return true;
    }
    else if (kind == wxT("NoteTrack")) {
@@ -237,7 +204,6 @@ static bool ConvertLegacyTrack(wxTextFile *f, XMLFileWriter &xmlFile)
          line = f->GetNextLine();
          if (line == wxT("WaveTrack") ||
              line == wxT("NoteTrack") ||
-             line == wxT("LabelTrack") ||
              line == wxT("EndTracks")) {
             f->GoToLine(f->GetCurrentLine()-1);
             return true;
