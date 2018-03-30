@@ -111,10 +111,6 @@ public:
    // Returns a user-visible string:
    virtual wxString GetFamilyName() = 0;
 
-   // These should move to the "EffectClientInterface" class once all
-   // effects have been converted.
-   virtual bool IsInteractive() = 0;
-
    // I don't really like this, but couldn't think of a better way to force the
    // effect to appear "above the line" in the menus.
    virtual bool IsDefault() = 0;

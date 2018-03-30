@@ -1443,7 +1443,6 @@ const PluginID & PluginManager::RegisterPlugin(ModuleInterface *provider, Effect
 
    plug.SetEffectType(effect->GetType());
    plug.SetEffectFamilyId(effect->GetFamilyId());
-   plug.SetEffectInteractive(effect->IsInteractive());
    plug.SetEffectDefault(effect->IsDefault());
    plug.SetEffectRealtime(effect->SupportsRealtime());
    plug.SetEffectAutomatable(effect->SupportsAutomation());
@@ -2390,7 +2389,6 @@ const PluginID & PluginManager::RegisterPlugin(EffectDefinitionInterface *effect
 
    plug.SetEffectType(effect->GetType());
    plug.SetEffectFamilyId(effect->GetFamilyId());
-   plug.SetEffectInteractive(effect->IsInteractive());
    plug.SetEffectDefault(effect->IsDefault());
    plug.SetEffectRealtime(effect->SupportsRealtime());
    plug.SetEffectAutomatable(effect->SupportsAutomation());

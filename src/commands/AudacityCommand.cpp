@@ -201,7 +201,7 @@ bool AudacityCommand::DoAudacityCommand(wxWindow *parent,
    // Prompting will be bypassed when applying a command that has already 
    // been configured, e.g. repeating the last effect on a different selection.
    // Prompting may call AudacityCommand::Preview
-   if (shouldPrompt && /*IsInteractive() && */!PromptUser(parent))
+   if (shouldPrompt && !PromptUser(parent))
    {
       return false;
    }

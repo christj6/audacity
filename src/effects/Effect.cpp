@@ -242,16 +242,6 @@ wxString Effect::GetFamilyName()
    return XO("Built-in");
 }
 
-bool Effect::IsInteractive()
-{
-   if (mClient)
-   {
-      return mClient->IsInteractive();
-   }
-
-   return true;
-}
-
 bool Effect::IsDefault()
 {
    if (mClient)
@@ -518,11 +508,6 @@ bool Effect::RealtimeProcessEnd()
 
 bool Effect::ShowInterface(wxWindow *parent, bool forceModal)
 {
-   if (!IsInteractive())
-   {
-      return true;
-   }
-
    if (mUIDialog)
    {
       if ( mUIDialog->Close(true) )
@@ -1222,7 +1207,7 @@ bool Effect::DoEffect(wxWindow *parent,
    // Prompting will be bypassed when applying an effect that has already 
    // been configured, e.g. repeating the last effect on a different selection.
    // Prompting may call Effect::Preview
-   if (shouldPrompt && IsInteractive() && !PromptUser(parent))
+   if (shouldPrompt && !PromptUser(parent))
    {
       return false;
    }
