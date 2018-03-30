@@ -2065,42 +2065,6 @@ Track *Effect::AddToOutputTracks(std::unique_ptr<Track> &&t)
    return mOutputTracks->Add(std::move(t));
 }
 
-Effect::AddedAnalysisTrack::AddedAnalysisTrack(Effect *pEffect, const wxString &name)
-   : mpEffect(pEffect)
-{
-   LabelTrack::Holder pTrack{ pEffect->mFactory->NewLabelTrack() };
-   mpTrack = pTrack.get();
-   if (!name.empty())
-      pTrack->SetName(name);
-   pEffect->mTracks->Add(std::move(pTrack));
-}
-
-Effect::AddedAnalysisTrack::AddedAnalysisTrack(AddedAnalysisTrack &&that)
-{
-   mpEffect = that.mpEffect;
-   mpTrack = that.mpTrack;
-   that.Commit();
-}
-
-void Effect::AddedAnalysisTrack::Commit()
-{
-   mpEffect = nullptr;
-}
-
-Effect::AddedAnalysisTrack::~AddedAnalysisTrack()
-{
-   if (mpEffect) {
-      // not committed -- DELETE the label track
-      mpEffect->mTracks->Remove(mpTrack);
-   }
-}
-
-auto Effect::AddAnalysisTrack(const wxString &name) -> std::shared_ptr<AddedAnalysisTrack>
-{
-   return std::shared_ptr<AddedAnalysisTrack>
-      { safenew AddedAnalysisTrack{ this, name } };
-}
-
 // If bGoodResult, replace mTracks tracks with successfully processed mOutputTracks copies.
 // Else clear and DELETE mOutputTracks copies.
 void Effect::ReplaceProcessedTracks(const bool bGoodResult)

@@ -371,36 +371,6 @@ protected:
    void CopyInputTracks(); // trackType = Track::Wave
    void CopyInputTracks(int trackType);
 
-   // For the use of analyzers, which don't need to make output wave tracks,
-   // but may need to add label tracks.
-   class AddedAnalysisTrack {
-      friend Effect;
-      AddedAnalysisTrack(Effect *pEffect, const wxString &name);
-      AddedAnalysisTrack(const AddedAnalysisTrack&) PROHIBITED;
-
-   public:
-
-      AddedAnalysisTrack() {}
-
-      // So you can have a vector of them
-      AddedAnalysisTrack(AddedAnalysisTrack &&that);
-
-      LabelTrack *get() const { return mpTrack; }
-
-      // Call this to indicate successful completion of the analyzer.
-      void Commit();
-
-      // Destructor undoes the addition of the analysis track if not committed.
-      ~AddedAnalysisTrack();
-
-   private:
-      Effect *mpEffect{};
-      LabelTrack *mpTrack{};
-   };
-
-   // Set name to given value if that is not empty, else use default name
-   std::shared_ptr<AddedAnalysisTrack> AddAnalysisTrack(const wxString &name = wxString());
-
    // If bGoodResult, replace mWaveTracks tracks in mTracks with successfully processed
    // mOutputTracks copies, get rid of old mWaveTracks, and set mWaveTracks to mOutputTracks.
    // Else clear and DELETE mOutputTracks copies.
