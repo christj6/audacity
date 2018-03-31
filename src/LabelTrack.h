@@ -298,7 +298,6 @@ public:
 
 private:
    void calculateFontHeight(wxDC & dc) const;
-   void RemoveSelectedText();
 
    static wxFont msFont;
 

@@ -1776,17 +1776,11 @@ bool LabelTrack::OnKeyDown(SelectedRegion &newSel, wxKeyEvent & event)
             //IF the label is not blank THEN get rid of a letter or letters according to cursor position
             if (len > 0)
             {
-               // IF there are some highlighted letters, THEN DELETE them
-               if (mInitialCursorPos != mCurrentCursorPos)
-                  RemoveSelectedText();
-               else
-               {
                   // DELETE one letter
                   if (mCurrentCursorPos > 0) {
                      title.Remove(mCurrentCursorPos-1, 1);
                      mCurrentCursorPos--;
                   }
-               }
             }
             else
             {
@@ -1806,16 +1800,10 @@ bool LabelTrack::OnKeyDown(SelectedRegion &newSel, wxKeyEvent & event)
             //If the label is not blank get rid of a letter according to cursor position
             if (len > 0)
             {
-               // if there are some highlighted letters, DELETE them
-               if (mInitialCursorPos != mCurrentCursorPos)
-                  RemoveSelectedText();
-               else
-               {
                   // DELETE one letter
                   if (mCurrentCursorPos < len) {
                      title.Remove(mCurrentCursorPos, 1);
                   }
-               }
             }
             else
             {
@@ -2013,10 +2001,6 @@ bool LabelTrack::OnChar(SelectedRegion &WXUNUSED(newSel), wxKeyEvent & event)
    auto &labelStruct = mLabels[mSelIndex];
    auto &title = labelStruct.title;
 
-   // Test if cursor is in the end of string or not
-   if (mInitialCursorPos != mCurrentCursorPos)
-      RemoveSelectedText();
-
    if (mCurrentCursorPos < (int)title.length()) {
       // Get substring on the righthand side of cursor
       wxString rightPart = title.Mid(mCurrentCursorPos);
@@ -2039,28 +2023,6 @@ bool LabelTrack::OnChar(SelectedRegion &WXUNUSED(newSel), wxKeyEvent & event)
    mDrawCursor = true;
 
    return updated;
-}
-
-void LabelTrack::RemoveSelectedText()
-{
-   wxString left, right;
-
-   int init = mInitialCursorPos;
-   int cur = mCurrentCursorPos;
-   if (init > cur)
-      std::swap(init, cur);
-
-   auto &labelStruct = mLabels[mSelIndex];
-   auto &title = labelStruct.title;
-
-   if (init > 0)
-      left = title.Left(init);
-
-   if (cur < (int)title.Length())
-      right = title.Mid(cur);
-
-   title = left + right;
-   mInitialCursorPos = mCurrentCursorPos = left.Length();
 }
 
 void LabelTrack::Unselect()
