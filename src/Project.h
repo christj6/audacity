@@ -403,9 +403,6 @@ public:
    typedef void (WaveTrack::* EditFunction)(double, double);
    typedef std::unique_ptr<Track> (WaveTrack::* EditDestFunction)(double, double);
 
-   void EditByLabel(EditFunction action, bool bSyncLockedTracks);
-   void EditClipboardByLabel(EditDestFunction action );
-
    bool IsSyncLocked();
    void SetSyncLock(bool flag);
 
