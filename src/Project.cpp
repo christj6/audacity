@@ -3474,10 +3474,6 @@ XMLTagHandler *AudacityProject::HandleXMLChild(const wxChar *tag)
       return mTracks->Add(mTrackFactory->NewWaveTrack());
    }
 
-   if (!wxStrcmp(tag, wxT("labeltrack"))) {
-      return mTracks->Add(mTrackFactory->NewLabelTrack());
-   }
-
    if (!wxStrcmp(tag, wxT("timetrack"))) {
       return mTracks->Add(mTrackFactory->NewTimeTrack());
    }
@@ -5161,35 +5157,6 @@ void AudacityProject::OnAudioIOStopRecording()
    if (GetAudioIOToken() > 0)
    {
       auto &intervals = gAudioIO->LostCaptureIntervals();
-      if (intervals.size()) {
-         // Make a track with labels for recording errors
-         auto uTrack = GetTrackFactory()->NewLabelTrack();
-         auto pTrack = uTrack.get();
-         GetTracks()->Add( std::move(uTrack) );
-         /* i18n-hint:  A name given to a track, appearing as its menu button.
-          The translation should be short or else it will not display well.
-          At most, about 11 Latin characters.
-          Dropout is a loss of a short sequence audio sample data from the
-          recording */
-         pTrack->SetName(_("Dropouts"));
-         long counter = 1;
-         for (auto &interval : intervals)
-            pTrack->AddLabel(
-               SelectedRegion{ interval.first,
-                  interval.first + interval.second },
-               wxString::Format(wxT("%ld"), counter++),
-               -2 );
-         ShowWarningDialog(this, wxT("DropoutDetected"), _("\
-Recorded audio was lost at the labeled locations. Possible causes:\n\
-\n\
-Other applications are competing with Audacity for processor time\n\
-\n\
-You are saving directly to a slow external storage device\n\
-"
-         ),
-         false,
-         _("Turn off dropout detection"));
-      }
 
       // Add to history
       PushState(_("Recorded Audio"), _("Record"));

@@ -41,7 +41,6 @@
 #include "../Internat.h"
 #include "../FileFormats.h"
 #include "../FileNames.h"
-#include "../LabelTrack.h"
 #include "../Project.h"
 #include "../Prefs.h"
 #include "../ShuttleGui.h"
@@ -139,8 +138,6 @@ ExportMultiple::~ExportMultiple()
 
 void ExportMultiple::CountTracksAndLabels()
 {
-   mLabels = NULL;
-   mNumLabels = 0;
    mNumWaveTracks = 0;
 
    const Track* pTrack;
@@ -155,17 +152,6 @@ void ExportMultiple::CountTracksAndLabels()
             auto wt = static_cast<const WaveTrack *>(pTrack);
             if (!wt->GetMute() && !pTrack->GetLinked()) // Don't count muted tracks.
                mNumWaveTracks++;
-            break;
-         }
-
-         // Only support one label track???
-         case Track::Label:
-         {
-            // Supports only one LabelTrack.
-            if (mLabels == NULL) {
-               mLabels = (LabelTrack*)pTrack;
-               mNumLabels = mLabels->GetNumLabels();
-            }
             break;
          }
       }
@@ -183,7 +169,7 @@ int ExportMultiple::ShowModal()
       return wxID_CANCEL;
    }
 
-   if ((mNumWaveTracks == 1) && (mNumLabels < 1))
+   if (mNumWaveTracks == 1)
    {
       ::AudacityMessageBox(_(
 "You have only one unmuted Audio Track and no applicable \
@@ -191,12 +177,6 @@ int ExportMultiple::ShowModal()
                      _("Cannot Export Multiple"),
                      wxOK | wxCENTRE, this);
       return wxID_CANCEL;
-   }
-
-   if (mNumLabels < 1) {
-      mLabel->Enable(false);
-      mTrack->SetValue(true);
-      mLabel->SetValue(false);
    }
 
    if (mNumWaveTracks < 2) {
@@ -345,6 +325,7 @@ void ExportMultiple::PopulateOrExchange(ShuttleGui& S)
       S.StartStatic(_("Name files:"), 1);
       {
          S.SetBorder(2);
+		 /*
          S.StartRadioButtonGroup(wxT("/Export/TrackNameWithOrWithoutNumbers"), wxT("labelTrack"));
          {
             mByName = S.Id(ByNameID)
@@ -357,7 +338,7 @@ void ExportMultiple::PopulateOrExchange(ShuttleGui& S)
                .TieRadioButton(_("Numbering after File name prefix"), wxT("numberAfter"));
          }
          S.EndRadioButtonGroup();
-
+		 */
          S.StartMultiColumn(3, wxEXPAND);
          S.SetStretchyCol(2);
          {
@@ -595,16 +576,9 @@ void ExportMultiple::OnExport(wxCommandEvent& WXUNUSED(event))
       } );
    } );
 
-   if (mLabel->GetValue()) {
-      ok = ExportMultipleByLabel(mByName->GetValue() || mByNumberAndName->GetValue(),
-                                 mPrefix->GetValue(),
-                                 mByNumberAndName->GetValue());
-   }
-   else {
       ok = ExportMultipleByTrack(mByName->GetValue() || mByNumberAndName->GetValue(),
                                  mPrefix->GetValue(),
                                  mByNumberAndName->GetValue());
-   }
 
    if (ok == ProgressResult::Success || ok == ProgressResult::Stopped) {
       EndModal(1);
@@ -634,135 +608,6 @@ bool ExportMultiple::DirOk()
    }
 
    return fn.Mkdir(0777, wxPATH_MKDIR_FULL);
-}
-
-// TODO: JKC July2016: Merge labels/tracks duplicated export code.
-ProgressResult ExportMultiple::ExportMultipleByLabel(bool byName,
-   const wxString &prefix, bool addNumber)
-{
-   wxASSERT(mProject);
-   bool tagsPrompt = mProject->GetShowId3Dialog();
-   int numFiles = mNumLabels;
-   int l = 0;        // counter for files done
-   std::vector<ExportKit> exportSettings; // dynamic array for settings.
-   exportSettings.reserve(numFiles); // Allocate some guessed space to use.
-
-   // Account for exporting before first label
-   if( mFirst->GetValue() ) {
-      l--;
-      numFiles++;
-   }
-
-   // Figure out how many channels we should export.
-   auto channels = mTracks->GetNumExportChannels(false);
-
-   wxArrayString otherNames;  // keep track of file names we will use, so we
-   // don't duplicate them
-   ExportKit setting;   // the current batch of settings
-   setting.destfile.SetPath(mDir->GetValue());
-   setting.destfile.SetExt(mPlugins[mPluginIndex]->GetExtension(mSubFormatIndex));
-   wxLogDebug(wxT("Plug-in index = %d, Sub-format = %d"), mPluginIndex, mSubFormatIndex);
-   wxLogDebug(wxT("File extension is %s"), setting.destfile.GetExt());
-   wxString name;    // used to hold file name whilst we mess with it
-   wxString title;   // un-messed-with title of file for tagging with
-
-   const LabelStruct *info = NULL;
-   /* Examine all labels a first time, sort out all data but don't do any
-    * exporting yet (so this run is quick but interactive) */
-   while( l < mNumLabels ) {
-
-      // Get file name and starting time
-      if( l < 0 ) {
-         // create wxFileName for output file
-         name = (mFirstFileName->GetValue());
-         setting.t0 = 0.0;
-      } else {
-         info = mLabels->GetLabel(l);
-         name = (info->title);
-         setting.t0 = info->selectedRegion.t0();
-      }
-
-      // Figure out the ending time
-      if( info && !info->selectedRegion.isPoint() ) {
-         setting.t1 = info->selectedRegion.t1();
-      } else if( l < mNumLabels-1 ) {
-         // Use start of next label as end
-         const LabelStruct *info1 = mLabels->GetLabel(l+1);
-         setting.t1 = info1->selectedRegion.t0();
-      } else {
-         setting.t1 = mTracks->GetEndTime();
-      }
-
-      if( name.IsEmpty() )
-         name = _("untitled");
-
-      // store title of label to use in tags
-      title = name;
-
-      // Numbering files...
-      if( !byName ) {
-         name.Printf(wxT("%s-%02d"), prefix, l+1);
-      } else if( addNumber ) {
-         // Following discussion with GA, always have 2 digits
-         // for easy file-name sorting (on Windows)
-         name.Prepend(wxString::Format(wxT("%02d-"), l+1));
-      }
-
-      // store sanitised and user checked name in object
-      setting.destfile.SetName(MakeFileName(name));
-      if( setting.destfile.GetName().IsEmpty() )
-      {  // user cancelled dialogue, or deleted everything in field.
-         // or maybe the label was empty??
-         // So we ignore this one and keep going.
-      } 
-      else
-      {
-         // FIXME: TRAP_ERR User could have given an illegal filename prefix.
-         // in that case we should tell them, not fail silently.
-         wxASSERT(setting.destfile.IsOk());     // burp if file name is broke
-
-         // Make sure the (final) file name is unique within the set of exports
-         FileNames::MakeNameUnique(otherNames, setting.destfile);
-
-         /* do the metadata for this file */
-         // copy project metadata to start with
-         setting.filetags = *(mProject->GetTags());
-         // over-ride with values
-         setting.filetags.SetTag(TAG_TITLE, title);
-         setting.filetags.SetTag(TAG_TRACK, l+1);
-         // let the user have a crack at editing it, exit if cancelled
-         if( !setting.filetags.ShowEditDialog(mProject, _("Edit Metadata Tags"), tagsPrompt) )
-            return ProgressResult::Cancelled;
-      }
-
-      /* add the settings to the array of settings to be used for export */
-      exportSettings.push_back(setting);
-
-      l++;  // next label, count up one
-   }
-
-   auto ok = ProgressResult::Success;   // did it work?
-   int count = 0; // count the number of sucessful runs
-   ExportKit activeSetting;  // pointer to the settings in use for this export
-   /* Go round again and do the exporting (so this run is slow but
-    * non-interactive) */
-   std::unique_ptr<ProgressDialog> pDialog;
-   for (count = 0; count < numFiles; count++) {
-      /* get the settings to use for the export from the array */
-      activeSetting = exportSettings[count];
-      // Bug 1440 fix.
-      if( activeSetting.destfile.GetName().IsEmpty() )
-         continue;
-
-      // Export it
-      ok = DoExport(pDialog, channels, activeSetting.destfile, false,
-         activeSetting.t0, activeSetting.t1, activeSetting.filetags);
-      if (ok != ProgressResult::Success && ok != ProgressResult::Stopped) {
-         break;
-      }
-   }
-
-   return ok;
 }
 
 ProgressResult ExportMultiple::ExportMultipleByTrack(bool byName,

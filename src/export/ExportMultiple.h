@@ -27,7 +27,6 @@ class wxRadioButton;
 class wxTextCtrl;
 
 class AudacityProject;
-class LabelTrack;
 class SelectionState;
 class ShuttleGui;
 class Track;
@@ -47,15 +46,6 @@ private:
    void CanExport();
    void CountTracksAndLabels();
    bool DirOk();
-   /** \brief Export multiple labeled regions of the project to separate files
-    *
-    * Uses a single label track in the project to split up the audio into a
-    * series of sections, each of which is exported to a separate file.
-    * @param byName Controls whether files are named after the text in the
-    * labels that define them (true), or just numbered (false).
-    * @param prefix The string used to prefix the file number if files are being
-    * numbered rather than named */
-   ProgressResult ExportMultipleByLabel(bool byName, const wxString &prefix, bool addNumber);
 
    /** \brief Export each track in the project to a separate file
     *
@@ -111,8 +101,6 @@ private:
    AudacityProject *mProject;
    TrackList *mTracks;           /**< The list of tracks in the project that is
                                    being exported */
-   LabelTrack *mLabels;
-   int mNumLabels;
    int mNumWaveTracks;
 
    int mFilterIndex;          /**< The index in the drop-down list of export

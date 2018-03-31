@@ -194,9 +194,6 @@ static bool ConvertLegacyTrack(wxTextFile *f, XMLFileWriter &xmlFile)
 
       return true;
    }
-   else if (kind == wxT("LabelTrack")) {
-      return true;
-   }
    else if (kind == wxT("NoteTrack")) {
       // Just skip over it - they didn't even work in version 1.0!
 
