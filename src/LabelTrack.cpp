@@ -2071,105 +2071,27 @@ static const char *const GlyphXpmRegionSpec[] = {
 /// Returns true for keys we capture to start a label.
 bool LabelTrack::IsGoodLabelFirstKey(const wxKeyEvent & evt)
 {
-   int keyCode = evt.GetKeyCode();
-   return (keyCode < WXK_START
-                  && keyCode != WXK_SPACE && keyCode != WXK_DELETE && keyCode != WXK_RETURN) ||
-          (keyCode >= WXK_NUMPAD0 && keyCode <= WXK_DIVIDE) ||
-          (keyCode >= WXK_NUMPAD_EQUAL && keyCode <= WXK_NUMPAD_DIVIDE) ||
-#if defined(__WXMAC__)
-          (keyCode > WXK_RAW_CONTROL) ||
-#endif
-          (keyCode > WXK_WINDOWS_MENU);
+	return false;
 }
 
 /// This returns true for keys we capture for label editing.
 bool LabelTrack::IsGoodLabelEditKey(const wxKeyEvent & evt)
 {
-   int keyCode = evt.GetKeyCode();
-
-   // Accept everything outside of WXK_START through WXK_COMMAND, plus the keys
-   // within that range that are usually printable, plus the ones we use for
-   // keyboard navigation.
-   return keyCode < WXK_START ||
-          (keyCode >= WXK_END && keyCode < WXK_UP) ||
-          (keyCode == WXK_RIGHT) ||
-          (keyCode >= WXK_NUMPAD0 && keyCode <= WXK_DIVIDE) ||
-          (keyCode >= WXK_NUMPAD_SPACE && keyCode <= WXK_NUMPAD_ENTER) ||
-          (keyCode >= WXK_NUMPAD_HOME && keyCode <= WXK_NUMPAD_END) ||
-          (keyCode >= WXK_NUMPAD_DELETE && keyCode <= WXK_NUMPAD_DIVIDE) ||
-#if defined(__WXMAC__)
-          (keyCode > WXK_RAW_CONTROL) ||
-#endif
-          (keyCode > WXK_WINDOWS_MENU);
+   return false;
 }
 
 wxString LabelTrack::GetTextOfLabels(double t0, double t1) const
 {
-   bool firstLabel = true;
    wxString retVal;
-
-   for (auto &labelStruct: mLabels) {
-      if (labelStruct.getT0() >= t0 &&
-          labelStruct.getT1() <= t1)
-      {
-         if (!firstLabel)
-            retVal += '\t';
-         firstLabel = false;
-         retVal += labelStruct.title;
-      }
-   }
-
    return retVal;
 }
 
 int LabelTrack::FindNextLabel(const SelectedRegion& currentRegion)
 {
-   int i = -1;
-
-   if (!mLabels.empty()) {
-      int len = (int) mLabels.size();
-      if (miLastLabel >= 0 && miLastLabel + 1 < len
-         && currentRegion.t0() == mLabels[miLastLabel].getT0()
-         && currentRegion.t0() == mLabels[miLastLabel + 1].getT0() ) {
-         i = miLastLabel + 1;
-      }
-      else {
-         i = 0;
-         if (currentRegion.t0() < mLabels[len - 1].getT0()) {
-            while (i < len &&
-                  mLabels[i].getT0() <= currentRegion.t0()) {
-               i++;
-            }
-         }
-      }
-   }
-
-   miLastLabel = i;
-   return i;
+   return -1;
 }
 
  int LabelTrack::FindPrevLabel(const SelectedRegion& currentRegion)
 {
-   int i = -1;
-
-   if (!mLabels.empty()) {
-      int len = (int) mLabels.size();
-      if (miLastLabel > 0 && miLastLabel < len
-         && currentRegion.t0() == mLabels[miLastLabel].getT0()
-         && currentRegion.t0() == mLabels[miLastLabel - 1].getT0() ) {
-         i = miLastLabel - 1;
-      }
-      else {
-         i = len - 1;
-         if (currentRegion.t0() > mLabels[0].getT0()) {
-            while (i >=0  &&
-                  mLabels[i].getT0() >= currentRegion.t0()) {
-               i--;
-            }
-         }
-      }
-   }
-
-   miLastLabel = i;
-   return i;
+   return -1;
 }
