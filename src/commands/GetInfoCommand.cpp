@@ -135,7 +135,6 @@ bool GetInfoCommand::ApplyInner(const CommandContext &context)
       case kTracks       : return SendTracks( context );
       case kClips        : return SendClips( context );
       case kEnvelopes    : return SendEnvelopes( context );
-      case kLabels       : return SendLabels( context );
       case kBoxes        : return SendBoxes( context );
       default:
          context.Status( "Command options not recognised" );
@@ -321,61 +320,6 @@ bool GetInfoCommand::SendEnvelopes(const CommandContext &context)
          t=iter.Next();
    }
    context.EndArray();
-
-   return true;
-}
-
-
-bool GetInfoCommand::SendLabels(const CommandContext &context)
-{
-   TrackList *tracks = context.GetProject()->GetTracks();
-   TrackListIterator iter(tracks);
-   Track *t = iter.First();
-   int i=0;
-   context.StartArray();
-   while (t) {
-      if (t->GetKind() == Track::Label) {
-         LabelTrack *labelTrack = static_cast<LabelTrack*>(t);
-         if( labelTrack )
-         {
-
-#ifdef VERBOSE_LABELS_FORMATTING
-            for (int nn = 0; nn< (int)labelTrack->mLabels.size(); nn++) {
-               const auto &label = labelTrack->mLabels[nn];
-               context.StartStruct();
-               context.AddItem( (double)i, "track" );
-               context.AddItem( label.getT0(), "start" );
-               context.AddItem( label.getT1(), "end" );
-               context.AddItem( label.title, "text" );
-               context.EndStruct();
-            }
-#else
-            context.AddItem( (double)i ); // Track number.
-            context.StartArray();
-            for (int nn = 0; nn< (int)labelTrack->mLabels.size(); nn++) {
-               const auto &label = labelTrack->mLabels[nn];
-               context.StartArray();
-               context.AddItem( label.getT0() ); // start
-               context.AddItem( label.getT1() ); // end
-               context.AddItem( label.title ); //text.
-               context.EndArray();
-            }
-            context.EndArray();
-#endif
-         }
-      }
-      // Theoretically you could have a stereo LabelTrack, and
-      // this way you'd skip the second version of it.
-      // Skip second tracks of stereo...
-      //if( t->GetLinked() )
-      //   t= iter.Next();
-      if( t )
-         t=iter.Next();
-      i++;
-   }
-   context.EndArray();
-
-
 
    return true;
 }
