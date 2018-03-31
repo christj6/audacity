@@ -577,8 +577,6 @@ public:
 
    void UpdateMixerBoard();
 
-   void GetRegionsByLabel( Regions &regions );
-
    void AutoSave();
    void DeleteCurrentAutoSaveFile();
 

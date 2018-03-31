@@ -100,7 +100,6 @@ scroll information.  It also has some status flags.
 #include "MixerBoard.h"
 #include "Internat.h"
 #include "import/Import.h"
-#include "LabelTrack.h"
 #include "Legacy.h"
 #include "Mix.h"
 #include "NoteTrack.h"
@@ -4770,50 +4769,6 @@ void AudacityProject::OnTimer(wxTimerEvent& WXUNUSED(event))
 
          mStatusBar->SetStatusText(msg, mainStatusBarField);
       }
-   }
-}
-
-//get regions selected by selected labels
-//removes unnecessary regions, overlapping regions are merged
-//regions memory need to be deleted by the caller
-void AudacityProject::GetRegionsByLabel( Regions &regions )
-{
-   TrackListIterator iter(GetTracks());
-   Track *n;
-
-   //determine labeled regions
-   for( n = iter.First(); n; n = iter.Next() )
-      if( n->GetKind() == Track::Label && n->GetSelected() )
-      {
-         LabelTrack *lt = ( LabelTrack* )n;
-         for( int i = 0; i < lt->GetNumLabels(); i++ )
-         {
-            const LabelStruct *ls = lt->GetLabel( i );
-            if( ls->selectedRegion.t0() >= mViewInfo.selectedRegion.t0() &&
-                ls->selectedRegion.t1() <= mViewInfo.selectedRegion.t1() )
-               regions.push_back(Region(ls->getT0(), ls->getT1()));
-         }
-      }
-
-   //anything to do ?
-   if( regions.size() == 0 )
-      return;
-
-   //sort and remove unnecessary regions
-   std::sort(regions.begin(), regions.end());
-   unsigned int selected = 1;
-   while( selected < regions.size() )
-   {
-      const Region &cur = regions.at( selected );
-      Region &last = regions.at( selected - 1 );
-      if( cur.start < last.end )
-      {
-         if( cur.end > last.end )
-            last.end = cur.end;
-         regions.erase( regions.begin() + selected );
-      }
-      else
-         selected++;
    }
 }
 

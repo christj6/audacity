@@ -15,7 +15,6 @@
 #include <cstdlib>
 
 #include "Project.h"
-#include "LabelTrack.h"
 #include "WaveTrack.h"
 
 inline bool operator < (SnapPoint s1, SnapPoint s2)
@@ -110,22 +109,7 @@ void SnapManager::Reinit()
          continue;
       }
 
-      if (track->GetKind() == Track::Label)
-      {
-         LabelTrack *labelTrack = (LabelTrack *)track;
-         for (int i = 0, cnt = labelTrack->GetNumLabels(); i < cnt; ++i)
-         {
-            const LabelStruct *label = labelTrack->GetLabel(i);
-            const double t0 = label->getT0();
-            const double t1 = label->getT1();
-            CondListAdd(t0, labelTrack);
-            if (t1 != t0)
-            {
-               CondListAdd(t1, labelTrack);
-            }
-         }
-      }
-      else if (track->GetKind() == Track::Wave)
+      if (track->GetKind() == Track::Wave)
       {
          auto waveTrack = static_cast<const WaveTrack *>(track);
          for (const auto &clip: waveTrack->GetClips())
