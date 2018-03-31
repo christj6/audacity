@@ -82,7 +82,6 @@ bool AudacityPrintout::OnPrintPage(int WXUNUSED(page))
    ruler.SetRange(0.0, mTracks->GetEndTime());
    ruler.SetFormat(Ruler::TimeFormat);
    ruler.SetLabelEdges(true);
-   ruler.Draw(*dc);
 
    TrackArtist artist;
    artist.SetBackgroundBrushes(*wxWHITE_BRUSH, *wxWHITE_BRUSH,

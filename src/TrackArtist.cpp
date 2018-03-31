@@ -504,7 +504,6 @@ void TrackArtist::DrawVRuler
 
       UpdateVRuler(t, rr);
       vruler->SetTickColour( theTheme.Colour( clrTrackPanelText ));
-      vruler->Draw(*dc);
 
       return;
    }
@@ -528,7 +527,6 @@ void TrackArtist::DrawVRuler
 
       UpdateVRuler(t, rr);
       vruler->SetTickColour( theTheme.Colour( clrTrackPanelText ));
-      vruler->Draw(*dc);
 
       return;
    }

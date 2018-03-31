@@ -957,16 +957,6 @@ void Ruler::TickCustom(int labelIdx, bool major, bool minor)
 
 }
 
-void Ruler::Update()
-{
-  // Update(NULL);
-}
-
-void Ruler::Draw(wxDC& dc)
-{
-   // Draw( dc, NULL);
-}
-
 // ********** Draw grid ***************************
 void Ruler::DrawGrid(wxDC& dc, int length, bool minor, bool major, int xOffset, int yOffset)
 {
@@ -974,8 +964,6 @@ void Ruler::DrawGrid(wxDC& dc, int length, bool minor, bool major, int xOffset, 
    mMajorGrid = major;
    mMinorGrid = minor;
    mDC = &dc;
-
-   Update();
 
    int gridPos;
    wxPen gridPen;
@@ -1057,7 +1045,6 @@ void Ruler::GetMaxSize(wxCoord *width, wxCoord *height)
    if (!mValid) {
       wxScreenDC sdc;
       mDC = &sdc;
-      // Update(NULL);
    }
 
    if (width)
@@ -1177,8 +1164,6 @@ void RulerPanel::OnPaint(wxPaintEvent & WXUNUSED(evt))
 #if defined(__WXMSW__)
    dc.Clear();
 #endif
-
-   ruler.Draw(dc);
 }
 
 void RulerPanel::OnSize(wxSizeEvent & WXUNUSED(evt))
@@ -1966,7 +1951,6 @@ void AdornedRulerPanel::DoDrawMarks(wxDC * dc, bool /*text */ )
 
    mRuler.SetTickColour( theTheme.Colour( clrTrackPanelText ) );
    mRuler.SetRange( min, max, hiddenMin, hiddenMax );
-   mRuler.Draw( *dc );
 }
 
 void AdornedRulerPanel::DrawSelection()

@@ -513,8 +513,6 @@ void MeterPanel::OnPaint(wxPaintEvent & WXUNUSED(event))
       }
       mRuler.SetTickColour( clrText );
       dc.SetTextForeground( clrText );
-      // Draw the ruler
-      mRuler.Draw(dc);
 
       // Bitmap created...unselect
       dc.SelectObject(wxNullBitmap);
@@ -543,7 +541,6 @@ void MeterPanel::OnPaint(wxPaintEvent & WXUNUSED(event))
          destDC.SetBackgroundMode( wxSOLID );
          destDC.SetTextBackground( clrBoxFill );
       }
-      mRuler.Draw(destDC);
    }
 
    // Let the user know they can click to start monitoring
