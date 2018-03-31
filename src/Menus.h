@@ -428,8 +428,6 @@ void OnMoveSelectionWithTracks(const CommandContext &context );
 void OnSyncLock(const CommandContext &context );
 void OnAddLabel(const CommandContext &context );
 void OnAddLabelPlaying(const CommandContext &context );
-void DoEditLabels(LabelTrack *lt = nullptr, int index = -1);
-void OnEditLabels(const CommandContext &context );
 void OnToggleTypeToCreateLabel(const CommandContext &context );
 
         // Effect Menu

@@ -263,8 +263,6 @@ class AUDACITY_DLL_API LabelTrack final : public Track
  public:
    void SortLabels(LabelTrackHit *pHit = nullptr);
  private:
-   void ShowContextMenu();
-   void OnContextMenu(wxCommandEvent & evt);
 
    int mSelIndex;              /// Keeps track of the currently selected label
    int mxMouseDisplacement;    /// Displacement of mouse cursor from the centre being dragged.

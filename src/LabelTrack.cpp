@@ -1504,13 +1504,6 @@ void LabelTrack::HandleTextDragRelease(const wxMouseEvent & evt)
       return;
    }
 
-   if (evt.RightUp()) {
-      if ((mSelIndex != -1) && OverTextBox(GetLabel(mSelIndex), evt.m_x, evt.m_y)) {
-         // popup menu for editing
-         ShowContextMenu();
-      }
-   }
-
    return;
 }
 
@@ -1914,12 +1907,6 @@ bool LabelTrack::OnKeyDown(SelectedRegion &newSel, wxKeyEvent & event)
          }
          break;
 
-      case '\x10':   // OSX
-      case WXK_MENU:
-      case WXK_WINDOWS_MENU:
-         ShowContextMenu();
-         break;
-
       default:
          if (!IsGoodLabelEditKey(event)) {
             event.Skip();
@@ -2052,98 +2039,6 @@ bool LabelTrack::OnChar(SelectedRegion &WXUNUSED(newSel), wxKeyEvent & event)
    mDrawCursor = true;
 
    return updated;
-}
-
-void LabelTrack::ShowContextMenu()
-{
-   wxWindow *parent = wxWindow::FindFocus();
-
-   {
-      wxMenu menu;
-      menu.Bind(wxEVT_MENU, &LabelTrack::OnContextMenu, this);
-
-      menu.Append(OnCutSelectedTextID, _("Cu&t"));
-      menu.Append(OnCopySelectedTextID, _("&Copy"));
-      menu.Append(OnPasteSelectedTextID, _("&Paste"));
-      menu.Append(OnDeleteSelectedLabelID, _("&Delete Label"));
-      menu.Append(OnEditSelectedLabelID, _("&Edit..."));
-
-      menu.Enable(OnCutSelectedTextID, IsTextSelected());
-      menu.Enable(OnCopySelectedTextID, IsTextSelected());
-      menu.Enable(OnPasteSelectedTextID, IsTextClipSupported());
-      menu.Enable(OnDeleteSelectedLabelID, true);
-      menu.Enable(OnEditSelectedLabelID, true);
-
-      wxASSERT(mSelIndex >= 0);
-      const LabelStruct *ls = GetLabel(mSelIndex);
-
-      wxClientDC dc(parent);
-
-      if (msFont.Ok())
-      {
-         dc.SetFont(msFont);
-      }
-
-      int x = 0;
-      bool success = CalcCursorX(&x);
-      wxASSERT(success);
-      static_cast<void>(success); // Suppress unused variable warning if debug mode is disabled
-
-      parent->PopupMenu(&menu, x, ls->y + (mIconHeight / 2) - 1);
-   }
-}
-
-void LabelTrack::OnContextMenu(wxCommandEvent & evt)
-{
-   AudacityProject *p = GetActiveProject();
-
-   switch (evt.GetId())
-   {
-   /// Cut selected text if cut menu item is selected
-   case OnCutSelectedTextID:
-      if (CutSelectedText())
-      {
-         p->PushState(_("Modified Label"),
-                      _("Label Edit"),
-                      UndoPush::CONSOLIDATE);
-      }
-      break;
-
-   /// Copy selected text if copy menu item is selected
-   case OnCopySelectedTextID:
-      CopySelectedText();
-      break;
-
-   /// paste selected text if paste menu item is selected
-   case OnPasteSelectedTextID:
-      if (PasteSelectedText(p->GetSel0(), p->GetSel1()))
-      {
-         p->PushState(_("Modified Label"),
-                      _("Label Edit"),
-                      UndoPush::CONSOLIDATE);
-      }
-      break;
-
-   /// DELETE selected label
-   case OnDeleteSelectedLabelID: {
-      int ndx = GetLabelIndex(p->GetSel0(), p->GetSel1());
-      if (ndx != -1)
-      {
-         DeleteLabel(ndx);
-         p->PushState(_("Deleted Label"),
-                      _("Label Edit"),
-                      UndoPush::CONSOLIDATE);
-      }
-   }
-      break;
-
-   case OnEditSelectedLabelID: {
-      int ndx = GetLabelIndex(p->GetSel0(), p->GetSel1());
-      if (ndx != -1)
-         p->DoEditLabels(this, ndx);
-   }
-      break;
-   }
 }
 
 void LabelTrack::RemoveSelectedText()

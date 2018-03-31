@@ -482,9 +482,6 @@ void AudacityProject::CreateMenusAndCommands()
 
       c->BeginSubMenu(_("&Labels"));
 
-      c->AddItem(wxT("EditLabels"), XXO("&Edit Labels..."), FN(OnEditLabels),
-                 AudioIONotBusyFlag, AudioIONotBusyFlag);
-
       c->AddSeparator();
 
       c->AddItem(wxT("AddLabel"), XXO("Add Label at &Selection"), FN(OnAddLabel), wxT("Ctrl+B"),
@@ -7558,27 +7555,6 @@ void AudacityProject::OnAddLabelPlaying(const CommandContext &WXUNUSED(context) 
       double indicator = gAudioIO->GetStreamTime();
       DoAddLabel(SelectedRegion(indicator, indicator), true);
    }
-}
-
-void AudacityProject::DoEditLabels(LabelTrack *lt, int index)
-{
-   wxString format = GetSelectionFormat(),
-      freqFormat = GetFrequencySelectionFormatName();
-
-   LabelDialog dlg(this, *GetTrackFactory(), GetTracks(),
-                   lt, index,
-                   mViewInfo, mRate,
-                   format, freqFormat);
-
-   if (dlg.ShowModal() == wxID_OK) {
-      PushState(_("Edited labels"), _("Label"));
-      RedrawProject();
-   }
-}
-
-void AudacityProject::OnEditLabels(const CommandContext &WXUNUSED(context) )
-{
-   DoEditLabels();
 }
 
 void AudacityProject::OnToggleTypeToCreateLabel(const CommandContext &WXUNUSED(context) )
