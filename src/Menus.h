@@ -377,9 +377,6 @@ void OnImportLabels(const CommandContext &context );
 
 void OnImportRaw(const CommandContext &context );
 
-void OnEditMetadata(const CommandContext &context );
-bool DoEditMetadata(const wxString &title, const wxString &shortUndoDescription, bool force);
-
 void OnMixAndRender(const CommandContext &context );
 void OnMixAndRenderToNewTrack(const CommandContext &context );
 void HandleMixAndRender(bool toNewTrack);

@@ -358,13 +358,6 @@ bool Exporter::Process(AudacityProject *project, bool selectedOnly, double t0, d
       return false;
    }
 
-   // Let user edit MetaData
-   if (mPlugins[mFormat]->GetCanMetaData(mSubFormat)) {
-      if (!(project->DoEditMetadata(_("Edit Metadata Tags"), _("Exported Tags"), mProject->GetShowId3Dialog()))) {
-         return false;
-      }
-   }
-
    // Ensure filename doesn't interfere with project files.
    if (!CheckFilename()) {
       return false;
@@ -992,14 +985,6 @@ bool Exporter::SetAutoExportOptions(AudacityProject *project) {
 
    if( GetFilename()==false )
         return false;
-
-   // Let user edit MetaData
-   if (mPlugins[mFormat]->GetCanMetaData(mSubFormat)) {
-      if (!(project->DoEditMetadata(_("Edit Metadata Tags"),
-                                    _("Exported Tags"), mProject->GetShowId3Dialog()))) {
-         return false;
-      }
-   }
 
    return true;
 }

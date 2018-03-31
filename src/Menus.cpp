@@ -511,24 +511,6 @@ void AudacityProject::CreateMenusAndCommands()
 
       /////////////////////////////////////////////////////////////////////////////
 
-      c->BeginSubMenu(_("La&beled Audio"));
-
-      c->SetDefaultFlags(AudioIONotBusyFlag | LabelsSelectedFlag | WaveTracksExistFlag | TimeSelectedFlag,
-         AudioIONotBusyFlag | LabelsSelectedFlag | WaveTracksExistFlag | TimeSelectedFlag);
-
-      c->AddSeparator();
-
-      c->AddSeparator();
-
-      c->AddSeparator();
-
-      c->EndSubMenu();
-
-      c->AddItem(wxT("EditMetaData"), XXO("Me&tadata..."), FN(OnEditMetadata),
-         AudioIONotBusyFlag, AudioIONotBusyFlag);
-
-      /////////////////////////////////////////////////////////////////////////////
-
 #ifndef __WXMAC__
       c->AddSeparator();
 #endif
@@ -6618,30 +6600,6 @@ void AudacityProject::OnImportRaw(const CommandContext &WXUNUSED(context) )
 
    AddImportedTracks(fileName, std::move(newTracks));
    HandleResize(); // Adjust scrollers for NEW track sizes.
-}
-
-void AudacityProject::OnEditMetadata(const CommandContext &WXUNUSED(context) )
-{
-   (void)DoEditMetadata(_("Edit Metadata Tags"), _("Metadata Tags"), true);
-}
-
-bool AudacityProject::DoEditMetadata
-(const wxString &title, const wxString &shortUndoDescription, bool force)
-{
-   // Back up my tags
-   auto newTags = mTags->Duplicate();
-
-   if (newTags->ShowEditDialog(this, title, force)) {
-      if (*mTags != *newTags) {
-         // Commit the change to project state only now.
-         mTags = newTags;
-         PushState(title, shortUndoDescription);
-      }
-
-      return true;
-   }
-
-   return false;
 }
 
 void AudacityProject::HandleMixAndRender(bool toNewTrack)
