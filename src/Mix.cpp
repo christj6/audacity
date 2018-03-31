@@ -37,7 +37,6 @@
 #include "Prefs.h"
 #include "Project.h"
 #include "Resample.h"
-#include "TimeTrack.h"
 #include "float_cast.h"
 
 //TODO-MB: wouldn't it make more sense to DELETE the time track after 'mix and render'?
@@ -161,7 +160,6 @@ void MixAndRender(TrackList *tracks, TrackFactory *trackFactory,
    Mixer mixer(waveArray,
       // Throw to abort mix-and-render if read fails:
       true,
-      Mixer::WarpOptions(tracks->GetTimeTrack()),
       startTime, endTime, mono ? 1 : 2, maxBlockLen, false,
       rate, format);
 
@@ -207,29 +205,8 @@ void MixAndRender(TrackList *tracks, TrackFactory *trackFactory,
    }
 }
 
-Mixer::WarpOptions::WarpOptions(double min, double max)
-   : timeTrack(0), minSpeed(min), maxSpeed(max)
-{
-   if (minSpeed < 0)
-   {
-      wxASSERT(false);
-      minSpeed = 0;
-   }
-   if (maxSpeed < 0)
-   {
-      wxASSERT(false);
-      maxSpeed = 0;
-   }
-   if (minSpeed > maxSpeed)
-   {
-      wxASSERT(false);
-      std::swap(minSpeed, maxSpeed);
-   }
-}
-
 Mixer::Mixer(const WaveTrackConstArray &inputTracks,
              bool mayThrow,
-             const WarpOptions &warpOptions,
              double startTime, double stopTime,
              unsigned numOutChannels, size_t outBufferSize, bool outInterleaved,
              double outRate, sampleFormat outFormat,
@@ -257,7 +234,6 @@ Mixer::Mixer(const WaveTrackConstArray &inputTracks,
       mInputTrack[i].SetTrack(inputTracks[i]);
       mSamplePos[i] = inputTracks[i]->TimeToLongSamples(startTime);
    }
-   mTimeTrack = warpOptions.timeTrack;
    mT0 = startTime;
    mT1 = stopTime;
    mTime = startTime;
@@ -304,23 +280,10 @@ Mixer::Mixer(const WaveTrackConstArray &inputTracks,
    for(size_t i=0; i<mNumInputTracks; i++) {
       double factor = (mRate / mInputTrack[i].GetTrack()->GetRate());
       double minFactor, maxFactor;
-      if (mTimeTrack) {
-         // variable rate resampling
-         mbVariableRates = true;
-         minFactor = factor / mTimeTrack->GetRangeUpper();
-         maxFactor = factor / mTimeTrack->GetRangeLower();
-      }
-      else if (warpOptions.minSpeed > 0.0 && warpOptions.maxSpeed > 0.0) {
-         // variable rate resampling
-         mbVariableRates = true;
-         minFactor = factor / warpOptions.maxSpeed;
-         maxFactor = factor / warpOptions.minSpeed;
-      }
-      else {
+
          // constant rate resampling
          mbVariableRates = false;
          minFactor = maxFactor = factor;
-      }
 
       mResample[i] = std::make_unique<Resample>(mHighQuality, minFactor, maxFactor);
       mQueueStart[i] = 0;
@@ -470,20 +433,6 @@ size_t Mixer::MixVariableRates(int *channelFlags, WaveTrackCache &cache,
       }
 
       double factor = initialWarp;
-      if (mTimeTrack)
-      {
-         //TODO-MB: The end time is wrong when the resampler doesn't use all input samples,
-         //         as a result of this the warp factor may be slightly wrong, so AudioIO will stop too soon
-         //         or too late (resulting in missing sound or inserted silence). This can't be fixed
-         //         without changing the way the resampler works, because the number of input samples that will be used
-         //         is unpredictable. Maybe it can be compensated later though.
-         if (backwards)
-            factor *= mTimeTrack->ComputeWarpFactor
-               (t - (double)thisProcessLen / trackRate + tstep, t + tstep);
-         else
-            factor *= mTimeTrack->ComputeWarpFactor
-               (t, t + (double)thisProcessLen / trackRate);
-      }
 
       auto results = pResample->Process(factor,
                                       &queue[*queueStart],

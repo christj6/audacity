@@ -486,7 +486,6 @@ ProgressResult ExportPCM::Export(AudacityProject *project,
       {
          wxASSERT(info.channels >= 0);
          auto mixer = CreateMixer(waveTracks,
-                                  tracks->GetTimeTrack(),
                                   t0, t1,
                                   info.channels, maxBlockLen, true,
                                   rate, format, true, mixerSpec);

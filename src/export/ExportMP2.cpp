@@ -269,7 +269,6 @@ ProgressResult ExportMP2::Export(AudacityProject *project,
    auto updateResult = ProgressResult::Success;
    {
       auto mixer = CreateMixer(waveTracks,
-         tracks->GetTimeTrack(),
          t0, t1,
          stereo ? 2 : 1, pcmBufferSize, true,
          rate, int16Sample, true, mixerSpec);

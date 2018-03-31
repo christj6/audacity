@@ -21,7 +21,6 @@ class wxMouseState;
 class Envelope;
 class EnvelopeEditor;
 class ViewInfo;
-class TimeTrack;
 class WaveTrack;
 
 class EnvelopeHandle final : public UIHandle
@@ -44,10 +43,6 @@ public:
    static UIHandlePtr HitAnywhere
       (std::weak_ptr<EnvelopeHandle> &holder, Envelope *envelope,
        bool timeTrack);
-   static UIHandlePtr TimeTrackHitTest
-      (std::weak_ptr<EnvelopeHandle> &holder,
-       const wxMouseState &state, const wxRect &rect,
-       const AudacityProject *pProject, const std::shared_ptr<TimeTrack> &tt);
    static UIHandlePtr WaveTrackHitTest
       (std::weak_ptr<EnvelopeHandle> &holder,
        const wxMouseState &state, const wxRect &rect,
@@ -87,8 +82,6 @@ private:
    Envelope *mEnvelope{};
    std::unique_ptr<EnvelopeEditor> mEnvelopeEditor;
    std::unique_ptr<EnvelopeEditor> mEnvelopeEditorRight;
-
-   bool mTimeTrack{};
 };
 
 #endif

@@ -1740,7 +1740,6 @@ ProgressResult ExportMP3::Export(AudacityProject *project,
       tracks->GetWaveTrackConstArray(selectionOnly, false);
    {
       auto mixer = CreateMixer(waveTracks,
-         tracks->GetTimeTrack(),
          t0, t1,
          channels, inSamples, true,
          rate, int16Sample, true, mixerSpec);

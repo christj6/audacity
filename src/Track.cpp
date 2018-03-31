@@ -10,8 +10,7 @@
 
 \class Track
 \brief Fundamental data object of Audacity, placed in the TrackPanel.
-Classes derived form it include the WaveTrack, NoteTrack, 
-and TimeTrack.
+Classes derived form it include the WaveTrack, NoteTrack.
 
 \class AudioTrack
 \brief A Track that can load/save audio data to/from XML.
@@ -30,7 +29,6 @@ and TimeTrack.
 #include <wx/textfile.h>
 #include <wx/log.h>
 
-#include "TimeTrack.h"
 #include "WaveTrack.h"
 #include "NoteTrack.h"
 #include "Project.h"
@@ -915,7 +913,6 @@ Track *TrackList::Add(std::unique_ptr<TrackKind> &&t)
 }
 
 // Make instantiations for the linker to find
-template Track *TrackList::Add<TimeTrack>(std::unique_ptr<TimeTrack> &&);
 template Track *TrackList::Add<WaveTrack>(std::unique_ptr<WaveTrack> &&);
 template Track *TrackList::Add<Track>(std::unique_ptr<Track> &&);
 
@@ -931,9 +928,6 @@ Track *TrackList::AddToHead(std::unique_ptr<TrackKind> &&t)
    ResizingEvent(n);
    return front().get();
 }
-
-// Make instantiations for the linker to find
-template Track *TrackList::AddToHead<TimeTrack>(std::unique_ptr<TimeTrack> &&);
 
 template<typename TrackKind>
 Track *TrackList::Add(std::shared_ptr<TrackKind> &&t)
@@ -1232,22 +1226,6 @@ size_t TrackList::size() const
       cnt = getPrev( getEnd() ).first->get()->GetIndex() + 1;
 
    return cnt;
-}
-
-TimeTrack *TrackList::GetTimeTrack()
-{
-   auto iter = std::find_if(begin(), end(),
-      [] ( Track *t ) { return t->GetKind() == Track::Time; }
-   );
-   if (iter == end())
-      return nullptr;
-   else
-      return static_cast<TimeTrack*>(*iter);
-}
-
-const TimeTrack *TrackList::GetTimeTrack() const
-{
-   return const_cast<TrackList*>(this)->GetTimeTrack();
 }
 
 unsigned TrackList::GetNumExportChannels(bool selectionOnly) const

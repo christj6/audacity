@@ -665,11 +665,6 @@ int ControlToolBar::PlayPlayRegion(const SelectedRegion &selectedRegion,
       }
       else {
          // Lifted the following into AudacityProject::GetDefaultPlayOptions()
-         /*
-         if (!timetrack) {
-            timetrack = t->GetTimeTrack();
-         }
-         */
          token = gAudioIO->StartStream(t->GetWaveTrackConstArray(false),
                                        WaveTrackArray(),
                                        t0, t1, options);
@@ -723,8 +718,6 @@ void ControlToolBar::PlayCurrentRegion(bool looped /* = false */,
 
       AudioIOStartStreamOptions options(p->GetDefaultPlayOptions());
       options.playLooped = looped;
-      if (cutpreview)
-         options.timeTrack = NULL;
       ControlToolBar::PlayAppearance appearance =
         cutpreview ? ControlToolBar::PlayAppearance::CutPreview
            : looped ? ControlToolBar::PlayAppearance::Looped

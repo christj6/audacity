@@ -216,7 +216,6 @@
     <ClCompile Include="..\..\..\src\Theme.cpp" />
     <ClCompile Include="..\..\..\src\TimeDialog.cpp" />
     <ClCompile Include="..\..\..\src\TimerRecordDialog.cpp" />
-    <ClCompile Include="..\..\..\src\TimeTrack.cpp" />
     <ClCompile Include="..\..\..\src\toolbars\SpectralSelectionBar.cpp" />
     <ClCompile Include="..\..\..\src\Track.cpp" />
     <ClCompile Include="..\..\..\src\TrackArtist.cpp" />
@@ -232,9 +231,6 @@
     <ClCompile Include="..\..\..\src\tracks\playabletrack\wavetrack\ui\WaveTrackUI.cpp" />
     <ClCompile Include="..\..\..\src\tracks\playabletrack\wavetrack\ui\WaveTrackVRulerControls.cpp" />
     <ClCompile Include="..\..\..\src\tracks\playabletrack\wavetrack\ui\WaveTrackVZoomHandle.cpp" />
-    <ClCompile Include="..\..\..\src\tracks\timetrack\ui\TimeTrackControls.cpp" />
-    <ClCompile Include="..\..\..\src\tracks\timetrack\ui\TimeTrackUI.cpp" />
-    <ClCompile Include="..\..\..\src\tracks\timetrack\ui\TimeTrackVRulerControls.cpp" />
     <ClCompile Include="..\..\..\src\tracks\ui\BackgroundCell.cpp" />
     <ClCompile Include="..\..\..\src\tracks\ui\ButtonHandle.cpp" />
     <ClCompile Include="..\..\..\src\tracks\ui\CommonTrackPanelCell.cpp" />
@@ -454,7 +450,6 @@
     <ClInclude Include="..\..\..\src\tracks\ui\SelectHandle.h" />
     <ClInclude Include="..\..\..\src\tracks\ui\BackgroundCell.h" />
     <ClInclude Include="..\..\..\src\tracks\ui\CommonTrackPanelCell.h" />
-    <ClInclude Include="..\..\..\src\tracks\timetrack\ui\TimeTrackControls.h" />
     <ClInclude Include="..\..\..\src\tracks\ui\ButtonHandle.h" />
     <ClInclude Include="..\..\..\src\tracks\ui\EditCursorOverlay.h" />
     <ClInclude Include="..\..\..\src\tracks\ui\EnvelopeHandle.h" />
@@ -467,7 +462,6 @@
     <ClInclude Include="..\..\..\src\tracks\ui\TrackControls.h" />
     <ClInclude Include="..\..\..\src\tracks\ui\TrackSelectHandle.h" />
     <ClInclude Include="..\..\..\src\tracks\ui\ZoomHandle.h" />
-    <ClInclude Include="..\..\..\src\tracks\timetrack\ui\TimeTrackVRulerControls.h" />
     <ClInclude Include="..\..\..\src\tracks\ui\TrackVRulerControls.h" />
     <ClInclude Include="..\..\..\src\UIHandle.h" />
     <ClInclude Include="..\..\..\src\WaveTrackLocation.h" />
@@ -531,7 +525,6 @@
     <ClInclude Include="..\..\..\src\Theme.h" />
     <ClInclude Include="..\..\..\src\TimeDialog.h" />
     <ClInclude Include="..\..\..\src\TimerRecordDialog.h" />
-    <ClInclude Include="..\..\..\src\TimeTrack.h" />
     <ClInclude Include="..\..\..\src\Track.h" />
     <ClInclude Include="..\..\..\src\TrackArtist.h" />
     <ClInclude Include="..\..\..\src\TrackPanel.h" />

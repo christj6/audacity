@@ -34,7 +34,6 @@ class WaveTrack;
 class WaveTrackCache;
 class WaveClip;
 class NoteTrack;
-class TimeTrack;
 class TrackList;
 class Ruler;
 class SelectedRegion;
@@ -108,10 +107,6 @@ class AUDACITY_DLL_API TrackArtist {
    void DrawSpectrum(const WaveTrack *track,
                      wxDC & dc, const wxRect & rect,
                      const SelectedRegion &selectedRegion, const ZoomInfo &zoomInfo);
-
-   void DrawTimeTrack(TrackPanelDrawingContext &context,
-                      const TimeTrack *track,
-                      const wxRect & rect, const ZoomInfo &zoomInfo);
 
    void DrawTimeSlider(wxDC & dc, const wxRect & rect,
                        bool rightwards, bool highlight);

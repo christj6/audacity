@@ -34,7 +34,6 @@
 class wxTextFile;
 class DirManager;
 class Track;
-class TimeTrack;
 class TrackControls;
 class TrackVRulerControls;
 class TrackPanelResizerCell;
@@ -698,9 +697,6 @@ class TrackList final : public wxEvtHandler, public ListOfTracks
    bool MoveDown(Track * t);
    bool Move(Track * t, bool up) { return up ? MoveUp(t) : MoveDown(t); }
 
-   TimeTrack *GetTimeTrack();
-   const TimeTrack *GetTimeTrack() const;
-
    /** \brief Find out how many channels this track list mixes to
    *
    * This is used in exports of the tracks to work out whether to export in
@@ -856,12 +852,10 @@ class AUDACITY_DLL_API TrackFactory
    friend class BenchmarkDialog;
 
  public:
-   // These methods are defined in WaveTrack.cpp, NoteTrack.cpp,
-   // and TimeTrack.cpp respectively
+   // These methods are defined in WaveTrack.cpp
    std::unique_ptr<WaveTrack> DuplicateWaveTrack(const WaveTrack &orig);
    std::unique_ptr<WaveTrack> NewWaveTrack(sampleFormat format = (sampleFormat)0,
                            double rate = 0);
-   std::unique_ptr<TimeTrack> NewTimeTrack();
 };
 
 #endif

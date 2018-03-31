@@ -27,7 +27,6 @@
 
 class Resample;
 class DirManager;
-class TimeTrack;
 class TrackFactory;
 class TrackList;
 class WaveTrack;
@@ -80,28 +79,11 @@ public:
 class AUDACITY_DLL_API Mixer {
  public:
 
-    // An argument to Mixer's constructor
-    class WarpOptions
-    {
-    public:
-       explicit WarpOptions(const TimeTrack *t)
-          : timeTrack(t), minSpeed(0.0), maxSpeed(0.0)
-       {}
-
-       WarpOptions(double min, double max);
-
-    private:
-       friend class Mixer;
-       const TimeTrack *timeTrack;
-       double minSpeed, maxSpeed;
-    };
-
     //
    // Constructor / Destructor
    //
 
    Mixer(const WaveTrackConstArray &inputTracks, bool mayThrow,
-         const WarpOptions &warpOptions,
          double startTime, double stopTime,
          unsigned numOutChannels, size_t outBufferSize, bool outInterleaved,
          double outRate, sampleFormat outFormat,
@@ -163,7 +145,6 @@ class AUDACITY_DLL_API Mixer {
    size_t           mNumInputTracks;
    ArrayOf<WaveTrackCache> mInputTrack;
    bool             mbVariableRates;
-   const TimeTrack *mTimeTrack;
    ArrayOf<sampleCount> mSamplePos;
    bool             mApplyTrackGains;
    Doubles          mEnvValues;

@@ -37,7 +37,6 @@ class AudioIO;
 class RingBuffer;
 class Mixer;
 class Resample;
-class TimeTrack;
 class AudioThread;
 class MeterPanel;
 class SelectedRegion;
@@ -79,8 +78,7 @@ struct AudioIOStartStreamOptions
 {
    explicit
    AudioIOStartStreamOptions(double rate_)
-      : timeTrack(NULL)
-      , listener(NULL)
+      : listener(NULL)
       , rate(rate_)
       , playLooped(false)
       , cutPreviewGapStart(0.0)
@@ -88,7 +86,6 @@ struct AudioIOStartStreamOptions
       , pStartTime(NULL)
    {}
 
-   TimeTrack *timeTrack;
    AudioIOListener* listener;
    double rate;
    bool playLooped;
@@ -507,8 +504,6 @@ private:
    friend class AudioThread;
 
    friend void InitAudioIO();
-
-   const TimeTrack *mTimeTrack;
 
    bool mUsingAlsa { false };
 

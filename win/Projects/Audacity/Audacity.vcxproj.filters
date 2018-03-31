@@ -57,12 +57,6 @@
     <Filter Include="src\tracks\ui">
       <UniqueIdentifier>{aa9627ea-e614-4704-bf68-4a347023569f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\tracks\timetrack">
-      <UniqueIdentifier>{f99cdeb8-6f20-43aa-bb7f-7ca9ec2fd7bf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\tracks\timetrack\ui">
-      <UniqueIdentifier>{0480a7aa-2605-4b17-984e-5a7c9412986d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\tracks\playabletrack">
       <UniqueIdentifier>{6e1dc240-b278-4242-852d-54ddc88d283e}</UniqueIdentifier>
     </Filter>
@@ -258,9 +252,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\TimerRecordDialog.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\TimeTrack.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\Track.cpp">
@@ -674,9 +665,6 @@
     <ClCompile Include="..\..\..\src\SelectionState.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\tracks\timetrack\ui\TimeTrackUI.cpp">
-      <Filter>src\tracks\timetrack\ui</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\tracks\ui\TrackUI.cpp">
       <Filter>src\tracks\ui</Filter>
     </ClCompile>
@@ -697,12 +685,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\tracks\ui\EnvelopeHandle.cpp">
       <Filter>src\tracks\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\tracks\timetrack\ui\TimeTrackControls.cpp">
-      <Filter>src\tracks\timetrack\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\tracks\timetrack\ui\TimeTrackVRulerControls.cpp">
-      <Filter>src\tracks\timetrack\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\tracks\ui\TrackVRulerControls.cpp">
       <Filter>src\tracks\ui</Filter>
@@ -1013,9 +995,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\TimerRecordDialog.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\TimeTrack.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\Track.h">
@@ -1500,12 +1479,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\tracks\ui\ZoomHandle.h">
       <Filter>src\tracks\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\tracks\timetrack\ui\TimeTrackControls.h">
-      <Filter>src\tracks\timetrack\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\tracks\timetrack\ui\TimeTrackVRulerControls.h">
-      <Filter>src\tracks\timetrack\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\tracks\ui\TrackVRulerControls.h">
       <Filter>src\tracks\ui</Filter>

@@ -19,7 +19,6 @@ Paul Licameli split from TrackPanel.cpp
 #include "../../prefs/WaveformSettings.h"
 #include "../../Project.h"
 #include "../../RefreshCode.h"
-#include "../../TimeTrack.h"
 #include "../../TrackArtist.h"
 #include "../../TrackPanelMouseEvent.h"
 #include "../../ViewInfo.h"
@@ -42,42 +41,7 @@ UIHandlePtr EnvelopeHandle::HitAnywhere
 (std::weak_ptr<EnvelopeHandle> & WXUNUSED(holder), Envelope *envelope, bool timeTrack)
 {
    auto result = std::make_shared<EnvelopeHandle>( envelope );
-   result->mTimeTrack = timeTrack;
    return result;
-}
-
-namespace {
-   void GetTimeTrackData
-      (const AudacityProject &project, const TimeTrack &tt,
-       double &dBRange, bool &dB, float &zoomMin, float &zoomMax)
-   {
-      const auto &viewInfo = project.GetViewInfo();
-      dBRange = viewInfo.dBr;
-      dB = tt.GetDisplayLog();
-      zoomMin = tt.GetRangeLower(), zoomMax = tt.GetRangeUpper();
-      if (dB) {
-         // MB: silly way to undo the work of GetWaveYPos while still getting a logarithmic scale
-         zoomMin = LINEAR_TO_DB(std::max(1.0e-7, double(dBRange))) / dBRange + 1.0;
-         zoomMax = LINEAR_TO_DB(std::max(1.0e-7, double(zoomMax))) / dBRange + 1.0;
-      }
-   }
-}
-
-UIHandlePtr EnvelopeHandle::TimeTrackHitTest
-(std::weak_ptr<EnvelopeHandle> &holder,
- const wxMouseState &state, const wxRect &rect,
- const AudacityProject *pProject, const std::shared_ptr<TimeTrack> &tt)
-{
-   auto envelope = tt->GetEnvelope();
-   if (!envelope)
-      return {};
-   bool dB;
-   double dBRange;
-   float zoomMin, zoomMax;
-   GetTimeTrackData( *pProject, *tt, dBRange, dB, zoomMin, zoomMax);
-   return EnvelopeHandle::HitEnvelope
-      (holder, state, rect, pProject, envelope, zoomMin, zoomMax, dB, dBRange,
-       true);
 }
 
 UIHandlePtr EnvelopeHandle::WaveTrackHitTest
@@ -200,16 +164,6 @@ UIHandle::Result EnvelopeHandle::Click
                std::make_unique< EnvelopeEditor >( *clickedEnvelope, true );
       }
    }
-   else if (pTrack->GetKind() == Track::Time)
-   {
-      TimeTrack *const tt = static_cast<TimeTrack*>(pTrack);
-      if (!mEnvelope)
-         return Cancelled;
-      GetTimeTrackData( *pProject, *tt, mdBRange, mLog, mLower, mUpper);
-      mEnvelopeEditor =
-         std::make_unique< EnvelopeEditor >( *mEnvelope, false );
-      mEnvelopeEditorRight.reset();
-   }
    else
       return Cancelled;
 
@@ -245,10 +199,7 @@ HitTestPreview EnvelopeHandle::Preview
       ::MakeCursor(wxCURSOR_ARROW, EnvCursorXpm, 16, 16);
 
    wxString message;
-   if (mTimeTrack)
-      message = _("Click and drag to warp playback time");
-   else
-      message = _("Click and drag to edit the amplitude envelope");
+   message = _("Click and drag to edit the amplitude envelope");
 
    return {
       message,

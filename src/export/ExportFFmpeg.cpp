@@ -898,7 +898,6 @@ ProgressResult ExportFFmpeg::Export(AudacityProject *project,
    const WaveTrackConstArray waveTracks =
       tracks->GetWaveTrackConstArray(selectionOnly, false);
    auto mixer = CreateMixer(waveTracks,
-      tracks->GetTimeTrack(),
       t0, t1,
       channels, pcmBufferSize, true,
       mSampleRate, int16Sample, true, mixerSpec);

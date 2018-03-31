@@ -30,7 +30,6 @@ class WaveTrack;
 class TrackList;
 class MixerSpec;
 class ProgressDialog;
-class TimeTrack;
 class Mixer;
 using WaveTrackConstArray = std::vector < std::shared_ptr < const WaveTrack > >;
 enum class ProgressResult : unsigned;
@@ -132,7 +131,6 @@ public:
 
 protected:
    std::unique_ptr<Mixer> CreateMixer(const WaveTrackConstArray &inputTracks,
-         const TimeTrack *timeTrack,
          double startTime, double stopTime,
          unsigned numOutChannels, size_t outBufferSize, bool outInterleaved,
          double outRate, sampleFormat outFormat,

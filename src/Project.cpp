@@ -107,7 +107,6 @@ scroll information.  It also has some status flags.
 #include "Sequence.h"
 #include "Snap.h"
 #include "Tags.h"
-#include "TimeTrack.h"
 #include "TrackPanel.h"
 #include "WaveTrack.h"
 #include "DirManager.h"
@@ -1211,7 +1210,6 @@ void AudacityProject::ApplyUpdatedTheme()
 AudioIOStartStreamOptions AudacityProject::GetDefaultPlayOptions()
 {
    AudioIOStartStreamOptions options { GetRate() };
-   options.timeTrack = GetTracks()->GetTimeTrack();
    options.listener = this;
    return options;
 }
@@ -3471,10 +3469,6 @@ XMLTagHandler *AudacityProject::HandleXMLChild(const wxChar *tag)
 
    if (!wxStrcmp(tag, wxT("wavetrack"))) {
       return mTracks->Add(mTrackFactory->NewWaveTrack());
-   }
-
-   if (!wxStrcmp(tag, wxT("timetrack"))) {
-      return mTracks->Add(mTrackFactory->NewTimeTrack());
    }
 
    if (!wxStrcmp(tag, wxT("recordingrecovery"))) {

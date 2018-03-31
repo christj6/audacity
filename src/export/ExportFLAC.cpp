@@ -349,7 +349,6 @@ ProgressResult ExportFLAC::Export(AudacityProject *project,
    const WaveTrackConstArray waveTracks =
       tracks->GetWaveTrackConstArray(selectionOnly, false);
    auto mixer = CreateMixer(waveTracks,
-                            tracks->GetTimeTrack(),
                             t0, t1,
                             numChannels, SAMPLES_PER_RUN, false,
                             rate, format, true, mixerSpec);

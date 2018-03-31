@@ -1399,8 +1399,7 @@ double Envelope::AverageOfInverse( double t0, double t1 ) const
 //
 // Integration and debugging functions
 //
-// The functions below are used by the TimeTrack and possibly for
-// other debugging.  They do not affect normal amplitude envelopes
+// The functions below do not affect normal amplitude envelopes
 // for waveforms, nor frequency envelopes for equalization.
 // The 'Average' function also uses 'Integral'.
 //

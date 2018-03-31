@@ -428,7 +428,6 @@ ProgressResult ExportCL::Export(AudacityProject *project,
       tracks->GetWaveTrackConstArray(selectionOnly, false);
    auto mixer = CreateMixer(
                             waveTracks,
-                            tracks->GetTimeTrack(),
                             t0,
                             t1,
                             channels,

@@ -11,7 +11,7 @@
 
 \class TrackArtist
 \brief   This class handles the actual rendering of WaveTracks (both
-  waveforms and spectra), NoteTracks, LabelTracks and TimeTracks.
+  waveforms and spectra).
 
   It's actually a little harder than it looks, because for
   waveforms at least it needs to cache the samples that are
@@ -167,7 +167,6 @@ audio tracks.
 #include "Envelope.h"
 #include "NumberScale.h"
 #include "WaveTrack.h"
-#include "TimeTrack.h"
 #include "Prefs.h"
 #include "prefs/GUISettings.h"
 #include "prefs/SpectrogramSettings.h"
@@ -465,9 +464,6 @@ void TrackArtist::DrawTrack(TrackPanelDrawingContext &context,
       }
       break;              // case Wave
    }
-   case Track::Time:
-      DrawTimeTrack(context, (TimeTrack *)t, rect, zoomInfo);
-      break;
    }
 }
 
@@ -543,22 +539,6 @@ void TrackArtist::UpdateVRuler(const Track *t, wxRect & rect)
    // Label tracks do not have a vruler
    if (t->GetKind() == Track::Label) {
       return;
-   }
-
-   // Time tracks
-   if (t->GetKind() == Track::Time) {
-      const TimeTrack *tt = (TimeTrack *)t;
-      float min, max;
-      min = tt->GetRangeLower() * 100.0;
-      max = tt->GetRangeUpper() * 100.0;
-
-      vruler->SetBounds(rect.x, rect.y, rect.x + rect.width, rect.y + rect.height-1);
-      vruler->SetOrientation(wxVERTICAL);
-      vruler->SetRange(max, min);
-      vruler->SetFormat((tt->GetDisplayLog()) ? Ruler::RealLogFormat : Ruler::RealFormat);
-      vruler->SetUnits(wxT(""));
-      vruler->SetLabelEdges(false);
-      vruler->SetLog(tt->GetDisplayLog());
    }
 
    // All waves have a ruler in the info panel
@@ -2225,25 +2205,6 @@ void TrackArtist::DrawClipSpectrum(WaveTrackCache &waveTrackCache,
    memDC.SelectObject(converted);
 
    dc.Blit(mid.x, mid.y, mid.width, mid.height, &memDC, 0, 0, wxCOPY, FALSE);
-}
-
-void TrackArtist::DrawTimeTrack(TrackPanelDrawingContext &context,
-                                const TimeTrack *track,
-                                const wxRect & rect,
-                                const ZoomInfo &zoomInfo)
-{
-   track->Draw(context, rect, zoomInfo);
-   wxRect envRect = rect;
-   envRect.height -= 2;
-   double lower = track->GetRangeLower(), upper = track->GetRangeUpper();
-   if(track->GetDisplayLog()) {
-      // MB: silly way to undo the work of GetWaveYPos while still getting a logarithmic scale
-      lower = LINEAR_TO_DB(std::max(1.0e-7, lower)) / mdBrange + 1.0;
-      upper = LINEAR_TO_DB(std::max(1.0e-7, upper)) / mdBrange + 1.0;
-   }
-   track->GetEnvelope()->DrawPoints
-      (context, envRect, zoomInfo,
-       track->GetDisplayLog(), mdBrange, lower, upper, false);
 }
 
 void TrackArtist::UpdatePrefs()

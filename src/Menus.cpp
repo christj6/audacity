@@ -77,7 +77,6 @@ simplifies construction of menu items.
 #include "Prefs.h"
 #include "Printing.h"
 #include "Tags.h"
-#include "TimeTrack.h"
 #include "Mix.h"
 #include "AboutDialog.h"
 #include "Benchmark.h"
@@ -865,7 +864,6 @@ void AudacityProject::CreateMenusAndCommands()
 
       c->AddItem(wxT("NewMonoTrack"), XXO("&Mono Track"), FN(OnNewWaveTrack), wxT("Ctrl+Shift+N"));
       c->AddItem(wxT("NewStereoTrack"), XXO("&Stereo Track"), FN(OnNewStereoTrack));
-      c->AddItem(wxT("NewTimeTrack"), XXO("&Time Track"), FN(OnNewTimeTrack));
 
       c->EndSubMenu();
 
@@ -5006,14 +5004,6 @@ bool AudacityProject::HandlePasteNothingSelected()
                pNewTrack = uNewTrack.get();
             }
             break;
-         case Track::Time: {
-            // Maintain uniqueness of the time track!
-            pNewTrack = GetTracks()->GetTimeTrack();
-            if (!pNewTrack)
-               uNewTrack = mTrackFactory->NewTimeTrack(),
-               pNewTrack = uNewTrack.get();
-            break;
-         }
          default:
             pClip = iterClip.Next();
             continue;
@@ -7044,25 +7034,6 @@ void AudacityProject::OnNewStereoTrack(const CommandContext &WXUNUSED(context) )
    t->SetSelected(true);
 
    PushState(_("Created new stereo audio track"), _("New Track"));
-
-   RedrawProject();
-   mTrackPanel->EnsureVisible(t);
-}
-
-void AudacityProject::OnNewTimeTrack(const CommandContext &WXUNUSED(context) )
-{
-   if (mTracks->GetTimeTrack()) {
-      AudacityMessageBox(_("This version of Audacity only allows one time track for each project window."));
-      return;
-   }
-
-   auto t = mTracks->AddToHead(mTrackFactory->NewTimeTrack());
-
-   SelectNone();
-
-   t->SetSelected(true);
-
-   PushState(_("Created new time track"), _("New Track"));
 
    RedrawProject();
    mTrackPanel->EnsureVisible(t);

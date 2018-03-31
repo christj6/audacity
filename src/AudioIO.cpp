@@ -393,7 +393,7 @@ callbacks for these events.
 
 \class AudioIOStartStreamOptions
 \brief struct holding stream options, including a pointer to the 
-TimeTrack and AudioIOListener and whether the playback is looped.
+AudioIOListener and whether the playback is looped.
 
 *//*******************************************************************/
 
@@ -436,7 +436,6 @@ TimeTrack and AudioIOListener and whether the playback is looped.
 #include "prefs/GUISettings.h"
 #include "Prefs.h"
 #include "Project.h"
-#include "TimeTrack.h"
 #include "WaveTrack.h"
 #include "AutoRecovery.h"
 
@@ -1289,7 +1288,6 @@ int AudioIO::StartStream(const WaveTrackConstArray &playbackTracks,
    }
    mSilenceLevel = (silenceLevelDB + dBRange)/(double)dBRange;  // meter goes -dBRange dB -> 0dB
 
-   mTimeTrack = options.timeTrack;
    mListener = options.listener;
    mRate    = sampleRate;
    mT0      = t0;
@@ -1329,11 +1327,7 @@ int AudioIO::StartStream(const WaveTrackConstArray &playbackTracks,
    // (ignoring accumulated rounding errors during playback) which fixes the 'missing sound at the end' bug
    mWarpedTime = 0.0;
 
-	if (mTimeTrack)
-		// Following gives negative when mT0 > mT1
-		mWarpedLength = mTimeTrack->ComputeWarpedLength(mT0, mT1);
-	else
-		mWarpedLength = mT1 - mT0;
+	mWarpedLength = mT1 - mT0;
 	// PRL allow backwards play
 	mWarpedLength = fabs(mWarpedLength);
 
@@ -1428,9 +1422,6 @@ int AudioIO::StartStream(const WaveTrackConstArray &playbackTracks,
             mPlaybackBuffers.reinit(mPlaybackTracks.size());
             mPlaybackMixers.reinit(mPlaybackTracks.size());
 
-            const Mixer::WarpOptions &warpOptions =
-                    Mixer::WarpOptions(mTimeTrack);
-
             for (unsigned int i = 0; i < mPlaybackTracks.size(); i++)
             {
                mPlaybackBuffers[i] = std::make_unique<RingBuffer>(floatSample, playbackBufferSize);
@@ -1442,7 +1433,6 @@ int AudioIO::StartStream(const WaveTrackConstArray &playbackTracks,
                   (tracks,
                   // Don't throw for read errors, just play silence:
                   false,
-                  warpOptions,
                   mT0, mT1, 1,
                   playbackMixBufferSize, false,
                   mRate, floatSample, false);
@@ -1536,10 +1526,7 @@ int AudioIO::StartStream(const WaveTrackConstArray &playbackTracks,
       unsigned numMixers = mPlaybackTracks.size();
       for (unsigned ii = 0; ii < numMixers; ++ii)
          mPlaybackMixers[ii]->Reposition(mTime);
-      if(mTimeTrack)
-         mWarpedTime = mTimeTrack->ComputeWarpedLength(mT0, mTime);
-      else
-         mWarpedTime = mTime - mT0;
+      mWarpedTime = mTime - mT0;
    }
 
    // We signal the audio thread to call FillBuffers, to prime the RingBuffers
@@ -3187,13 +3174,7 @@ int audacityAudioCallback(const void *inputBuffer, void *outputBuffer,
             gAudioIO->mSeek = 0.0;
 
             // Reset mixer positions and flush buffers for all tracks
-            if(gAudioIO->mTimeTrack)
-               // Following gives negative when mT0 > mTime
-               gAudioIO->mWarpedTime =
-                  gAudioIO->mTimeTrack->ComputeWarpedLength
-                     (gAudioIO->mT0, gAudioIO->mTime);
-            else
-               gAudioIO->mWarpedTime = gAudioIO->mTime - gAudioIO->mT0;
+            gAudioIO->mWarpedTime = gAudioIO->mTime - gAudioIO->mT0;
             gAudioIO->mWarpedTime = std::abs(gAudioIO->mWarpedTime);
 
             // Reset mixer positions and flush buffers for all tracks
@@ -3543,11 +3524,7 @@ int audacityAudioCallback(const void *inputBuffer, void *outputBuffer,
 	if (gAudioIO->ReversedTime())
 		delta *= -1.0;
 
-	if (gAudioIO->mTimeTrack)
-		// MB: this is why SolveWarpedLength is needed :)
-		gAudioIO->mTime = gAudioIO->mTimeTrack->SolveWarpedLength(gAudioIO->mTime, delta);
-	else
-		gAudioIO->mTime += delta;
+	gAudioIO->mTime += delta;
 
       // Wrap to start if looping
       if (gAudioIO->mPlayMode == AudioIO::PLAY_LOOPED)
