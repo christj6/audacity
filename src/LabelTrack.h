@@ -118,7 +118,6 @@ class AUDACITY_DLL_API LabelTrack final : public Track
    bool IsGoodLabelEditKey(const wxKeyEvent & evt);
    bool IsTextSelected();
 
-   void CreateCustomGlyphs();
    LabelTrack(const std::shared_ptr<DirManager> &projDirManager);
    LabelTrack(const LabelTrack &orig);
 

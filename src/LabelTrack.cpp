@@ -116,7 +116,6 @@ LabelTrack::LabelTrack(const std::shared_ptr<DirManager> &projDirManager):
    SetHeight(73);
 
    ResetFont();
-   CreateCustomGlyphs();
 
    // reset flags
    ResetFlags();
@@ -2523,69 +2522,6 @@ static const char *const GlyphXpmRegionSpec[] = {
 "...............",
 "..............."
 };
-
-/// CreateCustomGlyphs() creates the mBoundaryGlyph array.
-/// It's a bit like painting by numbers!
-///
-/// Schematically the glyphs we want will 'look like':
-///   <O,  O>   and   <O>
-/// for a left boundary to a label, a right boundary and both.
-/// we're creating all three glyphs using the one Xpm Spec.
-///
-/// When we hover over a glyph we highlight the
-/// inside of either the '<', the 'O' or the '>' or none,
-/// giving 3 x 4 = 12 combinations.
-///
-/// Two of those combinations aren't used, but
-/// treating them specially would make other code more
-/// complicated.
-void LabelTrack::CreateCustomGlyphs()
-{
-   int iConfig;
-   int iHighlight;
-   int index;
-   const int nSpecRows =
-      sizeof( GlyphXpmRegionSpec )/sizeof( GlyphXpmRegionSpec[0]);
-   const char *XmpBmp[nSpecRows];
-
-   // The glyphs are declared static wxIcon; so we only need
-   // to create them once, no matter how many LabelTracks.
-   if( mbGlyphsReady )
-      return;
-
-   // We're about to tweak the basic color spec to get 12 variations.
-   for( iConfig=0;iConfig<NUM_GLYPH_CONFIGS;iConfig++)
-   {
-      for( iHighlight=0;iHighlight<NUM_GLYPH_HIGHLIGHTS;iHighlight++)
-      {
-         index = iConfig + NUM_GLYPH_CONFIGS * iHighlight;
-         // Copy the basic spec...
-         memcpy( XmpBmp, GlyphXpmRegionSpec, sizeof( GlyphXpmRegionSpec ));
-         // The higlighted region (if any) is white...
-         if( iHighlight==1 ) XmpBmp[5]="5 c #FFFFFF";
-         if( iHighlight==2 ) XmpBmp[6]="6 c #FFFFFF";
-         if( iHighlight==3 ) XmpBmp[7]="7 c #FFFFFF";
-         // For left or right arrow the other side of the glyph
-         // is the transparent color.
-         if( iConfig==0) { XmpBmp[3]="3 c none"; XmpBmp[5]="5 c none"; }
-         if( iConfig==1) { XmpBmp[4]="4 c none"; XmpBmp[7]="7 c none"; }
-         // Create the icon from the tweaked spec.
-         mBoundaryGlyphs[index] = wxBitmap(XmpBmp);
-         // Create the mask
-         // SetMask takes ownership
-         mBoundaryGlyphs[index].SetMask(safenew wxMask(mBoundaryGlyphs[index], wxColour(192, 192, 192)));
-      }
-   }
-
-   mIconWidth  = mBoundaryGlyphs[0].GetWidth();
-   mIconHeight = mBoundaryGlyphs[0].GetHeight();
-   mTextHeight = mIconHeight; // until proved otherwise...
-   // The icon should have an odd width so that the
-   // line goes exactly down the middle.
-   wxASSERT( (mIconWidth %2)==1);
-
-   mbGlyphsReady=true;
-}
 
 /// Returns true for keys we capture to start a label.
 bool LabelTrack::IsGoodLabelFirstKey(const wxKeyEvent & evt)
