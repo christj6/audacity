@@ -34,7 +34,6 @@
 class wxTextFile;
 class DirManager;
 class Track;
-class LabelTrack;
 class TimeTrack;
 class TrackControls;
 class TrackVRulerControls;
@@ -858,11 +857,10 @@ class AUDACITY_DLL_API TrackFactory
 
  public:
    // These methods are defined in WaveTrack.cpp, NoteTrack.cpp,
-   // LabelTrack.cpp, and TimeTrack.cpp respectively
+   // and TimeTrack.cpp respectively
    std::unique_ptr<WaveTrack> DuplicateWaveTrack(const WaveTrack &orig);
    std::unique_ptr<WaveTrack> NewWaveTrack(sampleFormat format = (sampleFormat)0,
                            double rate = 0);
-   std::unique_ptr<LabelTrack> NewLabelTrack();
    std::unique_ptr<TimeTrack> NewTimeTrack();
 };
 

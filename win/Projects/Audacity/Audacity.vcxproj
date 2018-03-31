@@ -170,7 +170,6 @@
     <ClCompile Include="..\..\..\src\InconsistencyException.cpp" />
     <ClCompile Include="..\..\..\src\Internat.cpp" />
     <ClCompile Include="..\..\..\src\InterpolateAudio.cpp" />
-    <ClCompile Include="..\..\..\src\LabelTrack.cpp" />
     <ClCompile Include="..\..\..\src\LangChoice.cpp" />
     <ClCompile Include="..\..\..\src\Languages.cpp" />
     <ClCompile Include="..\..\..\src\Legacy.cpp" />
@@ -225,12 +224,6 @@
     <ClCompile Include="..\..\..\src\TrackPanelAx.cpp" />
     <ClCompile Include="..\..\..\src\TrackPanelResizeHandle.cpp" />
     <ClCompile Include="..\..\..\src\TrackPanelResizerCell.cpp" />
-    <ClCompile Include="..\..\..\src\tracks\labeltrack\ui\LabelDefaultClickHandle.cpp" />
-    <ClCompile Include="..\..\..\src\tracks\labeltrack\ui\LabelGlyphHandle.cpp" />
-    <ClCompile Include="..\..\..\src\tracks\labeltrack\ui\LabelTextHandle.cpp" />
-    <ClCompile Include="..\..\..\src\tracks\labeltrack\ui\LabelTrackControls.cpp" />
-    <ClCompile Include="..\..\..\src\tracks\labeltrack\ui\LabelTrackUI.cpp" />
-    <ClCompile Include="..\..\..\src\tracks\labeltrack\ui\LabelTrackVRulerControls.cpp" />
     <ClCompile Include="..\..\..\src\tracks\playabletrack\ui\PlayableTrackButtonHandles.cpp" />
     <ClCompile Include="..\..\..\src\tracks\playabletrack\wavetrack\ui\CutlineHandle.cpp" />
     <ClCompile Include="..\..\..\src\tracks\playabletrack\wavetrack\ui\SampleHandle.cpp" />
@@ -458,14 +451,9 @@
     <ClInclude Include="..\..\..\src\tracks\playabletrack\wavetrack\ui\WaveTrackVZoomHandle.h" />
     <ClInclude Include="..\..\..\src\TrackPanelResizeHandle.h" />
     <ClInclude Include="..\..\..\src\TrackPanelResizerCell.h" />
-    <ClInclude Include="..\..\..\src\tracks\labeltrack\ui\LabelDefaultClickHandle.h" />
-    <ClInclude Include="..\..\..\src\tracks\labeltrack\ui\LabelGlyphHandle.h" />
-    <ClInclude Include="..\..\..\src\tracks\labeltrack\ui\LabelTextHandle.h" />
     <ClInclude Include="..\..\..\src\tracks\ui\SelectHandle.h" />
     <ClInclude Include="..\..\..\src\tracks\ui\BackgroundCell.h" />
     <ClInclude Include="..\..\..\src\tracks\ui\CommonTrackPanelCell.h" />
-    <ClInclude Include="..\..\..\src\tracks\labeltrack\ui\LabelTrackControls.h" />
-    <ClInclude Include="..\..\..\src\tracks\labeltrack\ui\LabelTrackVRulerControls.h" />
     <ClInclude Include="..\..\..\src\tracks\timetrack\ui\TimeTrackControls.h" />
     <ClInclude Include="..\..\..\src\tracks\ui\ButtonHandle.h" />
     <ClInclude Include="..\..\..\src\tracks\ui\EditCursorOverlay.h" />
@@ -509,7 +497,6 @@
     <ClInclude Include="..\..\..\src\ImageManipulation.h" />
     <ClInclude Include="..\..\..\src\Internat.h" />
     <ClInclude Include="..\..\..\src\InterpolateAudio.h" />
-    <ClInclude Include="..\..\..\src\LabelTrack.h" />
     <ClInclude Include="..\..\..\src\LangChoice.h" />
     <ClInclude Include="..\..\..\src\Languages.h" />
     <ClInclude Include="..\..\..\src\Legacy.h" />

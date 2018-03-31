@@ -20,7 +20,7 @@ can accommodate merged regions.
 *//****************************************************************//**
 
 \class TrackFactory
-\brief Used to create a WaveTrack, or a LabelTrack..  Implementation
+\brief Used to create a WaveTrack..  Implementation
 of the functions of this class are dispersed through the different
 Track classes.
 

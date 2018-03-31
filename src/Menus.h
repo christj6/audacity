@@ -47,9 +47,6 @@ public:
 // inactive project as it is needlessly expensive.
 CommandFlag GetUpdateFlags(bool checkActive = false);
 
-//Adds label and returns index of label in labeltrack.
-int DoAddLabel(const SelectedRegion& region, bool preserveFocus = false);
-
 private:
 double NearestZeroCrossing(double t0);
 
@@ -373,7 +370,6 @@ void OnRescanDevices(const CommandContext &context );
 
 // Import Submenu
 void OnImport(const CommandContext &context );
-void OnImportLabels(const CommandContext &context );
 
 void OnImportRaw(const CommandContext &context );
 

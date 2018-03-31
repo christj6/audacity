@@ -10,7 +10,7 @@
 
 \class Track
 \brief Fundamental data object of Audacity, placed in the TrackPanel.
-Classes derived form it include the WaveTrack, NoteTrack, LabelTrack
+Classes derived form it include the WaveTrack, NoteTrack, 
 and TimeTrack.
 
 \class AudioTrack
@@ -33,7 +33,6 @@ and TimeTrack.
 #include "TimeTrack.h"
 #include "WaveTrack.h"
 #include "NoteTrack.h"
-#include "LabelTrack.h"
 #include "Project.h"
 #include "DirManager.h"
 
@@ -918,7 +917,6 @@ Track *TrackList::Add(std::unique_ptr<TrackKind> &&t)
 // Make instantiations for the linker to find
 template Track *TrackList::Add<TimeTrack>(std::unique_ptr<TimeTrack> &&);
 template Track *TrackList::Add<WaveTrack>(std::unique_ptr<WaveTrack> &&);
-template Track *TrackList::Add<LabelTrack>(std::unique_ptr<LabelTrack> &&);
 template Track *TrackList::Add<Track>(std::unique_ptr<Track> &&);
 
 template<typename TrackKind>

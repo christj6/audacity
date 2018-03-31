@@ -34,7 +34,6 @@ class WaveTrack;
 class WaveTrackCache;
 class WaveClip;
 class NoteTrack;
-class LabelTrack;
 class TimeTrack;
 class TrackList;
 class Ruler;

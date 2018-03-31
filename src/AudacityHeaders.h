@@ -53,7 +53,6 @@
 #include "FreqWindow.h"
 #include "ImageManipulation.h"
 #include "Internat.h"
-#include "LabelTrack.h"
 #include "Mix.h"
 #include "NoteTrack.h"
 #include "Prefs.h"

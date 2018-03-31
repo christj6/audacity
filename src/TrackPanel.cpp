@@ -50,7 +50,6 @@
 
   Note that in some of the older code here, e.g., GetLabelWidth(),
   "Label" means the TrackInfo plus the vertical ruler.
-  Confusing relative to LabelTrack labels.
 
   The TrackPanel manages multiple tracks and their TrackInfos.
 

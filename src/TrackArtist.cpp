@@ -167,7 +167,6 @@ audio tracks.
 #include "Envelope.h"
 #include "NumberScale.h"
 #include "WaveTrack.h"
-#include "LabelTrack.h"
 #include "TimeTrack.h"
 #include "Prefs.h"
 #include "prefs/GUISettings.h"

@@ -61,7 +61,6 @@ simplifies construction of menu items.
 #include "AudioIO.h"
 #include "Dependencies.h"
 #include "float_cast.h"
-#include "LabelTrack.h"
 
 #include "import/ImportRaw.h"
 #include "export/Export.h"
@@ -364,7 +363,6 @@ void AudacityProject::CreateMenusAndCommands()
       c->BeginSubMenu(_("&Import"));
 
       c->AddItem(wxT("ImportAudio"), XXO("&Audio..."), FN(OnImport), wxT("Ctrl+Shift+I"));
-      c->AddItem(wxT("ImportLabels"), XXO("&Labels..."), FN(OnImportLabels));
       c->AddItem(wxT("ImportRaw"), XXO("&Raw Data..."), FN(OnImportRaw));
 
       c->EndSubMenu();
@@ -2037,28 +2035,7 @@ CommandFlag AudacityProject::GetUpdateFlags(bool checkActive)
    Track *t = iter.First();
    while (t) {
       flags |= TracksExistFlag;
-      if (t->GetKind() == Track::Label) {
-         LabelTrack *lt = (LabelTrack *) t;
-
-         flags |= LabelTracksExistFlag;
-
-         if (lt->GetSelected()) {
-            flags |= TracksSelectedFlag;
-            for (int i = 0; i < lt->GetNumLabels(); i++) {
-               const LabelStruct *ls = lt->GetLabel(i);
-               if (ls->getT0() >= mViewInfo.selectedRegion.t0() &&
-                   ls->getT1() <= mViewInfo.selectedRegion.t1()) {
-                  flags |= LabelsSelectedFlag;
-                  break;
-               }
-            }
-         }
-
-         if (lt->IsTextSelected()) {
-            flags |= CutCopyAvailableFlag;
-         }
-      }
-      else if (t->GetKind() == Track::Wave) {
+      if (t->GetKind() == Track::Wave) {
          flags |= WaveTracksExistFlag;
          flags |= PlayableTracksExistFlag;
          if (t->GetSelected()) {
@@ -2097,12 +2074,6 @@ CommandFlag AudacityProject::GetUpdateFlags(bool checkActive)
 
    if (ZoomOutAvailable() && (flags & TracksExistFlag))
       flags |= ZoomOutAvailableFlag;
-
-   // TextClipFlag is currently unused (Jan 2017, 2.1.3 alpha)
-   // and LabelTrack::IsTextClipSupported() is quite slow on Linux,
-   // so disable for now (See bug 1575).
-   // if ((flags & LabelTracksExistFlag) && LabelTrack::IsTextClipSupported())
-   //    flags |= TextClipFlag;
 
    flags |= GetFocusedFrame();
 
@@ -2804,10 +2775,6 @@ double AudacityProject::GetTime(const Track *t)
          }
       }
    }
-   else if (t->GetKind() == Track::Label) {
-      LabelTrack *l = (LabelTrack *)t;
-      stime = l->GetStartTime();
-   }
 
    return stime;
 }
@@ -2996,38 +2963,6 @@ void AudacityProject::OnMoveToLabel(bool next)
          if (!track) {
           mTrackPanel->MessageForScreenReader(_("no label track at or below focused track"));
          }
-      }
-   }
-
-   // If there is a single label track, or there is a label track at or below the focused track
-   if (track) {
-      LabelTrack* lt = static_cast<LabelTrack*>(track);
-      int i;
-      if (next)
-         i = lt->FindNextLabel(GetSelection());
-      else
-         i = lt->FindPrevLabel(GetSelection());
-
-      if (i >= 0) {
-         const LabelStruct* label = lt->GetLabel(i);
-         if (IsAudioActive()) {
-            OnPlayStop(*this);     // stop
-            GetViewInfo().selectedRegion = label->selectedRegion;
-            RedrawProject();
-            OnPlayStop(*this);     // play
-         }
-         else {
-            GetViewInfo().selectedRegion = label->selectedRegion;
-            mTrackPanel->ScrollIntoView(GetViewInfo().selectedRegion.t0());
-            RedrawProject();
-         }
-
-         wxString message;
-         message.Printf(wxT("%s %d of %d"), label->title, i + 1, lt->GetNumLabels() );
-         mTrackPanel->MessageForScreenReader(message);
-      }
-      else {
-         mTrackPanel->MessageForScreenReader(_("no labels in label track"));
       }
    }
 }
@@ -4534,14 +4469,6 @@ void AudacityProject::OnExportLabels(const CommandContext &WXUNUSED(context) )
       return;
    }
 
-   t = iter.First();
-   while (t) {
-      if (t->GetKind() == Track::Label)
-         ((LabelTrack *) t)->Export(f);
-
-      t = iter.Next();
-   }
-
    f.Write();
    f.Close();
 }
@@ -4749,18 +4676,6 @@ void AudacityProject::OnCut(const CommandContext &WXUNUSED(context) )
    // cutting the _text_ inside of labels, i.e. if you're
    // in the middle of editing the label text and select "Cut".
 
-   while (n) {
-      if (n->GetSelected()) {
-         if (n->GetKind() == Track::Label) {
-            if (((LabelTrack *)n)->CutSelectedText()) {
-               mTrackPanel->Refresh(false);
-               return;
-            }
-         }
-      }
-      n = iter.Next();
-   }
-
    ClearClipboard();
 
    auto pNewClipboard = TrackList::Create();
@@ -4882,18 +4797,6 @@ void AudacityProject::OnCopy(const CommandContext &WXUNUSED(context) )
    TrackListIterator iter(GetTracks());
 
    Track *n = iter.First();
-
-   while (n) {
-      if (n->GetSelected()) {
-         if (n->GetKind() == Track::Label) {
-            if (((LabelTrack *)n)->CopySelectedText()) {
-               //mTrackPanel->Refresh(false);
-               return;
-            }
-         }
-      }
-      n = iter.Next();
-   }
 
    ClearClipboard();
 
@@ -5028,18 +4931,6 @@ void AudacityProject::OnPaste(const CommandContext &WXUNUSED(context) )
             bPastedSomething = true;
             ((WaveTrack*)n)->ClearAndPaste(t0, t1, (WaveTrack*)c, true, true);
          }
-         else if (c->GetKind() == Track::Label &&
-                  n->GetKind() == Track::Label)
-         {
-            ((LabelTrack *)n)->Clear(t0, t1);
-
-            // To be (sort of) consistent with Clear behavior, we'll only shift
-            // them if sync-lock is on.
-            if (IsSyncLocked())
-               ((LabelTrack *)n)->ShiftLabelsOnInsert(msClipT1 - msClipT0, t0);
-
-            bPastedSomething |= ((LabelTrack *)n)->PasteOver(t0, c);
-         }
          else
          {
             bPastedSomething = true;
@@ -5107,14 +4998,6 @@ void AudacityProject::OnPaste(const CommandContext &WXUNUSED(context) )
                ((WaveTrack *)n)->ClearAndPaste(t0, t1, tmp.get(), true, true);
             }
          }
-         else if (n->GetKind() == Track::Label && n->GetSelected())
-         {
-            ((LabelTrack *)n)->Clear(t0, t1);
-
-            // As above, only shift labels if sync-lock is on.
-            if (IsSyncLocked())
-               ((LabelTrack *)n)->ShiftLabelsOnInsert(msClipT1 - msClipT0, t0);
-         }
          else if (n->IsSyncLockSelected())
          {
             n->SyncLockAdjust(t1, t0 + msClipT1 - msClipT0);
@@ -5143,32 +5026,6 @@ void AudacityProject::OnPaste(const CommandContext &WXUNUSED(context) )
 // (This was formerly the first part of overly-long OnPaste.)
 bool AudacityProject::HandlePasteText()
 {
-   TrackListOfKindIterator iterLabelTrack(Track::Label, GetTracks());
-   LabelTrack* pLabelTrack = (LabelTrack*)(iterLabelTrack.First());
-   while (pLabelTrack)
-   {
-      // Does this track have an active label?
-      if (pLabelTrack->IsSelected()) {
-
-         // Yes, so try pasting into it
-         if (pLabelTrack->PasteSelectedText(mViewInfo.selectedRegion.t0(),
-                                            mViewInfo.selectedRegion.t1()))
-         {
-            PushState(_("Pasted text from the clipboard"), _("Paste"));
-
-            // Make sure caret is in view
-            int x;
-            if (pLabelTrack->CalcCursorX(&x)) {
-               mTrackPanel->ScrollIntoView(x);
-            }
-
-            // Redraw everyting (is that necessary???) and bail
-            RedrawProject();
-            return true;
-         }
-      }
-      pLabelTrack = (LabelTrack *) iterLabelTrack.Next();
-   }
    return false;
 }
 
@@ -5216,10 +5073,6 @@ bool AudacityProject::HandlePasteNothingSelected()
                uNewTrack = mTrackFactory->NewWaveTrack(w->GetSampleFormat(), w->GetRate()),
                pNewTrack = uNewTrack.get();
             }
-            break;
-         case Track::Label:
-            uNewTrack = mTrackFactory->NewLabelTrack(),
-            pNewTrack = uNewTrack.get();
             break;
          case Track::Time: {
             // Maintain uniqueness of the time track!
@@ -5299,41 +5152,8 @@ void AudacityProject::OnPasteNewLabel(const CommandContext &WXUNUSED(context) )
          }
       }
 
-      // If no match found, add one
-      if (!t) {
-         t = mTracks->Add(GetTrackFactory()->NewLabelTrack());
-      }
-
       // Select this track so the loop picks it up
       t->SetSelected(true);
-   }
-
-   LabelTrack *plt = NULL; // the previous track
-   for (Track *t = iter.First(); t; t = iter.Next())
-   {
-      LabelTrack *lt = (LabelTrack *)t;
-
-      // Unselect the last label, so we'll have just one active label when
-      // we're done
-      if (plt)
-         plt->Unselect();
-
-      // Add a NEW label, paste into it
-      // Paul L:  copy whatever defines the selected region, not just times
-      lt->AddLabel(mViewInfo.selectedRegion);
-      if (lt->PasteSelectedText(mViewInfo.selectedRegion.t0(),
-                                mViewInfo.selectedRegion.t1()))
-         bPastedSomething = true;
-
-      // Set previous track
-      plt = lt;
-   }
-
-   // plt should point to the last label track pasted to -- ensure it's visible
-   // and set focus
-   if (plt) {
-      mTrackPanel->EnsureVisible(plt);
-      mTrackPanel->SetFocus();
    }
 
    if (bPastedSomething) {
@@ -6531,47 +6351,6 @@ void AudacityProject::OnImport(const CommandContext &WXUNUSED(context) )
    ZoomAfterImport(nullptr);
 }
 
-void AudacityProject::OnImportLabels(const CommandContext &WXUNUSED(context) )
-{
-   wxString fileName =
-       FileNames::SelectFile(FileNames::Operation::Open,
-                    _("Select a text file containing labels"),
-                    wxEmptyString,     // Path
-                    wxT(""),       // Name
-                    wxT(".txt"),   // Extension
-                    _("Text files (*.txt)|*.txt|All files|*"),
-                    wxRESIZE_BORDER,        // Flags
-                    this);    // Parent
-
-   if (fileName != wxT("")) {
-      wxTextFile f;
-
-      f.Open(fileName);
-      if (!f.IsOpened()) {
-         AudacityMessageBox(
-            wxString::Format( _("Could not open file: %s"), fileName ) );
-         return;
-      }
-
-      auto newTrack = GetTrackFactory()->NewLabelTrack();
-      wxString sTrackName;
-      wxFileName::SplitPath(fileName, NULL, NULL, &sTrackName, NULL);
-      newTrack->SetName(sTrackName);
-
-      newTrack->Import(f);
-
-      SelectNone();
-      newTrack->SetSelected(true);
-      mTracks->Add(std::move(newTrack));
-
-      PushState(wxString::
-                Format(_("Imported labels from '%s'"), fileName),
-                _("Import Labels"));
-
-      ZoomAfterImport(nullptr);
-   }
-}
-
 void AudacityProject::OnImportRaw(const CommandContext &WXUNUSED(context) )
 {
    wxString fileName =
@@ -7450,74 +7229,6 @@ void AudacityProject::OnRescanDevices(const CommandContext &WXUNUSED(context) )
    DeviceManager::Instance()->Rescan();
 }
 
-int AudacityProject::DoAddLabel(const SelectedRegion &region, bool preserveFocus)
-{
-   LabelTrack *lt = NULL;
-
-   // If the focused track is a label track, use that
-   Track *const pFocusedTrack = mTrackPanel->GetFocusedTrack();
-   Track *t = pFocusedTrack;
-   if (t && t->GetKind() == Track::Label) {
-      lt = (LabelTrack *) t;
-   }
-
-   // Otherwise look for a label track after the focused track
-   if (!lt) {
-      TrackListIterator iter(GetTracks());
-      if (t)
-         iter.StartWith(t);
-      else
-         t = iter.First();
-
-      while (t && !lt) {
-         if (t->GetKind() == Track::Label)
-            lt = (LabelTrack *) t;
-
-         t = iter.Next();
-      }
-   }
-
-   // If none found, start a NEW label track and use it
-   if (!lt) {
-      lt = static_cast<LabelTrack*>
-         (mTracks->Add(GetTrackFactory()->NewLabelTrack()));
-   }
-
-// LLL: Commented as it seemed a little forceful to remove users
-//      selection when adding the label.  This does not happen if
-//      you select several tracks and the last one of those is a
-//      label track...typing a label will not clear the selections.
-//
-//   SelectNone();
-   lt->SetSelected(true);
-
-   int focusTrackNumber = -1;
-   if (pFocusedTrack && preserveFocus) {
-      // Must remember the track to re-focus after finishing a label edit.
-      // do NOT identify it by a pointer, which might dangle!  Identify
-      // by position.
-      TrackListIterator iter(GetTracks());
-      Track *track = iter.First();
-      do
-         ++focusTrackNumber;
-      while (track != pFocusedTrack &&
-             NULL != (track = iter.Next()));
-      if (!track)
-         // How could we not find it?
-         focusTrackNumber = -1;
-   }
-
-   int index = lt->AddLabel(region, wxString(), focusTrackNumber);
-
-   PushState(_("Added label"), _("Label"));
-
-   RedrawProject();
-   mTrackPanel->EnsureVisible((Track *)lt);
-   mTrackPanel->SetFocus();
-
-   return index;
-}
-
 void AudacityProject::OnMoveSelectionWithTracks(const CommandContext &WXUNUSED(context) )
 {
    bool bMoveWith;
@@ -7544,7 +7255,6 @@ void AudacityProject::OnSyncLock(const CommandContext &WXUNUSED(context) )
 
 void AudacityProject::OnAddLabel(const CommandContext &WXUNUSED(context) )
 {
-   DoAddLabel(mViewInfo.selectedRegion);
 }
 
 void AudacityProject::OnAddLabelPlaying(const CommandContext &WXUNUSED(context) )
@@ -7552,7 +7262,6 @@ void AudacityProject::OnAddLabelPlaying(const CommandContext &WXUNUSED(context) 
    if (GetAudioIOToken()>0 &&
        gAudioIO->IsStreamActive(GetAudioIOToken())) {
       double indicator = gAudioIO->GetStreamTime();
-      DoAddLabel(SelectedRegion(indicator, indicator), true);
    }
 }
 
