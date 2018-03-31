@@ -260,8 +260,6 @@ class AUDACITY_DLL_API LabelTrack final : public Track
    int FindNextLabel(const SelectedRegion& currentSelection);
    int FindPrevLabel(const SelectedRegion& currentSelection);
 
- public:
-   void SortLabels(LabelTrackHit *pHit = nullptr);
  private:
 
    int mSelIndex;              /// Keeps track of the currently selected label

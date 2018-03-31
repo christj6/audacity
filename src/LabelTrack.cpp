@@ -196,7 +196,6 @@ void LabelTrack::ChangeLabelsOnReverse(double b, double e)
             e - (labelStruct.getT0() - b));
       }
    }
-   SortLabels();
 }
 
 void LabelTrack::ScaleLabels(double b, double e, double change)
@@ -1482,7 +1481,6 @@ bool LabelTrack::HandleGlyphDragRelease
          //the NEW size of the label.
          *newSel = mLabels[mSelIndex].selectedRegion;
       }
-      SortLabels( &hit );
    }
 
    return false;
@@ -2065,7 +2063,6 @@ void LabelTrack::Import(wxTextFile & in)
    }
    if (error)
       ::AudacityMessageBox( _("One or more saved labels could not be read.") );
-   SortLabels();
 }
 
 bool LabelTrack::HandleXMLTag(const wxChar *tag, const wxChar **attrs)
@@ -2377,8 +2374,6 @@ void LabelTrack::Silence(double t0, double t1)
          i--;
       }
    }
-
-   SortLabels();
 }
 
 void LabelTrack::InsertSilence(double t, double len)
@@ -2625,53 +2620,6 @@ bool LabelTrack::IsGoodLabelEditKey(const wxKeyEvent & evt)
           (keyCode > WXK_RAW_CONTROL) ||
 #endif
           (keyCode > WXK_WINDOWS_MENU);
-}
-
-/// Sorts the labels in order of their starting times.
-/// This function is called often (whilst dragging a label)
-/// We expect them to be very nearly in order, so insertion
-/// sort (with a linear search) is a reasonable choice.
-void LabelTrack::SortLabels( LabelTrackHit *pHit )
-{
-   const auto begin = mLabels.begin();
-   const auto nn = (int)mLabels.size();
-   int i = 1;
-   while (true)
-   {
-      // Find the next disorder
-      while (i < nn && mLabels[i - 1].getT0() <= mLabels[i].getT0())
-         ++i;
-      if (i >= nn)
-         break;
-
-      // Where must element i sink to?  At most i - 1, maybe less
-      int j = i - 2;
-      while( (j >= 0) && (mLabels[j].getT0() > mLabels[i].getT0()) )
-         --j;
-      ++j;
-
-      // Now fix the disorder
-      std::rotate(
-         begin + j,
-         begin + i,
-         begin + i + 1
-      );
-
-      // Various indices need to be updated with the moved items...
-      auto update = [=](int &index) {
-         if( index <= i ) {
-            if( index == i )
-               index = j;
-            else if( index >= j)
-               ++index;
-         }
-      };
-      if ( pHit ) {
-         update( pHit->mMouseOverLabelLeft );
-         update( pHit->mMouseOverLabelRight );
-      }
-      update(mSelIndex);
-   }
 }
 
 wxString LabelTrack::GetTextOfLabels(double t0, double t1) const
