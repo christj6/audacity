@@ -110,11 +110,6 @@ class AUDACITY_DLL_API TrackArtist {
                      wxDC & dc, const wxRect & rect,
                      const SelectedRegion &selectedRegion, const ZoomInfo &zoomInfo);
 
-   void DrawLabelTrack(TrackPanelDrawingContext &context,
-                       const LabelTrack *track,
-                       const wxRect & rect,
-                       const SelectedRegion &selectedRegion, const ZoomInfo &zoomInfo);
-
    void DrawTimeTrack(TrackPanelDrawingContext &context,
                       const TimeTrack *track,
                       const wxRect & rect, const ZoomInfo &zoomInfo);

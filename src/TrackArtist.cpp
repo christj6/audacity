@@ -466,9 +466,6 @@ void TrackArtist::DrawTrack(TrackPanelDrawingContext &context,
       }
       break;              // case Wave
    }
-   case Track::Label:
-      DrawLabelTrack(context, (LabelTrack *)t, rect, selectedRegion, zoomInfo);
-      break;
    case Track::Time:
       DrawTimeTrack(context, (TimeTrack *)t, rect, zoomInfo);
       break;
@@ -2229,21 +2226,6 @@ void TrackArtist::DrawClipSpectrum(WaveTrackCache &waveTrackCache,
    memDC.SelectObject(converted);
 
    dc.Blit(mid.x, mid.y, mid.width, mid.height, &memDC, 0, 0, wxCOPY, FALSE);
-}
-
-void TrackArtist::DrawLabelTrack(TrackPanelDrawingContext &context,
-                                 const LabelTrack *track,
-                                 const wxRect & rect,
-                                 const SelectedRegion &selectedRegion,
-                                 const ZoomInfo &zoomInfo)
-{
-   double sel0 = selectedRegion.t0();
-   double sel1 = selectedRegion.t1();
-
-   if (!track->GetSelected() && !track->IsSyncLockSelected())
-      sel0 = sel1 = 0.0;
-
-   track->Draw(context, rect, SelectedRegion(sel0, sel1), zoomInfo);
 }
 
 void TrackArtist::DrawTimeTrack(TrackPanelDrawingContext &context,
