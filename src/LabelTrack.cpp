@@ -140,14 +140,9 @@ LabelTrack::~LabelTrack()
 {
 }
 
-void LabelTrack::SetOffset(double dOffset)
-{
-   for (auto &labelStruct: mLabels)
-      labelStruct.selectedRegion.move(dOffset);
-}
-
 void LabelTrack::Clear(double b, double e)
 {
+	/*
    // May DELETE labels, so use subscripts to iterate
    for (size_t i = 0; i < mLabels.size(); ++i) {
       auto &labelStruct = mLabels[i];
@@ -168,10 +163,12 @@ void LabelTrack::Clear(double b, double e)
       else if (relation == LabelStruct::WITHIN_LABEL)
          labelStruct.selectedRegion.moveT1( - (e-b));
    }
+   */
 }
 
 void LabelTrack::ShiftLabelsOnInsert(double length, double pt)
 {
+	/*
    for (auto &labelStruct: mLabels) {
       LabelStruct::TimeRelations relation =
                         labelStruct.RegionRelation(pt, pt, this);
@@ -181,10 +178,12 @@ void LabelTrack::ShiftLabelsOnInsert(double length, double pt)
       else if (relation == LabelStruct::WITHIN_LABEL)
          labelStruct.selectedRegion.moveT1(length);
    }
+   */
 }
 
 void LabelTrack::ChangeLabelsOnReverse(double b, double e)
 {
+	/*
    for (auto &labelStruct: mLabels) {
       if (labelStruct.RegionRelation(b, e, this) ==
                                     LabelStruct::SURROUNDS_LABEL)
@@ -195,15 +194,18 @@ void LabelTrack::ChangeLabelsOnReverse(double b, double e)
             e - (labelStruct.getT0() - b));
       }
    }
+   */
 }
 
 void LabelTrack::ScaleLabels(double b, double e, double change)
 {
+	/*
    for (auto &labelStruct: mLabels) {
       labelStruct.selectedRegion.setTimes(
          AdjustTimeStampOnScale(labelStruct.getT0(), b, e, change),
          AdjustTimeStampOnScale(labelStruct.getT1(), b, e, change));
    }
+   */
 }
 
 double LabelTrack::AdjustTimeStampOnScale(double t, double b, double e, double change)
@@ -224,19 +226,23 @@ double LabelTrack::AdjustTimeStampOnScale(double t, double b, double e, double c
 
 void LabelTrack::ResetFlags()
 {
+	/*
    mInitialCursorPos = 1;
    mCurrentCursorPos = 1;
    mRightDragging = false;
    mDrawCursor = false;
+   */
 }
 
 void LabelTrack::RestoreFlags( const Flags& flags )
 {
+	/*
    mInitialCursorPos = flags.mInitialCursorPos;
    mCurrentCursorPos = flags.mCurrentCursorPos;
    mSelIndex = flags.mSelIndex;
    mRightDragging = flags.mRightDragging;
    mDrawCursor = flags.mDrawCursor;
+   */
 }
 
 wxFont LabelTrack::GetFont(const wxString &faceName, int size)
@@ -252,10 +258,12 @@ wxFont LabelTrack::GetFont(const wxString &faceName, int size)
 
 void LabelTrack::ResetFont()
 {
+	/*
    mFontHeight = -1;
    wxString facename = gPrefs->Read(wxT("/GUI/LabelFontFacename"), wxT(""));
    int size = gPrefs->Read(wxT("/GUI/LabelFontSize"), DefaultFontSize);
    msFont = GetFont(facename, size);
+   */
 }
 
 /// ComputeTextPosition is 'smart' about where to display
@@ -273,6 +281,7 @@ void LabelTrack::ResetFont()
 /// we can't do everything we want to.
 void LabelTrack::ComputeTextPosition(const wxRect & r, int index) const
 {
+	/*
    auto &labelStruct = mLabels[index];
 
    // xExtra is extra space
@@ -410,6 +419,7 @@ void LabelTrack::ComputeTextPosition(const wxRect & r, int index) const
       xText=x+xExtra;
 
    labelStruct.xText = xText;
+   */
 }
 
 /// ComputeLayout determines which row each label
@@ -417,6 +427,7 @@ void LabelTrack::ComputeTextPosition(const wxRect & r, int index) const
 /// Function assumes that the labels are sorted.
 void LabelTrack::ComputeLayout(const wxRect & r, const ZoomInfo &zoomInfo) const
 {
+	/*
    int xUsed[MAX_NUM_ROWS];
 
    int iRow;
@@ -480,6 +491,7 @@ void LabelTrack::ComputeLayout(const wxRect & r, const ZoomInfo &zoomInfo) const
          ComputeTextPosition( r, i );
       }
    }}
+   */
 }
 
 LabelStruct::LabelStruct(const SelectedRegion &region,
@@ -518,6 +530,7 @@ LabelStruct::LabelStruct(const SelectedRegion &region,
 ///   @param  r  the LabelTrack rectangle.
 void LabelStruct::DrawLines(wxDC & dc, const wxRect & r) const
 {
+	/*
    // How far out from the centre line should the vertical lines
    // start, i.e. what is the y position of the icon?
    // We adjust this so that the line encroaches on the icon
@@ -548,6 +561,7 @@ void LabelStruct::DrawLines(wxDC & dc, const wxRect & r) const
       AColor::Line(dc, x, r.y,  x, r.y + r.height);
       AColor::Line(dc, x1, r.y,  x1, r.y + r.height);
    }
+   */
 }
 
 /// DrawGlyphs draws the wxIcons at the start and end of a label.
@@ -556,6 +570,7 @@ void LabelStruct::DrawLines(wxDC & dc, const wxRect & r) const
 void LabelStruct::DrawGlyphs
    (wxDC & dc, const wxRect & r, int GlyphLeft, int GlyphRight) const
 {
+	/*
    const int xHalfWidth=LabelTrack::mIconWidth/2;
    const int yStart=y-LabelTrack::mIconHeight/2+(LabelTrack::mTextHeight+3)/2;
 
@@ -567,8 +582,9 @@ void LabelStruct::DrawGlyphs
       dc.DrawBitmap(LabelTrack::GetGlyph(GlyphLeft), x-xHalfWidth,yStart, true);
    // The extra test commented out here would suppress right hand markers
    // when they overlap the left hand marker (e.g. zoomed out) or to the left.
-   if((x1 >= r.x) && (x1 <= (r.x+r.width)) /*&& (x1>x+LabelTrack::mIconWidth)*/)
+   if((x1 >= r.x) && (x1 <= (r.x+r.width)))
       dc.DrawBitmap(LabelTrack::GetGlyph(GlyphRight), x1-xHalfWidth,yStart, true);
+*/
 }
 
 /// Draw the text of the label and also draw
@@ -579,6 +595,7 @@ void LabelStruct::DrawGlyphs
 ///   @param  r  the LabelTrack rectangle.
 void LabelStruct::DrawText(wxDC & dc, const wxRect & r) const
 {
+	/*
    //If y is positive then it is the center line for the
    //text we are about to draw.
    //if it isn't, nothing to draw.
@@ -599,11 +616,12 @@ void LabelStruct::DrawText(wxDC & dc, const wxRect & r) const
          dc.DrawText(title, xText, y-LabelTrack::mTextHeight/2);
       }
    }
-
+   */
 }
 
 void LabelStruct::DrawTextBox(wxDC & dc, const wxRect & r) const
 {
+	/*
    //If y is positive then it is the center line for the
    //text we are about to draw.
    const int yBarHeight=3;
@@ -649,12 +667,14 @@ void LabelStruct::DrawTextBox(wxDC & dc, const wxRect & r) const
          dc.DrawRectangle(frame);
       }
    }
+   */
 }
 
 /// Draws text-selected region within the label
 void LabelStruct::DrawHighlight
    ( wxDC & dc, int xPos1, int xPos2, int charHeight) const
 {
+	/*
    wxPen curPen = dc.GetPen();
    curPen.SetColour(wxString(wxT("BLUE")));
    wxBrush curBrush = dc.GetBrush();
@@ -663,10 +683,12 @@ void LabelStruct::DrawHighlight
       dc.DrawRectangle(xPos1-1, y-charHeight/2, xPos2-xPos1+1, charHeight);
    else
       dc.DrawRectangle(xPos2-1, y-charHeight/2, xPos1-xPos2+1, charHeight);
+	  */
 }
 
 void LabelStruct::getXPos( wxDC & dc, int * xPos1, int cursorPos) const
 {
+	/*
    *xPos1 = xText;
    if( cursorPos > 0)
    {
@@ -675,10 +697,12 @@ void LabelStruct::getXPos( wxDC & dc, int * xPos1, int cursorPos) const
       dc.GetTextExtent(title.Left(cursorPos), &partWidth, NULL);
       *xPos1 += partWidth;
    }
+   */
 }
 
 bool LabelTrack::CalcCursorX(int * x) const
 {
+	/*
    if (mSelIndex >= 0) {
       wxMemoryDC dc;
 
@@ -690,12 +714,14 @@ bool LabelTrack::CalcCursorX(int * x) const
       *x += LabelTrack::mIconWidth / 2;
       return true;
    }
+   */
 
    return false;
 }
 
 void LabelTrack::CalcHighlightXs(int *x1, int *x2) const
 {
+	/*
    wxMemoryDC dc;
 
    if (msFont.Ok()) {
@@ -712,6 +738,7 @@ void LabelTrack::CalcHighlightXs(int *x1, int *x2) const
    labelStruct.getXPos(dc, x1, pos1);
    // find the right X pos of highlighted area
    labelStruct.getXPos(dc, x2, pos2);
+   */
 }
 
 #include "tracks/labeltrack/ui/LabelGlyphHandle.h"

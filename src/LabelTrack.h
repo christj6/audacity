@@ -138,8 +138,6 @@ class AUDACITY_DLL_API LabelTrack final : public Track
    unsigned Char
       (wxKeyEvent &event, ViewInfo &viewInfo, wxWindow *pParent) override;
 
-   void SetOffset(double dOffset) override;
-
    static const int DefaultFontSize = 12;
 
    static wxFont GetFont(const wxString &faceName, int size = DefaultFontSize);
