@@ -106,7 +106,6 @@ simplifies construction of menu items.
 #include "TimeDialog.h"
 #include "TimerRecordDialog.h"
 #include "SoundActivatedRecord.h"
-#include "LabelDialog.h"
 
 #include "SplashDialog.h"
 #include "widgets/HelpSystem.h"

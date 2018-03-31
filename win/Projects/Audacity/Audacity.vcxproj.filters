@@ -167,9 +167,6 @@
     <ClCompile Include="..\..\..\src\InterpolateAudio.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\LabelDialog.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\LabelTrack.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -941,9 +938,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\InterpolateAudio.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\LabelDialog.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\LabelTrack.h">

@@ -170,7 +170,6 @@
     <ClCompile Include="..\..\..\src\InconsistencyException.cpp" />
     <ClCompile Include="..\..\..\src\Internat.cpp" />
     <ClCompile Include="..\..\..\src\InterpolateAudio.cpp" />
-    <ClCompile Include="..\..\..\src\LabelDialog.cpp" />
     <ClCompile Include="..\..\..\src\LabelTrack.cpp" />
     <ClCompile Include="..\..\..\src\LangChoice.cpp" />
     <ClCompile Include="..\..\..\src\Languages.cpp" />
@@ -510,7 +509,6 @@
     <ClInclude Include="..\..\..\src\ImageManipulation.h" />
     <ClInclude Include="..\..\..\src\Internat.h" />
     <ClInclude Include="..\..\..\src\InterpolateAudio.h" />
-    <ClInclude Include="..\..\..\src\LabelDialog.h" />
     <ClInclude Include="..\..\..\src\LabelTrack.h" />
     <ClInclude Include="..\..\..\src\LangChoice.h" />
     <ClInclude Include="..\..\..\src\Languages.h" />
