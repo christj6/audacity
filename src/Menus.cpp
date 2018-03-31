@@ -347,9 +347,6 @@ void AudacityProject::CreateMenusAndCommands()
          AudioIONotBusyFlag | TimeSelectedFlag | WaveTracksSelectedFlag,
          AudioIONotBusyFlag | TimeSelectedFlag | WaveTracksSelectedFlag);
 
-      c->AddItem(wxT("ExportLabels"), XXO("Export &Labels..."), FN(OnExportLabels),
-         AudioIONotBusyFlag | LabelTracksExistFlag,
-         AudioIONotBusyFlag | LabelTracksExistFlag);
       // Enable Export audio commands only when there are audio tracks.
       c->AddItem(wxT("ExportMultiple"), XXO("Export &Multiple..."), FN(OnExportMultiple), wxT("Ctrl+Shift+L"),
          AudioIONotBusyFlag | WaveTracksExistFlag,
@@ -4406,71 +4403,6 @@ void AudacityProject::OnCheckDependencies(const CommandContext &WXUNUSED(context
 void AudacityProject::OnExit(const CommandContext &WXUNUSED(context) )
 {
    QuitAudacity();
-}
-
-void AudacityProject::OnExportLabels(const CommandContext &WXUNUSED(context) )
-{
-   Track *t;
-   int numLabelTracks = 0;
-
-   TrackListIterator iter(GetTracks());
-
-   /* i18n-hint: filename containing exported text from label tracks */
-   wxString fName = _("labels.txt");
-   t = iter.First();
-   while (t) {
-      if (t->GetKind() == Track::Label)
-      {
-         numLabelTracks++;
-         fName = t->GetName();
-      }
-      t = iter.Next();
-   }
-
-   if (numLabelTracks == 0) {
-      AudacityMessageBox(_("There are no label tracks to export."));
-      return;
-   }
-
-   fName = FileNames::SelectFile(FileNames::Operation::Export,
-                        _("Export Labels As:"),
-                        wxEmptyString,
-                        fName,
-                        wxT("txt"),
-                        wxT("*.txt"),
-                        wxFD_SAVE | wxFD_OVERWRITE_PROMPT | wxRESIZE_BORDER,
-                        this);
-
-   if (fName == wxT(""))
-      return;
-
-   // Move existing files out of the way.  Otherwise wxTextFile will
-   // append to (rather than replace) the current file.
-
-   if (wxFileExists(fName)) {
-#ifdef __WXGTK__
-      wxString safetyFileName = fName + wxT("~");
-#else
-      wxString safetyFileName = fName + wxT(".bak");
-#endif
-
-      if (wxFileExists(safetyFileName))
-         wxRemoveFile(safetyFileName);
-
-      wxRename(fName, safetyFileName);
-   }
-
-   wxTextFile f(fName);
-   f.Create();
-   f.Open();
-   if (!f.IsOpened()) {
-      AudacityMessageBox( wxString::Format(
-         _("Couldn't write to file: %s"), fName ) );
-      return;
-   }
-
-   f.Write();
-   f.Close();
 }
 
 void AudacityProject::OnExport(const wxString & Format )

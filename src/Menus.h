@@ -220,8 +220,6 @@ void OnExportWav(const CommandContext &context );
 void OnExportOgg(const CommandContext &context );
 void OnExportSelection(const CommandContext &context );
 void OnExportMultiple(const CommandContext &context );
-void OnExportLabels(const CommandContext &context );
-void OnExportMIDI(const CommandContext &context );
 
 void OnPreferences(const CommandContext &context );
 void OnReloadPreferences(const CommandContext &context );
