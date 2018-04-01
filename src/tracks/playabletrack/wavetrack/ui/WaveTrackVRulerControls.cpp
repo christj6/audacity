@@ -199,7 +199,7 @@ unsigned WaveTrackVRulerControls::HandleWheelRotation
    else
       return RefreshNone;
 
-   pProject->ModifyState(true);
+   pProject->ModifyState();
 
    return RefreshCell | UpdateVRuler;
 }

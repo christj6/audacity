@@ -37,7 +37,7 @@ UIHandle::Result MinimizeButtonHandle::CommitChanges
       pTrack->SetMinimized(!pTrack->GetMinimized());
       if (pTrack->GetLink())
          pTrack->GetLink()->SetMinimized(pTrack->GetMinimized());
-      pProject->ModifyState(true);
+      pProject->ModifyState();
 
       // Redraw all tracks when any one of them expands or contracts
       // (Could we invent a return code that draws only those at or below

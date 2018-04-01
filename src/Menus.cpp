@@ -2685,7 +2685,7 @@ bool AudacityProject::DoPlayStopSelect(bool click, bool shift)
          // -- change t0, collapsing to point only if t1 was greater
          selection.setT0(time, false);
 
-      ModifyState(false);           // without bWantsAutoSave
+      ModifyState();
       return true;
    }
    return false;
@@ -2698,7 +2698,7 @@ void AudacityProject::OnStopSelect(const CommandContext &WXUNUSED(context) )
    if (gAudioIO->IsStreamActive()) {
       mViewInfo.selectedRegion.setT0(gAudioIO->GetStreamTime(), false);
       GetControlToolBar()->OnStop(evt);
-      ModifyState(false);           // without bWantsAutoSave
+      ModifyState();
    }
 }
 
@@ -2879,7 +2879,7 @@ void AudacityProject::OnSkipStart(const CommandContext &WXUNUSED(context) )
    wxCommandEvent evt;
 
    GetControlToolBar()->OnRewind(evt);
-   ModifyState(false);
+   ModifyState();
 }
 
 void AudacityProject::OnSkipEnd(const CommandContext &WXUNUSED(context) )
@@ -2887,7 +2887,7 @@ void AudacityProject::OnSkipEnd(const CommandContext &WXUNUSED(context) )
    wxCommandEvent evt;
 
    GetControlToolBar()->OnFF(evt);
-   ModifyState(false);
+   ModifyState();
 }
 
 void AudacityProject::OnSeekLeftShort(const CommandContext &WXUNUSED(context) )
@@ -2913,13 +2913,13 @@ void AudacityProject::OnSeekRightLong(const CommandContext &WXUNUSED(context) )
 void AudacityProject::OnSelToStart(const CommandContext &WXUNUSED(context) )
 {
    Rewind(true);
-   ModifyState(false);
+   ModifyState();
 }
 
 void AudacityProject::OnSelToEnd(const CommandContext &WXUNUSED(context) )
 {
    SkipEnd(true);
-   ModifyState(false);
+   ModifyState();
 }
 
 void AudacityProject::OnMoveToNextLabel(const CommandContext &WXUNUSED(context) )
@@ -2971,7 +2971,7 @@ void AudacityProject::OnPrevTrack( bool shift )
       t = iter.Last();
       mTrackPanel->SetFocusedTrack( t );
       mTrackPanel->EnsureVisible( t );
-      ModifyState(false);
+      ModifyState();
       return;
    }
 
@@ -3006,7 +3006,7 @@ void AudacityProject::OnPrevTrack( bool shift )
             ( *mTracks, *t, false, false, GetMixerBoard() );
          mTrackPanel->SetFocusedTrack( p );   // move focus to next track down
          mTrackPanel->EnsureVisible( p );
-         ModifyState(false);
+         ModifyState();
          return;
       }
       if( tSelected && !pSelected )
@@ -3015,7 +3015,7 @@ void AudacityProject::OnPrevTrack( bool shift )
             ( *mTracks, *p, true, false, GetMixerBoard() );
          mTrackPanel->SetFocusedTrack( p );   // move focus to next track down
          mTrackPanel->EnsureVisible( p );
-         ModifyState(false);
+         ModifyState();
          return;
       }
       if( !tSelected && pSelected )
@@ -3024,7 +3024,7 @@ void AudacityProject::OnPrevTrack( bool shift )
             ( *mTracks, *p, false, false, GetMixerBoard() );
          mTrackPanel->SetFocusedTrack( p );   // move focus to next track down
          mTrackPanel->EnsureVisible( p );
-         ModifyState(false);
+         ModifyState();
          return;
       }
       if( !tSelected && !pSelected )
@@ -3033,7 +3033,7 @@ void AudacityProject::OnPrevTrack( bool shift )
             ( *mTracks, *t, true, false, GetMixerBoard() );
          mTrackPanel->SetFocusedTrack( p );   // move focus to next track down
          mTrackPanel->EnsureVisible( p );
-         ModifyState(false);
+         ModifyState();
          return;
       }
    }
@@ -3052,7 +3052,7 @@ void AudacityProject::OnPrevTrack( bool shift )
             }
             mTrackPanel->SetFocusedTrack( p );   // Wrap to the first track
             mTrackPanel->EnsureVisible( p );
-            ModifyState(false);
+            ModifyState();
             return;
          }
          else
@@ -3065,7 +3065,7 @@ void AudacityProject::OnPrevTrack( bool shift )
       {
          mTrackPanel->SetFocusedTrack( p );   // move focus to next track down
          mTrackPanel->EnsureVisible( p );
-         ModifyState(false);
+         ModifyState();
          return;
       }
    }
@@ -3087,7 +3087,7 @@ void AudacityProject::OnNextTrack( bool shift )
       t = iter.First();
       mTrackPanel->SetFocusedTrack( t );
       mTrackPanel->EnsureVisible( t );
-      ModifyState(false);
+      ModifyState();
       return;
    }
 
@@ -3116,7 +3116,7 @@ void AudacityProject::OnNextTrack( bool shift )
             ( *mTracks, *t, false, false, GetMixerBoard() );
          mTrackPanel->SetFocusedTrack( n );   // move focus to next track down
          mTrackPanel->EnsureVisible( n );
-         ModifyState(false);
+         ModifyState();
          return;
       }
       if( tSelected && !nSelected )
@@ -3125,7 +3125,7 @@ void AudacityProject::OnNextTrack( bool shift )
             ( *mTracks, *n, true, false, GetMixerBoard() );
          mTrackPanel->SetFocusedTrack( n );   // move focus to next track down
          mTrackPanel->EnsureVisible( n );
-         ModifyState(false);
+         ModifyState();
          return;
       }
       if( !tSelected && nSelected )
@@ -3134,7 +3134,7 @@ void AudacityProject::OnNextTrack( bool shift )
             ( *mTracks, *n, false, false, GetMixerBoard() );
          mTrackPanel->SetFocusedTrack( n );   // move focus to next track down
          mTrackPanel->EnsureVisible( n );
-         ModifyState(false);
+         ModifyState();
          return;
       }
       if( !tSelected && !nSelected )
@@ -3143,7 +3143,7 @@ void AudacityProject::OnNextTrack( bool shift )
             ( *mTracks, *t, true, false, GetMixerBoard() );
          mTrackPanel->SetFocusedTrack( n );   // move focus to next track down
          mTrackPanel->EnsureVisible( n );
-         ModifyState(false);
+         ModifyState();
          return;
       }
    }
@@ -3159,7 +3159,7 @@ void AudacityProject::OnNextTrack( bool shift )
             n = iter.First();
             mTrackPanel->SetFocusedTrack( n );   // Wrap to the first track
             mTrackPanel->EnsureVisible( n );
-            ModifyState(false);
+            ModifyState();
             return;
          }
          else
@@ -3172,7 +3172,7 @@ void AudacityProject::OnNextTrack( bool shift )
       {
          mTrackPanel->SetFocusedTrack( n );   // move focus to next track down
          mTrackPanel->EnsureVisible( n );
-         ModifyState(false);
+         ModifyState();
          return;
       }
    }
@@ -3199,7 +3199,7 @@ void AudacityProject::OnFirstTrack(const CommandContext &WXUNUSED(context) )
    if (t != f)
    {
       mTrackPanel->SetFocusedTrack(f);
-      ModifyState(false);
+      ModifyState();
    }
    mTrackPanel->EnsureVisible(f);
 }
@@ -3215,7 +3215,7 @@ void AudacityProject::OnLastTrack(const CommandContext &WXUNUSED(context) )
    if (t != l)
    {
       mTrackPanel->SetFocusedTrack(l);
-      ModifyState(false);
+      ModifyState();
    }
    mTrackPanel->EnsureVisible(l);
 }
@@ -3242,7 +3242,7 @@ void AudacityProject::OnToggle(const CommandContext &WXUNUSED(context) )
    GetSelectionState().SelectTrack
       ( *mTracks, *t, !t->GetSelected(), true, GetMixerBoard() );
    mTrackPanel->EnsureVisible( t );
-   ModifyState(false);
+   ModifyState();
 
    mTrackPanel->GetAx().Updated();
 
@@ -3260,7 +3260,7 @@ void AudacityProject::HandleListSelection(Track *t, bool shift, bool ctrl,
       mTrackPanel->SetFocusedTrack(t);
    Refresh(false);
    if (modifyState)
-      ModifyState(true);
+      ModifyState();
 }
 
 // If this returns true, then there was a key up, and nothing more to do,
@@ -3276,7 +3276,7 @@ bool AudacityProject::OnlyHandleKeyUp( const CommandContext &context )
    if( !bKeyUp )
       return false;
 
-   ModifyState(false);
+   ModifyState();
    return true;
 }
 
@@ -3490,7 +3490,7 @@ void AudacityProject::OnSetLeftSelection(const CommandContext &WXUNUSED(context)
 
    if (bSelChanged)
    {
-      ModifyState(false);
+      ModifyState();
       mTrackPanel->Refresh(false);
    }
 }
@@ -3522,7 +3522,7 @@ void AudacityProject::OnSetRightSelection(const CommandContext &WXUNUSED(context
 
    if (bSelChanged)
    {
-      ModifyState(false);
+      ModifyState();
       mTrackPanel->Refresh(false);
    }
 }
@@ -4095,7 +4095,7 @@ void AudacityProject::OnZeroCrossing(const CommandContext &WXUNUSED(context) )
       mViewInfo.selectedRegion.setTimes(t0, t1);
    }
 
-   ModifyState(false);
+   ModifyState();
 
    mTrackPanel->Refresh(false);
 }
@@ -5347,7 +5347,7 @@ void AudacityProject::OnSelectTimeAndTracks(bool bAllTime, bool bAllTracks)
       for (Track *t = iter.First(); t; t = iter.Next())
          t->SetSelected(true);
 
-      ModifyState(false);
+      ModifyState();
       mTrackPanel->Refresh(false);
       if (mMixerBoard)
          mMixerBoard->Refresh(false);
@@ -5400,7 +5400,7 @@ void AudacityProject::OnSelectNone(const CommandContext &WXUNUSED(context) )
 {
    mViewInfo.selectedRegion.collapseToT0();
    SelectNone();
-   ModifyState(false);
+   ModifyState();
 }
 
 #ifdef EXPERIMENTAL_SPECTRAL_EDITING
@@ -5423,7 +5423,7 @@ void AudacityProject::OnToggleSpectralSelection(const CommandContext &WXUNUSED(c
       region.setFrequencies(mLastF0, mLastF1);
 
    mTrackPanel->Refresh(false);
-   ModifyState(false);
+   ModifyState();
 }
 
 void AudacityProject::DoNextPeakFrequency(bool up)
@@ -5444,7 +5444,7 @@ void AudacityProject::DoNextPeakFrequency(bool up)
       SpectrumAnalyst analyst;
       SelectHandle::SnapCenterOnce(analyst, mViewInfo, pTrack, up);
       mTrackPanel->Refresh(false);
-      ModifyState(false);
+      ModifyState();
    }
 }
 
@@ -5482,7 +5482,7 @@ void AudacityProject::OnSelectCursorEnd(const CommandContext &WXUNUSED(context) 
 
    mViewInfo.selectedRegion.setT1(maxEndOffset);
 
-   ModifyState(false);
+   ModifyState();
 
    mTrackPanel->Refresh(false);
 }
@@ -5509,7 +5509,7 @@ void AudacityProject::OnSelectStartCursor(const CommandContext &WXUNUSED(context
 
    mViewInfo.selectedRegion.setT0(minOffset);
 
-   ModifyState(false);
+   ModifyState();
 
    mTrackPanel->Refresh(false);
 }
@@ -5541,7 +5541,7 @@ void AudacityProject::OnSelectTrackStartToEnd(const CommandContext &WXUNUSED(con
       return;
 
    mViewInfo.selectedRegion.setTimes( minOffset, maxEndOffset );
-   ModifyState(false);
+   ModifyState();
 
    mTrackPanel->Refresh(false);
 }
@@ -5570,7 +5570,7 @@ void AudacityProject::OnSelectClipBoundary(bool next)
       else
          mViewInfo.selectedRegion.setT0(results[0].time);
 
-      ModifyState(false);
+      ModifyState();
       mTrackPanel->Refresh(false);
 
       wxString message = ClipBoundaryMessage(results);
@@ -5769,7 +5769,7 @@ void AudacityProject::OnSelectClip(bool next)
       double t0 = results[0].startTime;
       double t1 = results[0].endTime;
       mViewInfo.selectedRegion.setTimes(t0, t1);
-      ModifyState(false);
+      ModifyState();
       mTrackPanel->ScrollIntoView(mViewInfo.selectedRegion.t0());
       mTrackPanel->Refresh(false);
 
@@ -5806,7 +5806,7 @@ void AudacityProject::OnSelectCursorStoredCursor(const CommandContext &WXUNUSED(
       mViewInfo.selectedRegion.setTimes(std::min(cursorPositionCurrent, mCursorPositionStored),
          std::max(cursorPositionCurrent, mCursorPositionStored));
 
-      ModifyState(false);
+      ModifyState();
       mTrackPanel->Refresh(false);
    }
 }
@@ -5824,7 +5824,7 @@ void AudacityProject::OnSelectSyncLockSel(const CommandContext &WXUNUSED(context
    }
 
    if (selected)
-      ModifyState(false);
+      ModifyState();
 
    mTrackPanel->Refresh(false);
    if (mMixerBoard)
@@ -6018,7 +6018,7 @@ void AudacityProject::OnZoomFitV(const CommandContext &WXUNUSED(context) )
 
    mVsbar->SetThumbPosition(0);
    RedrawProject();
-   ModifyState(true);
+   ModifyState();
 }
 
 void AudacityProject::OnZoomSel(const CommandContext &WXUNUSED(context) )
@@ -6379,7 +6379,7 @@ void AudacityProject::OnSelectionRestore(const CommandContext &WXUNUSED(context)
 
    mViewInfo.selectedRegion = mRegionSave;
 
-   ModifyState(false);
+   ModifyState();
 
    mTrackPanel->Refresh(false);
 }
@@ -6406,7 +6406,7 @@ void AudacityProject::OnCursorTrackStart(const CommandContext &WXUNUSED(context)
 
    if (minOffset < 0.0) minOffset = 0.0;
    mViewInfo.selectedRegion.setTimes(minOffset, minOffset);
-   ModifyState(false);
+   ModifyState();
    mTrackPanel->ScrollIntoView(mViewInfo.selectedRegion.t0());
    mTrackPanel->Refresh(false);
 }
@@ -6434,7 +6434,7 @@ void AudacityProject::OnCursorTrackEnd(const CommandContext &WXUNUSED(context) )
       return;
 
    mViewInfo.selectedRegion.setTimes(maxEndOffset, maxEndOffset);
-   ModifyState(false);
+   ModifyState();
    mTrackPanel->ScrollIntoView(mViewInfo.selectedRegion.t1());
    mTrackPanel->Refresh(false);
 }
@@ -6442,7 +6442,7 @@ void AudacityProject::OnCursorTrackEnd(const CommandContext &WXUNUSED(context) )
 void AudacityProject::OnCursorSelStart(const CommandContext &WXUNUSED(context) )
 {
    mViewInfo.selectedRegion.collapseToT0();
-   ModifyState(false);
+   ModifyState();
    mTrackPanel->ScrollIntoView(mViewInfo.selectedRegion.t0());
    mTrackPanel->Refresh(false);
 }
@@ -6450,7 +6450,7 @@ void AudacityProject::OnCursorSelStart(const CommandContext &WXUNUSED(context) )
 void AudacityProject::OnCursorSelEnd(const CommandContext &WXUNUSED(context) )
 {
    mViewInfo.selectedRegion.collapseToT1();
-   ModifyState(false);
+   ModifyState();
    mTrackPanel->ScrollIntoView(mViewInfo.selectedRegion.t1());
    mTrackPanel->Refresh(false);
 }
@@ -6671,7 +6671,7 @@ void AudacityProject::OnCursorClipBoundary(bool next)
       // note that if there is more than one result, each has the same time value.
       double time = results[0].time;
       mViewInfo.selectedRegion.setTimes(time, time);
-      ModifyState(false);
+      ModifyState();
       mTrackPanel->ScrollIntoView(mViewInfo.selectedRegion.t0());
       mTrackPanel->Refresh(false);
 
@@ -7338,7 +7338,7 @@ void AudacityProject::OnCollapseAllTracks(const CommandContext &WXUNUSED(context
       t = iter.Next();
    }
 
-   ModifyState(true);
+   ModifyState();
    RedrawProject();
 }
 
@@ -7353,7 +7353,7 @@ void AudacityProject::OnExpandAllTracks(const CommandContext &WXUNUSED(context) 
       t = iter.Next();
    }
 
-   ModifyState(true);
+   ModifyState();
    RedrawProject();
 }
 
@@ -7413,7 +7413,7 @@ void AudacityProject::OnMuteAllTracks(const CommandContext &WXUNUSED(context) )
       t = iter.Next();
    }
 
-   ModifyState(true);
+   ModifyState();
    RedrawProject();
    if (mMixerBoard) {
       mMixerBoard->UpdateMute();
@@ -7438,7 +7438,7 @@ void AudacityProject::OnUnmuteAllTracks(const CommandContext &WXUNUSED(context) 
       t = iter.Next();
    }
 
-   ModifyState(true);
+   ModifyState();
    RedrawProject();
    if (mMixerBoard) {
       mMixerBoard->UpdateMute();
@@ -7661,7 +7661,7 @@ void AudacityProject::OnBoundaryMove(int step)
       else
          mViewInfo.selectedRegion.setT1(indicator);
 
-      ModifyState(false);
+      ModifyState();
       GetTrackPanel()->Refresh(false);
       return;
    }
@@ -7688,7 +7688,7 @@ void AudacityProject::OnBoundaryMove(int step)
    GetTrackPanel()->ScrollIntoView(newT);
    GetTrackPanel()->Refresh(false);
 
-   ModifyState(false);
+   ModifyState();
 }
 
 void AudacityProject::SeekWhenAudioInactive
@@ -7821,5 +7821,5 @@ void AudacityProject::OnCursorMove(double seekStep)
         MoveWhenAudioInactive(seekStep, TIME_UNIT_SECONDS);
     }
 
-   ModifyState(false);
+   ModifyState();
 }

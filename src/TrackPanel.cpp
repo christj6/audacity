@@ -585,9 +585,9 @@ void TrackPanel::OnPaint(wxPaintEvent & /* event */)
 #endif
 }
 
-void TrackPanel::MakeParentModifyState(bool bWantsAutoSave)
+void TrackPanel::MakeParentModifyState()
 {
-   mListener->TP_ModifyState(bWantsAutoSave);
+   mListener->TP_ModifyState();
 }
 
 void TrackPanel::MakeParentRedrawScrollbars()

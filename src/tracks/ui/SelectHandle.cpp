@@ -575,7 +575,7 @@ UIHandle::Result SelectHandle::Click
          }
       }
 
-      pProject->ModifyState(false);
+      pProject->ModifyState();
 
       // Do not start a drag
       return RefreshAll | UpdateSelection | Cancelled;
@@ -664,7 +664,7 @@ UIHandle::Result SelectHandle::Click
       };
 
       // For persistence of the selection change:
-      pProject->ModifyState(false);
+      pProject->ModifyState();
 
       // Get timer events so we can auto-scroll
       Connect(pProject);
@@ -702,7 +702,7 @@ UIHandle::Result SelectHandle::Click
                static_cast<WaveTrack*>(pTrack),
                viewInfo, event.m_y, mRect.y, mRect.height);
             // For persistence of the selection change:
-            pProject->ModifyState(false);
+            pProject->ModifyState();
             mSelectionBoundary = SBWidth;
             return UpdateSelection;
          }
@@ -973,7 +973,7 @@ UIHandle::Result SelectHandle::Release
  wxWindow *)
 {
    using namespace RefreshCode;
-   pProject->ModifyState(false);
+   pProject->ModifyState();
    mFrequencySnapper.reset();
    mSnapManager.reset();
    if (mSelectionStateChanger) {
@@ -1113,7 +1113,7 @@ void SelectHandle::StartSelection( AudacityProject *pProject )
 
    viewInfo.selectedRegion.setTimes(mSelStart, mSelStart);
 
-   pProject->ModifyState(false);
+   pProject->ModifyState();
 }
 
 /// Extend or contract the existing selection

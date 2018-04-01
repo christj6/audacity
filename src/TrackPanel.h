@@ -325,8 +325,7 @@ public:
    void MakeParentRedrawScrollbars();
 
 protected:
-   void MakeParentModifyState(bool bWantsAutoSave);    // if true, writes auto-save file. Should set only if you really want the state change restored after
-                                                               // a crash, as it can take many seconds for large (eg. 10 track-hours) projects
+   void MakeParentModifyState();
 
    // Find track info by coordinate
    struct FoundCell {

@@ -223,7 +223,7 @@ UIHandle::Result TrackPanelResizeHandle::Release
    ///  We also modify the undo state (the action doesn't become
    ///  undo-able, but it gets merged with the previous undo-able
    ///  event).
-   pProject->ModifyState(false);
+   pProject->ModifyState();
    return RefreshCode::FixScrollbars;
 }
 

@@ -1534,7 +1534,7 @@ void AudacityProject::SSBL_ModifySpectralSelection(double &bottom, double &top, 
    mViewInfo.selectedRegion.setFrequencies(bottom, top);
    mTrackPanel->Refresh(false);
    if (done) {
-      ModifyState(false);
+      ModifyState();
    }
 #else
    bottom; top; done;
@@ -1590,7 +1590,7 @@ void AudacityProject::AS_ModifySelection(double &start, double &end, bool done)
    mViewInfo.selectedRegion.setTimes(start, end);
    mTrackPanel->Refresh(false);
    if (done) {
-      ModifyState(false);
+      ModifyState();
    }
 }
 
@@ -3680,13 +3680,9 @@ void AudacityProject::RollbackState()
    SetStateTo(GetUndoManager()->GetCurrentState());
 }
 
-void AudacityProject::ModifyState(bool bWantsAutoSave)
+void AudacityProject::ModifyState()
 {
    GetUndoManager()->ModifyState(GetTracks(), mViewInfo.selectedRegion, mTags);
-   /*
-   if (bWantsAutoSave)
-      AutoSave();
-	  */
    GetTrackPanel()->HandleCursorForPresentMouseState();
 }
 
@@ -4131,9 +4127,9 @@ void AudacityProject::TP_PushState(const wxString &desc, const wxString &shortDe
 }
 
 // TrackPanel callback method
-void AudacityProject::TP_ModifyState(bool bWantsAutoSave)
+void AudacityProject::TP_ModifyState()
 {
-   ModifyState(bWantsAutoSave);
+   ModifyState();
 }
 
 // TrackPanel callback method
@@ -4447,7 +4443,7 @@ void AudacityProject::HandleTrackMute(Track *t, const bool exclusive)
          }
       }
    }
-   ModifyState(true);
+   ModifyState();
 }
 
 // Type of solo (standard or simple) follows the set preference, unless
@@ -4518,7 +4514,7 @@ void AudacityProject::HandleTrackSolo(Track *const t, const bool alternate)
          i = iter.Next();
       }
    }
-   ModifyState(true);
+   ModifyState();
 }
 
 // Keyboard capture

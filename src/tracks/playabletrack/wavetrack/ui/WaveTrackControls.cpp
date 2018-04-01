@@ -741,7 +741,7 @@ void WaveTrackMenuTable::OnSetDisplay(wxCommandEvent & event)
       }
 
       AudacityProject *const project = ::GetActiveProject();
-      project->ModifyState(true);
+      project->ModifyState();
 
       using namespace RefreshCode;
       mpData->result = RefreshAll | UpdateVRuler;
@@ -799,7 +799,7 @@ void WaveTrackMenuTable::OnSpectrogramSettings(wxCommandEvent &)
    if (0 != dialog.ShowModal()) {
       // Redraw
       AudacityProject *const project = ::GetActiveProject();
-      project->ModifyState(true);
+      project->ModifyState();
       mpData->result = RefreshCode::RefreshAll;
    }
 }
