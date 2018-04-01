@@ -170,63 +170,6 @@ static bool HaveFilesToRecover()
    return c;
 }
 
-static bool RemoveAllAutoSaveFiles()
-{
-   wxArrayString files;
-   wxDir::GetAllFiles(FileNames::AutoSaveDir(), &files,
-                      wxT("*.autosave"), wxDIR_FILES);
-
-   for (unsigned int i = 0; i < files.GetCount(); i++)
-   {
-      if (!wxRemoveFile(files[i]))
-      {
-         // I don't think this error message is actually useful.
-         // -dmazzoni
-         //AudacityMessageBox(wxT("Could not remove auto save file: " + files[i]),
-         //             _("Error"), wxICON_STOP);
-         return false;
-      }
-   }
-
-   return true;
-}
-
-static bool RecoverAllProjects(AudacityProject** pproj)
-{
-   wxDir dir(FileNames::AutoSaveDir());
-   if (!dir.IsOpened())
-   {
-      AudacityMessageBox(_("Could not enumerate files in auto save directory."),
-                   _("Error"), wxICON_STOP);
-      return false;
-   }
-
-   // Open a project window for each auto save file
-   wxString filename;
-
-   wxArrayString files;
-   wxDir::GetAllFiles(FileNames::AutoSaveDir(), &files,
-                      wxT("*.autosave"), wxDIR_FILES);
-
-   for (unsigned int i = 0; i < files.GetCount(); i++)
-   {
-      AudacityProject* proj{};
-      if (*pproj)
-      {
-         // Reuse existing project window
-         proj = *pproj;
-         *pproj = NULL;
-      }
-
-      // Open project. When an auto-save file has been opened successfully,
-      // the opened auto-save file is automatically deleted and a NEW one
-      // is created.
-      AudacityProject::OpenProject( proj, files[i], false );
-   }
-
-   return true;
-}
-
 bool ShowAutoRecoveryDialogIfNeeded(AudacityProject** pproj,
                                     bool *didRecoverAnything)
 {
@@ -252,14 +195,6 @@ bool ShowAutoRecoveryDialogIfNeeded(AudacityProject** pproj,
 
       switch (ret)
       {
-      case ID_RECOVER_NONE:
-         return RemoveAllAutoSaveFiles();
-
-      case ID_RECOVER_ALL:
-         if (didRecoverAnything)
-            *didRecoverAnything = true;
-         return RecoverAllProjects(pproj);
-
       default:
          // This includes ID_QUIT_AUDACITY
          return false;
