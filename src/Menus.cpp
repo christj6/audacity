@@ -1045,11 +1045,6 @@ void AudacityProject::CreateMenusAndCommands()
       c->AddItem(wxT("ManageAnalyzers"), XXO("Add / Remove Plug-ins..."), FN(OnManageAnalyzers));
       c->AddSeparator();
 #endif
-
-      c->AddItem(wxT("PlotSpectrum"), XXO("Plot Spectrum..."), FN(OnPlotSpectrum),
-         AudioIONotBusyFlag | WaveTracksSelectedFlag | TimeSelectedFlag,
-         AudioIONotBusyFlag | WaveTracksSelectedFlag | TimeSelectedFlag);
-
       PopulateEffectsMenu(c,
          EffectTypeAnalyze,
          AudioIONotBusyFlag | TimeSelectedFlag | WaveTracksSelectedFlag,
@@ -6125,25 +6120,6 @@ void AudacityProject::OnMixerBoard(const CommandContext &WXUNUSED(context) )
    mMixerBoardFrame->Show();
    mMixerBoardFrame->Raise();
    mMixerBoardFrame->SetFocus();
-}
-
-void AudacityProject::OnPlotSpectrum(const CommandContext &WXUNUSED(context) )
-{
-   if (!mFreqWindow) {
-      wxPoint where;
-
-      where.x = 150;
-      where.y = 150;
-
-      mFreqWindow.reset( safenew FreqWindow(
-         this, -1, _("Frequency Analysis"), where ) );
-   }
-
-   if( ScreenshotCommand::MayCapture( mFreqWindow.get() ) )
-      return;
-   mFreqWindow->Show(true);
-   mFreqWindow->Raise();
-   mFreqWindow->SetFocus();
 }
 
 void AudacityProject::OnShowTransportToolBar(const CommandContext &WXUNUSED(context) )

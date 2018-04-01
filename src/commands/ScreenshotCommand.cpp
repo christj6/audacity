@@ -493,8 +493,6 @@ void ScreenshotCommand::CaptureEffects(
 #ifdef TRICKY_CAPTURE
       //"Contrast...", // renamed
       "ContrastAnalyser",
-      //"Plot Spectrum...", // renamed
-      "PlotSpectrum",
 
       "Auto Duck...",  // needs a track below.
       //"Spectral edit multi tool",

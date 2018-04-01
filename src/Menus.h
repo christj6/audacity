@@ -341,8 +341,6 @@ void OnHistory(const CommandContext &context );
 
 void OnMixerBoard(const CommandContext &context );
 
-void OnPlotSpectrum(const CommandContext &context );
-
 void OnShowTransportToolBar(const CommandContext &context );
 void OnShowDeviceToolBar(const CommandContext &context );
 void OnShowEditToolBar(const CommandContext &context );
