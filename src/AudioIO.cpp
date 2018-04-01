@@ -2966,9 +2966,6 @@ void AudioIO::FillBuffers()
                   blockFileLog.EndTag(wxT("recordingrecovery"));
                }
             }
-
-            if (mListener && !blockFileLog.IsEmpty())
-               mListener->OnAudioIONewBlockFiles(blockFileLog);
          }
          // end of record buffering
       },

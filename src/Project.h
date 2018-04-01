@@ -546,7 +546,6 @@ public:
    void OnAudioIORate(int rate) override;
    void OnAudioIOStartRecording() override;
    void OnAudioIOStopRecording() override;
-   void OnAudioIONewBlockFiles(const AutoSaveFile & blockFileLog) override;
 
    // Command Handling
    bool ReportIfActionNotAllowed
@@ -578,7 +577,6 @@ public:
    void UpdateMixerBoard();
 
    void AutoSave();
-   void DeleteCurrentAutoSaveFile();
 
    double GetZoomOfToFit();
    double GetZoomOfSelection();

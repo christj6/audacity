@@ -2490,10 +2490,6 @@ void AudacityProject::OnCloseWindow(wxCloseEvent & event)
    // Stop the timer since there's no need to update anything anymore
    mTimer.reset();
 
-   // The project is now either saved or the user doesn't want to save it,
-   // so there's no need to keep auto save info around anymore
-   DeleteCurrentAutoSaveFile();
-
    // DMM: Save the size of the last window the user closes
    //
    // LL: Save before doing anything else to the window that might make
@@ -3687,8 +3683,10 @@ void AudacityProject::RollbackState()
 void AudacityProject::ModifyState(bool bWantsAutoSave)
 {
    GetUndoManager()->ModifyState(GetTracks(), mViewInfo.selectedRegion, mTags);
+   /*
    if (bWantsAutoSave)
       AutoSave();
+	  */
    GetTrackPanel()->HandleCursorForPresentMouseState();
 }
 
@@ -4172,73 +4170,6 @@ void AudacityProject::GetPlayRegion(double* playRegionStart,
 
 void AudacityProject::AutoSave()
 {
-   // To minimize the possibility of race conditions, we first write to a
-   // file with the extension ".tmp", then rename the file to .autosave
-   wxString projName;
-
-   if (mFileName.IsEmpty())
-      projName = wxT("New Project");
-   else
-      projName = wxFileName(mFileName).GetName();
-
-   wxString fn = wxFileName(FileNames::AutoSaveDir(),
-      projName + wxString(wxT(" - ")) + CreateUniqueName()).GetFullPath();
-
-   // PRL:  I found a try-catch and rewrote it,
-   // but this guard is unnecessary because AutoSaveFile does not throw
-   bool success = GuardedCall< bool >( [&]
-   {
-      VarSetter<bool> setter(&mAutoSaving, true, false);
-
-      AutoSaveFile buffer;
-      WriteXMLHeader(buffer);
-      WriteXML(buffer, false);
-      mStrOtherNamesArray.Clear();
-
-      wxFFile saveFile;
-      saveFile.Open(fn + wxT(".tmp"), wxT("wb"));
-      return buffer.Write(saveFile);
-   } );
-
-   if (!success)
-      return;
-
-   // Now that we have a NEW auto-save file, DELETE the old one
-   DeleteCurrentAutoSaveFile();
-
-   if (!mAutoSaveFileName.IsEmpty())
-      return; // could not remove auto-save file
-
-   if (!wxRenameFile(fn + wxT(".tmp"), fn + wxT(".autosave")))
-   {
-      AudacityMessageBox(
-         wxString::Format( _("Could not create autosave file: %s"),
-            fn + wxT(".autosave") ),
-         _("Error"), wxICON_STOP, this);
-      return;
-   }
-
-   mAutoSaveFileName += fn + wxT(".autosave");
-}
-
-void AudacityProject::DeleteCurrentAutoSaveFile()
-{
-   if (!mAutoSaveFileName.IsEmpty())
-   {
-      if (wxFileExists(mAutoSaveFileName))
-      {
-         if (!wxRemoveFile(mAutoSaveFileName))
-         {
-            AudacityMessageBox(
-               wxString::Format(
-                  _("Could not remove old autosave file: %s"), mAutoSaveFileName ),
-               _("Error"), wxICON_STOP, this);
-            return;
-         }
-      }
-
-      mAutoSaveFileName = wxT("");
-   }
 }
 
 void AudacityProject::OnAudioIORate(int rate)
@@ -4293,19 +4224,6 @@ void AudacityProject::OnAudioIOStopRecording()
 
    // Now we auto-save again to get the project to a "normal" state again.
    AutoSave();
-}
-
-void AudacityProject::OnAudioIONewBlockFiles(const AutoSaveFile & blockFileLog)
-{
-   // New blockfiles have been created, so add them to the auto-save file
-   if (!mAutoSaveFileName.IsEmpty())
-   {
-      wxFFile f(mAutoSaveFileName, wxT("ab"));
-      if (!f.IsOpened())
-         return; // Keep recording going, there's not much we can do here
-      blockFileLog.Append(f);
-      f.Close();
-   }
 }
 
 void AudacityProject::SetSnapTo(int snap)

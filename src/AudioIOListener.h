@@ -27,7 +27,6 @@ public:
 
    virtual void OnAudioIOStartRecording() = 0;
    virtual void OnAudioIOStopRecording() = 0;
-   virtual void OnAudioIONewBlockFiles(const AutoSaveFile & blockFileLog) = 0;
 };
 
 #endif
