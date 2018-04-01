@@ -81,7 +81,6 @@
 #include "../WaveTrack.h"
 #include "ImportPlugin.h"
 #include "Import.h"
-#include "../NoteTrack.h"
 #include "../Project.h"
 #include "../FileFormats.h"
 #include "../Prefs.h"

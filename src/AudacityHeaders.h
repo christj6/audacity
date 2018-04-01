@@ -54,7 +54,6 @@
 #include "ImageManipulation.h"
 #include "Internat.h"
 #include "Mix.h"
-#include "NoteTrack.h"
 #include "Prefs.h"
 #include "Project.h"
 #include "SampleFormat.h"

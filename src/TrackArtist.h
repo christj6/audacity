@@ -33,7 +33,6 @@ class WaveDisplay;
 class WaveTrack;
 class WaveTrackCache;
 class WaveClip;
-class NoteTrack;
 class TrackList;
 class Ruler;
 class SelectedRegion;

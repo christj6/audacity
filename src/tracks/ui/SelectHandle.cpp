@@ -33,9 +33,6 @@ Paul Licameli split from TrackPanel.cpp
 
 #include <wx/event.h>
 
-// Only for definition of SonifyBeginModifyState:
-//#include "../../NoteTrack.h"
-
 #include "../../Experimental.h"
 
 enum {

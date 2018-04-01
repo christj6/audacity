@@ -51,7 +51,6 @@ struct TrackPanelMouseState;
 
 class ViewInfo;
 
-class NoteTrack;
 class WaveTrack;
 class WaveClip;
 class UIHandle;

@@ -194,21 +194,6 @@ static bool ConvertLegacyTrack(wxTextFile *f, XMLFileWriter &xmlFile)
 
       return true;
    }
-   else if (kind == wxT("NoteTrack")) {
-      // Just skip over it - they didn't even work in version 1.0!
-
-      do {
-         line = f->GetNextLine();
-         if (line == wxT("WaveTrack") ||
-             line == wxT("NoteTrack") ||
-             line == wxT("EndTracks")) {
-            f->GoToLine(f->GetCurrentLine()-1);
-            return true;
-         }
-      } while (f->GetCurrentLine() < f->GetLineCount());
-
-      return false;
-   }
    else
       return false;
 }

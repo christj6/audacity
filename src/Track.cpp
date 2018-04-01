@@ -30,7 +30,6 @@ Classes derived form it include the WaveTrack, NoteTrack.
 #include <wx/log.h>
 
 #include "WaveTrack.h"
-#include "NoteTrack.h"
 #include "Project.h"
 #include "DirManager.h"
 

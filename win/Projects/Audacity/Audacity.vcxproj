@@ -179,7 +179,6 @@
     <ClCompile Include="..\..\..\src\MixerBoard.cpp" />
     <ClCompile Include="..\..\..\lib-src\lib-widget-extra\NonGuiThread.cpp" />
     <ClCompile Include="..\..\..\src\ModuleManager.cpp" />
-    <ClCompile Include="..\..\..\src\NoteTrack.cpp" />
     <ClCompile Include="..\..\..\src\PitchName.cpp" />
     <ClCompile Include="..\..\..\src\PlatformCompatibility.cpp" />
     <ClCompile Include="..\..\..\src\PluginManager.cpp" />
@@ -500,7 +499,6 @@
     <ClInclude Include="..\..\..\src\Mix.h" />
     <ClInclude Include="..\..\..\src\MixerBoard.h" />
     <ClInclude Include="..\..\..\lib-src\lib-widget-extra\NonGuiThread.h" />
-    <ClInclude Include="..\..\..\src\NoteTrack.h" />
     <ClInclude Include="..\..\..\src\PitchName.h" />
     <ClInclude Include="..\..\..\src\PlatformCompatibility.h" />
     <ClInclude Include="..\..\..\src\PluginManager.h" />
