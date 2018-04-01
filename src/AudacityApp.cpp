@@ -1449,6 +1449,7 @@ bool AudacityApp::OnInit()
    Importer::Get().Initialize();
 
    // Bug1561: delay the recovery dialog, to avoid crashes.
+   /*
    CallAfter( [=] () mutable {
       //
       // Auto-recovery
@@ -1484,7 +1485,7 @@ bool AudacityApp::OnInit()
 #endif
       }
    } );
-
+   */
    gInited = true;
 
    ModuleManager::Get().Dispatch(AppInitialized);
