@@ -133,7 +133,7 @@ BEGIN_EVENT_TABLE(TimerRecordDialog, wxDialogWrapper)
 
    EVT_TIMER(TIMER_ID, TimerRecordDialog::OnTimer)
 
-   EVT_BUTTON(ID_AUTOSAVEPATH_BUTTON, TimerRecordDialog::OnAutoSavePathButton_Click)
+   // EVT_BUTTON(ID_AUTOSAVEPATH_BUTTON, TimerRecordDialog::OnAutoSavePathButton_Click)
    EVT_BUTTON(ID_AUTOEXPORTPATH_BUTTON, TimerRecordDialog::OnAutoExportPathButton_Click)
 
    EVT_CHECKBOX(ID_AUTOSAVE_CHECKBOX, TimerRecordDialog::OnAutoSaveCheckBox_Change)
@@ -290,45 +290,6 @@ void TimerRecordDialog::OnTimeText_Duration(wxCommandEvent& WXUNUSED(event))
    this->UpdateEnd(); // Keep Start constant and update End for changed Duration.
 }
 
-// New events for timer recording automation
-void TimerRecordDialog::OnAutoSavePathButton_Click(wxCommandEvent& WXUNUSED(event))
-{
-   wxString fName = FileNames::SelectFile(FileNames::Operation::Export,
-      _("Save Timer Recording As"),
-      m_fnAutoSaveFile.GetPath(),
-      m_fnAutoSaveFile.GetFullName(),
-      wxT("aup"),
-      _("Audacity projects") + wxT(" (*.aup)|*.aup"),
-      wxFD_SAVE | wxRESIZE_BORDER,
-      this);
-
-   if (fName == wxT(""))
-      return;
-
-   AudacityProject* pProject = GetActiveProject();
-
-   // If project already exists then abort - we do not allow users to overwrite an existing project
-   // unless it is the current project.
-   if (wxFileExists(fName) && (pProject->GetFileName() != fName)) {
-      AudacityMessageDialog m(
-         NULL,
-         _("The selected file name could not be used\nfor Timer Recording because it \
-would overwrite another project.\nPlease try again and select an original name."),
-         _("Error Saving Timer Recording Project"),
-         wxOK|wxICON_ERROR);
-      m.ShowModal();
-      return;
-   }
-
-   // Set this boolean to false so we now do a SaveAs at the end of the recording
-   // unless we're saving the current project.
-   m_bProjectAlreadySaved = pProject->GetFileName() == fName? true : false;
-
-   m_fnAutoSaveFile = fName;
-   m_fnAutoSaveFile.SetExt(wxT("aup"));
-   this->UpdateTextBoxControls();
-}
-
 void TimerRecordDialog::OnAutoExportPathButton_Click(wxCommandEvent& WXUNUSED(event))
 {
    AudacityProject* pProject = GetActiveProject();
@@ -442,7 +403,7 @@ void TimerRecordDialog::EnableDisableAutoControls(bool bEnable, int iControlGoup
        m_pTimerExportPathButtonCtrl->Enable( bEnable);
    } else if (iControlGoup == CONTROL_GROUP_SAVE) {
        m_pTimerSavePathTextCtrl->Enable( bEnable);
-       m_pTimerSavePathButtonCtrl->Enable(bEnable );
+       // m_pTimerSavePathButtonCtrl->Enable(bEnable );
    }
 
    // Enable or disable the Choice box - if there is no Save or Export then this will be disabled
@@ -895,7 +856,7 @@ void TimerRecordDialog::PopulateOrExchange(ShuttleGui& S)
                m_pTimerSavePathTextCtrl = NewPathControl(this, ID_AUTOSAVEPATH_TEXT, _("Save Project As:"), sInitialValue);
                m_pTimerSavePathTextCtrl->SetEditable(false);
                S.AddWindow(m_pTimerSavePathTextCtrl);
-               m_pTimerSavePathButtonCtrl = S.Id(ID_AUTOSAVEPATH_BUTTON).AddButton(_("Select..."));
+               // m_pTimerSavePathButtonCtrl = S.Id(ID_AUTOSAVEPATH_BUTTON).AddButton(_("Select..."));
                }
             S.EndMultiColumn();
          }

@@ -87,7 +87,6 @@ private:
    ProgressResult WaitForStart();
 
    // Timer Recording Automation Control Events
-   void OnAutoSavePathButton_Click(wxCommandEvent& event);
    void OnAutoExportPathButton_Click(wxCommandEvent& event);
    void OnAutoSaveCheckBox_Change(wxCommandEvent& event);
    void OnAutoExportCheckBox_Change(wxCommandEvent& event);
@@ -123,7 +122,7 @@ private:
    // Controls for Auto Save/Export
    wxCheckBox *m_pTimerAutoSaveCheckBoxCtrl;
    TimerRecordPathCtrl *m_pTimerSavePathTextCtrl;
-   wxButton *m_pTimerSavePathButtonCtrl;
+   // wxButton *m_pTimerSavePathButtonCtrl;
    wxCheckBox *m_pTimerAutoExportCheckBoxCtrl;
    TimerRecordPathCtrl *m_pTimerExportPathTextCtrl;
    wxButton *m_pTimerExportPathButtonCtrl;
