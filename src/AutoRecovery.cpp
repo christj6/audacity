@@ -190,15 +190,8 @@ bool ShowAutoRecoveryDialogIfNeeded(AudacityProject** pproj,
       //
       // This must be done before "dlg" is declared.
       wxEventLoopBase::GetActive()->YieldFor(wxEVT_CATEGORY_UI);
-
       int ret = AutoRecoveryDialog{nullptr}.ShowModal();
-
-      switch (ret)
-      {
-      default:
-         // This includes ID_QUIT_AUDACITY
-         return false;
-      }
+	  return false;
    } else
    {
       // Nothing to recover, move along

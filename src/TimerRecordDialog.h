@@ -134,7 +134,6 @@ private:
    bool m_bProjectCleanupRequired;
 
    // Variables for the Auto Save/Export
-   bool m_bAutoSaveEnabled;
    wxFileName m_fnAutoSaveFile;
    bool m_bAutoExportEnabled;
    wxFileName m_fnAutoExportFile;

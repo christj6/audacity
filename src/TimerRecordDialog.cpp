@@ -501,9 +501,6 @@ int TimerRecordDialog::RunWaitDialog()
       column1.push_back( {} );
       column2.push_back( {} );
 
-      column1.push_back( _("Automatic Save enabled:") );
-      column2.push_back( (m_bAutoSaveEnabled ? _("Yes") : _("No")) );
-
       column1.push_back( _("Automatic Export enabled:") );
       column2.push_back( (m_bAutoExportEnabled ? _("Yes") : _("No")) );
 
@@ -559,17 +556,6 @@ int TimerRecordDialog::ExecutePostRecordActions(bool bWasStopped) {
    int iOverriddenAction = iPostRecordAction;
    bool bErrorOverride = false;
 
-   // Do Automatic Save?
-   if (m_bAutoSaveEnabled) {
-
-      // MY: If this project has already been saved then simply execute a Save here
-      if (m_bProjectAlreadySaved) {
-         bSaveOK = pProject->Save();
-      } else {
-         bSaveOK = pProject->SaveFromTimerRecording(m_fnAutoSaveFile);
-      }
-   }
-
    // Do Automatic Export?
    if (m_bAutoExportEnabled) {
       bExportOK = pProject->ExportFromTimerRecording(m_fnAutoExportFile, m_iAutoExportFormat,
@@ -577,7 +563,7 @@ int TimerRecordDialog::ExecutePostRecordActions(bool bWasStopped) {
    }
 
    // Check if we need to override the post recording action
-   bErrorOverride = ((m_bAutoSaveEnabled && !bSaveOK) || (m_bAutoExportEnabled && !bExportOK));
+   bErrorOverride = ((!bSaveOK) || (m_bAutoExportEnabled && !bExportOK));
    if (bErrorOverride || bWasStopped) {
       iPostRecordAction = POST_TIMER_RECORD_NOTHING;
    }
@@ -587,15 +573,6 @@ int TimerRecordDialog::ExecutePostRecordActions(bool bWasStopped) {
 
       wxString sMessage = (bWasStopped ? _("Timer Recording stopped.") :
                                          _("Timer Recording completed."));
-
-      if (m_bAutoSaveEnabled) {
-         if (bSaveOK) {
-            sMessage.Printf(_("%s\n\nRecording saved: %s"),
-                            sMessage, m_fnAutoSaveFile.GetFullPath());
-         } else {
-            sMessage.Printf(_("%s\n\nError saving recording."), sMessage);
-         }
-      }
       if (m_bAutoExportEnabled) {
          if (bExportOK) {
             sMessage.Printf(_("%s\n\nRecording exported: %s"),
@@ -635,7 +612,7 @@ int TimerRecordDialog::ExecutePostRecordActions(bool bWasStopped) {
 
          // Set the flags as appropriate based on what we have done
          wxUint32 eActionFlags = TR_ACTION_NOTHING;
-         if (m_bAutoSaveEnabled && bSaveOK) {
+         if (bSaveOK) {
             eActionFlags |= TR_ACTION_SAVED;
          }
          if (m_bAutoExportEnabled && bExportOK) {
@@ -657,7 +634,7 @@ int TimerRecordDialog::ExecutePostRecordActions(bool bWasStopped) {
 
          // If we have simply recorded, exported and then plan to Exit/Restart/Shutdown
          // then we will have a temporary project setup.  Let's get rid of that!
-         if (m_bAutoExportEnabled && !m_bAutoSaveEnabled) {
+         if (m_bAutoExportEnabled) {
             // PRL:  Move the following cleanup into a finally?
             // No, I think you would want to skip this, in case recording
             // succeeded but then save or export threw an exception.
@@ -945,14 +922,12 @@ bool TimerRecordDialog::TransferDataFromWindow()
    m_TimeSpan_Duration = m_DateTime_End - m_DateTime_Start;
 
    // Pull the settings from the auto save/export controls and write to the pref file
-   m_bAutoSaveEnabled = m_pTimerAutoSaveCheckBoxCtrl->GetValue();
    m_bAutoExportEnabled = m_pTimerAutoExportCheckBoxCtrl->GetValue();
 
    // MY: Obtain the index from the choice control so we can save to the prefs file
    int iPostRecordAction = m_pTimerAfterCompleteChoiceCtrl->GetSelection();
 
    // Save the options back to the prefs file
-   gPrefs->Write("/TimerRecord/AutoSave", m_bAutoSaveEnabled);
    gPrefs->Write("/TimerRecord/AutoExport", m_bAutoExportEnabled);
    gPrefs->Write("/TimerRecord/PostAction", iPostRecordAction);
 
@@ -998,9 +973,6 @@ ProgressResult TimerRecordDialog::WaitForStart()
 
    column1.push_back( {} );
    column2.push_back( {} );
-
-   column1.push_back(_("Automatic Save enabled:"));
-   column2.push_back((m_bAutoSaveEnabled ? _("Yes") : _("No")));
 
    column1.push_back(_("Automatic Export enabled:"));
    column2.push_back((m_bAutoExportEnabled ? _("Yes") : _("No")));
