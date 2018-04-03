@@ -413,7 +413,6 @@ size_t mAlignLabelsCount;
 // Tracks menu
 void OnNewWaveTrack(const CommandContext &context );
 void OnNewStereoTrack(const CommandContext &context );
-void OnTimerRecord(const CommandContext &context );
 void OnRemoveTracks(const CommandContext &context );
 void OnMoveSelectionWithTracks(const CommandContext &context );
 void OnSyncLock(const CommandContext &context );
