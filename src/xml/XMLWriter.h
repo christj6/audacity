@@ -109,10 +109,6 @@ class AUDACITY_DLL_API XMLFileWriter final : private wxFFile, public XMLWriter {
       throw FileException{ FileException::Cause::Write, fileName, caption };
    }
 
-   /// Close file without automatically ending tags.
-   /// Might throw.
-   void CloseWithoutEndingTags(); // for auto-save files
-
    const wxString mOutputPath;
    const wxString mCaption;
    wxString mBackupName;

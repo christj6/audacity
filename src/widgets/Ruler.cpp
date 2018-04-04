@@ -1586,7 +1586,6 @@ void AdornedRulerPanel::OnMouseEvents(wxMouseEvent &evt)
           ? StatusChoice::EnteringQP
           : StatusChoice::NoChange;
    const bool changeInZone = (zone != mPrevZone);
-   const bool changing = evt.Leaving() || evt.Entering() || changeInZone;
 
    wxCoord xx = evt.GetX();
    wxCoord mousePosX = xx;
@@ -1635,18 +1634,9 @@ void AdornedRulerPanel::OnMouseEvents(wxMouseEvent &evt)
       return;
    }
    else if( !HasCapture() && evt.LeftUp() && inScrubZone ) {
-      // repaint_all so that the indicator changes shape.
-      bool repaint_all = true;
       return;
    }
    else if ( !HasCapture() && inScrubZone) {
-      // mouse going down => we are (probably) seeking
-      bool repaint_all = false;
-      if (evt.LeftDown()) {
-      } 
-      else if( changeInZone ) {
-         repaint_all = true;
-      }
       return;
    }
    else if ( mQuickPlayEnabled) {
@@ -1831,8 +1821,6 @@ void AdornedRulerPanel::ShowMenu(const wxPoint & pos)
    else
       prlitem = rulerMenu.Append(OnLockPlayRegionID, _("Unlock Play Region"));
    prlitem->Enable(mProject->IsPlayRegionLocked() || (mPlayRegionStart != mPlayRegionEnd));
-
-   wxMenuItem *ruleritem;
 
    PopupMenu(&rulerMenu, pos);
 }

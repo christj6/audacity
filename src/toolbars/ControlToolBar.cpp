@@ -1265,8 +1265,6 @@ wxString ControlToolBar::StateForStatusBar()
 {
    wxString state;
 
-   auto pProject = GetActiveProject();
-
    if (mPlay->IsDown())
       state = wxGetTranslation(mStatePlay);
    else if (mRecord->IsDown())

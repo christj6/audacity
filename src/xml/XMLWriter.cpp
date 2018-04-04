@@ -332,8 +332,6 @@ XMLFileWriter::~XMLFileWriter()
    GuardedCall( [&] {
       if (!mCommitted) {
          auto fileName = GetName();
-         if ( IsOpened() )
-            CloseWithoutEndingTags();
          ::wxRemoveFile( fileName );
       }
    } );
@@ -352,8 +350,6 @@ void XMLFileWriter::PreCommit()
    while (mTagstack.GetCount()) {
       EndTag(mTagstack[0]);
    }
-
-   CloseWithoutEndingTags();
 }
 
 void XMLFileWriter::PostCommit()
@@ -381,22 +377,6 @@ void XMLFileWriter::PostCommit()
       };
 
    mCommitted = true;
-}
-
-void XMLFileWriter::CloseWithoutEndingTags()
-// may throw
-{
-   // Before closing, we first flush it, because if Flush() fails because of a
-   // "disk full" condition, we can still at least try to close the file.
-   if (!wxFFile::Flush())
-   {
-      wxFFile::Close();
-      ThrowException( GetName(), mCaption );
-   }
-
-   // Note that this should never fail if flushing worked.
-   if (!wxFFile::Close())
-      ThrowException( GetName(), mCaption );
 }
 
 void XMLFileWriter::Write(const wxString &data)
