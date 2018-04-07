@@ -160,7 +160,7 @@ bool SetTrackStatusCommand::ApplyInner(const CommandContext & context, Track * t
 }
 
 
-
+/*
 bool SetTrackAudioCommand::DefineParams( ShuttleParams & S ){ 
    SetTrackBase::DefineParams( S );
    S.OptionalN( bHasMute           ).Define(     bMute,           wxT("Mute"),       false );
@@ -211,7 +211,7 @@ bool SetTrackAudioCommand::ApplyInner(const CommandContext & context, Track * t 
    }
    return true;
 }
-
+*/
 
 
 enum kColours
@@ -369,7 +369,7 @@ bool SetTrackVisualsCommand::ApplyInner(const CommandContext & context, Track * 
 SetTrackCommand::SetTrackCommand()
 {
    mSetStatus.mbPromptForTracks = false;
-   mSetAudio.mbPromptForTracks = false;
+   // mSetAudio.mbPromptForTracks = false;
    mSetVisuals.mbPromptForTracks = false;
 }
 

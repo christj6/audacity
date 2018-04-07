@@ -70,7 +70,7 @@ public:
    bool bHasSelected;
    bool bHasFocused;
 };
-
+/*
 class SetTrackAudioCommand : public SetTrackBase
 {
 public:
@@ -97,7 +97,7 @@ public:
    bool bHasSolo;
    bool bHasMute;
 };
-
+*/
 class SetTrackVisualsCommand : public SetTrackBase
 {
 public:
@@ -151,28 +151,28 @@ public:
       return 
          SetTrackBase::DefineParams(S) &&
          mSetStatus.DefineParams(S) &&  
-         mSetAudio.DefineParams(S) &&
+         // mSetAudio.DefineParams(S) &&
          mSetVisuals.DefineParams(S);
    };
    void PopulateOrExchange(ShuttleGui & S) override {
       SetTrackBase::PopulateOrExchange( S );
       mSetStatus.PopulateOrExchange(S);
-      mSetAudio.PopulateOrExchange(S);
+      // mSetAudio.PopulateOrExchange(S);
       mSetVisuals.PopulateOrExchange(S);
    };
    bool ApplyInner(const CommandContext & context, Track * t ) override {
       mSetStatus.bIsSecondChannel = bIsSecondChannel;
-      mSetAudio.bIsSecondChannel = bIsSecondChannel;
+      // mSetAudio.bIsSecondChannel = bIsSecondChannel;
       mSetVisuals.bIsSecondChannel = bIsSecondChannel;
       return 
          mSetStatus.ApplyInner( context, t ) &&  
-         mSetAudio.ApplyInner( context, t )&&
+         // mSetAudio.ApplyInner( context, t )&&
          mSetVisuals.ApplyInner( context, t );
    }
 
 private:
    SetTrackStatusCommand mSetStatus;
-   SetTrackAudioCommand mSetAudio;
+   // SetTrackAudioCommand mSetAudio;
    SetTrackVisualsCommand mSetVisuals;
 };
 

@@ -48,7 +48,6 @@ modelled on BuiltinEffectsModule
    COMMAND( COMPARE_AUDIO,       CompareAudioCommand, () )     \
    COMMAND( SET_TRACK,           SetTrackCommand, () )         \
    COMMAND( SET_TRACK_STATUS,    SetTrackStatusCommand, () )   \
-   COMMAND( SET_TRACK_AUDIO,     SetTrackAudioCommand, () )    \
    COMMAND( SET_TRACK_VISUALS,   SetTrackVisualsCommand, () )  \
    COMMAND( SET_ENVELOPE,        SetEnvelopeCommand, () )      \
    COMMAND( SET_CLIP,            SetClipCommand, () )          \
