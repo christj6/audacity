@@ -325,10 +325,6 @@ void TrackArtist::DrawTracks(TrackPanelDrawingContext &context,
       if (other)
          t = other.get();
       auto pt = dynamic_cast<const PlayableTrack *>(t);
-      if (pt && pt->GetSolo()) {
-         hasSolo = true;
-         break;
-      }
    }
 
 #if defined(DEBUG_CLIENT_AREA)
@@ -424,8 +420,7 @@ void TrackArtist::DrawTrack(TrackPanelDrawingContext &context,
          clip->ClearDisplayRect();
       }
 
-      bool muted = (hasSolo || wt->GetMute()) &&
-         !wt->GetSolo();
+      bool muted = (hasSolo || wt->GetMute());
 
 #if defined(__WXMAC__)
       wxAntialiasMode aamode = dc.GetGraphicsContext()->GetAntialiasMode();

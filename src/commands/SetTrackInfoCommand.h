@@ -70,34 +70,7 @@ public:
    bool bHasSelected;
    bool bHasFocused;
 };
-/*
-class SetTrackAudioCommand : public SetTrackBase
-{
-public:
-   //SetTrackAudioCommand();
-   // CommandDefinitionInterface overrides
-   wxString GetSymbol() override {return SET_TRACK_AUDIO_PLUGIN_SYMBOL;};
-   wxString GetDescription() override {return _("Sets various values for a track.");};
-   bool DefineParams( ShuttleParams & S ) override;
-   void PopulateOrExchange(ShuttleGui & S) override;
 
-   // AudacityCommand overrides
-   wxString ManualPage() override {return wxT("Extra_Menu:_Tools#set_track");};
-   bool ApplyInner( const CommandContext & context, Track * t ) override;
-
-public:
-   double mPan;
-   double mGain;
-   bool bSolo;
-   bool bMute;
-
-// For tracking optional parameters.
-   bool bHasPan;
-   bool bHasGain;
-   bool bHasSolo;
-   bool bHasMute;
-};
-*/
 class SetTrackVisualsCommand : public SetTrackBase
 {
 public:

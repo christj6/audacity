@@ -231,8 +231,6 @@ bool GetInfoCommand::SendTracks(const CommandContext & context)
          // context.AddItem( t->GetGain() , "gain");
          context.AddBool( t->GetSelected(), "selected" );
          context.AddBool( t->GetLinked(), "linked");
-         // context.AddBool( t->GetSolo(), "solo" );
-         // context.AddBool( t->GetMute(), "mute");
       }
       context.EndStruct();
       // Skip second tracks of stereo...

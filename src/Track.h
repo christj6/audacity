@@ -369,9 +369,8 @@ public:
    PlayableTrack(const Track &orig) : AudioTrack{ orig } {}
 
    bool GetMute    () const { return mMute;     }
-   bool GetSolo    () const { return mSolo;     }
    void SetMute    (bool m) { mMute     = m; }
-   void SetSolo    (bool s) { mSolo     = s; }
+   // void SetSolo    (bool s) { mSolo     = s; }
 
    void Init( const PlayableTrack &init );
    void Merge( const Track &init ) override;

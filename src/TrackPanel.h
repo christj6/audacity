@@ -116,19 +116,11 @@ public:
       ( TrackPanelDrawingContext &context,
         const wxRect &rect, const Track *pTrack );
 
-   static void MuteOrSoloDrawFunction
-      ( wxDC *dc, const wxRect &rect, const Track *pTrack, bool down,
-        bool captured, bool solo, bool hit );
-
    static void WideMuteDrawFunction
       ( TrackPanelDrawingContext &context,
         const wxRect &rect, const Track *pTrack );
 
    static void WideSoloDrawFunction
-      ( TrackPanelDrawingContext &context,
-        const wxRect &rect, const Track *pTrack );
-
-   static void MuteAndSoloDrawFunction
       ( TrackPanelDrawingContext &context,
         const wxRect &rect, const Track *pTrack );
 
@@ -163,9 +155,6 @@ public:
       ( const wxRect & rect, wxRect &dest );
    static void GetWideMuteSoloHorizontalBounds
       ( const wxRect & rect, wxRect &dest );
-   static void GetMuteSoloRect
-      (const wxRect & rect, wxRect &dest, bool solo, bool bHasSoloButton,
-       const Track *pTrack);
 
    static void GetSliderHorizontalBounds( const wxPoint &topleft, wxRect &dest );
 
@@ -391,10 +380,6 @@ public:
    void SetBackgroundCell
       (const std::shared_ptr< TrackPanelCell > &pCell);
    std::shared_ptr< TrackPanelCell > GetBackgroundCell();
-
-public:
-   // Accessors...
-   static bool HasSoloButton(){  return gSoloPref!=wxT("None");}
 
 protected:
 

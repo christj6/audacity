@@ -3200,11 +3200,6 @@ int audacityAudioCallback(const void *inputBuffer, void *outputBuffer,
             return paContinue;
          }
 
-         unsigned numSolo = 0;
-         for(unsigned t = 0; t < numPlaybackTracks; t++ )
-            if( gAudioIO->mPlaybackTracks[t]->GetSolo() )
-               numSolo++;
-
          const WaveTrack **chans = (const WaveTrack **) alloca(numPlaybackChannels * sizeof(WaveTrack *));
          float **tempBufs = (float **) alloca(numPlaybackChannels * sizeof(float *));
          for (unsigned int c = 0; c < numPlaybackChannels; c++)
@@ -3229,14 +3224,6 @@ int audacityAudioCallback(const void *inputBuffer, void *outputBuffer,
                linkFlag = false;
             else {
                cut = false;
-
-               // Cut if somebody else is soloing
-               if (numSolo>0 && !vt->GetSolo())
-                  cut = true;
-
-               // Cut if we're muted (unless we're soloing)
-               if (vt->GetMute() && !vt->GetSolo())
-                  cut = true;
 
                linkFlag = vt->GetLinked();
                selected = vt->GetSelected();

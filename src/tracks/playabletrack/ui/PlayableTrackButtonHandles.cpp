@@ -32,8 +32,6 @@ UIHandle::Result MuteButtonHandle::CommitChanges
    (const wxMouseEvent &event, AudacityProject *pProject, wxWindow *)
 {
    auto pTrack = mpTrack.lock();
-   if ( dynamic_cast< PlayableTrack* >( pTrack.get() ) )
-      pProject->DoTrackMute(pTrack.get(), event.ShiftDown());
 
    return RefreshCode::RefreshNone;
 }
@@ -58,9 +56,7 @@ UIHandlePtr MuteButtonHandle::HitTest
  const AudacityProject *pProject, const std::shared_ptr<Track> &pTrack)
 {
    wxRect buttonRect;
-   if ( pTrack )
-      TrackInfo::GetMuteSoloRect(rect, buttonRect, false,
-         !pProject->IsSoloNone(), pTrack.get());
+
    if ( TrackInfo::HideTopItem( rect, buttonRect ) )
       return {};
 
@@ -88,8 +84,6 @@ UIHandle::Result SoloButtonHandle::CommitChanges
 (const wxMouseEvent &event, AudacityProject *pProject, wxWindow *WXUNUSED(pParent))
 {
    auto pTrack = mpTrack.lock();
-   if ( dynamic_cast< PlayableTrack* >( pTrack.get() ) )
-      pProject->DoTrackSolo(pTrack.get(), event.ShiftDown());
 
    return RefreshCode::RefreshNone;
 }
@@ -114,9 +108,6 @@ UIHandlePtr SoloButtonHandle::HitTest
  const AudacityProject *pProject, const std::shared_ptr<Track> &pTrack)
 {
    wxRect buttonRect;
-   if ( pTrack )
-      TrackInfo::GetMuteSoloRect(rect, buttonRect, true,
-         !pProject->IsSoloNone(), pTrack.get());
 
    if ( TrackInfo::HideTopItem( rect, buttonRect ) )
       return {};

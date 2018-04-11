@@ -1158,8 +1158,7 @@ enum : unsigned {
       { kItemBarButtons, kTrackInfoBtnSize, 0, \
         &TrackInfo::CloseTitleDrawFunction },
    #define MUTE_SOLO_ITEMS(extra) \
-      { kItemMute | kItemSolo, kTrackInfoBtnSize + 1, extra, \
-        &TrackInfo::MuteAndSoloDrawFunction },
+      { kItemMute | kItemSolo, kTrackInfoBtnSize + 1, extra},
    #define STATUS_ITEMS \
       { kItemStatusInfo1, 12, 0, \
         &TrackInfo::Status1DrawFunction }, \
@@ -1177,10 +1176,8 @@ TCPLines commonTrackTCPLines{ RANGE(defaultCommonTrackTCPLines) };
 const TrackInfo::TCPLine defaultWaveTrackTCPLines[] = {
    COMMON_ITEMS
    MUTE_SOLO_ITEMS(2)
-   { kItemGain, kTrackInfoSliderHeight, kTrackInfoSliderExtra,
-     &TrackInfo::GainSliderDrawFunction },
-   { kItemPan, kTrackInfoSliderHeight, kTrackInfoSliderExtra,
-     &TrackInfo::PanSliderDrawFunction },
+   { kItemGain, kTrackInfoSliderHeight, kTrackInfoSliderExtra },
+   { kItemPan, kTrackInfoSliderHeight, kTrackInfoSliderExtra },
    STATUS_ITEMS
 };
 TCPLines waveTrackTCPLines{ RANGE(defaultWaveTrackTCPLines) };
@@ -2115,35 +2112,6 @@ void TrackInfo::GainSliderDrawFunction
       ( &TrackInfo::GainSlider, dc, rect, pTrack, captured, hit);
 }
 
-void TrackInfo::MuteOrSoloDrawFunction
-( wxDC *dc, const wxRect &bev, const Track *pTrack, bool down, 
-  bool WXUNUSED(captured),
-  bool solo, bool hit )
-{
-   //bev.Inflate(-1, -1);
-   bool selected = pTrack ? pTrack->GetSelected() : true;
-   auto pt = dynamic_cast<const PlayableTrack *>(pTrack);
-   bool value = pt ? (solo ? pt->GetSolo() : pt->GetMute()) : false;
-
-   wxCoord textWidth, textHeight;
-   wxString str = (solo) ?
-      /* i18n-hint: This is on a button that will silence all the other tracks.*/
-      _("Solo") :
-      /* i18n-hint: This is on a button that will silence this track.*/
-      _("Mute");
-
-   AColor::Bevel2(
-      *dc,
-      value == down,
-      bev,
-      selected, hit
-   );
-
-   SetTrackInfoFont(dc);
-   dc->GetTextExtent(str, &textWidth, &textHeight);
-   dc->DrawText(str, bev.x + (bev.width - textWidth) / 2, bev.y + (bev.height - textHeight) / 2);
-}
-
 #include "tracks/playabletrack/ui/PlayableTrackButtonHandles.h"
 void TrackInfo::WideMuteDrawFunction
 ( TrackPanelDrawingContext &context,
@@ -2156,7 +2124,6 @@ void TrackInfo::WideMuteDrawFunction
    bool hit = target && target->GetTrack().get() == pTrack;
    bool captured = hit && target->IsClicked();
    bool down = captured && bev.Contains( context.lastState.GetPosition());
-   MuteOrSoloDrawFunction( dc, bev, pTrack, down, captured, false, hit );
 }
 
 void TrackInfo::WideSoloDrawFunction
@@ -2170,40 +2137,6 @@ void TrackInfo::WideSoloDrawFunction
    bool hit = target && target->GetTrack().get() == pTrack;
    bool captured = hit && target->IsClicked();
    bool down = captured && bev.Contains( context.lastState.GetPosition());
-   MuteOrSoloDrawFunction( dc, bev, pTrack, down, captured, true, hit );
-}
-
-void TrackInfo::MuteAndSoloDrawFunction
-( TrackPanelDrawingContext &context,
-  const wxRect &rect, const Track *pTrack )
-{
-   auto dc = &context.dc;
-   bool bHasSoloButton = TrackPanel::HasSoloButton();
-
-   wxRect bev = rect;
-   if ( bHasSoloButton )
-      GetNarrowMuteHorizontalBounds( rect, bev );
-   else
-      GetWideMuteSoloHorizontalBounds( rect, bev );
-   {
-      auto target = dynamic_cast<MuteButtonHandle*>( context.target.get() );
-      bool hit = target && target->GetTrack().get() == pTrack;
-      bool captured = hit && target->IsClicked();
-      bool down = captured && bev.Contains( context.lastState.GetPosition());
-      MuteOrSoloDrawFunction( dc, bev, pTrack, down, captured, false, hit );
-   }
-
-   if( !bHasSoloButton )
-      return;
-
-   GetNarrowSoloHorizontalBounds( rect, bev );
-   {
-      auto target = dynamic_cast<SoloButtonHandle*>( context.target.get() );
-      bool hit = target && target->GetTrack().get() == pTrack;
-      bool captured = hit && target->IsClicked();
-      bool down = captured && bev.Contains( context.lastState.GetPosition());
-      MuteOrSoloDrawFunction( dc, bev, pTrack, down, captured, true, hit );
-   }
 }
 
 void TrackInfo::StatusDrawFunction
@@ -2871,38 +2804,6 @@ void TrackInfo::GetWideMuteSoloHorizontalBounds( const wxRect & rect, wxRect &de
    dest.x = rect.x + kTrackInfoBtnSize -3;
 }
 
-void TrackInfo::GetMuteSoloRect
-(const wxRect & rect, wxRect & dest, bool solo, bool bHasSoloButton,
- const Track *pTrack)
-{
-
-   auto resultsM = CalcItemY( getTCPLines( *pTrack ), kItemMute );
-   auto resultsS = CalcItemY( getTCPLines( *pTrack ), kItemSolo );
-   dest.height = resultsS.second;
-
-   int yMute = resultsM.first;
-   int ySolo = resultsS.first;
-
-   bool bSameRow = ( yMute == ySolo );
-   bool bNarrow = bSameRow && bHasSoloButton;
-
-   if( bNarrow )
-   {
-      if( solo )
-         GetNarrowSoloHorizontalBounds( rect, dest );
-      else
-         GetNarrowMuteHorizontalBounds( rect, dest );
-   }
-   else
-      GetWideMuteSoloHorizontalBounds( rect, dest );
-
-   if( bSameRow || !solo )
-      dest.y = rect.y + yMute;
-   else
-      dest.y = rect.y + ySolo;
-
-}
-
 void TrackInfo::GetSliderHorizontalBounds( const wxPoint &topleft, wxRect &dest )
 {
    dest.x = topleft.x + 6;
@@ -2985,8 +2886,6 @@ void TrackInfo::DrawBordersWithin
    AColor::Line
       (*dc, buttonRect.x, buttonRect.y,
             buttonRect.x, buttonRect.y + buttonRect.height - 1);
-
-   GetMuteSoloRect( rect, buttonRect, false, true, &track );
 
    bool bHasMuteSolo = dynamic_cast<const PlayableTrack*>( &track ) != NULL;
    if( bHasMuteSolo && !TrackInfo::HideTopItem( rect, buttonRect ) )

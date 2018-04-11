@@ -143,8 +143,6 @@ BEGIN_EVENT_TABLE(MixerTrackCluster, wxPanelWrapper)
    EVT_SLIDER(ID_SLIDER_PAN, MixerTrackCluster::OnSlider_Pan)
    EVT_SLIDER(ID_SLIDER_GAIN, MixerTrackCluster::OnSlider_Gain)
    //v EVT_COMMAND_SCROLL(ID_SLIDER_GAIN, MixerTrackCluster::OnSliderScroll_Gain)
-   EVT_COMMAND(ID_TOGGLEBUTTON_MUTE, wxEVT_COMMAND_BUTTON_CLICKED, MixerTrackCluster::OnButton_Mute)
-   EVT_COMMAND(ID_TOGGLEBUTTON_SOLO, wxEVT_COMMAND_BUTTON_CLICKED, MixerTrackCluster::OnButton_Solo)
 END_EVENT_TABLE()
 
 MixerTrackCluster::MixerTrackCluster(wxWindow* parent,
@@ -251,7 +249,6 @@ MixerTrackCluster::MixerTrackCluster(wxWindow* parent,
       *(mMixerBoard->mImageMuteUp), *(mMixerBoard->mImageMuteOver),
       *(mMixerBoard->mImageMuteDown), *(mMixerBoard->mImageMuteDown), 
       *(mMixerBoard->mImageMuteDisabled));
-   this->UpdateMute();
 
    ctrlPos.y += MUTE_SOLO_HEIGHT;
    mToggleButton_Solo =
@@ -262,7 +259,6 @@ MixerTrackCluster::MixerTrackCluster(wxWindow* parent,
                   *(mMixerBoard->mImageSoloDisabled),
                   true); // toggle button
    mToggleButton_Solo->SetName(_("Solo"));
-   this->UpdateSolo();
    bool bSoloNone = mProject->IsSoloNone();
    mToggleButton_Solo->Show(!bSoloNone);
 
@@ -421,25 +417,6 @@ void MixerTrackCluster::UpdateName()
       *(mMixerBoard->GetMusicalInstrumentBitmap(mTrack.get())));
 }
 
-void MixerTrackCluster::UpdateMute()
-{
-   mToggleButton_Mute->SetAlternateIdx(mTrack->GetSolo() ? 1 : 0);
-   if (mTrack->GetMute())
-      mToggleButton_Mute->PushDown();
-   else
-      mToggleButton_Mute->PopUp();
-}
-
-void MixerTrackCluster::UpdateSolo()
-{
-   bool bIsSolo = mTrack->GetSolo();
-   if (bIsSolo)
-      mToggleButton_Solo->PushDown();
-   else
-      mToggleButton_Solo->PopUp();
-   mToggleButton_Mute->SetAlternateIdx(bIsSolo ? 1 : 0);
-}
-
 void MixerTrackCluster::UpdatePan()
 {
    if (!GetWave()) {
@@ -464,20 +441,6 @@ void MixerTrackCluster::UpdateMeter(const double t0, const double t1)
    // a good idea to display 16 channel "active" lights rather than a meter
    if (!GetWave())
       return;
-
-   if ((t0 < 0.0) || (t1 < 0.0) || (t0 >= t1) || // bad time value or nothing to show
-         ((mMixerBoard->HasSolo() || mTrack->GetMute()) && !mTrack->GetSolo())
-      )
-   {
-      //v Vaughan, 2011-02-25: Moved the update back to TrackPanel::OnTimer() as it helps with
-      //    playback issues reported by Bill and noted on Bug 258, so no assert.
-      // Vaughan, 2011-02-04: Now that we're updating all meters from audacityAudioCallback,
-      //    this causes an assert if you click Mute while playing, because ResetMeter() resets
-      //    the timer, and wxTimerbase says that can only be done from main thread --
-      //    but it seems to work fine.
-      this->ResetMeter(false);
-      return;
-   }
 
    const auto pTrack = GetWave();
    auto startSample = (sampleCount)((pTrack->GetRate() * t0) + 0.5);
@@ -619,40 +582,6 @@ void MixerTrackCluster::OnSlider_Gain(wxCommandEvent& WXUNUSED(event))
 void MixerTrackCluster::OnSlider_Pan(wxCommandEvent& WXUNUSED(event))
 {
    this->HandleSliderPan();
-}
-
-void MixerTrackCluster::OnButton_Mute(wxCommandEvent& WXUNUSED(event))
-{
-   mProject->HandleTrackMute(mTrack.get(), mToggleButton_Mute->WasShiftDown());
-   mToggleButton_Mute->SetAlternateIdx(mTrack->GetSolo() ? 1 : 0);
-
-   // Update the TrackPanel correspondingly.
-   if (mProject->IsSoloSimple())
-   {
-      // Have to refresh all tracks.
-      mMixerBoard->UpdateSolo();
-      mProject->RedrawProject();
-   }
-   else
-      // Update only the changed track.
-      mProject->RefreshTPTrack(mTrack.get());
-}
-
-void MixerTrackCluster::OnButton_Solo(wxCommandEvent& WXUNUSED(event))
-{
-   mProject->HandleTrackSolo(mTrack.get(), mToggleButton_Solo->WasShiftDown());
-   bool bIsSolo = mTrack->GetSolo();
-   mToggleButton_Mute->SetAlternateIdx(bIsSolo ? 1 : 0);
-
-   // Update the TrackPanel correspondingly.
-   if (mProject->IsSoloSimple())
-   {
-      // Have to refresh all tracks.
-      mMixerBoard->UpdateMute();
-      mMixerBoard->UpdateSolo();
-   }
-   // Bug 509: Must repaint all, as many tracks can change with one Solo change.
-   mProject->RedrawProject();
 }
 
 
@@ -998,18 +927,6 @@ wxBitmap* MixerBoard::GetMusicalInstrumentBitmap(const Track* pTrack)
    return mMusicalInstruments[nBestItemIndex]->mBitmap.get();
 }
 
-bool MixerBoard::HasSolo()
-{
-   TrackListIterator iterTracks(mTracks);
-   Track* pTrack;
-   for (pTrack = iterTracks.First(); pTrack; pTrack = iterTracks.Next()) {
-      auto pPlayable = dynamic_cast<PlayableTrack *>( pTrack );
-      if (pPlayable && pPlayable->GetSolo())
-         return true;
-   }
-   return false;
-}
-
 void MixerBoard::RefreshTrackCluster(const PlayableTrack* pTrack, bool bEraseBackground /*= true*/)
 {
    MixerTrackCluster* pMixerTrackCluster;
@@ -1047,38 +964,6 @@ void MixerBoard::UpdateName(const PlayableTrack* pTrack)
    this->FindMixerTrackCluster(pTrack, &pMixerTrackCluster);
    if (pMixerTrackCluster)
       pMixerTrackCluster->UpdateName();
-}
-
-void MixerBoard::UpdateMute(const PlayableTrack* pTrack /*= NULL*/) // NULL means update for all tracks.
-{
-   if (pTrack == NULL)
-   {
-      for (unsigned int i = 0; i < mMixerTrackClusters.size(); i++)
-         mMixerTrackClusters[i]->UpdateMute();
-   }
-   else
-   {
-      MixerTrackCluster* pMixerTrackCluster;
-      FindMixerTrackCluster(pTrack, &pMixerTrackCluster);
-      if (pMixerTrackCluster)
-         pMixerTrackCluster->UpdateMute();
-   }
-}
-
-void MixerBoard::UpdateSolo(const PlayableTrack* pTrack /*= NULL*/) // NULL means update for all tracks.
-{
-   if (pTrack == NULL)
-   {
-      for (unsigned int i = 0; i < mMixerTrackClusters.size(); i++)
-         mMixerTrackClusters[i]->UpdateSolo();
-   }
-   else
-   {
-      MixerTrackCluster* pMixerTrackCluster;
-      FindMixerTrackCluster(pTrack, &pMixerTrackCluster);
-      if (pMixerTrackCluster)
-         pMixerTrackCluster->UpdateSolo();
-   }
 }
 
 void MixerBoard::UpdatePan(const PlayableTrack* pTrack)

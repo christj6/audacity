@@ -160,60 +160,6 @@ bool SetTrackStatusCommand::ApplyInner(const CommandContext & context, Track * t
 }
 
 
-/*
-bool SetTrackAudioCommand::DefineParams( ShuttleParams & S ){ 
-   SetTrackBase::DefineParams( S );
-   S.OptionalN( bHasMute           ).Define(     bMute,           wxT("Mute"),       false );
-   S.OptionalN( bHasSolo           ).Define(     bSolo,           wxT("Solo"),       false );
-
-   S.OptionalN( bHasPan            ).Define(     mPan,            wxT("Pan"),        0.0, -1.0, 1.0);
-   S.OptionalN( bHasGain           ).Define(     mGain,           wxT("Gain"),       1.0,  0.0, 10.0);
-   return true;
-};
-
-void SetTrackAudioCommand::PopulateOrExchange(ShuttleGui & S)
-{
-   SetTrackBase::PopulateOrExchange( S );
-   S.StartMultiColumn(2, wxEXPAND);
-   {
-      S.SetStretchyCol( 1 );
-      S.Optional( bHasMute           ).TieCheckBox( _("Mute"),               bMute);
-      S.Optional( bHasSolo           ).TieCheckBox( _("Solo"),               bSolo);
-   }
-   S.EndMultiColumn();
-   S.StartMultiColumn(3, wxEXPAND);
-   {
-      S.SetStretchyCol( 2 );
-      S.Optional( bHasPan         ).TieSlider(          _("Pan:"),           mPan,  1.0, -1.0);
-      S.Optional( bHasGain        ).TieSlider(          _("Gain:"),          mGain, 10.0, 0.0);
-   }
-   S.EndMultiColumn();
-}
-
-bool SetTrackAudioCommand::ApplyInner(const CommandContext & context, Track * t )
-{
-   auto wt = dynamic_cast<WaveTrack *>(t);
-   auto pt = dynamic_cast<PlayableTrack *>(t);
-
-   // You can get some intriguing effects by setting R and L channels to 
-   // different values.
-   if( wt && bHasPan )
-      wt->SetPan(mPan);
-   if( wt && bHasGain )
-      wt->SetGain(mGain);
-
-   // These ones don't make sense on the second channel of a stereo track.
-   if( !bIsSecondChannel ){
-      if( pt && bHasSolo )
-         pt->SetSolo(bSolo);
-      if( pt && bHasMute )
-         pt->SetMute(bMute);
-   }
-   return true;
-}
-*/
-
-
 enum kColours
 {
    kColour0,

@@ -90,8 +90,6 @@ public:
    // These are used by TrackPanel for synchronizing control states.
    void UpdateForStateChange(); // Update the controls that can be affected by state change.
    void UpdateName();
-   void UpdateMute();
-   void UpdateSolo();
    void UpdatePan();
    void UpdateGain();
    void UpdateMeter(const double t0, const double t1);
@@ -109,8 +107,6 @@ private:
    void OnButton_MusicalInstrument(wxCommandEvent& event);
    void OnSlider_Gain(wxCommandEvent& event);
    void OnSlider_Pan(wxCommandEvent& event);
-   void OnButton_Mute(wxCommandEvent& event);
-   void OnButton_Solo(wxCommandEvent& event);
    //v void OnSliderScroll_Gain(wxScrollEvent& event);
 
 
@@ -201,8 +197,6 @@ public:
 
    wxBitmap* GetMusicalInstrumentBitmap(const Track *pTrack);
 
-   bool HasSolo();
-
    void RefreshTrackCluster(const PlayableTrack* pTrack, bool bEraseBackground = true);
    void RefreshTrackClusters(bool bEraseBackground = true);
    void ResizeTrackClusters();
@@ -210,8 +204,6 @@ public:
    void ResetMeters(const bool bResetClipping);
 
    void UpdateName(const PlayableTrack* pTrack);
-   void UpdateMute(const PlayableTrack* pTrack = NULL); // NULL means update for all tracks.
-   void UpdateSolo(const PlayableTrack* pTrack = NULL); // NULL means update for all tracks.
    void UpdatePan(const PlayableTrack* pTrack = NULL); // NULL means update for all tracks.
    void UpdateGain(const PlayableTrack* pTrack);
 

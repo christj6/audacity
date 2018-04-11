@@ -104,8 +104,6 @@ void OnTrackGain(const CommandContext &context );
 void OnTrackGainInc(const CommandContext &context );
 void OnTrackGainDec(const CommandContext &context );
 void OnTrackMenu(const CommandContext &context );
-void OnTrackMute(const CommandContext &context );
-void OnTrackSolo(const CommandContext &context );
 void OnTrackClose(const CommandContext &context );
 void OnTrackMoveUp(const CommandContext &context );
 void OnTrackMoveDown(const CommandContext &context );

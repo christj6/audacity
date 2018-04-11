@@ -1397,12 +1397,6 @@ void AudacityProject::CreateMenusAndCommands()
       c->AddItem(wxT("TrackMenu"), XXO("Op&en Menu on Focused Track..."), FN(OnTrackMenu), wxT("Shift+M\tskipKeydown"),
                  TracksExistFlag | TrackPanelHasFocus,
                  TracksExistFlag | TrackPanelHasFocus);
-      c->AddItem(wxT("TrackMute"), XXO("M&ute/Unmute Focused Track"), FN(OnTrackMute), wxT("Shift+U"),
-                 TracksExistFlag | TrackPanelHasFocus,
-                 TracksExistFlag | TrackPanelHasFocus);
-      c->AddItem(wxT("TrackSolo"), XXO("&Solo/Unsolo Focused Track"), FN(OnTrackSolo), wxT("Shift+S"),
-                 TracksExistFlag | TrackPanelHasFocus,
-                 TracksExistFlag | TrackPanelHasFocus);
       c->AddItem(wxT("TrackClose"), XXO("&Close Focused Track"), FN(OnTrackClose), wxT("Shift+C"),
                  AudioIONotBusyFlag | TrackPanelHasFocus | TracksExistFlag,
                  AudioIONotBusyFlag | TrackPanelHasFocus | TracksExistFlag);
@@ -3778,29 +3772,6 @@ void AudacityProject::OnTrackGainDec(const CommandContext &WXUNUSED(context) )
 void AudacityProject::OnTrackMenu(const CommandContext &WXUNUSED(context) )
 {
    mTrackPanel->OnTrackMenu();
-}
-
-void AudacityProject::OnTrackMute(const CommandContext &WXUNUSED(context) )
-{
-   Track *t = NULL;
-   if (!t) {
-      t = mTrackPanel->GetFocusedTrack();
-      if (!dynamic_cast<PlayableTrack*>(t))
-         return;
-   }
-   DoTrackMute(t, false);
-}
-
-void AudacityProject::OnTrackSolo(const CommandContext &WXUNUSED(context) )
-{
-   Track *t = NULL;
-   if (!t)
-   {
-      t = mTrackPanel->GetFocusedTrack();
-      if (!dynamic_cast<PlayableTrack*>(t))
-         return;
-   }
-   DoTrackSolo(t, false);
 }
 
 void AudacityProject::OnTrackClose(const CommandContext &WXUNUSED(context) )
@@ -7311,19 +7282,12 @@ void AudacityProject::OnMuteAllTracks(const CommandContext &WXUNUSED(context) )
       auto pt = dynamic_cast<PlayableTrack *>(t);
       if (pt) {
          pt->SetMute(true);
-         if (IsSoloSimple() || IsSoloNone())
-            pt->SetSolo(false);
       }
       t = iter.Next();
    }
 
    ModifyState();
    RedrawProject();
-   if (mMixerBoard) {
-      mMixerBoard->UpdateMute();
-      if (IsSoloSimple() || IsSoloNone())
-         mMixerBoard->UpdateSolo();
-   }
 }
 
 void AudacityProject::OnUnmuteAllTracks(const CommandContext &WXUNUSED(context) )
@@ -7336,19 +7300,12 @@ void AudacityProject::OnUnmuteAllTracks(const CommandContext &WXUNUSED(context) 
       auto pt = dynamic_cast<PlayableTrack *>(t);
       if (pt) {
          pt->SetMute(false);
-         if (IsSoloSimple() || IsSoloNone())
-            pt->SetSolo(false);
       }
       t = iter.Next();
    }
 
    ModifyState();
    RedrawProject();
-   if (mMixerBoard) {
-      mMixerBoard->UpdateMute();
-      if (IsSoloSimple() || IsSoloNone())
-         mMixerBoard->UpdateSolo();
-   }
 }
 
 void AudacityProject::OnLockPlayRegion(const CommandContext &WXUNUSED(context) )
