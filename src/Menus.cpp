@@ -676,8 +676,6 @@ void AudacityProject::CreateMenusAndCommands()
          AudioIONotBusyFlag,
          AudioIONotBusyFlag);
 
-      c->AddItem(wxT("MixerBoard"), XXO("&Mixer Board..."), FN(OnMixerBoard), PlayableTracksExistFlag, PlayableTracksExistFlag);
-
       c->AddSeparator();
 
       /////////////////////////////////////////////////////////////////////////////
@@ -6065,18 +6063,6 @@ void AudacityProject::OnHistory(const CommandContext &WXUNUSED(context) )
    mHistoryWindow->Show();
    mHistoryWindow->Raise();
    mHistoryWindow->UpdateDisplay();
-}
-
-void AudacityProject::OnMixerBoard(const CommandContext &WXUNUSED(context) )
-{
-   if (!mMixerBoardFrame)
-   {
-      mMixerBoardFrame = safenew MixerBoardFrame(this);
-      mMixerBoard = mMixerBoardFrame->mMixerBoard;
-   }
-   mMixerBoardFrame->Show();
-   mMixerBoardFrame->Raise();
-   mMixerBoardFrame->SetFocus();
 }
 
 void AudacityProject::OnShowTransportToolBar(const CommandContext &WXUNUSED(context) )
