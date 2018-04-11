@@ -739,9 +739,6 @@ void MixerBoard::UpdatePrefs()
 //
 void MixerBoard::UpdateTrackClusters()
 {
-   if (!mImageMuteUp)
-      this->CreateMuteSoloImages();
-
    const int nClusterHeight = mScrolledWindow->GetClientSize().GetHeight() - kDoubleInset;
    size_t nClusterCount = mMixerTrackClusters.size();
    unsigned int nClusterIndex = 0;
@@ -1059,47 +1056,6 @@ void MixerBoard::MakeButtonBitmap( wxMemoryDC & dc, wxBitmap & WXUNUSED(bitmap),
    dc.SetBackgroundMode(wxTRANSPARENT);
    dc.DrawText(str, x, y);
 //   dc.DrawText(str, 0, 0);
-}
-
-void MixerBoard::CreateMuteSoloImages()
-{
-   // Much of this is similar to TrackInfo::MuteOrSoloDrawFunction.
-   wxMemoryDC dc;
-   wxString str = _("Mute");
-
-   //mMuteSoloWidth = textWidth + kQuadrupleInset;
-   //if (mMuteSoloWidth < kRightSideStackWidth - kInset)
-   mMuteSoloWidth = kRightSideStackWidth - kInset;
-
-   wxBitmap bitmap(mMuteSoloWidth, MUTE_SOLO_HEIGHT,24);
-   dc.SelectObject(bitmap);
-   wxRect bev(0, 0, mMuteSoloWidth, MUTE_SOLO_HEIGHT);
-   
-   const bool up=true;
-   const bool down=false;
-
-   MakeButtonBitmap( dc, bitmap, bev, str, up );
-   mImageMuteUp = std::make_unique<wxImage>(bitmap.ConvertToImage());
-   mImageMuteOver = std::make_unique<wxImage>(bitmap.ConvertToImage()); // Same as up, for now.
-
-   MakeButtonBitmap( dc, bitmap, bev, str, down );
-   //AColor::Bevel(dc, false, bev);
-   mImageMuteDown = std::make_unique<wxImage>(bitmap.ConvertToImage());
-
-   MakeButtonBitmap( dc, bitmap, bev, str, down );
-   mImageMuteDownWhileSolo = std::make_unique<wxImage>(bitmap.ConvertToImage());
-
-   mImageMuteDisabled = std::make_unique<wxImage>(mMuteSoloWidth, MUTE_SOLO_HEIGHT); // Leave empty because unused.
-
-   str = _("Solo");
-   MakeButtonBitmap( dc, bitmap, bev, str, up );
-   mImageSoloUp = std::make_unique<wxImage>(bitmap.ConvertToImage());
-   mImageSoloOver = std::make_unique<wxImage>(bitmap.ConvertToImage()); // Same as up, for now.
-
-   MakeButtonBitmap( dc, bitmap, bev, str, down );
-   mImageSoloDown = std::make_unique<wxImage>(bitmap.ConvertToImage());
-
-   mImageSoloDisabled = std::make_unique<wxImage>(mMuteSoloWidth, MUTE_SOLO_HEIGHT); // Leave empty because unused.
 }
 
 int MixerBoard::FindMixerTrackCluster(const PlayableTrack* pTrack,
