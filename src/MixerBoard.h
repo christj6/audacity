@@ -191,10 +191,6 @@ public:
 
    wxBitmap* GetMusicalInstrumentBitmap(const Track *pTrack);
 
-   void RefreshTrackCluster(const PlayableTrack* pTrack, bool bEraseBackground = true);
-   void RefreshTrackClusters(bool bEraseBackground = true);
-   void ResizeTrackClusters();
-
    void ResetMeters(const bool bResetClipping);
 
    void UpdateName(const PlayableTrack* pTrack);

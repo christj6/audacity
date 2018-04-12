@@ -850,28 +850,6 @@ wxBitmap* MixerBoard::GetMusicalInstrumentBitmap(const Track* pTrack)
    return mMusicalInstruments[nBestItemIndex]->mBitmap.get();
 }
 
-void MixerBoard::RefreshTrackCluster(const PlayableTrack* pTrack, bool bEraseBackground /*= true*/)
-{
-   MixerTrackCluster* pMixerTrackCluster;
-   this->FindMixerTrackCluster(pTrack, &pMixerTrackCluster);
-   if (pMixerTrackCluster)
-      pMixerTrackCluster->Refresh(bEraseBackground);
-}
-
-void MixerBoard::RefreshTrackClusters(bool bEraseBackground /*= true*/)
-{
-   for (unsigned int i = 0; i < mMixerTrackClusters.size(); i++)
-      mMixerTrackClusters[i]->Refresh(bEraseBackground);
-}
-
-void MixerBoard::ResizeTrackClusters()
-{
-	/*
-   for (unsigned int nClusterIndex = 0; nClusterIndex < mMixerTrackClusters.size(); nClusterIndex++)
-      mMixerTrackClusters[nClusterIndex]->HandleResize();
-	  */
-}
-
 void MixerBoard::ResetMeters(const bool bResetClipping)
 {
    mPrevT1 = BAD_STREAM_TIME;
@@ -1049,9 +1027,6 @@ void MixerBoard::OnSize(wxSizeEvent &evt)
 {
    // this->FitInside() doesn't work, and it doesn't happen automatically. Is wxScrolledWindow wrong?
    mScrolledWindow->SetSize(evt.GetSize());
-
-   this->ResizeTrackClusters();
-   this->RefreshTrackClusters(true);
 }
 
 void MixerBoard::OnTimer(wxCommandEvent &event)

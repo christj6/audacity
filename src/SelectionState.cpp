@@ -62,29 +62,6 @@ void SelectionState::SelectTrack
    tracks.Select( &track, selected );
    if (updateLastPicked)
       mLastPickedTrack = Track::Pointer( &track );
-
-//The older code below avoids an anchor on an unselected track.
-
-   /*
-   if (selected) {
-      // This handles the case of linked tracks, selecting all channels
-      mTracks->Select(pTrack, true);
-      if (updateLastPicked)
-         mLastPickedTrack = Track::Pointer( pTrack );
-   }
-   else {
-      mTracks->Select(pTrack, false);
-      if (updateLastPicked && pTrack == mLastPickedTrack.lock().get())
-         mLastPickedTrack.reset();
-   }
-*/
-
-   // Update mixer board, but only as needed so it does not flicker.
-   if (!wasCorrect) {
-      auto pt = dynamic_cast< PlayableTrack* >( &track );
-      if (pMixerBoard && pt)
-         pMixerBoard->RefreshTrackCluster( pt );
-   }
 }
 
 void SelectionState::SelectRangeOfTracks
@@ -175,9 +152,6 @@ void SelectionState::HandleListSelection
          SelectTrack( tracks, track, true, true, pMixerBoard );
          SelectTrackLength( tracks, viewInfo, track, syncLocked );
       }
-
-      if (pMixerBoard)
-         pMixerBoard->RefreshTrackClusters();
    }
 }
 
