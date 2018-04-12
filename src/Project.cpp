@@ -3614,7 +3614,6 @@ void AudacityProject::InitialState()
    ModifyUndoMenuItems();
 
    UpdateMenus();
-   this->UpdateMixerBoard();
 }
 
 bool AudacityProject::UndoAvailable()
@@ -3651,16 +3650,6 @@ void AudacityProject::PushState(const wxString &desc,
    ModifyUndoMenuItems();
 
    UpdateMenus();
-
-   // Some state pushes, like changing a track gain control (& probably others),
-   // should not repopulate MixerBoard.
-   // Others, such as deleting a label or adding a wave track, obviously do.
-   // Could categorize these state changes, but for now...
-   // It's crucial to not do that repopulating during playback.
-   if (!gAudioIO->IsStreamActive(GetAudioIOToken()))
-   {
-      this->UpdateMixerBoard();
-   }
 
    if (GetTracksFitVerticallyZoomed())
       this->DoZoomFitV();
@@ -3734,7 +3723,6 @@ void AudacityProject::PopState(const UndoState &state)
    HandleResize();
 
    UpdateMenus();
-   this->UpdateMixerBoard();
 
    AutoSave();
 }
@@ -3749,18 +3737,6 @@ void AudacityProject::SetStateTo(unsigned int n)
    mTrackPanel->SetFocusedTrack(NULL);
    mTrackPanel->Refresh(false);
    ModifyUndoMenuItems();
-   this->UpdateMixerBoard();
-}
-
-void AudacityProject::UpdateMixerBoard()
-{
-   if (!mMixerBoard)
-      return;
-   mMixerBoard->UpdateTrackClusters();
-
-   // Vaughan, 2011-01-28: AudacityProject::UpdateMixerBoard() is called on state changes,
-   //   so don't really need to call UpdateMeters().
-   //mMixerBoard->UpdateMeters(gAudioIO->GetStreamTime(), (mLastPlayMode == loopedPlay));
 }
 
 //

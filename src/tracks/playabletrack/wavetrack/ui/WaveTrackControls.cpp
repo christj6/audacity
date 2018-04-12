@@ -957,10 +957,6 @@ void WaveTrackMenuTable::OnSwapChannels(wxCommandEvent &)
    (tracks->MoveUp(partner));
    partner->SetLinked(true);
 
-   MixerBoard* pMixerBoard = project->GetMixerBoard();
-   if (pMixerBoard)
-      pMixerBoard->UpdateTrackClusters();
-
    if (hasFocus)
       project->GetTrackPanel()->SetFocusedTrack(partner);
 

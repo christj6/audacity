@@ -183,10 +183,6 @@ public:
                const wxPoint& pos = wxDefaultPosition,
                const wxSize& size = wxDefaultSize);
 
-   // Add clusters for any tracks we're not yet showing.
-   // Update pointers for tracks we're aleady showing.
-   void UpdateTrackClusters();
-
    int GetTrackClustersWidth();
    void MoveTrackCluster(const PlayableTrack* pTrack, bool bUp); // Up in TrackPanel is left in MixerBoard.
    void RemoveTrackCluster(const PlayableTrack* pTrack);

@@ -562,8 +562,6 @@ public:
  private:
    void PopState(const UndoState &state);
 
-   void UpdateMixerBoard();
-
    void AutoSave();
 
    double GetZoomOfToFit();

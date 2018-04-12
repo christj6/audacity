@@ -319,7 +319,7 @@ void MixerTrackCluster::UpdatePrefs()
    mStaticText_TrackName->SetForegroundColour(theTheme.Colour(clrTrackPanelText));
    if (mMeter)
       mMeter->UpdatePrefs(); // in case meter range has changed
-   HandleResize(); // in case prefs "/GUI/Solo" changed
+   // HandleResize(); // in case prefs "/GUI/Solo" changed
 }
 
 void MixerTrackCluster::HandleResize() // For wxSizeEvents, update gain slider and meter.
@@ -726,72 +726,6 @@ MixerBoard::MixerBoard(AudacityProject* pProject,
       this);
 }
 
-// Reassign mixer input strips (MixerTrackClusters) to Track Clusters
-// both have the same order.
-//
-void MixerBoard::UpdateTrackClusters()
-{
-   const int nClusterHeight = mScrolledWindow->GetClientSize().GetHeight() - kDoubleInset;
-   size_t nClusterCount = mMixerTrackClusters.size();
-   unsigned int nClusterIndex = 0;
-   TrackListIterator iterTracks(mTracks);
-   MixerTrackCluster* pMixerTrackCluster = NULL;
-   Track* pTrack;
-
-   pTrack = iterTracks.First();
-   while (pTrack) {
-      if (auto pPlayableTrack = dynamic_cast<PlayableTrack*>(pTrack))
-      {
-         auto spTrack = Track::Pointer<PlayableTrack>( pPlayableTrack );
-         if (nClusterIndex < nClusterCount)
-         {
-            // Already showing it.
-            // Track clusters are maintained in the same order as the WaveTracks.
-            // Track pointers can change for the "same" track for different states
-            // on the undo stack, so update the pointers and display name.
-            mMixerTrackClusters[nClusterIndex]->mTrack = spTrack;
-            // Assume linked track is wave or null
-            mMixerTrackClusters[nClusterIndex]->UpdateForStateChange();
-         }
-         else
-         {
-            // Not already showing it. Add a NEW MixerTrackCluster.
-            wxPoint clusterPos(
-               (kInset +                                       // extra inset to left for first one, so it's double
-                  (nClusterIndex *
-                     (kInset + kMixerTrackClusterWidth)) +     // left margin and width for each to its left
-                  kInset),                                     // plus left margin for NEW cluster
-               kInset);
-            wxSize clusterSize(kMixerTrackClusterWidth, nClusterHeight);
-            pMixerTrackCluster =
-               safenew MixerTrackCluster(mScrolledWindow, this, mProject,
-                                       spTrack,
-                                       clusterPos, clusterSize);
-            if (pMixerTrackCluster)
-               mMixerTrackClusters.push_back(pMixerTrackCluster);
-         }
-         nClusterIndex++;
-      }
-      pTrack = iterTracks.Next(true);
-   }
-
-   if (pMixerTrackCluster)
-   {
-      // Added at least one MixerTrackCluster.
-      this->UpdateWidth();
-      this->ResizeTrackClusters();
-   }
-   else while (nClusterIndex < nClusterCount)
-   {
-      // We've got too many clusters.
-      // This can happen only on things like Undo New Audio Track or Undo Import
-      // that don't call RemoveTrackCluster explicitly.
-      // We've already updated the track pointers for the clusters to the left, so just remove all the rest.
-      // Successively DELETE from right to left.
-      RemoveTrackCluster(--nClusterCount);
-   }
-}
-
 int MixerBoard::GetTrackClustersWidth()
 {
    return
@@ -932,8 +866,10 @@ void MixerBoard::RefreshTrackClusters(bool bEraseBackground /*= true*/)
 
 void MixerBoard::ResizeTrackClusters()
 {
+	/*
    for (unsigned int nClusterIndex = 0; nClusterIndex < mMixerTrackClusters.size(); nClusterIndex++)
       mMixerTrackClusters[nClusterIndex]->HandleResize();
+	  */
 }
 
 void MixerBoard::ResetMeters(const bool bResetClipping)
@@ -1174,8 +1110,6 @@ MixerBoardFrame::MixerBoardFrame(AudacityProject* parent)
    mMixerBoard = safenew MixerBoard(parent, this, wxDefaultPosition, kDefaultSize);
 
    this->SetSizeHints(MIXER_BOARD_MIN_WIDTH, MIXER_BOARD_MIN_HEIGHT);
-
-   mMixerBoard->UpdateTrackClusters();
 
    // loads either the XPM or the windows resource, depending on the platform
 #if !defined(__WXMAC__) && !defined(__WXX11__)
