@@ -726,14 +726,6 @@ MixerBoard::MixerBoard(AudacityProject* pProject,
       this);
 }
 
-
-
-
-void MixerBoard::UpdatePrefs()
-{
-   mProject->RecreateMixerBoard();
-}
-
 // Reassign mixer input strips (MixerTrackClusters) to Track Clusters
 // both have the same order.
 //

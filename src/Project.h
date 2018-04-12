@@ -558,7 +558,6 @@ public:
 
  public:
    void ModifyState();
-   void RecreateMixerBoard();
 
  private:
    void PopState(const UndoState &state);

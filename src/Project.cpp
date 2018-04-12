@@ -1252,8 +1252,6 @@ void AudacityProject::UpdatePrefs()
    if (mTrackPanel) {
       mTrackPanel->UpdatePrefs();
    }
-   if (mMixerBoard)
-      mMixerBoard->UpdatePrefs();
 
    if (mToolManager) {
       mToolManager->UpdatePrefs();
@@ -3763,25 +3761,6 @@ void AudacityProject::UpdateMixerBoard()
    // Vaughan, 2011-01-28: AudacityProject::UpdateMixerBoard() is called on state changes,
    //   so don't really need to call UpdateMeters().
    //mMixerBoard->UpdateMeters(gAudioIO->GetStreamTime(), (mLastPlayMode == loopedPlay));
-}
-
-
-void AudacityProject::RecreateMixerBoard( )
-{
-   wxASSERT( mMixerBoard );
-   wxASSERT( mMixerBoardFrame );
-   wxPoint  pos = mMixerBoard->GetPosition();
-   wxSize siz = mMixerBoard->GetSize();
-   wxSize siz2 = mMixerBoardFrame->GetSize();
-   //wxLogDebug("Got rid of board %p", mMixerBoard );
-   mMixerBoard->Destroy();
-   mMixerBoard = NULL;
-   mMixerBoard = safenew MixerBoard(this, mMixerBoardFrame, pos, siz);
-   mMixerBoardFrame->mMixerBoard = mMixerBoard;
-   //wxLogDebug("Created NEW board %p", mMixerBoard );
-   mMixerBoard->UpdateTrackClusters();
-   mMixerBoard->SetSize( siz );
-   mMixerBoardFrame->SetSize( siz2 );
 }
 
 //

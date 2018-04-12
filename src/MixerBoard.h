@@ -183,8 +183,6 @@ public:
                const wxPoint& pos = wxDefaultPosition,
                const wxSize& size = wxDefaultSize);
 
-   void UpdatePrefs();
-
    // Add clusters for any tracks we're not yet showing.
    // Update pointers for tracks we're aleady showing.
    void UpdateTrackClusters();
