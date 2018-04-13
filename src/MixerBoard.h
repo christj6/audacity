@@ -91,7 +91,6 @@ public:
    void UpdateForStateChange(); // Update the controls that can be affected by state change.
    void UpdateName();
    void UpdatePan();
-   // void UpdateGain();
    void UpdateMeter(const double t0, const double t1);
 
 private:
@@ -195,9 +194,6 @@ public:
 
    void UpdateName(const PlayableTrack* pTrack);
    void UpdatePan(const PlayableTrack* pTrack = NULL); // NULL means update for all tracks.
-   // void UpdateGain(const PlayableTrack* pTrack);
-
-   void UpdateMeters(const double t1, const bool bLoopedPlay);
 
    void UpdateWidth();
 

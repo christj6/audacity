@@ -53,11 +53,6 @@ UIHandle::Result GainSliderHandle::SetValue
       const auto link = static_cast<WaveTrack*>(mpTrack.lock()->GetLink());
       if (link)
          link->SetGain(newValue);
-	  /*
-      MixerBoard *const pMixerBoard = pProject->GetMixerBoard();
-      if (pMixerBoard)
-         pMixerBoard->UpdateGain(pTrack.get());
-		 */
    }
 
    return RefreshCode::RefreshNone;

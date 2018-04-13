@@ -196,7 +196,6 @@ MixerTrackCluster::MixerTrackCluster(wxWindow* parent,
                .Style( DB_SLIDER )
                .Orientation( wxVERTICAL ));
    mSlider_Gain->SetName(_("Gain"));
-   // this->UpdateGain();
 
    // other controls and meter at right
 
@@ -295,7 +294,6 @@ MixerTrackCluster::MixerTrackCluster(wxWindow* parent,
       wxSizeEvent event(GetSize(), GetId());
       event.SetEventObject(this);
       GetEventHandler()->ProcessEvent(event);
-      // UpdateGain();
    #endif
 }
 
@@ -401,7 +399,6 @@ void MixerTrackCluster::UpdateForStateChange()
 {
    this->UpdateName();
    this->UpdatePan();
-   // this->UpdateGain();
 }
 
 void MixerTrackCluster::UpdateName()
@@ -426,16 +423,6 @@ void MixerTrackCluster::UpdatePan()
    mSlider_Pan->Set(GetWave()->GetPan());
 }
 
-/*
-void MixerTrackCluster::UpdateGain()
-{
-   if (!GetWave()) {
-      mSlider_Gain->Hide();
-      return;
-   }
-   mSlider_Gain->Set(GetWave()->GetGain());
-}
-*/
 void MixerTrackCluster::UpdateMeter(const double t0, const double t1)
 {
    // NoteTracks do not (currently) register on meters. It would probably be
@@ -885,42 +872,6 @@ void MixerBoard::UpdatePan(const PlayableTrack* pTrack)
          pMixerTrackCluster->UpdatePan();
    }
 }
-/*
-void MixerBoard::UpdateGain(const PlayableTrack* pTrack)
-{
-   MixerTrackCluster* pMixerTrackCluster;
-   FindMixerTrackCluster(pTrack, &pMixerTrackCluster);
-   if (pMixerTrackCluster)
-      pMixerTrackCluster->UpdateGain();
-}
-*/
-void MixerBoard::UpdateMeters(const double t1, const bool bLoopedPlay)
-{
-   if (!this->IsShown() || (t1 == BAD_STREAM_TIME))
-      return;
-
-   if (mPrevT1 == BAD_STREAM_TIME)
-   {
-      mPrevT1 = t1;
-      return;
-   }
-
-   // In loopedPlay mode, at the end of the loop, mPrevT1 is set to
-   // selection end, so the next t1 will be less, but we do want to
-   // keep updating the meters.
-   if (t1 <= mPrevT1)
-   {
-      if (bLoopedPlay)
-         mPrevT1 = t1;
-      return;
-   }
-
-   for (unsigned int i = 0; i < mMixerTrackClusters.size(); i++)
-      mMixerTrackClusters[i]->UpdateMeter(mPrevT1, t1);
-
-   mPrevT1 = t1;
-}
-
 
 void MixerBoard::UpdateWidth()
 {
@@ -1032,24 +983,6 @@ void MixerBoard::OnSize(wxSizeEvent &evt)
 
 void MixerBoard::OnTimer(wxCommandEvent &event)
 {
-   // PRL 12 Jul 2015:  Moved the below (with comments) out of TrackPanel::OnTimer.
-
-   // Vaughan, 2011-01-28: No longer doing this on timer.
-   //   Now it's in AudioIO::SetMeters() and AudioIO::StopStream(), as with Meter Toolbar meters.
-   //if (pMixerBoard)
-   //   pMixerBoard->ResetMeters(false);
-
-   //v Vaughan, 2011-02-25: Moved this update back here from audacityAudioCallback.
-   //    See note there.
-   // Vaughan, 2010-01-30:
-   //    Since all we're doing here is updating the meters, I moved it to
-   //    audacityAudioCallback where it calls gAudioIO->mOutputMeter->UpdateDisplay().
-   if (mProject->IsAudioActive())
-   {
-      UpdateMeters(gAudioIO->GetStreamTime(),
-                   (mProject->mLastPlayMode == PlayMode::loopedPlay));
-   }
-
    // Let other listeners get the notification
    event.Skip();
 }
