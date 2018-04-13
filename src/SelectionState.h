@@ -25,11 +25,10 @@ public:
 
    void SelectTrack
       ( TrackList &tracks, Track &track,
-        bool selected, bool updateLastPicked, MixerBoard *pMixerBoard );
+        bool selected, bool updateLastPicked );
    // Inclusive range of tracks, the limits specified in either order:
    void SelectRangeOfTracks
-      ( TrackList &tracks, Track &sTrack, Track &eTrack,
-        MixerBoard *pMixerBoard );
+      ( TrackList &tracks, Track &sTrack, Track &eTrack );
    void SelectNone( TrackList &tracks, MixerBoard *pMixerBoard );
    void ChangeSelectionOnShiftClick
       ( TrackList &tracks, Track &track, MixerBoard *pMixerBoard );

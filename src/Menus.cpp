@@ -2981,7 +2981,7 @@ void AudacityProject::OnPrevTrack( bool shift )
       if( tSelected && pSelected )
       {
          GetSelectionState().SelectTrack
-            ( *mTracks, *t, false, false, GetMixerBoard() );
+            ( *mTracks, *t, false, false );
          mTrackPanel->SetFocusedTrack( p );   // move focus to next track down
          mTrackPanel->EnsureVisible( p );
          ModifyState();
@@ -2990,7 +2990,7 @@ void AudacityProject::OnPrevTrack( bool shift )
       if( tSelected && !pSelected )
       {
          GetSelectionState().SelectTrack
-            ( *mTracks, *p, true, false, GetMixerBoard() );
+            ( *mTracks, *p, true, false );
          mTrackPanel->SetFocusedTrack( p );   // move focus to next track down
          mTrackPanel->EnsureVisible( p );
          ModifyState();
@@ -2999,7 +2999,7 @@ void AudacityProject::OnPrevTrack( bool shift )
       if( !tSelected && pSelected )
       {
          GetSelectionState().SelectTrack
-            ( *mTracks, *p, false, false, GetMixerBoard() );
+            ( *mTracks, *p, false, false );
          mTrackPanel->SetFocusedTrack( p );   // move focus to next track down
          mTrackPanel->EnsureVisible( p );
          ModifyState();
@@ -3008,7 +3008,7 @@ void AudacityProject::OnPrevTrack( bool shift )
       if( !tSelected && !pSelected )
       {
          GetSelectionState().SelectTrack
-            ( *mTracks, *t, true, false, GetMixerBoard() );
+            ( *mTracks, *t, true, false );
          mTrackPanel->SetFocusedTrack( p );   // move focus to next track down
          mTrackPanel->EnsureVisible( p );
          ModifyState();
@@ -3091,7 +3091,7 @@ void AudacityProject::OnNextTrack( bool shift )
       if( tSelected && nSelected )
       {
          GetSelectionState().SelectTrack
-            ( *mTracks, *t, false, false, GetMixerBoard() );
+            ( *mTracks, *t, false, false );
          mTrackPanel->SetFocusedTrack( n );   // move focus to next track down
          mTrackPanel->EnsureVisible( n );
          ModifyState();
@@ -3100,7 +3100,7 @@ void AudacityProject::OnNextTrack( bool shift )
       if( tSelected && !nSelected )
       {
          GetSelectionState().SelectTrack
-            ( *mTracks, *n, true, false, GetMixerBoard() );
+            ( *mTracks, *n, true, false );
          mTrackPanel->SetFocusedTrack( n );   // move focus to next track down
          mTrackPanel->EnsureVisible( n );
          ModifyState();
@@ -3109,7 +3109,7 @@ void AudacityProject::OnNextTrack( bool shift )
       if( !tSelected && nSelected )
       {
          GetSelectionState().SelectTrack
-            ( *mTracks, *n, false, false, GetMixerBoard() );
+            ( *mTracks, *n, false, false );
          mTrackPanel->SetFocusedTrack( n );   // move focus to next track down
          mTrackPanel->EnsureVisible( n );
          ModifyState();
@@ -3118,7 +3118,7 @@ void AudacityProject::OnNextTrack( bool shift )
       if( !tSelected && !nSelected )
       {
          GetSelectionState().SelectTrack
-            ( *mTracks, *t, true, false, GetMixerBoard() );
+            ( *mTracks, *t, true, false );
          mTrackPanel->SetFocusedTrack( n );   // move focus to next track down
          mTrackPanel->EnsureVisible( n );
          ModifyState();
@@ -3218,7 +3218,7 @@ void AudacityProject::OnToggle(const CommandContext &WXUNUSED(context) )
       return;
 
    GetSelectionState().SelectTrack
-      ( *mTracks, *t, !t->GetSelected(), true, GetMixerBoard() );
+      ( *mTracks, *t, !t->GetSelected(), true );
    mTrackPanel->EnsureVisible( t );
    ModifyState();
 

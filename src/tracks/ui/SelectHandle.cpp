@@ -558,7 +558,7 @@ UIHandle::Result SelectHandle::Click
       selectionState.SelectNone( *trackList, pProject->GetMixerBoard() );
 
       selectionState.SelectTrack
-         ( *trackList, *pTrack, true, true, pProject->GetMixerBoard() );
+         ( *trackList, *pTrack, true, true );
 
       // Default behavior: select whole track
       SelectionState::SelectTrackLength
@@ -612,7 +612,7 @@ UIHandle::Result SelectHandle::Click
          // Don't toggle away the last selected track.
          if( !bIsSelected || trackPanel->GetSelectedTrackCount() > 1 )
             selectionState.SelectTrack
-               ( *trackList, *pTrack, !bIsSelected, true, pMixerBoard );
+               ( *trackList, *pTrack, !bIsSelected, true );
       }
 
       double value;
@@ -768,7 +768,7 @@ UIHandle::Result SelectHandle::Click
 #endif
       StartSelection(pProject);
       selectionState.SelectTrack
-         ( *trackList, *pTrack, true, true, pMixerBoard );
+         ( *trackList, *pTrack, true, true );
       trackPanel->SetFocusedTrack(pTrack);
       //On-Demand: check to see if there is an OD thing associated with this track.
       if (pTrack->GetKind() == Track::Wave) {
@@ -843,7 +843,7 @@ UIHandle::Result SelectHandle::Drag
       if ( sTrack && eTrack && !event.ControlDown() ) {
          auto &selectionState = pProject->GetSelectionState();
          selectionState.SelectRangeOfTracks
-         ( *trackList, *sTrack, *eTrack, pMixerBoard );
+         ( *trackList, *sTrack, *eTrack );
       }
 
 #ifdef EXPERIMENTAL_SPECTRAL_EDITING
