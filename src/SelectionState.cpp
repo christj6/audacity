@@ -137,7 +137,7 @@ void SelectionState::ChangeSelectionOnShiftClick
 
 void SelectionState::HandleListSelection
 ( TrackList &tracks, ViewInfo &viewInfo,
-  Track &track, bool shift, bool ctrl, bool syncLocked, MixerBoard *pMixerBoard )
+  Track &track, bool shift, bool ctrl, bool syncLocked )
 {
    // AS: If the shift button is being held down, invert
    //  the selection on this track.

@@ -34,7 +34,7 @@ public:
       ( TrackList &tracks, Track &track );
    void HandleListSelection
       ( TrackList &tracks, ViewInfo &viewInfo, Track &track,
-        bool shift, bool ctrl, bool syncLocked, MixerBoard *pMixerBoard );
+        bool shift, bool ctrl, bool syncLocked );
 
 private:
    friend class SelectionStateChanger;

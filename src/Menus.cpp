@@ -3232,7 +3232,7 @@ void AudacityProject::HandleListSelection(Track *t, bool shift, bool ctrl,
 {
    GetSelectionState().HandleListSelection
       ( *GetTracks(), mViewInfo, *t,
-        shift, ctrl, IsSyncLocked(), GetMixerBoard() );
+        shift, ctrl, IsSyncLocked() );
 
    if (! ctrl )
       mTrackPanel->SetFocusedTrack(t);
