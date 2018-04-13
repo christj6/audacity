@@ -196,7 +196,7 @@ MixerTrackCluster::MixerTrackCluster(wxWindow* parent,
                .Style( DB_SLIDER )
                .Orientation( wxVERTICAL ));
    mSlider_Gain->SetName(_("Gain"));
-   this->UpdateGain();
+   // this->UpdateGain();
 
    // other controls and meter at right
 
@@ -295,7 +295,7 @@ MixerTrackCluster::MixerTrackCluster(wxWindow* parent,
       wxSizeEvent event(GetSize(), GetId());
       event.SetEventObject(this);
       GetEventHandler()->ProcessEvent(event);
-      UpdateGain();
+      // UpdateGain();
    #endif
 }
 
@@ -401,7 +401,7 @@ void MixerTrackCluster::UpdateForStateChange()
 {
    this->UpdateName();
    this->UpdatePan();
-   this->UpdateGain();
+   // this->UpdateGain();
 }
 
 void MixerTrackCluster::UpdateName()
@@ -426,6 +426,7 @@ void MixerTrackCluster::UpdatePan()
    mSlider_Pan->Set(GetWave()->GetPan());
 }
 
+/*
 void MixerTrackCluster::UpdateGain()
 {
    if (!GetWave()) {
@@ -434,7 +435,7 @@ void MixerTrackCluster::UpdateGain()
    }
    mSlider_Gain->Set(GetWave()->GetGain());
 }
-
+*/
 void MixerTrackCluster::UpdateMeter(const double t0, const double t1)
 {
    // NoteTracks do not (currently) register on meters. It would probably be
@@ -884,7 +885,7 @@ void MixerBoard::UpdatePan(const PlayableTrack* pTrack)
          pMixerTrackCluster->UpdatePan();
    }
 }
-
+/*
 void MixerBoard::UpdateGain(const PlayableTrack* pTrack)
 {
    MixerTrackCluster* pMixerTrackCluster;
@@ -892,7 +893,7 @@ void MixerBoard::UpdateGain(const PlayableTrack* pTrack)
    if (pMixerTrackCluster)
       pMixerTrackCluster->UpdateGain();
 }
-
+*/
 void MixerBoard::UpdateMeters(const double t1, const bool bLoopedPlay)
 {
    if (!this->IsShown() || (t1 == BAD_STREAM_TIME))
