@@ -31,7 +31,7 @@ public:
       ( TrackList &tracks, Track &sTrack, Track &eTrack );
    void SelectNone( TrackList &tracks );
    void ChangeSelectionOnShiftClick
-      ( TrackList &tracks, Track &track, MixerBoard *pMixerBoard );
+      ( TrackList &tracks, Track &track );
    void HandleListSelection
       ( TrackList &tracks, ViewInfo &viewInfo, Track &track,
         bool shift, bool ctrl, bool syncLocked, MixerBoard *pMixerBoard );

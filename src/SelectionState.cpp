@@ -94,7 +94,7 @@ void SelectionState::SelectNone( TrackList &tracks )
 }
 
 void SelectionState::ChangeSelectionOnShiftClick
-( TrackList &tracks, Track &track, MixerBoard *pMixerBoard )
+( TrackList &tracks, Track &track )
 {
 
    // Optional: Track already selected?  Nothing to do.
@@ -145,7 +145,7 @@ void SelectionState::HandleListSelection
       SelectTrack( tracks, track, !track.GetSelected(), true );
    else {
       if (shift && mLastPickedTrack.lock())
-         ChangeSelectionOnShiftClick( tracks, track, pMixerBoard );
+         ChangeSelectionOnShiftClick( tracks, track );
       else {
          SelectNone( tracks );
          SelectTrack( tracks, track, true, true );

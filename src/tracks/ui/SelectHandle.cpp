@@ -603,7 +603,7 @@ UIHandle::Result SelectHandle::Click
    if (bShiftDown || bCtrlDown) {
       if (bShiftDown)
          selectionState.ChangeSelectionOnShiftClick
-            ( *trackList, *pTrack, pMixerBoard );
+            ( *trackList, *pTrack );
       if( bCtrlDown ){
          //Commented out bIsSelected toggles, as in Track Control Panel.
          //bool bIsSelected = pTrack->GetSelected();
