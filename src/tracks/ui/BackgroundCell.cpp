@@ -51,7 +51,7 @@ public:
       //  selected.
       if ((event.ButtonDown() || event.ButtonDClick())) {
          pProject->GetSelectionState().SelectNone
-            ( *pProject->GetTracks(), pProject->GetMixerBoard() );
+            ( *pProject->GetTracks() );
          result |= RefreshAll;
       }
 

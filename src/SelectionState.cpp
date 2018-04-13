@@ -83,7 +83,7 @@ void SelectionState::SelectRangeOfTracks
    } while ( sTrack );
 }
 
-void SelectionState::SelectNone( TrackList &tracks, MixerBoard *pMixerBoard )
+void SelectionState::SelectNone( TrackList &tracks )
 {
    TrackListIterator iter( &tracks );
    Track *track = iter.First();
@@ -127,7 +127,7 @@ void SelectionState::ChangeSelectionOnShiftClick
          pExtendFrom = Track::Pointer( pLast );
    }
 
-   SelectNone( tracks, pMixerBoard );
+   SelectNone( tracks );
    if( pExtendFrom )
       SelectRangeOfTracks( tracks, track, *pExtendFrom );
    else
@@ -147,7 +147,7 @@ void SelectionState::HandleListSelection
       if (shift && mLastPickedTrack.lock())
          ChangeSelectionOnShiftClick( tracks, track, pMixerBoard );
       else {
-         SelectNone( tracks, pMixerBoard );
+         SelectNone( tracks );
          SelectTrack( tracks, track, true, true );
          SelectTrackLength( tracks, viewInfo, track, syncLocked );
       }

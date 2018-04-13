@@ -555,7 +555,7 @@ UIHandle::Result SelectHandle::Click
       TrackList *const trackList = pProject->GetTracks();
 
       // Deselect all other tracks and select this one.
-      selectionState.SelectNone( *trackList, pProject->GetMixerBoard() );
+      selectionState.SelectNone( *trackList );
 
       selectionState.SelectTrack
          ( *trackList, *pTrack, true, true );
@@ -762,7 +762,7 @@ UIHandle::Result SelectHandle::Click
 
    if (startNewSelection) {
       // If we didn't move a selection boundary, start a NEW selection
-      selectionState.SelectNone( *trackList, pMixerBoard );
+      selectionState.SelectNone( *trackList );
 #ifdef EXPERIMENTAL_SPECTRAL_EDITING
       StartFreqSelection (viewInfo, event.m_y, mRect.y, mRect.height, pTrack);
 #endif

@@ -29,7 +29,7 @@ public:
    // Inclusive range of tracks, the limits specified in either order:
    void SelectRangeOfTracks
       ( TrackList &tracks, Track &sTrack, Track &eTrack );
-   void SelectNone( TrackList &tracks, MixerBoard *pMixerBoard );
+   void SelectNone( TrackList &tracks );
    void ChangeSelectionOnShiftClick
       ( TrackList &tracks, Track &track, MixerBoard *pMixerBoard );
    void HandleListSelection
