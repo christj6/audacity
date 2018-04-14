@@ -392,12 +392,6 @@ void OnCursorPrevClipBoundary(const CommandContext &context );
 void OnCursorClipBoundary(bool next);
 static wxString ClipBoundaryMessage(const std::vector<FoundClipBoundary>& results);
 
-void OnAlignNoSync(const CommandContext &context );
-void OnAlign(const CommandContext &context );
-//void OnAlignMoveSel(int index);
-void HandleAlign(int index, bool moveSel);
-size_t mAlignLabelsCount;
-
 // Tracks menu
 void OnNewWaveTrack(const CommandContext &context );
 void OnNewStereoTrack(const CommandContext &context );
