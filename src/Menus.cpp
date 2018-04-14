@@ -885,23 +885,6 @@ void AudacityProject::CreateMenusAndCommands()
 
       c->AddSeparator();
 
-      c->BeginSubMenu(_("M&ute/Unmute"));
-      // c->AddItem(wxT("MuteAllTracks"), XXO("&Mute All Tracks"), FN(OnMuteAllTracks), wxT("Ctrl+U"));
-      // c->AddItem(wxT("UnmuteAllTracks"), XXO("&Unmute All Tracks"), FN(OnUnmuteAllTracks), wxT("Ctrl+Shift+U"));
-      c->EndSubMenu();
-
-      c->BeginSubMenu(_("&Pan"));
-      // As Pan changes are not saved on Undo stack, pan settings for all tracks
-      // in the project could very easily be lost unless we require the tracks to be selcted.
-      c->SetDefaultFlags(TracksSelectedFlag, TracksSelectedFlag);
-      // c->SetLongName( _("Pan Left"))->AddItem(wxT("PanLeft"), XXO("&Left"), FN(OnPanLeft));
-      // c->SetLongName( _("Pan Right"))->AddItem(wxT("PanRight"), XXO("&Right"), FN(OnPanRight));
-      // c->SetLongName( _("Pan Center"))->AddItem(wxT("PanCenter"), XXO("&Center"), FN(OnPanCenter));
-      c->EndSubMenu();
-
-
-      c->AddSeparator();
-
       //////////////////////////////////////////////////////////////////////////
 
       const TranslatedInternalString alignLabelsNoSync[] = {
