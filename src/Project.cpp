@@ -97,7 +97,6 @@ scroll information.  It also has some status flags.
 #include "Dependencies.h"
 #include "Diags.h"
 #include "HistoryWindow.h"
-#include "MixerBoard.h"
 #include "Internat.h"
 #include "import/Import.h"
 #include "Mix.h"

@@ -69,7 +69,6 @@ simplifies construction of menu items.
 #include "prefs/PlaybackPrefs.h"
 #include "ShuttleGui.h"
 #include "HistoryWindow.h"
-#include "MixerBoard.h"
 #include "Internat.h"
 #include "FileFormats.h"
 #include "ModuleManager.h"
@@ -3511,7 +3510,7 @@ void AudacityProject::NextOrPrevFrame(bool forward)
    // accepts focus.  Tell controls to take focus for the duration of this
    // function, only.  Outside of this, they won't steal the focus when
    // clicked.
-   auto temp1 = AButton::TemporarilyAllowFocus();
+   // auto temp1 = AButton::TemporarilyAllowFocus();
    auto temp2 = ASlider::TemporarilyAllowFocus();
    auto temp3 = MeterPanel::TemporarilyAllowFocus();
 
@@ -3840,36 +3839,14 @@ void AudacityProject::MoveTrack(Track* target, MoveChoice choice)
       /* i18n-hint: Past tense of 'to move', as in 'moved audio track up'.*/
       longDesc = _("Moved '%s' to Top");
       shortDesc = _("Move Track to Top");
-
-      while (mTracks->CanMoveUp(target)) {
-         if (mTracks->Move(target, true)) {
-            MixerBoard* pMixerBoard = this->GetMixerBoard(); // Update mixer board.
-            if (pMixerBoard && pt)
-               pMixerBoard->MoveTrackCluster(pt, true);
-         }
-      }
       break;
    case OnMoveBottomID:
       /* i18n-hint: Past tense of 'to move', as in 'moved audio track up'.*/
       longDesc = _("Moved '%s' to Bottom");
       shortDesc = _("Move Track to Bottom");
-
-      while (mTracks->CanMoveDown(target)) {
-         if (mTracks->Move(target, false)) {
-            MixerBoard* pMixerBoard = this->GetMixerBoard(); // Update mixer board.
-            if (pMixerBoard && pt)
-               pMixerBoard->MoveTrackCluster(pt, false);
-         }
-      }
       break;
    default:
       bool bUp = (OnMoveUpID == choice);
-
-      if (mTracks->Move(target, bUp)) {
-         MixerBoard* pMixerBoard = this->GetMixerBoard();
-         if (pMixerBoard && pt)
-            pMixerBoard->MoveTrackCluster(pt, bUp);
-      }
       longDesc =
          /* i18n-hint: Past tense of 'to move', as in 'moved audio track up'.*/
          bUp? _("Moved '%s' Up")

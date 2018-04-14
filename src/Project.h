@@ -83,8 +83,6 @@ class ToolsToolBar;
 class AdornedRulerPanel;
 class HistoryWindow;
 class MacrosWindow;
-class MixerBoard;
-class MixerBoardFrame;
 
 struct AudioIOStartStreamOptions;
 struct UndoState;
@@ -488,8 +486,6 @@ public:
    MeterPanel *GetCaptureMeter();
    void SetCaptureMeter(MeterPanel *capture);
 
-   MixerBoard* GetMixerBoard() { return mMixerBoard; }
-
    wxStatusBar* GetStatusBar() { return mStatusBar; }
 
 private:
@@ -649,7 +645,6 @@ private:
 
    MacrosWindow *mMacrosWindow{};
    HistoryWindow *mHistoryWindow{};
-   MixerBoard* mMixerBoard{};
 
    Destroy_ptr<FreqWindow> mFreqWindow;
 
