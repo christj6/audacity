@@ -887,17 +887,17 @@ void AudacityProject::CreateMenusAndCommands()
       c->AddSeparator();
 
       c->BeginSubMenu(_("M&ute/Unmute"));
-      c->AddItem(wxT("MuteAllTracks"), XXO("&Mute All Tracks"), FN(OnMuteAllTracks), wxT("Ctrl+U"));
-      c->AddItem(wxT("UnmuteAllTracks"), XXO("&Unmute All Tracks"), FN(OnUnmuteAllTracks), wxT("Ctrl+Shift+U"));
+      // c->AddItem(wxT("MuteAllTracks"), XXO("&Mute All Tracks"), FN(OnMuteAllTracks), wxT("Ctrl+U"));
+      // c->AddItem(wxT("UnmuteAllTracks"), XXO("&Unmute All Tracks"), FN(OnUnmuteAllTracks), wxT("Ctrl+Shift+U"));
       c->EndSubMenu();
 
       c->BeginSubMenu(_("&Pan"));
       // As Pan changes are not saved on Undo stack, pan settings for all tracks
       // in the project could very easily be lost unless we require the tracks to be selcted.
       c->SetDefaultFlags(TracksSelectedFlag, TracksSelectedFlag);
-      c->SetLongName( _("Pan Left"))->AddItem(wxT("PanLeft"), XXO("&Left"), FN(OnPanLeft));
-      c->SetLongName( _("Pan Right"))->AddItem(wxT("PanRight"), XXO("&Right"), FN(OnPanRight));
-      c->SetLongName( _("Pan Center"))->AddItem(wxT("PanCenter"), XXO("&Center"), FN(OnPanCenter));
+      // c->SetLongName( _("Pan Left"))->AddItem(wxT("PanLeft"), XXO("&Left"), FN(OnPanLeft));
+      // c->SetLongName( _("Pan Right"))->AddItem(wxT("PanRight"), XXO("&Right"), FN(OnPanRight));
+      // c->SetLongName( _("Pan Center"))->AddItem(wxT("PanCenter"), XXO("&Center"), FN(OnPanCenter));
       c->EndSubMenu();
 
 
@@ -7191,80 +7191,6 @@ void AudacityProject::OnExpandAllTracks(const CommandContext &WXUNUSED(context) 
    while (t)
    {
       t->SetMinimized(false);
-      t = iter.Next();
-   }
-
-   ModifyState();
-   RedrawProject();
-}
-
-void AudacityProject::OnPanTracks(float PanValue)
-{
-   TrackListIterator iter(GetTracks());
-   Track *t = iter.First();
-
-   // count selected wave tracks
-   int count =0;
-   while (t)
-   {
-      if( t->GetKind() == Track::Wave && t->GetSelected() )
-         count++;
-      t = iter.Next();
-   }
-
-   // iter through them, all if none selected.
-   t = iter.First();
-   while (t)
-   {
-      if( t->GetKind() == Track::Wave && ((count==0) || t->GetSelected()) ){
-         WaveTrack *left = (WaveTrack *)t;
-         left->SetPan( PanValue );
-      }
-      t = iter.Next();
-   }
-
-   RedrawProject();
-
-   auto flags = UndoPush::AUTOSAVE;
-   /*i18n-hint: One or more audio tracks have been panned*/
-   PushState(_("Panned audio track(s)"), _("Pan Track"), flags);
-         flags = flags | UndoPush::CONSOLIDATE;
-}
-
-void AudacityProject::OnPanLeft(const CommandContext &WXUNUSED(context) ){ OnPanTracks( -1.0);}
-void AudacityProject::OnPanRight(const CommandContext &WXUNUSED(context) ){ OnPanTracks( 1.0);}
-void AudacityProject::OnPanCenter(const CommandContext &WXUNUSED(context) ){ OnPanTracks( 0.0);}
-
-
-void AudacityProject::OnMuteAllTracks(const CommandContext &WXUNUSED(context) )
-{
-   TrackListIterator iter(GetTracks());
-   Track *t = iter.First();
-
-   while (t)
-   {
-      auto pt = dynamic_cast<PlayableTrack *>(t);
-      if (pt) {
-         pt->SetMute(true);
-      }
-      t = iter.Next();
-   }
-
-   ModifyState();
-   RedrawProject();
-}
-
-void AudacityProject::OnUnmuteAllTracks(const CommandContext &WXUNUSED(context) )
-{
-   TrackListIterator iter(GetTracks());
-   Track *t = iter.First();
-
-   while (t)
-   {
-      auto pt = dynamic_cast<PlayableTrack *>(t);
-      if (pt) {
-         pt->SetMute(false);
-      }
       t = iter.Next();
    }
 

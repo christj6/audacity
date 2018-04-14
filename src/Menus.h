@@ -324,14 +324,6 @@ void OnGoSelEnd(const CommandContext &context );
 void OnExpandAllTracks(const CommandContext &context );
 void OnCollapseAllTracks(const CommandContext &context );
 
-void OnPanTracks(float PanValue);
-void OnPanLeft(const CommandContext &context );
-void OnPanRight(const CommandContext &context );
-void OnPanCenter(const CommandContext &context );
-
-void OnMuteAllTracks(const CommandContext &context );
-void OnUnmuteAllTracks(const CommandContext &context );
-
 void OnShowClipping(const CommandContext &context );
 void OnShowExtraMenus(const CommandContext &context );
 
