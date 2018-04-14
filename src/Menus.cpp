@@ -4493,10 +4493,6 @@ void AudacityProject::OnUndo(const CommandContext &WXUNUSED(context) )
    if (mHistoryWindow)
       mHistoryWindow->UpdateDisplay();
 
-   if (mMixerBoard)
-      // Mixer board may need to change for selection state and pan/gain
-      mMixerBoard->Refresh();
-
    ModifyUndoMenuItems();
 }
 
@@ -4521,10 +4517,6 @@ void AudacityProject::OnRedo(const CommandContext &WXUNUSED(context) )
 
    if (mHistoryWindow)
       mHistoryWindow->UpdateDisplay();
-
-   if (mMixerBoard)
-      // Mixer board may need to change for selection state and pan/gain
-      mMixerBoard->Refresh();
 
    ModifyUndoMenuItems();
 }
@@ -5304,8 +5296,6 @@ void AudacityProject::OnSelectTimeAndTracks(bool bAllTime, bool bAllTracks)
 
       ModifyState();
       mTrackPanel->Refresh(false);
-      if (mMixerBoard)
-         mMixerBoard->Refresh(false);
    }
 }
 
@@ -5347,8 +5337,6 @@ void AudacityProject::SelectNone()
       t = iter.Next();
    }
    mTrackPanel->Refresh(false);
-   if (mMixerBoard)
-      mMixerBoard->Refresh(false);
 }
 
 void AudacityProject::OnSelectNone(const CommandContext &WXUNUSED(context) )
@@ -5782,8 +5770,6 @@ void AudacityProject::OnSelectSyncLockSel(const CommandContext &WXUNUSED(context
       ModifyState();
 
    mTrackPanel->Refresh(false);
-   if (mMixerBoard)
-      mMixerBoard->Refresh(false);
 }
 
 //
@@ -7024,9 +7010,6 @@ void AudacityProject::OnRemoveTracks(const CommandContext &WXUNUSED(context) )
 
    while (t) {
       if (t->GetSelected()) {
-         auto playable = dynamic_cast<PlayableTrack*>(t);
-         if (mMixerBoard && playable)
-            mMixerBoard->RemoveTrackCluster(playable);
          if (!f)
             f = l;         // Capture the track preceeding the first removed track
          t = iter.RemoveCurrent();
@@ -7057,9 +7040,6 @@ void AudacityProject::OnRemoveTracks(const CommandContext &WXUNUSED(context) )
 
    mTrackPanel->UpdateViewIfNoTracks();
    mTrackPanel->Refresh(false);
-
-   if (mMixerBoard)
-      mMixerBoard->Refresh(true);
 }
 
 //
@@ -7244,8 +7224,6 @@ void AudacityProject::OnPanTracks(float PanValue)
    }
 
    RedrawProject();
-   if (mMixerBoard)
-      mMixerBoard->UpdatePan();
 
    auto flags = UndoPush::AUTOSAVE;
    /*i18n-hint: One or more audio tracks have been panned*/

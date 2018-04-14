@@ -4255,15 +4255,6 @@ void AudacityProject::RemoveTrack(Track * toRemove)
    wxString name = toRemove->GetName();
    Track *partner = toRemove->GetLink();
 
-   auto playable = dynamic_cast<PlayableTrack*>(toRemove);
-   if (playable)
-   {
-      // Update mixer board displayed tracks.
-      MixerBoard* pMixerBoard = this->GetMixerBoard();
-      if (pMixerBoard)
-         pMixerBoard->RemoveTrackCluster(playable); // Will remove partner shown in same cluster.
-   }
-
    mTracks->Remove(toRemove);
    if (partner) {
       mTracks->Remove(partner);

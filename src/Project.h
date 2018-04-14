@@ -649,7 +649,6 @@ private:
 
    MacrosWindow *mMacrosWindow{};
    HistoryWindow *mHistoryWindow{};
-   MixerBoardFrame* mMixerBoardFrame{};
    MixerBoard* mMixerBoard{};
 
    Destroy_ptr<FreqWindow> mFreqWindow;

@@ -16,7 +16,6 @@ Paul Licameli split from TrackPanel.cpp
 #include "../../AColor.h"
 #include "../../FreqWindow.h"
 #include "../../HitTestResult.h"
-#include "../../MixerBoard.h"
 #include "../../NumberScale.h"
 #include "../../Project.h"
 #include "../../RefreshCode.h"
@@ -594,8 +593,6 @@ UIHandle::Result SelectHandle::Click
    bool bShiftDown = event.ShiftDown();
    bool bCtrlDown = event.ControlDown();
 
-   auto pMixerBoard = pProject->GetMixerBoard();
-
    mSelStart = mUseSnap ? mSnapStart.outTime : mSnapStart.timeSnappedTime;
    auto xx = viewInfo.TimeToPosition(mSelStart, mRect.x);
 
@@ -839,7 +836,6 @@ UIHandle::Result SelectHandle::Drag
       Track *sTrack = pTrack.get();
       Track *eTrack = clickedTrack.get();
       auto trackList = pProject->GetTracks();
-      auto pMixerBoard = pProject->GetMixerBoard();
       if ( sTrack && eTrack && !event.ControlDown() ) {
          auto &selectionState = pProject->GetSelectionState();
          selectionState.SelectRangeOfTracks
@@ -991,10 +987,6 @@ UIHandle::Result SelectHandle::Cancel(AudacityProject *pProject)
 {
    mSelectionStateChanger.reset();
    pProject->GetViewInfo().selectedRegion = mInitialSelection;
-
-   // Refresh mixer board for change of set of selected tracks
-   if (MixerBoard* pMixerBoard = pProject->GetMixerBoard())
-      pMixerBoard->Refresh();
 
    return RefreshCode::RefreshAll;
 }

@@ -11,7 +11,6 @@
 
 class Track;
 class TrackList;
-class MixerBoard;
 class ViewInfo;
 #include "MemoryX.h"
 #include <vector>

@@ -14,7 +14,6 @@ Paul Licameli split from TrackPanel.cpp
 #include "TrackSelectHandle.h"
 #include "../../HitTestResult.h"
 #include "../../RefreshCode.h"
-#include "../../MixerBoard.h"
 #include "../../Project.h"
 #include "../../TrackPanel.h" // for TrackInfo
 #include "../../TrackPanelMouseEvent.h"
@@ -170,11 +169,6 @@ void TrackMenuTable::OnSetName(wxCommandEvent &)
          // (otherwise sort by name and time will crash).
          if (pTrack->GetLinked())
             pTrack->GetLink()->SetName(newName);
-
-         MixerBoard *const pMixerBoard = proj->GetMixerBoard();
-         auto pt = dynamic_cast<PlayableTrack*>(pTrack);
-         if (pt && pMixerBoard)
-            pMixerBoard->UpdateName(pt);
 
          proj->PushState(wxString::Format(_("Renamed '%s' to '%s'"),
             oldName,

@@ -8,7 +8,6 @@
 
 #include "Audacity.h"
 #include "SelectionState.h"
-#include "MixerBoard.h"
 #include "ViewInfo.h"
 #include "Track.h"
 

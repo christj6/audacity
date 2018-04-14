@@ -430,7 +430,6 @@ AudioIOListener and whether the playback is looped.
 #include "AudacityApp.h"
 #include "AudacityException.h"
 #include "Mix.h"
-#include "MixerBoard.h"
 #include "Resample.h"
 #include "RingBuffer.h"
 #include "prefs/GUISettings.h"
@@ -1680,11 +1679,6 @@ void AudioIO::SetMeters()
    if (mOutputMeter)
       mOutputMeter->Reset(mRate, true);
 
-   AudacityProject* pProj = GetActiveProject();
-   MixerBoard* pMixerBoard = pProj->GetMixerBoard();
-   if (pMixerBoard)
-      pMixerBoard->ResetMeters(true);
-
    mUpdateMeters = true;
 }
 
@@ -1924,10 +1918,6 @@ void AudioIO::StopStream()
 
    if (mOutputMeter)
       mOutputMeter->Reset(mRate, false);
-
-   MixerBoard* pMixerBoard = mOwningProject->GetMixerBoard();
-   if (pMixerBoard)
-      pMixerBoard->ResetMeters(false);
 
    mInputMeter.Release();
    mOutputMeter = NULL;
