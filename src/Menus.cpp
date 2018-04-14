@@ -900,19 +900,6 @@ void AudacityProject::CreateMenusAndCommands()
          { wxT("EndToSelEnd"),     _("End to Selection En&d") },
       };
 
-      // Calling c->SetCommandFlags() after AddItemList for "Align" and "AlignMove"
-      // does not correctly set flags for submenus, so do it this way.
-      c->SetDefaultFlags(AudioIONotBusyFlag | TracksSelectedFlag,
-         AudioIONotBusyFlag | TracksSelectedFlag);
-
-      c->BeginSubMenu(_("&Align Tracks"));
-
-      c->AddCheck(wxT("MoveSelectionWithTracks"), XXO("&Move Selection with Tracks (on/off)"),
-         FN(OnMoveSelectionWithTracks),
-         gPrefs->Read(wxT("/GUI/MoveSelectionWithTracks"), 0L),
-         AlwaysEnabledFlag, AlwaysEnabledFlag);
-      c->EndSubMenu();
-
       c->SetDefaultFlags(AudioIONotBusyFlag, AudioIONotBusyFlag);
 
       c->BeginSubMenu(_("S&ort Tracks"));
@@ -6690,15 +6677,6 @@ void AudacityProject::OnSoundActivated(const CommandContext &WXUNUSED(context) )
 void AudacityProject::OnRescanDevices(const CommandContext &WXUNUSED(context) )
 {
    DeviceManager::Instance()->Rescan();
-}
-
-void AudacityProject::OnMoveSelectionWithTracks(const CommandContext &WXUNUSED(context) )
-{
-   bool bMoveWith;
-   gPrefs->Read(wxT("/GUI/MoveSelectionWithTracks"), &bMoveWith, false);
-   gPrefs->Write(wxT("/GUI/MoveSelectionWithTracks"), !bMoveWith);
-   gPrefs->Flush();
-
 }
 
 void AudacityProject::OnSyncLock(const CommandContext &WXUNUSED(context) )

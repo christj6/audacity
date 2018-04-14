@@ -396,7 +396,6 @@ static wxString ClipBoundaryMessage(const std::vector<FoundClipBoundary>& result
 void OnNewWaveTrack(const CommandContext &context );
 void OnNewStereoTrack(const CommandContext &context );
 void OnRemoveTracks(const CommandContext &context );
-void OnMoveSelectionWithTracks(const CommandContext &context );
 void OnSyncLock(const CommandContext &context );
 void OnAddLabel(const CommandContext &context );
 void OnAddLabelPlaying(const CommandContext &context );
