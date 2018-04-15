@@ -1432,17 +1432,9 @@ const wxString & AudacityProject::GetFrequencySelectionFormatName() const
    return mFrequencySelectionFormatName;
 }
 
-void AudacityProject::SetFrequencySelectionFormatName(const wxString & formatName)
-{
-}
-
 const wxString & AudacityProject::GetBandwidthSelectionFormatName() const
 {
    return mBandwidthSelectionFormatName;
-}
-
-void AudacityProject::SetBandwidthSelectionFormatName(const wxString & formatName)
-{
 }
 
 void AudacityProject::SetSelectionFormat(const wxString & format)
@@ -2877,15 +2869,8 @@ bool AudacityProject::HandleXMLTag(const wxChar *tag, const wxChar **attrs)
       else if (!wxStrcmp(attr, wxT("snapto"))) {
          SetSnapTo(wxString(value) == wxT("on") ? true : false);
       }
-
       else if (!wxStrcmp(attr, wxT("selectionformat")))
          SetSelectionFormat(value);
-
-      else if (!wxStrcmp(attr, wxT("frequencyformat")))
-         SetFrequencySelectionFormatName(value);
-
-      else if (!wxStrcmp(attr, wxT("bandwidthformat")))
-         SetBandwidthSelectionFormatName(value);
    } // while
 
    mViewInfo.UpdatePrefs();

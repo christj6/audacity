@@ -417,10 +417,8 @@ public:
 
    // Spectral Selection Formats
 
-   void SetFrequencySelectionFormatName(const wxString & format);
    const wxString & GetFrequencySelectionFormatName() const;
 
-   void SetBandwidthSelectionFormatName(const wxString & format);
    const wxString & GetBandwidthSelectionFormatName() const;
 
    // Scrollbars
