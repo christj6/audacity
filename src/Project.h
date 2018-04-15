@@ -31,8 +31,6 @@
 #include "commands/CommandManager.h"
 #include "effects/EffectManager.h"
 #include "xml/XMLTagHandler.h"
-#include "toolbars/SelectionBarListener.h"
-#include "toolbars/SpectralSelectionBarListener.h"
 
 #include "MemoryX.h"
 #include <wx/defs.h>
@@ -167,8 +165,6 @@ class WaveTrack;
 
 class AUDACITY_DLL_API AudacityProject final : public wxFrame,
                                      public TrackPanelListener,
-                                     public SelectionBarListener,
-                                     public SpectralSelectionBarListener,
                                      public XMLTagHandler,
                                      public AudioIOListener
 {
@@ -489,29 +485,6 @@ private:
    bool SnapSelection();
 
 public:
-   // SelectionBarListener callback methods
-
-   double AS_GetRate() override;
-   void AS_SetRate(double rate) override;
-   int AS_GetSnapTo() override;
-   void AS_SetSnapTo(int snap) override;
-   const wxString & AS_GetSelectionFormat() override;
-   void AS_SetSelectionFormat(const wxString & format) override;
-   void AS_ModifySelection(double &start, double &end, bool done) override;
-
-   // SpectralSelectionBarListener callback methods
-
-   double SSBL_GetRate() const override;
-
-   const wxString & SSBL_GetFrequencySelectionFormatName() override;
-   void SSBL_SetFrequencySelectionFormatName(const wxString & formatName) override;
-
-   const wxString & SSBL_GetBandwidthSelectionFormatName() override;
-   void SSBL_SetBandwidthSelectionFormatName(const wxString & formatName) override;
-
-   void SSBL_ModifySpectralSelection(double &bottom, double &top, bool done) override;
-
-   void SetStateTo(unsigned int n);
 
    // XMLTagHandler callback methods
 

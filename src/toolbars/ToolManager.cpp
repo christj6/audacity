@@ -56,7 +56,6 @@
 #include "MeterToolBar.h"
 #include "MixerToolBar.h"
 #include "SelectionBar.h"
-#include "SpectralSelectionBar.h"
 #include "ToolsToolBar.h"
 
 #include "../AColor.h"

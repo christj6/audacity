@@ -590,9 +590,6 @@
     <ClCompile Include="..\..\..\src\ModuleManager.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\toolbars\SpectralSelectionBar.cpp">
-      <Filter>src\toolbars</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\widgets\NumericTextCtrl.cpp">
       <Filter>src\widgets</Filter>
     </ClCompile>
@@ -1362,12 +1359,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\ModuleManager.h">
       <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\toolbars\SpectralSelectionBar.h">
-      <Filter>src\toolbars</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\toolbars\SpectralSelectionBarListener.h">
-      <Filter>src\toolbars</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\widgets\NumericTextCtrl.h">
       <Filter>src\widgets</Filter>

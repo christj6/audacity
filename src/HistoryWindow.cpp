@@ -240,7 +240,6 @@ void HistoryWindow::OnDiscard(wxCommandEvent & WXUNUSED(event))
 
    mSelected -= i;
    mManager->RemoveStates(i);
-   mProject->SetStateTo(mSelected + 1);
 
    while(--i >= 0)
       mList->DeleteItem(i);
@@ -275,12 +274,6 @@ void HistoryWindow::OnItemSelected(wxListEvent &event)
    }
    mList->SetItemImage(selected, 1);
 
-   // Do not do a SetStateTo() if we're not actually changing the selected
-   // entry.  Doing so can cause unnecessary delays upon initial load or while
-   // clicking the same entry over and over.
-   if (selected != mSelected) {
-      mProject->SetStateTo(selected + 1);
-   }
    mSelected = selected;
 
    UpdateLevels();

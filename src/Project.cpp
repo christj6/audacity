@@ -139,7 +139,6 @@ scroll information.  It also has some status flags.
 #include "toolbars/MeterToolBar.h"
 #include "toolbars/MixerToolBar.h"
 #include "toolbars/SelectionBar.h"
-#include "toolbars/SpectralSelectionBar.h"
 #include "toolbars/ToolsToolBar.h"
 
 #include "tracks/ui/BackgroundCell.h"
@@ -966,7 +965,6 @@ AudacityProject::AudacityProject(wxWindow * parent, wxWindowID id,
    // Create the ToolDock
    //
    mToolManager = std::make_unique<ToolManager>( this, mTopPanel );
-   GetSelectionBar()->SetListener(this);
    mToolManager->LayoutToolBars();
 
    //
@@ -1429,98 +1427,6 @@ bool AudacityProject::SnapSelection()
    return false;
 }
 
-double AudacityProject::AS_GetRate()
-{
-   return mRate;
-}
-
-void AudacityProject::AS_SetRate(double rate)
-{
-   mRate = rate;
-}
-
-int AudacityProject::AS_GetSnapTo()
-{
-   return GetSnapTo();
-}
-
-void AudacityProject::AS_SetSnapTo(int snap)
-{
-   mSnapTo = snap;
-
-// LLL: TODO - what should this be changed to???
-// mCommandManager.Check(wxT("Snap"), mSnapTo);
-   gPrefs->Write(wxT("/SnapTo"), mSnapTo);
-   gPrefs->Flush();
-
-   SnapSelection();
-
-   RedrawProject();
-}
-
-const wxString & AudacityProject::AS_GetSelectionFormat()
-{
-   return GetSelectionFormat();
-}
-
-void AudacityProject::AS_SetSelectionFormat(const wxString & format)
-{
-   mSelectionFormat = format;
-
-   gPrefs->Write(wxT("/SelectionFormat"), mSelectionFormat);
-   gPrefs->Flush();
-
-   if (SnapSelection() && GetTrackPanel())
-      GetTrackPanel()->Refresh(false);
-}
-
-double AudacityProject::SSBL_GetRate() const
-{
-   // Return maximum of project rate and all track rates.
-   double rate = mRate;
-
-   TrackListOfKindIterator iterWaveTrack(Track::Wave, mTracks.get());
-   WaveTrack *pWaveTrack = static_cast<WaveTrack*>(iterWaveTrack.First());
-   while (pWaveTrack)
-   {
-      rate = std::max(rate, pWaveTrack->GetRate());
-      pWaveTrack = static_cast<WaveTrack*>(iterWaveTrack.Next());
-   }
-
-   return rate;
-}
-
-const wxString & AudacityProject::SSBL_GetFrequencySelectionFormatName()
-{
-   return GetFrequencySelectionFormatName();
-}
-
-void AudacityProject::SSBL_SetFrequencySelectionFormatName(const wxString & formatName)
-{
-   mFrequencySelectionFormatName = formatName;
-
-   gPrefs->Write(wxT("/FrequencySelectionFormatName"), mFrequencySelectionFormatName);
-   gPrefs->Flush();
-}
-
-const wxString & AudacityProject::SSBL_GetBandwidthSelectionFormatName()
-{
-   return GetBandwidthSelectionFormatName();
-}
-
-void AudacityProject::SSBL_SetBandwidthSelectionFormatName(const wxString & formatName)
-{
-   mBandwidthSelectionFormatName = formatName;
-
-   gPrefs->Write(wxT("/BandwidthSelectionFormatName"), mBandwidthSelectionFormatName);
-   gPrefs->Flush();
-}
-
-void AudacityProject::SSBL_ModifySpectralSelection(double &bottom, double &top, bool done)
-{
-   bottom; top; done;
-}
-
 const wxString & AudacityProject::GetFrequencySelectionFormatName() const
 {
    return mFrequencySelectionFormatName;
@@ -1528,7 +1434,6 @@ const wxString & AudacityProject::GetFrequencySelectionFormatName() const
 
 void AudacityProject::SetFrequencySelectionFormatName(const wxString & formatName)
 {
-   SSBL_SetFrequencySelectionFormatName(formatName);
 }
 
 const wxString & AudacityProject::GetBandwidthSelectionFormatName() const
@@ -1538,12 +1443,10 @@ const wxString & AudacityProject::GetBandwidthSelectionFormatName() const
 
 void AudacityProject::SetBandwidthSelectionFormatName(const wxString & formatName)
 {
-   SSBL_SetBandwidthSelectionFormatName(formatName);
 }
 
 void AudacityProject::SetSelectionFormat(const wxString & format)
 {
-   AS_SetSelectionFormat(format);
    if (GetSelectionBar()) {
       GetSelectionBar()->SetSelectionFormat(format);
    }
@@ -1552,16 +1455,6 @@ void AudacityProject::SetSelectionFormat(const wxString & format)
 const wxString & AudacityProject::GetSelectionFormat() const
 {
    return mSelectionFormat;
-}
-
-
-void AudacityProject::AS_ModifySelection(double &start, double &end, bool done)
-{
-   mViewInfo.selectedRegion.setTimes(start, end);
-   mTrackPanel->Refresh(false);
-   if (done) {
-      ModifyState();
-   }
 }
 
 void AudacityProject::FinishAutoScroll()
@@ -3633,7 +3526,6 @@ void AudacityProject::PushState(const wxString &desc,
 
 void AudacityProject::RollbackState()
 {
-   SetStateTo(GetUndoManager()->GetCurrentState());
 }
 
 void AudacityProject::ModifyState()
@@ -3697,18 +3589,6 @@ void AudacityProject::PopState(const UndoState &state)
    UpdateMenus();
 
    AutoSave();
-}
-
-void AudacityProject::SetStateTo(unsigned int n)
-{
-   const UndoState &state =
-       GetUndoManager()->SetStateTo(n, &mViewInfo.selectedRegion);
-   PopState(state);
-
-   HandleResize();
-   mTrackPanel->SetFocusedTrack(NULL);
-   mTrackPanel->Refresh(false);
-   ModifyUndoMenuItems();
 }
 
 //
@@ -4133,7 +4013,6 @@ void AudacityProject::OnAudioIOStopRecording()
 
 void AudacityProject::SetSnapTo(int snap)
 {
-   AS_SetSnapTo(snap);
    if (GetSelectionBar()) {
       GetSelectionBar()->SetSnapTo(snap);
    }

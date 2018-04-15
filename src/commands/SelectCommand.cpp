@@ -148,8 +148,6 @@ bool SelectFrequenciesCommand::Apply(const CommandContext & context){
    if( !bHasBottom && !bHasTop )
       return true;
 
-   context.GetProject()->SSBL_ModifySpectralSelection(
-      mBottom, mTop, false);// false for not done.
    return true;
 }
 
