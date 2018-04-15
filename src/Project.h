@@ -475,9 +475,6 @@ public:
    EditToolBar *GetEditToolBar();
    MixerToolBar *GetMixerToolBar();
    SelectionBar *GetSelectionBar();
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-   SpectralSelectionBar *GetSpectralSelectionBar();
-#endif
    ToolsToolBar *GetToolsToolBar();
    const ToolsToolBar *GetToolsToolBar() const;
 

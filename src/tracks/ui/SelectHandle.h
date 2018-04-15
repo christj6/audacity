@@ -109,15 +109,6 @@ private:
    static void StartSnappingFreqSelection
       (SpectrumAnalyst &analyst,
        const ViewInfo &viewInfo, const WaveTrack *pTrack);
-   void MoveSnappingFreqSelection
-      (AudacityProject *pProject, ViewInfo &viewInfo, int mouseYCoordinate,
-       int trackTopEdge,
-       int trackHeight, Track *pTrack);
-public:
-   // This is needed to implement a command assignable to keystrokes
-   static void SnapCenterOnce
-      (SpectrumAnalyst &analyst,
-       ViewInfo &viewInfo, const WaveTrack *pTrack, bool up);
 private:
    //void ResetFreqSelectionPin
    //   (const ViewInfo &viewInfo, double hintFrequency, bool logF);

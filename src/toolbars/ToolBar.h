@@ -73,9 +73,6 @@ enum
    EditBarID,
    DeviceBarID,
    SelectionBarID,
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-   SpectralSelectionBarID,
-#endif
    ToolBarCount
 };
 

@@ -263,15 +263,6 @@ private:
 int CountSelectedWaveTracks();
 int CountSelectedTracks();
 public:
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-// For toggling of spectral seletion
-double mLastF0;
-double mLastF1;
-void OnToggleSpectralSelection(const CommandContext &context );
-void DoNextPeakFrequency(bool up);
-void OnNextHigherPeakFrequency(const CommandContext &context );
-void OnNextLowerPeakFrequency(const CommandContext &context );
-#endif
 void OnSelectCursorEnd(const CommandContext &context );
 void OnSelectStartCursor(const CommandContext &context );
 void OnSelectTrackStartToEnd(const CommandContext &context );
@@ -327,9 +318,6 @@ void OnShowRecordMeterToolBar(const CommandContext &context );
 void OnShowPlayMeterToolBar(const CommandContext &context );
 void OnShowMixerToolBar(const CommandContext &context );
 void OnShowSelectionToolBar(const CommandContext &context );
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-void OnShowSpectralSelectionToolBar(const CommandContext &context );
-#endif
 void OnShowToolsToolBar(const CommandContext &context );
 void OnResetToolBars(const CommandContext &context );
 

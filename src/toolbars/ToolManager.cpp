@@ -420,9 +420,6 @@ ToolManager::ToolManager( AudacityProject *parent, wxWindow *topDockParent )
    mBars[ MixerBarID ]         =  ToolBar::Holder{ safenew MixerToolBar() };
    mBars[ SelectionBarID ]     =  ToolBar::Holder{ safenew SelectionBar() };
    mBars[ DeviceBarID ]        =  ToolBar::Holder{ safenew DeviceToolBar() };
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-   mBars[SpectralSelectionBarID] =  ToolBar::Holder{ safenew SpectralSelectionBar() };
-#endif
 
    // We own the timer
    mTimer.SetOwner( this );
@@ -481,9 +478,6 @@ static struct DefaultConfigEntry {
 
    // Bottom dock
    { SelectionBarID,         NoBarID,                NoBarID                },
-
-   // Hidden by default in bottom dock
-   { SpectralSelectionBarID, NoBarID,                NoBarID                },
 };
 
 void ToolManager::Reset()
@@ -530,11 +524,7 @@ void ToolManager::Reset()
       bar->EnableDisableButtons();
 
       // Hide some bars.
-      if( ndx == MeterBarID
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-         || ndx == SpectralSelectionBarID
-#endif
-         )
+      if( ndx == MeterBarID)
          expose = false;
 
       // Next condition will alwys (?) be true, as the reset configuration is
@@ -676,13 +666,6 @@ void ToolManager::ReadConfig()
          defaultDock = BotDockID;
       if( ndx == MeterBarID )
          bShownByDefault = false;
-
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-      if( ndx == SpectralSelectionBarID ){
-         defaultDock = BotDockID;
-         bShownByDefault = false; // Only show if asked for.  
-      }
-#endif
 
       // Read in all the settings
 

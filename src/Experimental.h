@@ -80,9 +80,6 @@
 // JKC Apr 2015, Menu item to manage effects.
 #define EXPERIMENTAL_EFFECT_MANAGEMENT
 
-// Paul Licameli (PRL) 5 Oct 2014
-#define EXPERIMENTAL_SPECTRAL_EDITING
-
 #ifdef EXPERIMENTAL_NYQUIST_INSPECTOR
    #include "NyquistAdapter.h"
 #endif

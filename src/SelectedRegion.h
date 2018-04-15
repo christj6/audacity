@@ -45,19 +45,11 @@ public:
    SelectedRegion()
       : mT0(0.0)
       , mT1(0.0)
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-      , mF0(UndefinedFrequency)
-      , mF1(UndefinedFrequency)
-#endif
    {}
 
    SelectedRegion(double t0, double t1)
       : mT0(t0)
       , mT1(t1)
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-      , mF0(UndefinedFrequency)
-      , mF1(UndefinedFrequency)
-#endif
    { ensureOrdering(); }
 
 
@@ -69,10 +61,6 @@ public:
    SelectedRegion(const SelectedRegion &x)
       : mT0(x.mT0)
       , mT1(x.mT1)
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-      , mF0(x.mF0)
-      , mF1(x.mF1)
-#endif
    {}
 
    SelectedRegion& operator=(const SelectedRegion& x)
@@ -80,10 +68,6 @@ public:
       if (this != &x) {
          mT0 = x.mT0;
          mT1 = x.mT1;
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-         mF0 = x.mF0;
-         mF1 = x.mF1;
-#endif
       }
       return *this;
    }
@@ -94,18 +78,6 @@ public:
    double t1() const { return mT1; }
    double duration() const { return mT1 - mT0; }
    bool isPoint() const { return mT1 <= mT0; }
-
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-   double f0() const { return mF0; }
-   double f1() const { return mF1; }
-   double fc() const {
-      if (mF0 == UndefinedFrequency ||
-          mF1 == UndefinedFrequency)
-          return UndefinedFrequency;
-      else
-         return sqrt(mF0 * mF1);
-   };
-#endif
 
    // Mutators
    // PRL: to do: more integrity checks
@@ -160,44 +132,6 @@ public:
 
    void collapseToT1() { mT0 = mT1; }
 
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-   // Returns true iff the bounds got swapped
-   bool setF0(double f, bool maySwap = true) {
-      if (f < 0)
-         f = UndefinedFrequency;
-      mF0 = f;
-      if (maySwap)
-         return ensureFrequencyOrdering();
-      else {
-         if (mF1 >= 0 && mF1 < mF0)
-            mF1 = mF0;
-         return false;
-      }
-   }
-
-   // Returns true iff the bounds got swapped
-   bool setF1(double f, bool maySwap = true) {
-      if (f < 0)
-         f = UndefinedFrequency;
-      mF1 = f;
-      if (maySwap)
-         return ensureFrequencyOrdering();
-      else {
-         if (mF0 >= 0 && mF1 < mF0)
-            mF0 = mF1;
-         return false;
-      }
-   }
-
-   // Returns true iff the bounds got swapped
-   bool setFrequencies(double f0, double f1)
-   {
-      mF0 = f0;
-      mF1 = f1;
-      return ensureFrequencyOrdering();
-   }
-#endif
-
    // Serialization:  historically, selections were written to file
    // in two places (project, and each label) but only as attributes
    // in the tags, and different names were used in the two places.
@@ -236,47 +170,16 @@ public:
 
 private:
 
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-   bool ensureFrequencyOrdering()
-   {
-      if (mF1 < 0)
-         mF1 = UndefinedFrequency;
-      if (mF0 < 0)
-         mF0 = UndefinedFrequency;
-
-      if (mF0 != UndefinedFrequency &&
-          mF1 != UndefinedFrequency &&
-          mF1 < mF0) {
-         const double t = mF1;
-         mF1 = mF0;
-         mF0 = t;
-         return true;
-      }
-      else
-         return false;
-   }
-#endif
-
    friend inline bool operator ==
    (const SelectedRegion &lhs, const SelectedRegion &rhs)
    {
       return
             lhs.mT0 == rhs.mT0
-         && lhs.mT1 == rhs.mT1
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-         && lhs.mF0 == rhs.mF0
-         && lhs.mF1 == rhs.mF1
-#endif
-      ;
+         && lhs.mT1 == rhs.mT1;
    }
 
    double mT0;
    double mT1;
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-   double mF0; // low frequency
-   double mF1; // high frequency
-#endif
-
 };
 
 inline bool operator != (const SelectedRegion &lhs, const SelectedRegion &rhs)

@@ -394,10 +394,6 @@ protected:
    std::shared_ptr<TrackList> mOutputTracks; // used only if CopyInputTracks() is called.
    double         mT0;
    double         mT1;
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-   double         mF0;
-   double         mF1;
-#endif
    wxArrayString  mPresetNames;
    wxArrayString  mPresetValues;
    int            mPass;

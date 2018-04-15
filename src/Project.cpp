@@ -967,9 +967,6 @@ AudacityProject::AudacityProject(wxWindow * parent, wxWindowID id,
    //
    mToolManager = std::make_unique<ToolManager>( this, mTopPanel );
    GetSelectionBar()->SetListener(this);
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-   GetSpectralSelectionBar()->SetListener(this);
-#endif
    mToolManager->LayoutToolBars();
 
    //
@@ -1176,7 +1173,6 @@ AudacityProject::AudacityProject(wxWindow * parent, wxWindowID id,
 
    //Initialize the last selection adjustment time.
    mLastSelectionAdjustment = ::wxGetLocalTimeMillis();
-   mLastF0 = mLastF1 = SelectedRegion::UndefinedFrequency;
 }
 
 AudacityProject::~AudacityProject()
@@ -1522,20 +1518,7 @@ void AudacityProject::SSBL_SetBandwidthSelectionFormatName(const wxString & form
 
 void AudacityProject::SSBL_ModifySpectralSelection(double &bottom, double &top, bool done)
 {
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-   double nyq = SSBL_GetRate() / 2.0;
-   if (bottom >= 0.0)
-      bottom = std::min(nyq, bottom);
-   if (top >= 0.0)
-      top = std::min(nyq, top);
-   mViewInfo.selectedRegion.setFrequencies(bottom, top);
-   mTrackPanel->Refresh(false);
-   if (done) {
-      ModifyState();
-   }
-#else
    bottom; top; done;
-#endif
 }
 
 const wxString & AudacityProject::GetFrequencySelectionFormatName() const
@@ -1546,11 +1529,6 @@ const wxString & AudacityProject::GetFrequencySelectionFormatName() const
 void AudacityProject::SetFrequencySelectionFormatName(const wxString & formatName)
 {
    SSBL_SetFrequencySelectionFormatName(formatName);
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-   if (GetSpectralSelectionBar()) {
-      GetSpectralSelectionBar()->SetFrequencySelectionFormatName(formatName);
-   }
-#endif
 }
 
 const wxString & AudacityProject::GetBandwidthSelectionFormatName() const
@@ -1561,11 +1539,6 @@ const wxString & AudacityProject::GetBandwidthSelectionFormatName() const
 void AudacityProject::SetBandwidthSelectionFormatName(const wxString & formatName)
 {
    SSBL_SetBandwidthSelectionFormatName(formatName);
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-   if (GetSpectralSelectionBar()) {
-      GetSpectralSelectionBar()->SetBandwidthSelectionFormatName(formatName);
-   }
-#endif
 }
 
 void AudacityProject::SetSelectionFormat(const wxString & format)
@@ -3902,16 +3875,6 @@ SelectionBar *AudacityProject::GetSelectionBar()
       NULL);
 }
 
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-SpectralSelectionBar *AudacityProject::GetSpectralSelectionBar()
-{
-   return static_cast<SpectralSelectionBar*>(
-      (mToolManager ?
-      mToolManager->GetToolBar(SpectralSelectionBarID) :
-      NULL));
-}
-#endif
-
 ToolsToolBar *AudacityProject::GetToolsToolBar()
 {
    return (ToolsToolBar *)
@@ -4047,11 +4010,6 @@ void AudacityProject::TP_DisplaySelection()
 
    GetSelectionBar()->SetTimes(mViewInfo.selectedRegion.t0(),
                                mViewInfo.selectedRegion.t1(), audioTime);
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-   GetSpectralSelectionBar()->SetFrequencies
-      (mViewInfo.selectedRegion.f0(), mViewInfo.selectedRegion.f1());
-#endif
-
 }
 
 

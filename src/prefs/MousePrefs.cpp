@@ -112,13 +112,6 @@ void MousePrefs::CreateList()
    AddItem(_("Shift-Left-Click"),  _("Select"),   _("Extend Selection Range"));
    AddItem(_("Left-Double-Click"), _("Select"),   _("Select Clip or Entire Track"));
 
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-   // JKC: Prompt is disabled for now.  It's a toggle rather than a drag modifier.
-   // more like Snap-to than anything else.
-   // Spectral selection
-   // AddItem(_("ESC"),              _("Select"),    _("Toggle center snapping in spectrogram"));
-#endif
-
    AddItem(_("Left-Click"),       _("Zoom"),      _("Zoom in on Point"));
    AddItem(_("Left-Drag"),        _("Zoom"),      _("Zoom in on a Range"), _("same as right-drag"));
    AddItem(_("Right-Click"),      _("Zoom"),      _("Zoom out one step"));

@@ -422,12 +422,6 @@ protected:
 
    bool mRefreshBacking;
 
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-
-protected:
-
-#endif
-
    bool mRedrawAfterStop;
 
    wxMouseState mLastMouseState;

@@ -523,18 +523,6 @@ void AudacityProject::CreateMenusAndCommands()
 
       /////////////////////////////////////////////////////////////////////////////
 
-      c->SetDefaultFlags(TracksExistFlag, TracksExistFlag);
-
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-      c->BeginSubMenu(_("S&pectral"));
-      c->AddItem(wxT("ToggleSpectralSelection"), XXO("To&ggle Spectral Selection"), FN(OnToggleSpectralSelection), wxT("Q"));
-      c->AddItem(wxT("NextHigherPeakFrequency"), XXO("Next &Higher Peak Frequency"), FN(OnNextHigherPeakFrequency));
-      c->AddItem(wxT("NextLowerPeakFrequency"), XXO("Next &Lower Peak Frequency"), FN(OnNextLowerPeakFrequency));
-      c->EndSubMenu();
-#endif
-
-      /////////////////////////////////////////////////////////////////////////////
-
       c->SetDefaultFlags(TracksSelectedFlag, TracksSelectedFlag);
 
       c->BeginSubMenu(_("Clip B&oundaries"));
@@ -663,10 +651,6 @@ void AudacityProject::CreateMenusAndCommands()
       c->AddCheck(wxT("ShowDeviceTB"), XXO("&Device Toolbar"), FN(OnShowDeviceToolBar), 0, AlwaysEnabledFlag, AlwaysEnabledFlag);
       /* i18n-hint: Clicking this menu item shows the toolbar for selecting a time range of audio*/
       c->AddCheck(wxT("ShowSelectionTB"), XXO("&Selection Toolbar"), FN(OnShowSelectionToolBar), 0, AlwaysEnabledFlag, AlwaysEnabledFlag);
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-      /* i18n-hint: Clicking this menu item shows the toolbar for selecting a frequency range of audio*/
-      c->AddCheck(wxT("ShowSpectralSelectionTB"), XXO("Spe&ctral Selection Toolbar"), FN(OnShowSpectralSelectionToolBar), 0, AlwaysEnabledFlag, AlwaysEnabledFlag);
-#endif
 
       c->EndSubMenu();
 
@@ -5001,63 +4985,6 @@ void AudacityProject::OnSelectNone(const CommandContext &WXUNUSED(context) )
    ModifyState();
 }
 
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-void AudacityProject::OnToggleSpectralSelection(const CommandContext &WXUNUSED(context) )
-{
-   SelectedRegion &region = mViewInfo.selectedRegion;
-   const double f0 = region.f0();
-   const double f1 = region.f1();
-   const bool haveSpectralSelection =
-   !(f0 == SelectedRegion::UndefinedFrequency &&
-     f1 == SelectedRegion::UndefinedFrequency);
-   if (haveSpectralSelection)
-   {
-      mLastF0 = f0;
-      mLastF1 = f1;
-      region.setFrequencies
-      (SelectedRegion::UndefinedFrequency, SelectedRegion::UndefinedFrequency);
-   }
-   else
-      region.setFrequencies(mLastF0, mLastF1);
-
-   mTrackPanel->Refresh(false);
-   ModifyState();
-}
-
-void AudacityProject::DoNextPeakFrequency(bool up)
-{
-   // Find the first selected wave track that is in a spectrogram view.
-   const WaveTrack *pTrack {};
-   SelectedTrackListOfKindIterator iter(Track::Wave, GetTracks());
-   for (Track *t = iter.First(); t; t = iter.Next()) {
-      WaveTrack *const wt = static_cast<WaveTrack*>(t);
-      const int display = wt->GetDisplay();
-      if (display == WaveTrack::Spectrum) {
-         pTrack = wt;
-         break;
-      }
-   }
-
-   if (pTrack) {
-      SpectrumAnalyst analyst;
-      SelectHandle::SnapCenterOnce(analyst, mViewInfo, pTrack, up);
-      mTrackPanel->Refresh(false);
-      ModifyState();
-   }
-}
-
-void AudacityProject::OnNextHigherPeakFrequency(const CommandContext &WXUNUSED(context) )
-{
-   DoNextPeakFrequency(true);
-}
-
-
-void AudacityProject::OnNextLowerPeakFrequency(const CommandContext &WXUNUSED(context) )
-{
-   DoNextPeakFrequency(false);
-}
-#endif
-
 void AudacityProject::OnSelectCursorEnd(const CommandContext &WXUNUSED(context) )
 {
    double kWayOverToLeft = -1000000.0;
@@ -5740,13 +5667,6 @@ void AudacityProject::OnShowSelectionToolBar(const CommandContext &WXUNUSED(cont
 {
    mToolManager->ShowHide( SelectionBarID );
 }
-
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-void AudacityProject::OnShowSpectralSelectionToolBar(const CommandContext &WXUNUSED(context) )
-{
-   mToolManager->ShowHide( SpectralSelectionBarID );
-}
-#endif
 
 void AudacityProject::OnShowToolsToolBar(const CommandContext &WXUNUSED(context) )
 {

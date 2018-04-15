@@ -28,12 +28,6 @@ void SelectedRegion::WriteXMLAttributes
 {
    xmlFile.WriteAttr(legacyT0Name, t0(), 10);
    xmlFile.WriteAttr(legacyT1Name, t1(), 10);
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-   if (f0() >= 0)
-      xmlFile.WriteAttr(sDefaultF0Name, f0(), 10);
-   if (f1() >= 0)
-      xmlFile.WriteAttr(sDefaultF1Name, f1(), 10);
-#endif
 }
 
 bool SelectedRegion::HandleXMLAttribute
@@ -46,12 +40,6 @@ bool SelectedRegion::HandleXMLAttribute
       setter = &SelectedRegion::setT0;
    else if (!wxStrcmp(attr, legacyT1Name))
       setter = &SelectedRegion::setT1;
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-   else if (!wxStrcmp(attr, sDefaultF0Name))
-      setter = &SelectedRegion::setF0;
-   else if (!wxStrcmp(attr, sDefaultF1Name))
-      setter = &SelectedRegion::setF1;
-#endif
    else
       return false;
 

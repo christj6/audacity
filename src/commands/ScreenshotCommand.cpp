@@ -861,8 +861,6 @@ bool ScreenshotCommand::Apply(const CommandContext & context)
       CapturePreferences(context, context.GetProject(), mFileName);
    else if (mCaptureMode.IsSameAs(wxT("Selectionbar")))
       return CaptureToolbar(context, context.GetProject()->GetToolManager(), SelectionBarID, mFileName);
-   else if (mCaptureMode.IsSameAs(wxT("Spectral_Selection")))
-      return CaptureToolbar(context, context.GetProject()->GetToolManager(), SpectralSelectionBarID, mFileName);
    else if (mCaptureMode.IsSameAs(wxT("Tools")))
       return CaptureToolbar(context, context.GetProject()->GetToolManager(), ToolsBarID, mFileName);
    else if (mCaptureMode.IsSameAs(wxT("Transport")))

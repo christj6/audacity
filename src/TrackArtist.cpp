@@ -1979,10 +1979,6 @@ void TrackArtist::DrawClipSpectrum(WaveTrackCache &waveTrackCache,
 
    double freqLo = SelectedRegion::UndefinedFrequency;
    double freqHi = SelectedRegion::UndefinedFrequency;
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-   freqLo = selectedRegion.f0();
-   freqHi = selectedRegion.f1();
-#endif
 
    const bool &isGrayscale = settings.isGrayscale;
    const int &range = settings.range;
