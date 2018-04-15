@@ -2011,69 +2011,6 @@ void AudacityProject::StopIfPaused()
       OnStop(*this);
 }
 
-void AudacityProject::ModifyAllProjectToolbarMenus()
-{
-   AProjectArray::iterator i;
-   for (i = gAudacityProjects.begin(); i != gAudacityProjects.end(); ++i) {
-      (*i)->ModifyToolbarMenus();
-   }
-}
-
-void AudacityProject::ModifyToolbarMenus()
-{
-   // Refreshes can occur during shutdown and the toolmanager may already
-   // be deleted, so protect against it.
-   if (!mToolManager) {
-      return;
-   }
-   mCommandManager.Check(wxT("ShowDeviceTB"),
-                         mToolManager->IsVisible(DeviceBarID));
-   mCommandManager.Check(wxT("ShowEditTB"),
-                         mToolManager->IsVisible(EditBarID));
-   mCommandManager.Check(wxT("ShowMeterTB"),
-                         mToolManager->IsVisible(MeterBarID));
-   mCommandManager.Check(wxT("ShowRecordMeterTB"),
-                         mToolManager->IsVisible(RecordMeterBarID));
-   mCommandManager.Check(wxT("ShowPlayMeterTB"),
-                         mToolManager->IsVisible(PlayMeterBarID));
-   mCommandManager.Check(wxT("ShowMixerTB"),
-                         mToolManager->IsVisible(MixerBarID));
-   mCommandManager.Check(wxT("ShowSelectionTB"),
-                         mToolManager->IsVisible(SelectionBarID));
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-   mCommandManager.Check(wxT("ShowSpectralSelectionTB"),
-                         mToolManager->IsVisible(SpectralSelectionBarID));
-#endif
-   mCommandManager.Check(wxT("ShowToolsTB"),
-                         mToolManager->IsVisible(ToolsBarID));
-   mCommandManager.Check(wxT("ShowTransportTB"),
-                         mToolManager->IsVisible(TransportBarID));
-
-   // Now, go through each toolbar, and call EnableDisableButtons()
-   for (int i = 0; i < ToolBarCount; i++) {
-      mToolManager->GetToolBar(i)->EnableDisableButtons();
-   }
-
-   // These don't really belong here, but it's easier and especially so for
-   // the Edit toolbar and the sync-lock menu item.
-   bool active;
-   gPrefs->Read(wxT("/AudioIO/SoundActivatedRecord"),&active, false);
-   mCommandManager.Check(wxT("SoundActivation"), active);
-
-   active = TracksPrefs::GetPinnedHeadPreference();
-   mCommandManager.Check(wxT("PinnedHead"), active);
-
-   gPrefs->Read(wxT("/AudioIO/Duplex"),&active, true);
-   mCommandManager.Check(wxT("Duplex"), active);
-   gPrefs->Read(wxT("/AudioIO/SWPlaythrough"),&active, false);
-   mCommandManager.Check(wxT("SWPlaythrough"), active);
-   gPrefs->Read(wxT("/GUI/SyncLockTracks"), &active, false);
-   SetSyncLock(active);
-   mCommandManager.Check(wxT("SyncLock"), active);
-   gPrefs->Read(wxT("/GUI/TypeToCreateLabel"),&active, true);
-   mCommandManager.Check(wxT("TypeToCreateLabel"), active);
-}
-
 // checkActive is a temporary hack that should be removed as soon as we
 // get multiple effect preview working
 void AudacityProject::UpdateMenus(bool checkActive)
@@ -2145,8 +2082,6 @@ void AudacityProject::UpdateMenus(bool checkActive)
          mCommandManager.Enable(wxT("Trim"), false);
       }
    }
-
-   ModifyToolbarMenus();
 }
 
 //
@@ -2597,14 +2532,12 @@ void AudacityProject::OnToggleSoundActivated(const CommandContext &WXUNUSED(cont
    gPrefs->Read(wxT("/AudioIO/SoundActivatedRecord"), &pause, false);
    gPrefs->Write(wxT("/AudioIO/SoundActivatedRecord"), !pause);
    gPrefs->Flush();
-   ModifyAllProjectToolbarMenus();
 }
 
 void AudacityProject::OnTogglePinnedHead(const CommandContext &WXUNUSED(context) )
 {
    bool value = !TracksPrefs::GetPinnedHeadPreference();
    TracksPrefs::SetPinnedHeadPreference(value, true);
-   ModifyAllProjectToolbarMenus();
 
    // Change what happens in case transport is in progress right now
    auto ctb = GetActiveProject()->GetControlToolBar();
@@ -2623,7 +2556,6 @@ void AudacityProject::OnTogglePlayRecording(const CommandContext &WXUNUSED(conte
    gPrefs->Read(wxT("/AudioIO/Duplex"), &Duplex, true);
    gPrefs->Write(wxT("/AudioIO/Duplex"), !Duplex);
    gPrefs->Flush();
-   ModifyAllProjectToolbarMenus();
 }
 
 void AudacityProject::OnToggleSWPlaythrough(const CommandContext &WXUNUSED(context) )
@@ -2632,7 +2564,6 @@ void AudacityProject::OnToggleSWPlaythrough(const CommandContext &WXUNUSED(conte
    gPrefs->Read(wxT("/AudioIO/SWPlaythrough"), &SWPlaythrough, false);
    gPrefs->Write(wxT("/AudioIO/SWPlaythrough"), !SWPlaythrough);
    gPrefs->Flush();
-   ModifyAllProjectToolbarMenus();
 }
 
 double AudacityProject::GetTime(const Track *t)
@@ -5907,19 +5838,16 @@ void AudacityProject::OnHistory(const CommandContext &WXUNUSED(context) )
 void AudacityProject::OnShowTransportToolBar(const CommandContext &WXUNUSED(context) )
 {
    mToolManager->ShowHide(TransportBarID);
-   ModifyToolbarMenus();
 }
 
 void AudacityProject::OnShowDeviceToolBar(const CommandContext &WXUNUSED(context) )
 {
    mToolManager->ShowHide( DeviceBarID );
-   ModifyToolbarMenus();
 }
 
 void AudacityProject::OnShowEditToolBar(const CommandContext &WXUNUSED(context) )
 {
    mToolManager->ShowHide( EditBarID );
-   ModifyToolbarMenus();
 }
 
 void AudacityProject::OnShowMeterToolBar(const CommandContext &WXUNUSED(context) )
@@ -5930,7 +5858,6 @@ void AudacityProject::OnShowMeterToolBar(const CommandContext &WXUNUSED(context)
       mToolManager->Expose( RecordMeterBarID, false );
    }
    mToolManager->ShowHide( MeterBarID );
-   ModifyToolbarMenus();
 }
 
 void AudacityProject::OnShowRecordMeterToolBar(const CommandContext &WXUNUSED(context) )
@@ -5940,7 +5867,6 @@ void AudacityProject::OnShowRecordMeterToolBar(const CommandContext &WXUNUSED(co
       mToolManager->Expose( MeterBarID, false );
    }
    mToolManager->ShowHide( RecordMeterBarID );
-   ModifyToolbarMenus();
 }
 
 void AudacityProject::OnShowPlayMeterToolBar(const CommandContext &WXUNUSED(context) )
@@ -5950,39 +5876,33 @@ void AudacityProject::OnShowPlayMeterToolBar(const CommandContext &WXUNUSED(cont
       mToolManager->Expose( MeterBarID, false );
    }
    mToolManager->ShowHide( PlayMeterBarID );
-   ModifyToolbarMenus();
 }
 
 void AudacityProject::OnShowMixerToolBar(const CommandContext &WXUNUSED(context) )
 {
    mToolManager->ShowHide( MixerBarID );
-   ModifyToolbarMenus();
 }
 
 void AudacityProject::OnShowSelectionToolBar(const CommandContext &WXUNUSED(context) )
 {
    mToolManager->ShowHide( SelectionBarID );
-   ModifyToolbarMenus();
 }
 
 #ifdef EXPERIMENTAL_SPECTRAL_EDITING
 void AudacityProject::OnShowSpectralSelectionToolBar(const CommandContext &WXUNUSED(context) )
 {
    mToolManager->ShowHide( SpectralSelectionBarID );
-   ModifyToolbarMenus();
 }
 #endif
 
 void AudacityProject::OnShowToolsToolBar(const CommandContext &WXUNUSED(context) )
 {
    mToolManager->ShowHide( ToolsBarID );
-   ModifyToolbarMenus();
 }
 
 void AudacityProject::OnResetToolBars(const CommandContext &WXUNUSED(context) )
 {
    mToolManager->Reset();
-   ModifyToolbarMenus();
 }
 
 //
@@ -6593,7 +6513,6 @@ void AudacityProject::OnToggleTypeToCreateLabel(const CommandContext &WXUNUSED(c
    gPrefs->Read(wxT("/GUI/TypeToCreateLabel"), &typeToCreateLabel, true);
    gPrefs->Write(wxT("/GUI/TypeToCreateLabel"), !typeToCreateLabel);
    gPrefs->Flush();
-   ModifyAllProjectToolbarMenus();
 }
 
 

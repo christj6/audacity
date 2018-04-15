@@ -36,9 +36,6 @@ void AddEffectMenuItemGroup(CommandManager *c, const wxArrayString & names,
                             const std::vector<CommandFlag> & flags, bool isDefault);
 void CreateRecentFilesMenu(CommandManager *c);
 void ModifyUndoMenuItems();
-void ModifyToolbarMenus();
-// Calls ModifyToolbarMenus() on all projects
-void ModifyAllProjectToolbarMenus();
 
 CommandFlag GetFocusedFrame();
 
