@@ -41,9 +41,6 @@
 // NEW key assignment view for preferences
 #define EXPERIMENTAL_KEY_VIEW
 
-// feature to link audio tracks to a label track
-#define EXPERIMENTAL_SYNC_LOCK
-
 // These CFG macros allow easy distinction between Audacity and DA defaults.
 #define CFG_A( x ) x
 #define CFG_DA( x ) 

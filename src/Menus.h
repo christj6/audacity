@@ -184,8 +184,6 @@ void OnLockPlayRegion(const CommandContext &context );
 void OnUnlockPlayRegion(const CommandContext &context );
 
 double GetTime(const Track *t);
-void OnSortTime(const CommandContext &context );
-void OnSortName(const CommandContext &context );
 
 void OnSnapToOff(const CommandContext &context );
 void OnSnapToNearest(const CommandContext &context );
@@ -308,7 +306,6 @@ void OnSelectPrevClip(const CommandContext &context );
 void OnSelectNextClip(const CommandContext &context );
 void OnSelectClip(bool next);
 void OnSelectCursorStoredCursor(const CommandContext &context );
-void OnSelectSyncLockSel(const CommandContext &context );
 
 void OnZoomIn(const CommandContext &context );
 void OnZoomOut(const CommandContext &context );
@@ -396,7 +393,6 @@ static wxString ClipBoundaryMessage(const std::vector<FoundClipBoundary>& result
 void OnNewWaveTrack(const CommandContext &context );
 void OnNewStereoTrack(const CommandContext &context );
 void OnRemoveTracks(const CommandContext &context );
-void OnSyncLock(const CommandContext &context );
 void OnAddLabel(const CommandContext &context );
 void OnAddLabelPlaying(const CommandContext &context );
 void OnToggleTypeToCreateLabel(const CommandContext &context );

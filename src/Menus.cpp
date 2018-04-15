@@ -525,13 +525,6 @@ void AudacityProject::CreateMenusAndCommands()
          wxT("Ctrl+Shift+K"),
          TracksExistFlag, TracksExistFlag);
 
-#ifdef EXPERIMENTAL_SYNC_LOCK
-      c->SetLongName( _("Select Sync-Locked"))->AddItem(wxT("SelSyncLockTracks"), XXO("In All &Sync-Locked Tracks"),
-         FN(OnSelectSyncLockSel), wxT("Ctrl+Shift+Y"),
-         TracksSelectedFlag | IsSyncLockedFlag,
-         TracksSelectedFlag | IsSyncLockedFlag);
-#endif
-
       c->EndSubMenu();
 
       c->SetDefaultFlags(TracksExistFlag, TracksExistFlag);
@@ -887,39 +880,7 @@ void AudacityProject::CreateMenusAndCommands()
 
       //////////////////////////////////////////////////////////////////////////
 
-      const TranslatedInternalString alignLabelsNoSync[] = {
-         { wxT("EndToEnd"),     _("&Align End to End") },
-         { wxT("Together"),     _("Align &Together") },
-      };
-
-      const TranslatedInternalString alignLabels[] = {
-         { wxT("StartToZero"),  _("Start to &Zero") },
-         { wxT("StartToSelStart"), _("Start to &Cursor/Selection Start") },
-         { wxT("StartToSelEnd"),   _("Start to Selection &End") },
-         { wxT("EndToSelStart"),   _("End to Cu&rsor/Selection Start") },
-         { wxT("EndToSelEnd"),     _("End to Selection En&d") },
-      };
-
-      c->SetDefaultFlags(AudioIONotBusyFlag, AudioIONotBusyFlag);
-
-      c->BeginSubMenu(_("S&ort Tracks"));
-
-      c->SetLongName( _("Sort by Time"))->AddItem(wxT("SortByTime"), XXO("By &Start Time"), FN(OnSortTime),
-         TracksExistFlag,
-         TracksExistFlag);
-      c->SetLongName( _("Sort by Name"))->AddItem(wxT("SortByName"), XXO("By &Name"), FN(OnSortName),
-         TracksExistFlag,
-         TracksExistFlag);
-
-      c->EndSubMenu();
-
-      //////////////////////////////////////////////////////////////////////////
-
 #ifdef EXPERIMENTAL_SYNC_LOCK
-      c->AddSeparator();
-      c->AddCheck(wxT("SyncLock"), XXO("Sync-&Lock Tracks (on/off)"), FN(OnSyncLock),
-         gPrefs->Read(wxT("/GUI/SyncLockTracks"), 0L),
-         AlwaysEnabledFlag, AlwaysEnabledFlag);
 
 #endif
 
@@ -2795,24 +2756,6 @@ void AudacityProject::SortTracks(int flags)
 
    // Now apply the permutation
    mTracks->Permute(arr);
-}
-
-void AudacityProject::OnSortTime(const CommandContext &WXUNUSED(context) )
-{
-   SortTracks(kAudacitySortByTime);
-
-   PushState(_("Tracks sorted by time"), _("Sort by Time"));
-
-   mTrackPanel->Refresh(false);
-}
-
-void AudacityProject::OnSortName(const CommandContext &WXUNUSED(context) )
-{
-   SortTracks(kAudacitySortByName);
-
-   PushState(_("Tracks sorted by name"), _("Sort by Name"));
-
-   mTrackPanel->Refresh(false);
 }
 
 void AudacityProject::OnSkipStart(const CommandContext &WXUNUSED(context) )
@@ -5695,24 +5638,6 @@ void AudacityProject::OnSelectCursorStoredCursor(const CommandContext &WXUNUSED(
    }
 }
 
-void AudacityProject::OnSelectSyncLockSel(const CommandContext &WXUNUSED(context) )
-{
-   bool selected = false;
-   TrackListIterator iter(GetTracks());
-   for (Track *t = iter.First(); t; t = iter.Next())
-   {
-      if (t->IsSyncLockSelected()) {
-         t->SetSelected(true);
-         selected = true;
-      }
-   }
-
-   if (selected)
-      ModifyState();
-
-   mTrackPanel->Refresh(false);
-}
-
 //
 // View Menu
 //
@@ -6677,19 +6602,6 @@ void AudacityProject::OnSoundActivated(const CommandContext &WXUNUSED(context) )
 void AudacityProject::OnRescanDevices(const CommandContext &WXUNUSED(context) )
 {
    DeviceManager::Instance()->Rescan();
-}
-
-void AudacityProject::OnSyncLock(const CommandContext &WXUNUSED(context) )
-{
-   bool bSyncLockTracks;
-   gPrefs->Read(wxT("/GUI/SyncLockTracks"), &bSyncLockTracks, false);
-   gPrefs->Write(wxT("/GUI/SyncLockTracks"), !bSyncLockTracks);
-   gPrefs->Flush();
-
-   // Toolbar, project sync-lock handled within
-   ModifyAllProjectToolbarMenus();
-
-   mTrackPanel->Refresh(false);
 }
 
 
