@@ -234,7 +234,6 @@ static void FinishCopy(const Track *n, Track::Holder &&dest, TrackList &list);
 
 public:
 void OnCut(const CommandContext &context );
-void OnSplitCut(const CommandContext &context );
 void OnCopy(const CommandContext &context );
 
 void OnPaste(const CommandContext &context );
@@ -245,11 +244,8 @@ public:
 
 void OnPasteNewLabel(const CommandContext &context );
 void OnPasteOver(const CommandContext &context );
-void OnTrim(const CommandContext &context );
 
 void OnDelete(const CommandContext &context );
-void OnSplitDelete(const CommandContext &context );
-void OnSilence(const CommandContext &context );
 
 void OnSplit(const CommandContext &context );
 void OnSplitNew(const CommandContext &context );

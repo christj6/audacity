@@ -421,26 +421,6 @@ void AudacityProject::CreateMenusAndCommands()
 
       c->AddSeparator();
 
-      c->BeginSubMenu(_("R&emove Special"));
-      /* i18n-hint: (verb) Do a special kind of cut*/
-      c->AddItem(wxT("SplitCut"), XXO("Spl&it Cut"), FN(OnSplitCut), wxT("Ctrl+Alt+X"));
-      /* i18n-hint: (verb) Do a special kind of DELETE*/
-      c->AddItem(wxT("SplitDelete"), XXO("Split D&elete"), FN(OnSplitDelete), wxT("Ctrl+Alt+K"));
-
-      c->AddSeparator();
-
-      /* i18n-hint: (verb)*/
-      c->AddItem(wxT("Silence"), XXO("Silence Audi&o"), FN(OnSilence), wxT("Ctrl+L"),
-         AudioIONotBusyFlag | TimeSelectedFlag | AudioTracksSelectedFlag,
-         AudioIONotBusyFlag | TimeSelectedFlag | AudioTracksSelectedFlag);
-      /* i18n-hint: (verb)*/
-      c->AddItem(wxT("Trim"), XXO("Tri&m Audio"), FN(OnTrim), wxT("Ctrl+T"),
-         AudioIONotBusyFlag | TimeSelectedFlag | AudioTracksSelectedFlag,
-         AudioIONotBusyFlag | TimeSelectedFlag | AudioTracksSelectedFlag);
-      c->EndSubMenu();
-
-      c->AddSeparator();
-
       /////////////////////////////////////////////////////////////////////////////
 
       c->BeginSubMenu(_("Clip B&oundaries"));
@@ -4416,55 +4396,6 @@ void AudacityProject::OnCut(const CommandContext &WXUNUSED(context) )
       mHistoryWindow->UpdateDisplay();
 }
 
-
-void AudacityProject::OnSplitCut(const CommandContext &WXUNUSED(context) )
-{
-   TrackListIterator iter(GetTracks());
-   Track *n = iter.First();
-
-   ClearClipboard();
-
-   auto pNewClipboard = TrackList::Create();
-   auto &newClipboard = *pNewClipboard;
-
-   while (n) {
-      if (n->GetSelected()) {
-         Track::Holder dest;
-         if (n->GetKind() == Track::Wave)
-         {
-            dest = ((WaveTrack*)n)->SplitCut(
-               mViewInfo.selectedRegion.t0(),
-               mViewInfo.selectedRegion.t1());
-         }
-         else
-         {
-            dest = n->Copy(mViewInfo.selectedRegion.t0(),
-                    mViewInfo.selectedRegion.t1());
-            n->Silence(mViewInfo.selectedRegion.t0(),
-                       mViewInfo.selectedRegion.t1());
-         }
-         if (dest)
-            FinishCopy(n, std::move(dest), newClipboard);
-      }
-      n = iter.Next();
-   }
-
-   // Survived possibility of exceptions.  Commit changes to the clipboard now.
-   newClipboard.Swap(*msClipboard);
-
-   msClipT0 = mViewInfo.selectedRegion.t0();
-   msClipT1 = mViewInfo.selectedRegion.t1();
-   msClipProject = this;
-
-   PushState(_("Split-cut to the clipboard"), _("Split Cut"));
-
-   RedrawProject();
-
-   if (mHistoryWindow)
-      mHistoryWindow->UpdateDisplay();
-}
-
-
 void AudacityProject::OnCopy(const CommandContext &WXUNUSED(context) )
 {
 
@@ -4843,70 +4774,9 @@ void AudacityProject::OnPasteOver(const CommandContext &context) // not currentl
    return;
 }
 
-void AudacityProject::OnTrim(const CommandContext &WXUNUSED(context) )
-{
-   if (mViewInfo.selectedRegion.isPoint())
-      return;
-
-   TrackListIterator iter(GetTracks());
-   Track *n = iter.First();
-
-   while (n) {
-      if (n->GetSelected()) {
-         switch (n->GetKind())
-         {
-            case Track::Wave:
-               //Delete the section before the left selector
-               ((WaveTrack*)n)->Trim(mViewInfo.selectedRegion.t0(),
-                                     mViewInfo.selectedRegion.t1());
-            break;
-
-            default:
-            break;
-         }
-      }
-      n = iter.Next();
-   }
-
-   PushState(wxString::Format(_("Trim selected audio tracks from %.2f seconds to %.2f seconds"),
-       mViewInfo.selectedRegion.t0(), mViewInfo.selectedRegion.t1()),
-       _("Trim Audio"));
-
-   RedrawProject();
-}
-
 void AudacityProject::OnDelete(const CommandContext &WXUNUSED(context) )
 {
    Clear();
-}
-
-void AudacityProject::OnSplitDelete(const CommandContext &WXUNUSED(context) )
-{
-   TrackListIterator iter(GetTracks());
-
-   Track *n = iter.First();
-
-   while (n) {
-      if (n->GetSelected()) {
-         if (n->GetKind() == Track::Wave)
-         {
-            ((WaveTrack*)n)->SplitDelete(mViewInfo.selectedRegion.t0(),
-                                         mViewInfo.selectedRegion.t1());
-         }
-         else {
-            n->Silence(mViewInfo.selectedRegion.t0(),
-                       mViewInfo.selectedRegion.t1());
-         }
-      }
-      n = iter.Next();
-   }
-
-   PushState(wxString::Format(_("Split-deleted %.2f seconds at t=%.2f"),
-                              mViewInfo.selectedRegion.duration(),
-                              mViewInfo.selectedRegion.t0()),
-             _("Split Delete"));
-
-   RedrawProject();
 }
 
 void AudacityProject::OnDisjoin(const CommandContext &WXUNUSED(context) )
@@ -4957,23 +4827,6 @@ void AudacityProject::OnJoin(const CommandContext &WXUNUSED(context) )
              _("Join"));
 
    RedrawProject();
-}
-
-void AudacityProject::OnSilence(const CommandContext &WXUNUSED(context) )
-{
-   TrackListIterator iter(GetTracks());
-
-   for (Track *n = iter.First(); n; n = iter.Next())
-      if (n->GetSelected() && (nullptr != dynamic_cast<AudioTrack *>(n)))
-         n->Silence(mViewInfo.selectedRegion.t0(), mViewInfo.selectedRegion.t1());
-
-   PushState(wxString::
-             Format(_("Silenced selected tracks for %.2f seconds at %.2f"),
-                    mViewInfo.selectedRegion.duration(),
-                    mViewInfo.selectedRegion.t0()),
-             _("Silence"));
-
-   mTrackPanel->Refresh(false);
 }
 
 void AudacityProject::OnDuplicate(const CommandContext &WXUNUSED(context) )
