@@ -359,12 +359,9 @@ void OnMixAndRenderToNewTrack(const CommandContext &context );
 void HandleMixAndRender(bool toNewTrack);
 
 private:
-   SelectedRegion mRegionSave{};
    bool mCursorPositionHasBeenStored{false};
    double mCursorPositionStored;
 public:
-void OnSelectionSave(const CommandContext &context );
-void OnSelectionRestore(const CommandContext &context );
 void OnCursorPositionStore(const CommandContext &context );
 
 void OnCursorTrackStart(const CommandContext &context );

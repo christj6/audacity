@@ -539,19 +539,6 @@ void AudacityProject::CreateMenusAndCommands()
       c->SetLongName( _("Select Track Start to Cursor"))->AddItem(wxT("SelTrackStartToCursor"), XXO("Track &Start to Cursor"), FN(OnSelectStartCursor), wxT("Shift+J"),AlwaysEnabledFlag,AlwaysEnabledFlag);
       c->SetLongName( _("Select Cursor to Track End"))->AddItem(wxT("SelCursorToTrackEnd"), XXO("Cursor to Track &End"), FN(OnSelectCursorEnd), wxT("Shift+K"),AlwaysEnabledFlag,AlwaysEnabledFlag);
       c->SetLongName( _("Select Track Start to End"))->AddItem(wxT("SelTrackStartToEnd"), XXO("Track Start to En&d"), FN(OnSelectTrackStartToEnd), wxT(""),AlwaysEnabledFlag,AlwaysEnabledFlag);
-      c->AddSeparator();
-      // GA: Audacity had 'Store Re&gion' here previously. There is no one-step
-      // way to restore the 'Saved Cursor Position' in Select Menu, so arguably
-      // using the word 'Selection' to do duty for both saving the region or the
-      // cursor is better. But it does not belong in a 'Region' submenu.
-      c->AddItem(wxT("SelSave"), XXO("S&tore Selection"), FN(OnSelectionSave),
-         WaveTracksSelectedFlag,
-         WaveTracksSelectedFlag);
-      // Audacity had 'Retrieve Regio&n' here previously.
-      c->AddItem(wxT("SelRestore"), XXO("Retrieve Selectio&n"), FN(OnSelectionRestore),
-         TracksExistFlag,
-         TracksExistFlag);
-
       c->EndSubMenu();
 
       /////////////////////////////////////////////////////////////////////////////
@@ -6155,28 +6142,10 @@ void AudacityProject::OnMixAndRenderToNewTrack(const CommandContext &WXUNUSED(co
    HandleMixAndRender(true);
 }
 
-void AudacityProject::OnSelectionSave(const CommandContext &WXUNUSED(context) )
-{
-   mRegionSave =  mViewInfo.selectedRegion;
-}
-
 void AudacityProject::OnCursorPositionStore(const CommandContext &WXUNUSED(context) )
 {
    mCursorPositionStored = IsAudioActive() ? gAudioIO->GetStreamTime() : mViewInfo.selectedRegion.t0();
    mCursorPositionHasBeenStored = true;
-}
-
-void AudacityProject::OnSelectionRestore(const CommandContext &WXUNUSED(context) )
-{
-   if ((mRegionSave.t0() == 0.0) &&
-       (mRegionSave.t1() == 0.0))
-      return;
-
-   mViewInfo.selectedRegion = mRegionSave;
-
-   ModifyState();
-
-   mTrackPanel->Refresh(false);
 }
 
 void AudacityProject::OnCursorTrackStart(const CommandContext &WXUNUSED(context) )
