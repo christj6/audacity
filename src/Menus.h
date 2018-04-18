@@ -325,7 +325,6 @@ void OnResetToolBars(const CommandContext &context );
 
 void OnSoundActivated(const CommandContext &context );
 void OnToggleSoundActivated(const CommandContext &context );
-void OnTogglePinnedHead(const CommandContext &context );
 void OnTogglePlayRecording(const CommandContext &context );
 void OnToggleSWPlaythrough(const CommandContext &context );
 void OnRescanDevices(const CommandContext &context );

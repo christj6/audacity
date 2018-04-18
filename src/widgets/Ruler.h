@@ -419,8 +419,6 @@ private:
 
    void OnContextMenu(wxContextMenuEvent & WXUNUSED(event));
 
-   void OnTogglePinnedState(wxCommandEvent & event);
-
    bool mPlayRegionDragsSelection;
    bool mTimelineToolTip;
    bool mQuickPlayEnabled;

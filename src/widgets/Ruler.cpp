@@ -1503,11 +1503,6 @@ void AdornedRulerPanel::OnContextMenu(wxContextMenuEvent & WXUNUSED(event))
    ShowContextMenu(MenuChoice::QuickPlay, nullptr);
 }
 
-void AdornedRulerPanel::OnTogglePinnedState(wxCommandEvent & /*event*/)
-{
-   // mProject->OnTogglePinnedHead(*mProject);
-}
-
 void AdornedRulerPanel::OnCaptureLost(wxMouseCaptureLostEvent & WXUNUSED(evt))
 {
    wxMouseEvent e(wxEVT_LEFT_UP);
