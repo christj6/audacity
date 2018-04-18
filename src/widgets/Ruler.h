@@ -332,8 +332,6 @@ public:
 
    void GetMaxSize(wxCoord *width, wxCoord *height);
 
-   void InvalidateRuler();
-
    void UpdatePrefs();
    void ReCreateButtons();
 

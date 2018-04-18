@@ -1241,32 +1241,13 @@ inline int IndicatorBigWidth()
 #include "../ViewInfo.h"
 #include "../AColor.h"
 
-enum {
-   OnToggleQuickPlayID = 7000,
-   OnSyncQuickPlaySelID,
-   OnTimelineToolTipID,
-   OnAutoScrollID,
-   OnLockPlayRegionID,
-
-   OnTogglePinnedStateID,
-};
-
 BEGIN_EVENT_TABLE(AdornedRulerPanel, OverlayPanel)
    EVT_PAINT(AdornedRulerPanel::OnPaint)
    EVT_SIZE(AdornedRulerPanel::OnSize)
    EVT_MOUSE_CAPTURE_LOST(AdornedRulerPanel::OnCaptureLost)
 
-   // Context menu commands
-   EVT_MENU(OnTimelineToolTipID, AdornedRulerPanel::OnTimelineToolTips)
-   EVT_MENU(OnAutoScrollID, AdornedRulerPanel::OnAutoScroll)
-   EVT_MENU(OnLockPlayRegionID, AdornedRulerPanel::OnLockPlayRegion)
-
    // Pop up menus on Windows
    EVT_CONTEXT_MENU(AdornedRulerPanel::OnContextMenu)
-
-   EVT_COMMAND( OnTogglePinnedStateID,
-               wxEVT_COMMAND_BUTTON_CLICKED,
-               AdornedRulerPanel::OnTogglePinnedState )
 
 END_EVENT_TABLE()
 
@@ -1403,21 +1384,8 @@ void AdornedRulerPanel::ReCreateButtons()
       mButtons[iButton++] = button;
       return button;
    };
-   auto button = buttonMaker(OnTogglePinnedStateID, bmpPlayPointerPinned, true);
-   ToolBar::MakeAlternateImages(
-      *button, 1,
-      bmpRecoloredUpSmall, bmpRecoloredDownSmall, 
-      bmpRecoloredUpHiliteSmall, bmpRecoloredHiliteSmall, 
-      //bmpUnpinnedPlayHead, bmpUnpinnedPlayHead, bmpUnpinnedPlayHead,
-      bmpPlayPointer, bmpPlayPointer, bmpPlayPointer,
-      size);
 
    UpdateButtonStates();
-}
-
-void AdornedRulerPanel::InvalidateRuler()
-{
-   mRuler.Invalidate();
 }
 
 void AdornedRulerPanel::RegenerateTooltips()
@@ -1599,37 +1567,6 @@ void AdornedRulerPanel::UpdateQuickPlayPos(wxCoord &mousePosX)
 void AdornedRulerPanel::ShowMenu(const wxPoint & pos)
 {
    wxMenu rulerMenu;
-
-   if (mQuickPlayEnabled)
-      rulerMenu.Append(OnToggleQuickPlayID, _("Disable Quick-Play"));
-   else
-      rulerMenu.Append(OnToggleQuickPlayID, _("Enable Quick-Play"));
-
-   wxMenuItem *dragitem;
-   if (mPlayRegionDragsSelection && !mProject->IsPlayRegionLocked())
-      dragitem = rulerMenu.Append(OnSyncQuickPlaySelID, _("Disable dragging selection"));
-   else
-      dragitem = rulerMenu.Append(OnSyncQuickPlaySelID, _("Enable dragging selection"));
-   dragitem->Enable(mQuickPlayEnabled && !mProject->IsPlayRegionLocked());
-
-#if wxUSE_TOOLTIPS
-   if (mTimelineToolTip)
-      rulerMenu.Append(OnTimelineToolTipID, _("Disable Timeline Tooltips"));
-   else
-      rulerMenu.Append(OnTimelineToolTipID, _("Enable Timeline Tooltips"));
-#endif
-
-   if (mViewInfo->bUpdateTrackIndicator)
-      rulerMenu.Append(OnAutoScrollID, _("Do not scroll while playing"));
-   else
-      rulerMenu.Append(OnAutoScrollID, _("Update display while playing"));
-
-   wxMenuItem *prlitem;
-   if (!mProject->IsPlayRegionLocked())
-      prlitem = rulerMenu.Append(OnLockPlayRegionID, _("Lock Play Region"));
-   else
-      prlitem = rulerMenu.Append(OnLockPlayRegionID, _("Unlock Play Region"));
-   prlitem->Enable(mProject->IsPlayRegionLocked() || (mPlayRegionStart != mPlayRegionEnd));
 
    PopupMenu(&rulerMenu, pos);
 }
