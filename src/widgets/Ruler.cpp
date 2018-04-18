@@ -1254,7 +1254,6 @@ enum {
 BEGIN_EVENT_TABLE(AdornedRulerPanel, OverlayPanel)
    EVT_PAINT(AdornedRulerPanel::OnPaint)
    EVT_SIZE(AdornedRulerPanel::OnSize)
-   EVT_MOUSE_EVENTS(AdornedRulerPanel::OnMouseEvents)
    EVT_MOUSE_CAPTURE_LOST(AdornedRulerPanel::OnCaptureLost)
 
    // Context menu commands
@@ -1353,7 +1352,7 @@ void AdornedRulerPanel::UpdatePrefs()
    UpdateRects();
    SetPanelSize();
 
-   RegenerateTooltips(mPrevZone);
+   RegenerateTooltips();
 }
 
 void AdornedRulerPanel::ReCreateButtons()
@@ -1421,7 +1420,7 @@ void AdornedRulerPanel::InvalidateRuler()
    mRuler.Invalidate();
 }
 
-void AdornedRulerPanel::RegenerateTooltips(StatusChoice choice)
+void AdornedRulerPanel::RegenerateTooltips()
 {
 #if wxUSE_TOOLTIPS
    if (mTimelineToolTip) {
@@ -1429,19 +1428,7 @@ void AdornedRulerPanel::RegenerateTooltips(StatusChoice choice)
          this->SetToolTip(_("Timeline actions disabled during recording"));
       }
       else {
-         switch(choice) {
-         case StatusChoice::EnteringQP :
-            if (!mQuickPlayEnabled) {
-               this->SetToolTip(_("Quick-Play disabled"));
-            }
-            else {
-               this->SetToolTip(_("Quick-Play enabled"));
-            }
-            break;
-         default:
-            this->SetToolTip(NULL);
-            break;
-         }
+         this->SetToolTip(NULL);
       }
    }
    else {
@@ -1465,7 +1452,7 @@ void AdornedRulerPanel::OnCapture(wxCommandEvent & evt)
       SetCursor(mCursorHand);
       mIsRecording = false;
    }
-   RegenerateTooltips(mPrevZone);
+   RegenerateTooltips();
 }
 
 void AdornedRulerPanel::OnPaint(wxPaintEvent & WXUNUSED(evt))
@@ -1491,7 +1478,7 @@ void AdornedRulerPanel::OnPaint(wxPaintEvent & WXUNUSED(evt))
       DoDrawSelection(&backDC);
    }
 
-   DoDrawMarks(&backDC, true);
+   DoDrawMarks(true);
 
    DoDrawEdge(&backDC);
 
@@ -1565,14 +1552,6 @@ bool AdornedRulerPanel::IsWithinMarker(int mousePosX, double markerTime)
    return mousePosX >= boundLeft && mousePosX < boundRight;
 }
 
-void AdornedRulerPanel::OnMouseEvents(wxMouseEvent &evt)
-{
-}
-
-void AdornedRulerPanel::StartQPPlay(bool looped, bool cutPreview)
-{
-}
-
 void AdornedRulerPanel::SetPanelSize()
 {
    wxSize size { GetSize().GetWidth(), GetRulerHeight(mShowScrubbing) };
@@ -1600,7 +1579,6 @@ void AdornedRulerPanel::OnCaptureLost(wxMouseCaptureLostEvent & WXUNUSED(evt))
 {
    wxMouseEvent e(wxEVT_LEFT_UP);
    e.m_x = mLastMouseX;
-   OnMouseEvents(e);
 }
 
 void AdornedRulerPanel::UpdateQuickPlayPos(wxCoord &mousePosX)
@@ -1661,7 +1639,7 @@ void AdornedRulerPanel::OnToggleQuickPlay(wxCommandEvent&)
    mQuickPlayEnabled = (mQuickPlayEnabled)? false : true;
    gPrefs->Write(wxT("/QuickPlay/QuickPlayEnabled"), mQuickPlayEnabled);
    gPrefs->Flush();
-   RegenerateTooltips(mPrevZone);
+   RegenerateTooltips();
 }
 
 void AdornedRulerPanel::OnSyncSelToQuickPlay(wxCommandEvent&)
@@ -1694,7 +1672,7 @@ void AdornedRulerPanel::OnTimelineToolTips(wxCommandEvent&)
    gPrefs->Write(wxT("/QuickPlay/ToolTips"), mTimelineToolTip);
    gPrefs->Flush();
 #if wxUSE_TOOLTIPS
-   RegenerateTooltips(mPrevZone);
+   RegenerateTooltips();
 #endif
 }
 
@@ -1761,7 +1739,7 @@ void AdornedRulerPanel::DoDrawEdge(wxDC *dc)
                 mOuter.y + mOuter.height - 1 );
 }
 
-void AdornedRulerPanel::DoDrawMarks(wxDC * dc, bool /*text */ )
+void AdornedRulerPanel::DoDrawMarks(bool /*text */ )
 {
    const double min = Pos2Time(0);
    const double hiddenMin = Pos2Time(0, true);

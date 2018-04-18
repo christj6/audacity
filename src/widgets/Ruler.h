@@ -344,7 +344,7 @@ public:
       NoChange
    };
 
-   void RegenerateTooltips(StatusChoice choice);
+   void RegenerateTooltips();
 
    void UpdateQuickPlayPos(wxCoord &mousPosX);
    void SetPanelSize();
@@ -355,14 +355,12 @@ private:
    void OnPaint(wxPaintEvent &evt);
    void OnSize(wxSizeEvent &evt);
    void UpdateRects();
-   void OnMouseEvents(wxMouseEvent &evt);
-   void StartQPPlay(bool looped, bool cutPreview);
 
    void OnCaptureLost(wxMouseCaptureLostEvent &evt);
 
    void DoDrawBackground(wxDC * dc);
    void DoDrawEdge(wxDC *dc);
-   void DoDrawMarks(wxDC * dc, bool /*text */ );
+   void DoDrawMarks(bool /*text */ );
    void DoDrawSelection(wxDC * dc);
 
 public:
