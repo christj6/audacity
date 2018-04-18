@@ -1315,9 +1315,6 @@ AdornedRulerPanel::~AdornedRulerPanel()
 
 void AdornedRulerPanel::UpdatePrefs()
 {
-   // Update button texts for language change
-   UpdateButtonStates();
-
 #ifdef EXPERIMENTAL_SCROLLING_LIMITS
 #ifdef EXPERIMENTAL_TWO_TONE_TIME_RULER
    {
@@ -1382,8 +1379,6 @@ void AdornedRulerPanel::ReCreateButtons()
       mButtons[iButton++] = button;
       return button;
    };
-
-   UpdateButtonStates();
 }
 
 void AdornedRulerPanel::OnCapture(wxCommandEvent & evt)
@@ -1475,18 +1470,13 @@ void AdornedRulerPanel::UpdateRects()
 
 double AdornedRulerPanel::Pos2Time(int p, bool ignoreFisheye)
 {
-   return mViewInfo->PositionToTime(p, mLeftOffset
-      , ignoreFisheye
-   );
+   return mViewInfo->PositionToTime(p, mLeftOffset, ignoreFisheye);
 }
 
 int AdornedRulerPanel::Time2Pos(double t, bool ignoreFisheye)
 {
-   return mViewInfo->TimeToPosition(t, mLeftOffset
-      , ignoreFisheye
-   );
+   return mViewInfo->TimeToPosition(t, mLeftOffset, ignoreFisheye);
 }
-
 
 bool AdornedRulerPanel::IsWithinMarker(int mousePosX, double markerTime)
 {
@@ -1513,14 +1503,9 @@ void AdornedRulerPanel::OnContextMenu(wxContextMenuEvent & WXUNUSED(event))
    ShowContextMenu(MenuChoice::QuickPlay, nullptr);
 }
 
-void AdornedRulerPanel::UpdateButtonStates()
-{
-}
-
 void AdornedRulerPanel::OnTogglePinnedState(wxCommandEvent & /*event*/)
 {
-   mProject->OnTogglePinnedHead(*mProject);
-   UpdateButtonStates();
+   // mProject->OnTogglePinnedHead(*mProject);
 }
 
 void AdornedRulerPanel::OnCaptureLost(wxMouseCaptureLostEvent & WXUNUSED(evt))

@@ -354,7 +354,6 @@ private:
 
 public:
    void DoDrawIndicator(wxDC * dc, wxCoord xx, bool playing, int width, bool scrub, bool seek);
-   void UpdateButtonStates();
 
 private:
    static bool s_AcceptsFocus;

@@ -2500,6 +2500,7 @@ void AudacityProject::OnToggleSoundActivated(const CommandContext &WXUNUSED(cont
 
 void AudacityProject::OnTogglePinnedHead(const CommandContext &WXUNUSED(context) )
 {
+	/*
    bool value = !TracksPrefs::GetPinnedHeadPreference();
    TracksPrefs::SetPinnedHeadPreference(value, true);
 
@@ -2507,11 +2508,7 @@ void AudacityProject::OnTogglePinnedHead(const CommandContext &WXUNUSED(context)
    auto ctb = GetActiveProject()->GetControlToolBar();
    if (ctb)
       ctb->StartScrollingIfPreferred();
-
-   auto ruler = GetRulerPanel();
-   if (ruler)
-      // Update button image
-      ruler->UpdateButtonStates();
+	  */
 }
 
 void AudacityProject::OnTogglePlayRecording(const CommandContext &WXUNUSED(context) )
