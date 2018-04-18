@@ -1385,7 +1385,7 @@ void AdornedRulerPanel::ReCreateButtons()
    position.x = 12;
 
    auto size = theTheme.ImageSize( bmpRecoloredUpSmall );
-   size.y = std::min(size.y, GetRulerHeight(false));
+   size.y = std::min(size.y, GetRulerHeight());
 
    auto buttonMaker = [&]
    (wxWindowID id, teBmps bitmap, bool toggle)
@@ -1554,7 +1554,7 @@ bool AdornedRulerPanel::IsWithinMarker(int mousePosX, double markerTime)
 
 void AdornedRulerPanel::SetPanelSize()
 {
-   wxSize size { GetSize().GetWidth(), GetRulerHeight(mShowScrubbing) };
+   wxSize size { GetSize().GetWidth(), GetRulerHeight() };
    SetSize(size);
    SetMinSize(size);
    GetParent()->PostSizeEventToParent();
@@ -1772,9 +1772,9 @@ void AdornedRulerPanel::DoDrawSelection(wxDC * dc)
    dc->DrawRectangle( r );
 }
 
-int AdornedRulerPanel::GetRulerHeight(bool showScrubBar)
+int AdornedRulerPanel::GetRulerHeight()
 {
-   return ProperRulerHeight + (showScrubBar ? ScrubHeight : 0);
+   return ProperRulerHeight;
 }
 
 void AdornedRulerPanel::SetLeftOffset(int offset)

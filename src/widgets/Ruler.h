@@ -319,8 +319,7 @@ public:
    void SetFocusFromKbd() override;
 
 public:
-   int GetRulerHeight() { return GetRulerHeight(mShowScrubbing); }
-   static int GetRulerHeight(bool showScrubBar);
+   static int GetRulerHeight();
    wxRect GetInnerRect() const { return mInner; }
 
    void SetLeftOffset(int offset);
@@ -444,8 +443,6 @@ private:
    double mLeftDownClick;  // click position in seconds
    int mLastMouseX;  // Pixel position
    bool mIsDragging;
-
-   bool mShowScrubbing{ false };
 
    DECLARE_EVENT_TABLE()
 
