@@ -335,8 +335,6 @@ public:
    void UpdatePrefs();
    void ReCreateButtons();
 
-   void RegenerateTooltips();
-
    void UpdateQuickPlayPos(wxCoord &mousPosX);
    void SetPanelSize();
 

@@ -1332,8 +1332,6 @@ void AdornedRulerPanel::UpdatePrefs()
    // Affected by the last
    UpdateRects();
    SetPanelSize();
-
-   RegenerateTooltips();
 }
 
 void AdornedRulerPanel::ReCreateButtons()
@@ -1388,23 +1386,6 @@ void AdornedRulerPanel::ReCreateButtons()
    UpdateButtonStates();
 }
 
-void AdornedRulerPanel::RegenerateTooltips()
-{
-#if wxUSE_TOOLTIPS
-   if (mTimelineToolTip) {
-      if (mIsRecording) {
-         this->SetToolTip(_("Timeline actions disabled during recording"));
-      }
-      else {
-         this->SetToolTip(NULL);
-      }
-   }
-   else {
-      this->SetToolTip(NULL);
-   }
-#endif
-}
-
 void AdornedRulerPanel::OnCapture(wxCommandEvent & evt)
 {
    evt.Skip();
@@ -1420,7 +1401,6 @@ void AdornedRulerPanel::OnCapture(wxCommandEvent & evt)
       SetCursor(mCursorHand);
       mIsRecording = false;
    }
-   RegenerateTooltips();
 }
 
 void AdornedRulerPanel::OnPaint(wxPaintEvent & WXUNUSED(evt))
@@ -1576,7 +1556,6 @@ void AdornedRulerPanel::OnToggleQuickPlay(wxCommandEvent&)
    mQuickPlayEnabled = (mQuickPlayEnabled)? false : true;
    gPrefs->Write(wxT("/QuickPlay/QuickPlayEnabled"), mQuickPlayEnabled);
    gPrefs->Flush();
-   RegenerateTooltips();
 }
 
 void AdornedRulerPanel::OnSyncSelToQuickPlay(wxCommandEvent&)
@@ -1608,9 +1587,6 @@ void AdornedRulerPanel::OnTimelineToolTips(wxCommandEvent&)
    mTimelineToolTip = (mTimelineToolTip)? false : true;
    gPrefs->Write(wxT("/QuickPlay/ToolTips"), mTimelineToolTip);
    gPrefs->Flush();
-#if wxUSE_TOOLTIPS
-   RegenerateTooltips();
-#endif
 }
 
 void AdornedRulerPanel::OnAutoScroll(wxCommandEvent&)
