@@ -338,12 +338,6 @@ public:
    void UpdatePrefs();
    void ReCreateButtons();
 
-   enum class StatusChoice {
-      EnteringQP,
-      Leaving,
-      NoChange
-   };
-
    void RegenerateTooltips();
 
    void UpdateQuickPlayPos(wxCoord &mousPosX);
@@ -450,8 +444,6 @@ private:
    double mLeftDownClick;  // click position in seconds
    int mLastMouseX;  // Pixel position
    bool mIsDragging;
-
-   StatusChoice mPrevZone { StatusChoice::NoChange };
 
    bool mShowScrubbing{ false };
 
