@@ -71,15 +71,8 @@ class AUDACITY_DLL_API Ruler {
    // Optional Ruler Parameters
    //
 
-   // If twoTone is true, cause zero and positive numbers to appear black, negative in another color.
-   void SetTwoTone(bool twoTone);
-
    // IntFormat, RealFormat, or TimeFormat
    void SetFormat(RulerFormat format);
-
-   // Specify the name of the units (like "dB") if you
-   // want numbers like "1.6" formatted as "1.6 dB".
-   void SetUnits(const wxString &units);
 
    // Logarithmic
    void SetLog(bool log);

@@ -175,11 +175,6 @@ Ruler::~Ruler()
    Invalidate();  // frees up our arrays
 }
 
-void Ruler::SetTwoTone(bool twoTone)
-{
-   mTwoTone = twoTone;
-}
-
 void Ruler::SetFormat(RulerFormat format)
 {
    // IntFormat, RealFormat, RealLogFormat, TimeFormat, or LinearDBFormat
@@ -197,18 +192,6 @@ void Ruler::SetLog(bool log)
 
    if (mLog != log) {
       mLog = log;
-
-      Invalidate();
-   }
-}
-
-void Ruler::SetUnits(const wxString &units)
-{
-   // Specify the name of the units (like "dB") if you
-   // want numbers like "1.6" formatted as "1.6 dB".
-
-   if (mUnits != units) {
-      mUnits = units;
 
       Invalidate();
    }
@@ -899,7 +882,6 @@ RulerPanel::RulerPanel(wxWindow* parent, wxWindowID id,
    ruler.SetRange( range.first, range.second );
    ruler.SetLog( options.log );
    ruler.SetFormat(format);
-   ruler.SetUnits( units );
    ruler.SetFlip( options.flip );
    ruler.SetLabelEdges( options.labelEdges );
    ruler.mbTicksAtExtremes = options.ticksAtExtremes;
@@ -1090,7 +1072,6 @@ void AdornedRulerPanel::UpdatePrefs()
       bool scrollBeyondZero = false;
       gPrefs->Read(TracksBehaviorsPrefs::ScrollingPreferenceKey(), &scrollBeyondZero,
                    TracksBehaviorsPrefs::ScrollingPreferenceDefault());
-      mRuler.SetTwoTone(scrollBeyondZero);
    }
 #endif
 #endif

@@ -693,10 +693,8 @@ void FreqWindow::DrawPlot()
    // Set up y axis ruler
 
    if (mAlg == SpectrumAnalyst::Spectrum) {
-      vRuler->ruler.SetUnits(_("dB"));
       vRuler->ruler.SetFormat(Ruler::LinearDBFormat);
    } else {
-      vRuler->ruler.SetUnits(wxT(""));
       vRuler->ruler.SetFormat(Ruler::RealFormat);
    }
    int w1, w2, h;
@@ -739,13 +737,11 @@ void FreqWindow::DrawPlot()
          xStep = (xMax - xMin) / width;
          hRuler->ruler.SetLog(false);
       }
-      hRuler->ruler.SetUnits(_("Hz"));
    } else {
       xMin = 0;
       xMax = mAnalyst->GetProcessedSize() / mRate;
       xStep = (xMax - xMin) / width;
       hRuler->ruler.SetLog(false);
-      hRuler->ruler.SetUnits(_("s"));
    }
    hRuler->ruler.SetRange(xMin, xMax-xStep);
    hRuler->Refresh(false);

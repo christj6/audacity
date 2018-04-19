@@ -580,15 +580,12 @@ void TrackArtist::UpdateVRuler(const Track *t, wxRect & rect)
             vruler->SetOrientation(wxVERTICAL);
             vruler->SetRange(max, min);
             vruler->SetFormat(Ruler::RealFormat);
-            vruler->SetUnits(wxT(""));
             vruler->SetLabelEdges(false);
             vruler->SetLog(false);
          }
          else {
             wxASSERT(scaleType == WaveformSettings::stLogarithmic);
             scaleType = WaveformSettings::stLogarithmic;
-
-            vruler->SetUnits(wxT(""));
 
             float min, max;
             wt->GetDisplayBounds(&min, &max);
@@ -704,12 +701,10 @@ void TrackArtist::UpdateVRuler(const Track *t, wxRect & rect)
             // use kHz in scale, if appropriate
             if (maxFreq >= 2000) {
                vruler->SetRange((maxFreq / 1000.), (minFreq / 1000.));
-               vruler->SetUnits(wxT("k"));
             }
             else {
                // use Hz
                vruler->SetRange((int)(maxFreq), (int)(minFreq));
-               vruler->SetUnits(wxT(""));
             }
             vruler->SetLog(false);
          }
@@ -735,7 +730,6 @@ void TrackArtist::UpdateVRuler(const Track *t, wxRect & rect)
             vruler->SetFormat(Ruler::IntFormat);
             vruler->SetLabelEdges(true);
             vruler->SetRange(maxFreq, minFreq);
-            vruler->SetUnits(wxT(""));
             vruler->SetLog(true);
             NumberScale scale(
                wt->GetSpectrogramSettings().GetScale( minFreq, maxFreq )
