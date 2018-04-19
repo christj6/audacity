@@ -151,7 +151,6 @@ class AUDACITY_DLL_API Ruler {
 
  private:
    void FindTickSizes();
-   void FindLinearTickSizes(double UPP);
    wxString LabelString(double d, bool major);
 
    void Tick(int pos, double d, bool major, bool minor);
