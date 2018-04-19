@@ -270,7 +270,6 @@ void SetTrackVisualsCommand::PopulateOrExchange(ShuttleGui & S)
 bool SetTrackVisualsCommand::ApplyInner(const CommandContext & context, Track * t )
 {
    auto wt = dynamic_cast<WaveTrack *>(t);
-   auto pt = dynamic_cast<PlayableTrack *>(t);
 
    // You can get some intriguing effects by setting R and L channels to 
    // different values.

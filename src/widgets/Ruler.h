@@ -261,7 +261,6 @@ class AUDACITY_DLL_API RulerPanel final : public wxPanelWrapper {
               const wxSize &bounds,
               const Range &range,
               Ruler::RulerFormat format,
-              const wxString &units,
               const Options &options = {},
               const wxPoint& pos = wxDefaultPosition,
               const wxSize& size = wxDefaultSize);

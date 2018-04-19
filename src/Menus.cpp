@@ -3600,7 +3600,6 @@ void AudacityProject::MoveTrack(Track* target, MoveChoice choice)
 {
    wxString longDesc, shortDesc;
 
-   auto pt = dynamic_cast<PlayableTrack*>(target);
    switch (choice)
    {
    case OnMoveTopID:
@@ -6253,10 +6252,6 @@ void AudacityProject::OnAddLabel(const CommandContext &WXUNUSED(context) )
 
 void AudacityProject::OnAddLabelPlaying(const CommandContext &WXUNUSED(context) )
 {
-   if (GetAudioIOToken()>0 &&
-       gAudioIO->IsStreamActive(GetAudioIOToken())) {
-      double indicator = gAudioIO->GetStreamTime();
-   }
 }
 
 void AudacityProject::OnToggleTypeToCreateLabel(const CommandContext &WXUNUSED(context) )

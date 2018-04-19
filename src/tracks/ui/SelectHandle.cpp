@@ -993,16 +993,6 @@ void SelectHandle::AdjustFreqSelection(
 
    // Dragging center?
    if (mFreqSelMode == FREQ_SEL_DRAG_CENTER) {
-      if (frequency == rate || frequency < 1.0)
-	  {
-         // snapped to top or bottom
-	  }
-      else 
-	  {
-         // mFreqSelPin holds the ratio of top to center
-         const double maxRatio = findMaxRatio(frequency, rate);
-         const double ratio = std::min(maxRatio, mFreqSelPin);
-      }
    }
    else if (mFreqSelMode == FREQ_SEL_PINNED_CENTER) {
       if (mFreqSelPin >= 0) {
@@ -1022,13 +1012,6 @@ void SelectHandle::AdjustFreqSelection(
             ratio = std::min(maxRatio, ratio);
          }
       }
-   }
-   else {
-      // Dragging of upper or lower.
-      const bool bottomDefined =
-         !(mFreqSelMode == FREQ_SEL_TOP_FREE && mFreqSelPin < 0);
-      const bool topDefined =
-         !(mFreqSelMode == FREQ_SEL_BOTTOM_FREE && mFreqSelPin < 0);
    }
 }
 

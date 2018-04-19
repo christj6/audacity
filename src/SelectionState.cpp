@@ -55,8 +55,6 @@ void SelectionState::SelectTrackLength
 void SelectionState::SelectTrack
 ( TrackList &tracks, Track &track, bool selected, bool updateLastPicked )
 {
-   bool wasCorrect = (selected == track.GetSelected());
-
    tracks.Select( &track, selected );
    if (updateLastPicked)
       mLastPickedTrack = Track::Pointer( &track );

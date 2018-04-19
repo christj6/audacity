@@ -728,8 +728,6 @@ wxRect ScreenshotCommand::GetScreenRect(){
 }
 
 wxRect ScreenshotCommand::GetPanelRect(TrackPanel * panel){
-   //AdornedRulerPanel *ruler = panel->mRuler;
-
    int h = panel->mRuler->GetRulerHeight();
    int x = 0, y = -h;
    int width, height;

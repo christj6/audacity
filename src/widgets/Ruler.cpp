@@ -857,7 +857,6 @@ RulerPanel::RulerPanel(wxWindow* parent, wxWindowID id,
                        const wxSize &bounds,
                        const Range &range,
                        Ruler::RulerFormat format,
-                       const wxString &units,
                        const Options &options,
                        const wxPoint& pos /*= wxDefaultPosition*/,
                        const wxSize& size /*= wxDefaultSize*/):

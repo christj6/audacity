@@ -225,7 +225,6 @@ class MeterPanel final : public wxPanelWrapper
    //
    void ShowMenu(const wxPoint & pos);
    void OnMonitor(wxCommandEvent &evt);
-   void OnPreferences(wxCommandEvent &evt);
    void OnMeterPrefsUpdated(wxCommandEvent &evt);
 
    wxString Key(const wxString & key) const;

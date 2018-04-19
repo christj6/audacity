@@ -2117,26 +2117,22 @@ void TrackInfo::WideMuteDrawFunction
 ( TrackPanelDrawingContext &context,
   const wxRect &rect, const Track *pTrack )
 {
-   auto dc = &context.dc;
    wxRect bev = rect;
    GetWideMuteSoloHorizontalBounds( rect, bev );
    auto target = dynamic_cast<MuteButtonHandle*>( context.target.get() );
    bool hit = target && target->GetTrack().get() == pTrack;
    bool captured = hit && target->IsClicked();
-   bool down = captured && bev.Contains( context.lastState.GetPosition());
 }
 
 void TrackInfo::WideSoloDrawFunction
 ( TrackPanelDrawingContext &context,
   const wxRect &rect, const Track *pTrack )
 {
-   auto dc = &context.dc;
    wxRect bev = rect;
    GetWideMuteSoloHorizontalBounds( rect, bev );
    auto target = dynamic_cast<SoloButtonHandle*>( context.target.get() );
    bool hit = target && target->GetTrack().get() == pTrack;
    bool captured = hit && target->IsClicked();
-   bool down = captured && bev.Contains( context.lastState.GetPosition());
 }
 
 void TrackInfo::StatusDrawFunction

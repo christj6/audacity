@@ -153,24 +153,6 @@ void AutoRecoveryDialog::OnRecoverAll(wxCommandEvent & WXUNUSED(event))
 }
 
 ////////////////////////////////////////////////////////////////////////////
-
-static bool HaveFilesToRecover()
-{
-   wxDir dir(FileNames::AutoSaveDir());
-   if (!dir.IsOpened())
-   {
-      AudacityMessageBox(_("Could not enumerate files in auto save directory."),
-                   _("Error"), wxICON_STOP);
-      return false;
-   }
-
-   wxString filename;
-   bool c = dir.GetFirst(&filename, wxT("*.autosave"), wxDIR_FILES);
-
-   return c;
-}
-
-////////////////////////////////////////////////////////////////////////////
 /// Recording recovery handler
 
 RecordingRecoveryHandler::RecordingRecoveryHandler(AudacityProject* proj)

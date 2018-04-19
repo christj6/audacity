@@ -324,7 +324,6 @@ void TrackArtist::DrawTracks(TrackPanelDrawingContext &context,
       auto other = tracks->FindPendingChangedTrack(t->GetId());
       if (other)
          t = other.get();
-      auto pt = dynamic_cast<const PlayableTrack *>(t);
    }
 
 #if defined(DEBUG_CLIENT_AREA)

@@ -849,13 +849,6 @@ void GetNextWindowPlacement(wxRect *nextRect, bool *pMaximized, bool *pIconized)
    }
 }
 
-static wxString CreateUniqueName()
-{
-   static int count = 0;
-   return wxDateTime::Now().Format(wxT("%Y-%m-%d %H-%M-%S")) +
-          wxString::Format(wxT(" N-%i"), ++count);
-}
-
 enum {
    FirstID = 1000,
 
@@ -2679,7 +2672,6 @@ void AudacityProject::OpenFiles(AudacityProject *proj)
 AudacityProject *AudacityProject::OpenProject(
    AudacityProject *pProject, const wxString &fileNameArg, bool addtohistory)
 {
-   AudacityProject *pNewProject = nullptr;
    return pProject;
 }
 
@@ -3972,8 +3964,6 @@ void AudacityProject::OnAudioIOStopRecording()
    // Only push state if we were capturing and not monitoring
    if (GetAudioIOToken() > 0)
    {
-      auto &intervals = gAudioIO->LostCaptureIntervals();
-
       // Add to history
       PushState(_("Recorded Audio"), _("Record"));
 

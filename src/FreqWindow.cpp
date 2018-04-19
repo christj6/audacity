@@ -285,7 +285,6 @@ FreqWindow::FreqWindow(wxWindow * parent, wxWindowID id,
             wxSize{ 100, 100 }, // Ruler can't handle small sizes
             RulerPanel::Range{ 0.0, -dBRange },
             Ruler::LinearDBFormat,
-            _("dB"),
             RulerPanel::Options{}
                .LabelEdges(true)
                .TickColour( theTheme.Colour( clrGraphLabels ) )
@@ -352,7 +351,6 @@ FreqWindow::FreqWindow(wxWindow * parent, wxWindowID id,
             wxSize{ 100, 100 }, // Ruler can't handle small sizes
             RulerPanel::Range{ 10, 20000 },
             Ruler::RealFormat,
-            _("Hz"),
             RulerPanel::Options{}
                .Log(true)
                .Flip(true)

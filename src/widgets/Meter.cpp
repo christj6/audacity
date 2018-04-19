@@ -188,7 +188,6 @@ const static wxChar *PrefStyles[] =
 enum {
    OnMeterUpdateID = 6000,
    OnMonitorID,
-   OnPreferencesID
 };
 
 BEGIN_EVENT_TABLE(MeterPanel, wxPanelWrapper)
@@ -203,7 +202,6 @@ BEGIN_EVENT_TABLE(MeterPanel, wxPanelWrapper)
    EVT_PAINT(MeterPanel::OnPaint)
    EVT_SIZE(MeterPanel::OnSize)
    EVT_MENU(OnMonitorID, MeterPanel::OnMonitor)
-   EVT_MENU(OnPreferencesID, MeterPanel::OnPreferences)
 END_EVENT_TABLE()
 
 IMPLEMENT_CLASS(MeterPanel, wxPanelWrapper)
@@ -663,8 +661,6 @@ void MeterPanel::OnMouse(wxMouseEvent &evt)
             mi = menu.Append(OnMonitorID, _("Start Monitoring"));
          mi->Enable(!mActive || mMonitoring);
       }
-
-      menu.Append(OnPreferencesID, _("Options..."));
 
       if (evt.RightDown()) {
          ShowMenu(evt.GetPosition());
@@ -1804,8 +1800,6 @@ void MeterPanel::ShowMenu(const wxPoint & pos)
       mi->Enable(!mActive || mMonitoring);
    }
 
-   menu.Append(OnPreferencesID, _("Options..."));
-
    mAccSilent = true;      // temporarily make screen readers say (close to) nothing on focus events
 
    PopupMenu(&menu, pos);
@@ -1835,137 +1829,6 @@ void MeterPanel::OnMeterPrefsUpdated(wxCommandEvent & evt)
    UpdatePrefs();
 
    Refresh(false);
-}
-
-void MeterPanel::OnPreferences(wxCommandEvent & WXUNUSED(event))
-{
-   wxTextCtrl *rate;
-   wxRadioButton *gradient;
-   wxRadioButton *rms;
-   wxRadioButton *db;
-   wxRadioButton *linear;
-   wxRadioButton *automatic;
-   wxRadioButton *horizontal;
-   wxRadioButton *vertical;
-   int meterRefreshRate = mMeterRefreshRate;
-
-   wxString title(mIsInput ? _("Recording Meter Options") : _("Playback Meter Options"));
-
-   // Dialog is a child of the project, rather than of the toolbar.
-   // This determines where it pops up.
-
-   wxDialogWrapper dlg(GetActiveProject(), wxID_ANY, title);
-   dlg.SetName(dlg.GetTitle());
-   ShuttleGui S(&dlg, eIsCreating);
-   S.StartVerticalLay();
-   {
-      S.StartStatic(_("Refresh Rate"), 0);
-      {
-         S.AddFixedText(_("Higher refresh rates make the meter show more frequent\nchanges. A rate of 30 per second or less should prevent\nthe meter affecting audio quality on slower machines."));
-         S.StartHorizontalLay();
-         {
-            rate = S.AddTextBox(_("Meter refresh rate per second [1-100]: "),
-                                wxString::Format(wxT("%d"), meterRefreshRate),
-                                10);
-            rate->SetName(_("Meter refresh rate per second [1-100]"));
-            IntegerValidator<long> vld(&mMeterRefreshRate);
-
-            vld.SetRange(MIN_REFRESH_RATE, MAX_REFRESH_RATE);
-            rate->SetValidator(vld);
-         }
-         S.EndHorizontalLay();
-      }
-      S.EndStatic();
-
-      S.StartHorizontalLay();
-      {
-        S.StartStatic(_("Meter Style"), 0);
-        {
-           S.StartVerticalLay();
-           {
-              gradient = S.AddRadioButton(_("Gradient"));
-              gradient->SetName(_("Gradient"));
-              gradient->SetValue(mGradient);
-
-              rms = S.AddRadioButtonToGroup(_("RMS"));
-              rms->SetName(_("RMS"));
-              rms->SetValue(!mGradient);
-           }
-           S.EndVerticalLay();
-        }
-        S.EndStatic();
-
-        S.StartStatic(_("Meter Type"), 0);
-        {
-           S.StartVerticalLay();
-           {
-              db = S.AddRadioButton(_("dB"));
-              db->SetName(_("dB"));
-              db->SetValue(mDB);
-
-              linear = S.AddRadioButtonToGroup(_("Linear"));
-              linear->SetName(_("Linear"));
-              linear->SetValue(!mDB);
-           }
-           S.EndVerticalLay();
-        }
-        S.EndStatic();
-
-        S.StartStatic(_("Orientation"), 1);
-        {
-           S.StartVerticalLay();
-           {
-              automatic = S.AddRadioButton(_("Automatic"));
-              automatic->SetName(_("Automatic"));
-              automatic->SetValue(mDesiredStyle == AutomaticStereo);
-
-              horizontal = S.AddRadioButtonToGroup(_("Horizontal"));
-              horizontal->SetName(_("Horizontal"));
-              horizontal->SetValue(mDesiredStyle == HorizontalStereo);
-
-              vertical = S.AddRadioButtonToGroup(_("Vertical"));
-              vertical->SetName(_("Vertical"));
-              vertical->SetValue(mDesiredStyle == VerticalStereo);
-           }
-           S.EndVerticalLay();
-        }
-        S.EndStatic();
-      }
-      S.EndHorizontalLay();
-      S.AddStandardButtons();
-   }
-   S.EndVerticalLay();
-   dlg.Layout();
-   dlg.Fit();
-
-   dlg.CenterOnParent();
-
-   if (dlg.ShowModal() == wxID_OK)
-   {
-      wxArrayString style;
-      style.Add(wxT("AutomaticStereo"));
-      style.Add(wxT("HorizontalStereo"));
-      style.Add(wxT("VerticalStereo"));
-
-      int s = 0;
-      s = automatic->GetValue() ? 0 : s;
-      s = horizontal->GetValue() ? 1 : s;
-      s = vertical->GetValue() ? 2 : s;
-
-      gPrefs->Write(Key(wxT("Style")), style[s]);
-      gPrefs->Write(Key(wxT("Bars")), gradient->GetValue() ? wxT("Gradient") : wxT("RMS"));
-      gPrefs->Write(Key(wxT("Type")), db->GetValue() ? wxT("dB") : wxT("Linear"));
-      gPrefs->Write(Key(wxT("RefreshRate")), rate->GetValue());
-
-      gPrefs->Flush();
-
-      // Currently, there are 2 playback meters and 2 record meters and any number of 
-      // mixerboard meters, so we have to send out an preferences updated message to
-      // ensure they all update themselves.
-      wxCommandEvent e(EVT_METER_PREFERENCES_CHANGED);
-      e.SetEventObject(this);
-      GetParent()->GetEventHandler()->ProcessEvent(e);
-   }
 }
 
 wxString MeterPanel::Key(const wxString & key) const
