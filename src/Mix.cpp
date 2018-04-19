@@ -347,7 +347,6 @@ size_t Mixer::MixVariableRates(int *channelFlags, WaveTrackCache &cache,
    const WaveTrack *const track = cache.GetTrack();
    const double trackRate = track->GetRate();
    const double initialWarp = mRate / mSpeed / trackRate;
-   const double tstep = 1.0 / trackRate;
    auto sampleSize = SAMPLE_SIZE(floatSample);
 
    decltype(mMaxOut) out = 0;

@@ -1448,44 +1448,6 @@ bool AudacityApp::OnInit()
 
    Importer::Get().Initialize();
 
-   // Bug1561: delay the recovery dialog, to avoid crashes.
-   /*
-   CallAfter( [=] () mutable {
-      //
-      // Auto-recovery
-      //
-      bool didRecoverAnything = false;
-      if (!ShowAutoRecoveryDialogIfNeeded(&project, &didRecoverAnything))
-      {
-         // Important: Prevent deleting any temporary files!
-         DirManager::SetDontDeleteTempFiles();
-         QuitAudacity(true);
-      }
-
-      //
-      // Remainder of command line parsing, but only if we didn't recover
-      //
-      if (!didRecoverAnything)
-      {
-         if (parser->Found(wxT("t")))
-         {
-            RunBenchmark(NULL);
-            QuitAudacity(true);
-         }
-
-         // As of wx3, there's no need to process the filename arguments as they
-         // will be sent view the MacOpenFile() method.
-#if !defined(__WXMAC__)
-         for (size_t i = 0, cnt = parser->GetParamCount(); i < cnt; i++)
-         {
-            // PRL: Catch any exceptions, don't try this file again, continue to
-            // other files.
-            SafeMRUOpen(parser->GetParam(i));
-         }
-#endif
-      }
-   } );
-   */
    gInited = true;
 
    ModuleManager::Get().Dispatch(AppInitialized);

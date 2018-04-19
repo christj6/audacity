@@ -170,35 +170,6 @@ static bool HaveFilesToRecover()
    return c;
 }
 
-bool ShowAutoRecoveryDialogIfNeeded(AudacityProject** pproj,
-                                    bool *didRecoverAnything)
-{
-   if (didRecoverAnything)
-      *didRecoverAnything = false;
-   if (HaveFilesToRecover())
-   {
-      // Under wxGTK3, the auto recovery dialog will not get
-      // the focus since the project window hasn't been allowed
-      // to completely initialize.
-      //
-      // Yielding seems to allow the initialization to complete.
-      //
-      // Additionally, it also corrects a sizing issue in the dialog
-      // related to wxWidgets bug:
-      //
-      //    http://trac.wxwidgets.org/ticket/16440
-      //
-      // This must be done before "dlg" is declared.
-      wxEventLoopBase::GetActive()->YieldFor(wxEVT_CATEGORY_UI);
-      int ret = AutoRecoveryDialog{nullptr}.ShowModal();
-	  return false;
-   } else
-   {
-      // Nothing to recover, move along
-      return true;
-   }
-}
-
 ////////////////////////////////////////////////////////////////////////////
 /// Recording recovery handler
 
