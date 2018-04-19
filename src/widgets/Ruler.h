@@ -52,9 +52,6 @@ class AUDACITY_DLL_API Ruler {
 
    void SetBounds(int left, int top, int right, int bottom);
 
-   // wxHORIZONTAL || wxVERTICAL
-   void SetOrientation(int orient);
-
    // min is the value at (x, y)
    // max is the value at (x+width, y+height)
    // (at the center of the pixel, in both cases)

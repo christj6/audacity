@@ -1064,12 +1064,10 @@ void MeterPanel::SetActiveStyle(Style newStyle)
       mRuler.SetFormat(Ruler::LinearDBFormat);
       if (mStyle == HorizontalStereo || mStyle == HorizontalStereoCompact)
       {
-         mRuler.SetOrientation(wxHORIZONTAL);
          mRuler.SetRange(-mDBRange, 0);
       }
       else
       {
-         mRuler.SetOrientation(wxVERTICAL);
          mRuler.SetRange(0, -mDBRange);
       }
    }
@@ -1078,12 +1076,10 @@ void MeterPanel::SetActiveStyle(Style newStyle)
       mRuler.SetFormat(Ruler::RealFormat);
       if (mStyle == HorizontalStereo || mStyle == HorizontalStereoCompact)
       {
-         mRuler.SetOrientation(wxHORIZONTAL);
          mRuler.SetRange(0, 1);
       }
       else
       {
-         mRuler.SetOrientation(wxVERTICAL);
          mRuler.SetRange(1, 0);
       }
    }

@@ -718,34 +718,6 @@ void LWSlider::Draw(wxDC & paintDC)
    wxColour TickColour = theTheme.Colour( clrSliderLight );
    bool bTicks = TickColour != wxColour(60,60,60);
 
-   //v 20090820: Ruler doesn't align with slider correctly -- yet.
-   //if ((mOrientation == wxVERTICAL) && (mStyle == DB_SLIDER))
-   //{
-   //   if (!mpRuler)
-   //   {
-   //      mpRuler = std::make_unique<Ruler>();
-   //      mpRuler->mbTicksOnly = false;
-   //      mpRuler->mbTicksAtExtremes = true;
-
-   //      #ifdef __WXMSW__
-   //         const int kFontSize = 8;
-   //      #else
-   //         const int kFontSize = 10;
-   //      #endif
-   //      wxFont rulerFont(kFontSize, wxSWISS, wxNORMAL, wxNORMAL);
-   //      mpRuler->SetFonts(rulerFont, rulerFont, rulerFont);
-
-   //      mpRuler->SetFlip(false);
-   //      mpRuler->SetLabelEdges(true);
-
-   //      mpRuler->SetOrientation(wxVERTICAL);
-   //      mpRuler->SetRange(mMaxValue, mMinValue);
-   //      mpRuler->SetFormat(Ruler::LinearDBFormat);
-   //   }
-   //   mpRuler->SetBounds(mLeft, mTop,  mWidth, mHeightY); //v Why the magic number reqd on height to get it to line up?    + 9);
-   //   mpRuler->Draw(*dc);
-   //}
-   //else
    if( bTicks ) {
       // tick marks
       int divs = 10;

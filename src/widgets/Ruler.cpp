@@ -197,20 +197,6 @@ void Ruler::SetLog(bool log)
    }
 }
 
-void Ruler::SetOrientation(int orient)
-{
-   // wxHORIZONTAL || wxVERTICAL
-
-   if (mOrientation != orient) {
-      mOrientation = orient;
-
-      if (mOrientation == wxVERTICAL && !mHasSetSpacing)
-         mSpacing = 2;
-
-      Invalidate();
-   }
-}
-
 void Ruler::SetRange(double min, double max)
 {
    SetRange(min, max, min, max);
@@ -878,7 +864,6 @@ RulerPanel::RulerPanel(wxWindow* parent, wxWindowID id,
    wxPanelWrapper(parent, id, pos, size)
 {
    ruler.SetBounds( 0, 0, bounds.x, bounds.y );
-   ruler.SetOrientation(orientation);
    ruler.SetRange( range.first, range.second );
    ruler.SetLog( options.log );
    ruler.SetFormat(format);

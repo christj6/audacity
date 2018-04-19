@@ -78,7 +78,6 @@ bool AudacityPrintout::OnPrintPage(int WXUNUSED(page))
    int rulerPageHeight = (int)(rulerScreenHeight * scale);
    Ruler ruler;
    ruler.SetBounds(0, 0, width, rulerPageHeight);
-   ruler.SetOrientation(wxHORIZONTAL);
    ruler.SetRange(0.0, mTracks->GetEndTime());
    ruler.SetFormat(Ruler::TimeFormat);
    ruler.SetLabelEdges(true);

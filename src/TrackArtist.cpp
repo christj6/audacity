@@ -577,7 +577,6 @@ void TrackArtist::UpdateVRuler(const Track *t, wxRect & rect)
             }
 
             vruler->SetBounds(rect.x, rect.y, rect.x + rect.width, rect.y + rect.height - 1);
-            vruler->SetOrientation(wxVERTICAL);
             vruler->SetRange(max, min);
             vruler->SetFormat(Ruler::RealFormat);
             vruler->SetLabelEdges(false);
@@ -663,7 +662,6 @@ void TrackArtist::UpdateVRuler(const Track *t, wxRect & rect)
                }
 
                vruler->SetBounds(rect.x, rect.y + top, rect.x + rect.width, rect.y + bot - 1);
-               vruler->SetOrientation(wxVERTICAL);
                vruler->SetRange(topval, botval);
             }
             else
@@ -695,7 +693,6 @@ void TrackArtist::UpdateVRuler(const Track *t, wxRect & rect)
             and append to the numbers a "k"
             */
             vruler->SetBounds(rect.x, rect.y, rect.x + rect.width, rect.y + rect.height - 1);
-            vruler->SetOrientation(wxVERTICAL);
             vruler->SetFormat(Ruler::RealFormat);
             vruler->SetLabelEdges(true);
             // use kHz in scale, if appropriate
@@ -726,7 +723,6 @@ void TrackArtist::UpdateVRuler(const Track *t, wxRect & rect)
             and append to the numbers a "k"
             */
             vruler->SetBounds(rect.x, rect.y, rect.x + rect.width, rect.y + rect.height - 1);
-            vruler->SetOrientation(wxVERTICAL);
             vruler->SetFormat(Ruler::IntFormat);
             vruler->SetLabelEdges(true);
             vruler->SetRange(maxFreq, minFreq);
