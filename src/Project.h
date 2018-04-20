@@ -247,7 +247,6 @@ class AUDACITY_DLL_API AudacityProject final : public wxFrame,
    static wxArrayString ShowOpenDialog(const wxString &extraformat = wxEmptyString,
          const wxString &extrafilter = wxEmptyString);
    static bool IsAlreadyOpen(const wxString & projPathName);
-   static void OpenFiles(AudacityProject *proj);
 
    // Return the given project if that is not NULL, else create a project.
    // Then open the given project path.
@@ -316,7 +315,6 @@ public:
    // Timer Record Auto Save/Export Routines
    bool SaveFromTimerRecording(wxFileName fnFile);
    bool ExportFromTimerRecording(wxFileName fnFile, int iFormat, int iSubFormat, int iFilterIndex);
-   int GetOpenProjectCount();
    bool IsProjectSaved();
 
    bool ProjectHasTracks();

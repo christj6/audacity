@@ -2034,13 +2034,8 @@ void AudacityApp::OnMenuOpen(wxCommandEvent & event)
    // this happens, and enable the same code to be present on
    // all platforms.
 
-
-   if(gAudacityProjects.size() == 0)
-      AudacityProject::OpenFiles(NULL);
-   else
+   if(gAudacityProjects.size() != 0)
       event.Skip();
-
-
 }
 
 void AudacityApp::OnMenuPreferences(wxCommandEvent & event)

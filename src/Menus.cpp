@@ -2665,41 +2665,6 @@ void AudacityProject::OnSelToEnd(const CommandContext &WXUNUSED(context) )
    ModifyState();
 }
 
-void AudacityProject::OnMoveToNextLabel(const CommandContext &WXUNUSED(context) )
-{
-   OnMoveToLabel(true);
-}
-
-void AudacityProject::OnMoveToPrevLabel(const CommandContext &WXUNUSED(context) )
-{
-   OnMoveToLabel(false);
-}
-
-void AudacityProject::OnMoveToLabel(bool next)
-{
-   // Find the number of label tracks, and ptr to last track found
-   Track* track = nullptr;
-   int nLabelTrack = 0;
-   TrackListOfKindIterator iter(Track::Label, &*mTracks);
-   for (Track* t = iter.First(); t; t = iter.Next()) {
-      nLabelTrack++;
-      track = t;
-   }
-
-   if (nLabelTrack == 0 ) {
-      mTrackPanel->MessageForScreenReader(_("no label track"));
-   }
-   else if (nLabelTrack > 1) {         // find first label track, if any, starting at the focused track
-      track = mTrackPanel->GetFocusedTrack();
-      while (track && track->GetKind() != Track::Label) {
-         track = mTracks->GetNext(track, true);
-         if (!track) {
-          mTrackPanel->MessageForScreenReader(_("no label track at or below focused track"));
-         }
-      }
-   }
-}
-
 /// The following method moves to the previous track
 /// selecting and unselecting depending if you are on the start of a
 /// block or not.
@@ -4059,7 +4024,6 @@ void AudacityProject::OnNew(const CommandContext &WXUNUSED(context) )
 
 void AudacityProject::OnOpen(const CommandContext &WXUNUSED(context) )
 {
-   OpenFiles(this);
 }
 
 void AudacityProject::OnClose(const CommandContext &WXUNUSED(context) )

@@ -171,10 +171,6 @@ void OnSetRightSelection(const CommandContext &context );
 void OnSelToStart(const CommandContext &context );
 void OnSelToEnd(const CommandContext &context );
 
-void OnMoveToNextLabel(const CommandContext &context );
-void OnMoveToPrevLabel(const CommandContext &context );
-void OnMoveToLabel(bool next);
-
 void OnZeroCrossing(const CommandContext &context );
 
 void OnLockPlayRegion(const CommandContext &context );

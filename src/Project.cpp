@@ -2610,62 +2610,6 @@ bool AudacityProject::IsAlreadyOpen(const wxString & projPathName)
    return false;
 }
 
-// static method, can be called outside of a project
-void AudacityProject::OpenFiles(AudacityProject *proj)
-{
-	/*
-   // i18n-hint: This string is a label in the file type filter in the open
-   // and save dialogues, for the option that only shows project files created
-   // with Audacity. Do not include pipe symbols or .aup (this extension will
-   // now be added automatically for the Save Projects dialogues).
-   wxArrayString selectedFiles = ShowOpenDialog(_("Audacity projects"), wxT("*.aup"));
-   if (selectedFiles.GetCount() == 0) {
-      gPrefs->Write(wxT("/LastOpenType"),wxT(""));
-      gPrefs->Flush();
-      return;
-   }
-
-   //sort selected files by OD status.
-   //For the open menu we load OD first so user can edit asap.
-   //first sort selectedFiles.
-   selectedFiles.Sort(CompareNoCaseFileName);
-   ODManager::Pauser pauser;
-
-   auto cleanup = finally( [] {
-      gPrefs->Write(wxT("/LastOpenType"),wxT(""));
-      gPrefs->Flush();
-   } );
-
-   for (size_t ff = 0; ff < selectedFiles.GetCount(); ff++) {
-      const wxString &fileName = selectedFiles[ff];
-
-      // Make sure it isn't already open.
-      if (AudacityProject::IsAlreadyOpen(fileName))
-         continue; // Skip ones that are already open.
-
-      FileNames::UpdateDefaultPath(FileNames::Operation::Open, fileName);
-
-      // DMM: If the project is dirty, that means it's been touched at
-      // all, and it's not safe to open a NEW project directly in its
-      // place.  Only if the project is brand-NEW clean and the user
-      // hasn't done any action at all is it safe for Open to take place
-      // inside the current project.
-      //
-      // If you try to Open a NEW project inside the current window when
-      // there are no tracks, but there's an Undo history, etc, then
-      // bad things can happen, including data files moving to the NEW
-      // project directory, etc.
-      if ( proj && ( proj->mDirty || !proj->mTracks->empty() ) )
-         proj = nullptr;
-
-      // This project is clean; it's never been touched.  Therefore
-      // all relevant member variables are in their initial state,
-      // and it's okay to open a NEW project inside this window.
-      proj = AudacityProject::OpenProject( proj, fileName );
-   }
-   */
-}
-
 AudacityProject *AudacityProject::OpenProject(
    AudacityProject *pProject, const wxString &fileNameArg, bool addtohistory)
 {
@@ -4132,10 +4076,6 @@ bool AudacityProject::ExportFromTimerRecording(wxFileName fnFile, int iFormat, i
 
    wxGetApp().SetMissingAliasedFileWarningShouldShow(true);
    return e.ProcessFromTimerRecording(this, false, 0.0, mTracks->GetEndTime(), fnFile, iFormat, iSubFormat, iFilterIndex);
-}
-
-int AudacityProject::GetOpenProjectCount() {
-   return gAudacityProjects.size();
 }
 
 bool AudacityProject::IsProjectSaved() {
