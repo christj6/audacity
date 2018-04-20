@@ -291,7 +291,7 @@ void EditToolBar::OnButton(wxCommandEvent &event)
 
    auto flags = p->GetUpdateFlags();
    const CommandContext context( *GetActiveProject() );
-   cm->HandleTextualCommand(EditToolbarButtonList[id].commandName, context, flags, NoFlagsSpecifed);
+   cm->HandleTextualCommand(EditToolbarButtonList[id].commandName, flags, NoFlagsSpecifed);
 }
 
 

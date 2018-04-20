@@ -98,10 +98,6 @@ public:
    // this function returns nonempty.
    virtual wxString InstallPath() = 0;
 
-   // Modules providing a single or static set of plugins may use
-   // AutoRegisterPlugins() to register those plugins.
-   virtual bool AutoRegisterPlugins(PluginManagerInterface & pluginManager) = 0;
-
    // For modules providing an interface to other dynamically loaded plugins,
    // the module returns a list of path names that will be presented to the
    // user as "New" for enablement.

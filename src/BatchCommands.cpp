@@ -765,7 +765,7 @@ bool MacroCommands::ApplyCommand( const wxString &friendlyCommand,
    AudacityProject *project = GetActiveProject();
    CommandManager * pManager = project->GetCommandManager();
    if( pContext ){
-      if( pManager->HandleTextualCommand( command, *pContext, AlwaysEnabledFlag, AlwaysEnabledFlag ) )
+      if( pManager->HandleTextualCommand( command, AlwaysEnabledFlag, AlwaysEnabledFlag ) )
          return true;
       pContext->Status( wxString::Format(
          _("Your batch command of %s was not recognized."), friendlyCommand ));
@@ -774,7 +774,7 @@ bool MacroCommands::ApplyCommand( const wxString &friendlyCommand,
    else
    {
       const CommandContext context(  *GetActiveProject() );
-      if( pManager->HandleTextualCommand( command, context, AlwaysEnabledFlag, AlwaysEnabledFlag ) )
+      if( pManager->HandleTextualCommand( command, AlwaysEnabledFlag, AlwaysEnabledFlag ) )
          return true;
    }
 

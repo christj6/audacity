@@ -130,12 +130,6 @@ void BuiltinEffectsModule::Terminate()
    return;
 }
 
-bool BuiltinEffectsModule::AutoRegisterPlugins(PluginManagerInterface & pm)
-{
-   // We still want to be called during the normal registration process
-   return false;
-}
-
 wxArrayString BuiltinEffectsModule::FindPluginPaths(PluginManagerInterface & WXUNUSED(pm))
 {
    return mNames;

@@ -178,8 +178,8 @@ namespace
 
    SelectionBoundary ChooseBoundary
       (const ViewInfo &viewInfo,
-       wxCoord xx, wxCoord yy, const Track *pTrack, const wxRect &rect,
-       bool mayDragWidth, bool onlyWithinSnapDistance,
+       wxCoord xx, const wxRect &rect,
+       bool onlyWithinSnapDistance,
        double *pPinValue = NULL)
    {
       // Choose one of four boundaries to adjust, or the center frequency.
@@ -496,7 +496,7 @@ UIHandle::Result SelectHandle::Click
       double value;
       // Shift-click, choose closest boundary
       SelectionBoundary boundary =
-         ChooseBoundary(viewInfo, xx, event.m_y, pTrack, mRect, false, false, &value);
+         ChooseBoundary(viewInfo, xx, mRect, false, &value);
       mSelectionBoundary = boundary;
       switch (boundary) {
          case SBLeft:
@@ -535,7 +535,7 @@ UIHandle::Result SelectHandle::Click
             // Not shift-down, choose boundary only within snapping
             double value;
             SelectionBoundary boundary =
-               ChooseBoundary(viewInfo, xx, event.m_y, pTrack, mRect, true, true, &value);
+               ChooseBoundary(viewInfo, xx, mRect, true, &value);
             mSelectionBoundary = boundary;
             switch (boundary) {
             case SBNone:
@@ -715,7 +715,7 @@ HitTestPreview SelectHandle::Preview
             // choose boundaries only in snapping tolerance,
             // and may choose center.
             SelectionBoundary boundary =
-            ChooseBoundary(viewInfo, xx, state.m_y, pTrack.get(), rect, !bModifierDown, !bModifierDown);
+            ChooseBoundary(viewInfo, xx, rect, !bModifierDown);
 
             SetTipAndCursorForBoundary(boundary, !bShiftDown, tip, pCursor);
          }
@@ -729,7 +729,7 @@ HitTestPreview SelectHandle::Preview
          const bool bCtrlDown = state.ControlDown();
          const bool bModifierDown = bShiftDown || bCtrlDown;
          SelectionBoundary boundary = ChooseBoundary(
-            viewInfo, xx, state.m_y, pTrack.get(), rect, !bModifierDown, !bModifierDown);
+            viewInfo, xx, rect, !bModifierDown);
          SetTipAndCursorForBoundary(boundary, !bShiftDown, tip, pCursor);
       }
 
@@ -1040,8 +1040,6 @@ void SelectHandle::StartSnappingFreqSelection
 {
    static const size_t minLength = 8;
 
-   const double rate = pTrack->GetRate();
-
    // Grab samples, just for this track, at these times
    std::vector<float> frequencySnappingData;
    const auto start =
@@ -1068,7 +1066,6 @@ void SelectHandle::StartSnappingFreqSelection
 
    while(windowSize > effectiveLength)
       windowSize >>= 1;
-   const int windowType = settings.windowType;
 
    // We can now throw away the sample data but we keep the spectrum.
 }

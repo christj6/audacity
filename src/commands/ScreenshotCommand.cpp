@@ -468,7 +468,7 @@ void ScreenshotCommand::CapturePreferences(
       gPrefs->Flush();
       wxString Command = "Preferences";
       const CommandContext context( *pProject );
-      if( !pMan->HandleTextualCommand( Command, context, AlwaysEnabledFlag, AlwaysEnabledFlag ) )
+      if( !pMan->HandleTextualCommand( Command, AlwaysEnabledFlag, AlwaysEnabledFlag ) )
       {
          wxLogDebug("Command %s not found", Command );
       }
@@ -626,7 +626,7 @@ void ScreenshotCommand::CaptureCommands(
       SetIdleHandler( IdleHandler );
       Str = Commands[i];
       const CommandContext context( *pProject );
-      if( !pMan->HandleTextualCommand( Str, context, AlwaysEnabledFlag, AlwaysEnabledFlag ) )
+      if( !pMan->HandleTextualCommand( Str, AlwaysEnabledFlag, AlwaysEnabledFlag ) )
       {
          wxLogDebug("Command %s not found", Str);
       }

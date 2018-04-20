@@ -286,7 +286,7 @@ class AUDACITY_DLL_API CommandManager final : public XMLTagHandler
    // MixerTrackCluster classes use it.
    bool FilterKeyEvent(AudacityProject *project, const wxKeyEvent & evt, bool permit = false);
    bool HandleMenuID(int id, CommandFlag flags, CommandMask mask);
-   bool HandleTextualCommand(const wxString & Str, const CommandContext & context, CommandFlag flags, CommandMask mask);
+   bool HandleTextualCommand(const wxString & Str, CommandFlag flags, CommandMask mask);
 
    //
    // Accessing

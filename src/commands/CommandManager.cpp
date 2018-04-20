@@ -1515,7 +1515,7 @@ bool CommandManager::HandleMenuID(int id, CommandFlag flags, CommandMask mask)
 /// HandleTextualCommand() allows us a limitted version of script/batch
 /// behavior, since we can get from a string command name to the actual
 /// code to run.
-bool CommandManager::HandleTextualCommand(const wxString & Str, const CommandContext & context, CommandFlag flags, CommandMask mask)
+bool CommandManager::HandleTextualCommand(const wxString & Str, CommandFlag flags, CommandMask mask)
 {
    if( Str.IsEmpty() )
       return false;

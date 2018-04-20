@@ -226,27 +226,6 @@ void BuiltinCommandsModule::Terminate()
    return;
 }
 
-bool BuiltinCommandsModule::AutoRegisterPlugins(PluginManagerInterface & pm)
-{
-   wxString ignoredErrMsg;
-   for (size_t i = 0; i < WXSIZEOF(kCOMMANDNames); i++)
-   {
-      wxString path(wxString(BUILTIN_GENERIC_COMMAND_PREFIX) + kCOMMANDNames[i]);
-
-      if (!pm.IsPluginRegistered(path))
-      {
-         // No checking of error ?
-         // Uses Generic Registration, not Default.
-         // Registers as TypeGeneric, not TypeEffect.
-         DiscoverPluginsAtPath(path, ignoredErrMsg,
-            PluginManagerInterface::AudacityCommandRegistrationCallback);
-      }
-   }
-
-   // We still want to be called during the normal registration process
-   return false;
-}
-
 wxArrayString BuiltinCommandsModule::FindPluginPaths(PluginManagerInterface & WXUNUSED(pm))
 {
    return mNames;

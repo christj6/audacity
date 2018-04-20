@@ -381,9 +381,6 @@ bool ModuleManager::DiscoverProviders()
       {
          // Register the provider
          pm.RegisterPlugin(module);
-
-         // Now, allow the module to auto-register children
-         module->AutoRegisterPlugins(pm);
       }
    }
 
@@ -408,9 +405,6 @@ void ModuleManager::InitializeBuiltins()
 
          // Need to remember it 
          mDynModules[id] = std::move(module);
-
-         // Allow the module to auto-register children
-         pInterface->AutoRegisterPlugins(pm);
       }
       else
       {
