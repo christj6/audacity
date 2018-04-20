@@ -32,7 +32,7 @@ class SetTrackBase : public AudacityCommand
 public:
    SetTrackBase();
    bool Apply(const CommandContext & context) override;
-   virtual bool ApplyInner( const CommandContext & context, Track * t ){return true;};
+   virtual bool ApplyInner( Track * t ){return true;};
    virtual bool DefineParams( ShuttleParams & S ) override;
    virtual void PopulateOrExchange(ShuttleGui & S) override;
 
@@ -58,7 +58,7 @@ public:
 
    // AudacityCommand overrides
    wxString ManualPage() override {return wxT("Extra_Menu:_Tools#set_track_status");};
-   bool ApplyInner( const CommandContext & context, Track * t ) override;
+   bool ApplyInner( const CommandContext & context, Track * t );
 
 public:
    wxString mTrackName;
@@ -83,7 +83,7 @@ public:
 
    // AudacityCommand overrides
    wxString ManualPage() override {return wxT("Extra_Menu:_Tools#set_track");};
-   bool ApplyInner( const CommandContext & context, Track * t ) override;
+   bool ApplyInner( Track * t ) override;
 
 public:
    int mColour;
@@ -124,28 +124,21 @@ public:
       return 
          SetTrackBase::DefineParams(S) &&
          mSetStatus.DefineParams(S) &&  
-         // mSetAudio.DefineParams(S) &&
          mSetVisuals.DefineParams(S);
    };
    void PopulateOrExchange(ShuttleGui & S) override {
       SetTrackBase::PopulateOrExchange( S );
       mSetStatus.PopulateOrExchange(S);
-      // mSetAudio.PopulateOrExchange(S);
       mSetVisuals.PopulateOrExchange(S);
    };
-   bool ApplyInner(const CommandContext & context, Track * t ) override {
+   bool ApplyInner(const CommandContext & context, Track * t ) {
       mSetStatus.bIsSecondChannel = bIsSecondChannel;
-      // mSetAudio.bIsSecondChannel = bIsSecondChannel;
       mSetVisuals.bIsSecondChannel = bIsSecondChannel;
-      return 
-         mSetStatus.ApplyInner( context, t ) &&  
-         // mSetAudio.ApplyInner( context, t )&&
-         mSetVisuals.ApplyInner( context, t );
+      return mSetStatus.ApplyInner( context, t ) &&  mSetVisuals.ApplyInner( t );
    }
 
 private:
    SetTrackStatusCommand mSetStatus;
-   // SetTrackAudioCommand mSetAudio;
    SetTrackVisualsCommand mSetVisuals;
 };
 

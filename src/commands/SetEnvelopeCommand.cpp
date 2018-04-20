@@ -51,7 +51,7 @@ void SetEnvelopeCommand::PopulateOrExchange(ShuttleGui & S)
    S.EndMultiColumn();
 }
 
-bool SetEnvelopeCommand::ApplyInner( const CommandContext & context, Track * t )
+bool SetEnvelopeCommand::ApplyInner( Track * t )
 {
    if( (t->GetKind() != Track::Wave)) 
       return true;

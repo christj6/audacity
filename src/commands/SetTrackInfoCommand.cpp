@@ -96,7 +96,7 @@ bool SetTrackBase::Apply(const CommandContext & context  )
 #endif
 
       if( bThisTrack ){
-         ApplyInner( context, t );
+         ApplyInner( t );
       }
       bIsSecondChannel = t->GetLinked();
       if( !bIsSecondChannel )
@@ -267,7 +267,7 @@ void SetTrackVisualsCommand::PopulateOrExchange(ShuttleGui & S)
    S.EndMultiColumn();
 }
 
-bool SetTrackVisualsCommand::ApplyInner(const CommandContext & context, Track * t )
+bool SetTrackVisualsCommand::ApplyInner( Track * t )
 {
    auto wt = dynamic_cast<WaveTrack *>(t);
 

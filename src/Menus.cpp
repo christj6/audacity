@@ -783,7 +783,6 @@ void AudacityProject::CreateMenusAndCommands()
 
       c->BeginSubMenu(_("Add &New"));
 
-      c->AddItem(wxT("NewMonoTrack"), XXO("&Mono Track"), FN(OnNewWaveTrack), wxT("Ctrl+Shift+N"));
       c->AddItem(wxT("NewStereoTrack"), XXO("&Stereo Track"), FN(OnNewStereoTrack));
 
       c->EndSubMenu();
@@ -6197,19 +6196,6 @@ wxString AudacityProject::ClipBoundaryMessage(const std::vector<FoundClipBoundar
    }
 
    return message;
-}
-
-void AudacityProject::OnNewWaveTrack(const CommandContext &WXUNUSED(context) )
-{
-   auto t = mTracks->Add(mTrackFactory->NewWaveTrack(mDefaultFormat, mRate));
-   SelectNone();
-
-   t->SetSelected(true);
-
-   PushState(_("Created new audio track"), _("New Track"));
-
-   RedrawProject();
-   mTrackPanel->EnsureVisible(t);
 }
 
 void AudacityProject::OnNewStereoTrack(const CommandContext &WXUNUSED(context) )

@@ -72,7 +72,7 @@ void SetClipCommand::PopulateOrExchange(ShuttleGui & S)
    S.EndMultiColumn();
 }
 
-bool SetClipCommand::ApplyInner( const CommandContext & context, Track * t )
+bool SetClipCommand::ApplyInner( Track * t )
 {
    if( t->GetKind() != Track::Wave) 
       return true;

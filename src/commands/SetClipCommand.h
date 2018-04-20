@@ -34,7 +34,7 @@ public:
 
    // AudacityCommand overrides
    wxString ManualPage() override {return wxT("Extra_Menu:_Tools#set_clip");};
-   bool ApplyInner( const CommandContext & context, Track * t ) override;
+   bool ApplyInner( Track * t );
 
 public:
    double mContainsTime;

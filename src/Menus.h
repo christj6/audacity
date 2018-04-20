@@ -367,7 +367,6 @@ void OnCursorClipBoundary(bool next);
 static wxString ClipBoundaryMessage(const std::vector<FoundClipBoundary>& results);
 
 // Tracks menu
-void OnNewWaveTrack(const CommandContext &context );
 void OnNewStereoTrack(const CommandContext &context );
 void OnRemoveTracks(const CommandContext &context );
 void OnAddLabel(const CommandContext &context );
