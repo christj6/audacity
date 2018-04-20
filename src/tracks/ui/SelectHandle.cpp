@@ -14,7 +14,6 @@ Paul Licameli split from TrackPanel.cpp
 #include "TrackControls.h"
 
 #include "../../AColor.h"
-#include "../../FreqWindow.h"
 #include "../../HitTestResult.h"
 #include "../../NumberScale.h"
 #include "../../Project.h"
@@ -753,7 +752,6 @@ UIHandle::Result SelectHandle::Release
 {
    using namespace RefreshCode;
    pProject->ModifyState();
-   mFrequencySnapper.reset();
    mSnapManager.reset();
    if (mSelectionStateChanger) {
       mSelectionStateChanger->Commit();
@@ -1032,15 +1030,13 @@ void SelectHandle::HandleCenterFrequencyClick
       mFreqSelMode = FREQ_SEL_SNAPPING_CENTER;
       // Disable time selection
       mSelStartValid = false;
-      mFrequencySnapper = std::make_shared<SpectrumAnalyst>();
-      StartSnappingFreqSelection(*mFrequencySnapper, viewInfo, pTrack);
+      StartSnappingFreqSelection(viewInfo, pTrack);
 #endif
    }
 }
 
 void SelectHandle::StartSnappingFreqSelection
-   (SpectrumAnalyst &analyst,
-    const ViewInfo &viewInfo, const WaveTrack *pTrack)
+   (const ViewInfo &viewInfo, const WaveTrack *pTrack)
 {
    static const size_t minLength = 8;
 
@@ -1054,7 +1050,7 @@ void SelectHandle::StartSnappingFreqSelection
       pTrack->TimeToLongSamples(viewInfo.selectedRegion.t1());
    const auto length =
       std::min(frequencySnappingData.max_size(),
-         limitSampleBufferSize(10485760, // as in FreqWindow.cpp
+         limitSampleBufferSize(10485760,
             end - start));
    const auto effectiveLength = std::max(minLength, length);
    frequencySnappingData.resize(effectiveLength, 0.0f);
@@ -1073,10 +1069,6 @@ void SelectHandle::StartSnappingFreqSelection
    while(windowSize > effectiveLength)
       windowSize >>= 1;
    const int windowType = settings.windowType;
-
-   analyst.Calculate(
-      SpectrumAnalyst::Spectrum, windowType, windowSize, rate,
-      &frequencySnappingData[0], length);
 
    // We can now throw away the sample data but we keep the spectrum.
 }

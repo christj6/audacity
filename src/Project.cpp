@@ -89,7 +89,6 @@ scroll information.  It also has some status flags.
 #endif
 
 #include "AudacityException.h"
-#include "FreqWindow.h"
 #include "AutoRecovery.h"
 #include "AudacityApp.h"
 #include "AColor.h"
@@ -2267,8 +2266,6 @@ void AudacityProject::OnCloseWindow(wxCloseEvent & event)
    // below:  closing the two analysis dialogs, and stopping audio streams.
    // Streams can be for play, recording, or monitoring.  But maybe it still
    // makes sense to stop any recording before putting up the dialog.
-
-   mFreqWindow.reset();
 
    // Check to see if we were playing or recording
    // audio, and if so, make sure Audio I/O is completely finished.

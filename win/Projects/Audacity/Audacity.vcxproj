@@ -159,7 +159,6 @@
     <ClCompile Include="..\..\..\src\FileFormats.cpp" />
     <ClCompile Include="..\..\..\src\FileIO.cpp" />
     <ClCompile Include="..\..\..\src\FileNames.cpp" />
-    <ClCompile Include="..\..\..\src\FreqWindow.cpp" />
     <ClCompile Include="..\..\..\src\HelpText.cpp" />
     <ClCompile Include="..\..\..\src\HistoryWindow.cpp" />
     <ClCompile Include="..\..\..\src\ImageManipulation.cpp" />
@@ -478,7 +477,6 @@
     <ClInclude Include="..\..\..\src\FileFormats.h" />
     <ClInclude Include="..\..\..\src\FileIO.h" />
     <ClInclude Include="..\..\..\src\FileNames.h" />
-    <ClInclude Include="..\..\..\src\FreqWindow.h" />
     <ClInclude Include="..\..\..\src\HelpText.h" />
     <ClInclude Include="..\..\..\src\HistoryWindow.h" />
     <ClInclude Include="..\..\..\src\ImageManipulation.h" />

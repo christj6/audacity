@@ -29,7 +29,6 @@
 class wxMenu;
 class wxRect;
 
-class SpectrumAnalyst;
 class Track;
 class TrackList;
 class TrackPanel;

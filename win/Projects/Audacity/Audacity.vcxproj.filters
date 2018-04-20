@@ -137,9 +137,6 @@
     <ClCompile Include="..\..\..\src\FileNames.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\FreqWindow.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\HelpText.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -860,9 +857,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\FileNames.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\FreqWindow.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\HelpText.h">

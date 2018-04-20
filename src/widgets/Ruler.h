@@ -267,10 +267,6 @@ class AUDACITY_DLL_API RulerPanel final : public wxPanelWrapper {
 
    ~RulerPanel();
 
-   void DoSetSize(int x, int y,
-                  int width, int height,
-                  int sizeFlags = wxSIZE_AUTO) override;
-
    void OnErase(wxEraseEvent &evt);
    void OnPaint(wxPaintEvent &evt);
    void OnSize(wxSizeEvent &evt);

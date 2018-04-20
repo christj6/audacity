@@ -22,7 +22,6 @@ Paul Licameli split from TrackPanel.cpp
 
 class SelectionStateChanger;
 class SnapManager;
-class SpectrumAnalyst;
 class Track;
 class TrackList;
 class ViewInfo;
@@ -107,8 +106,7 @@ private:
       (const ViewInfo &viewInfo, bool shiftDown,
        const WaveTrack *pTrack, double value);
    static void StartSnappingFreqSelection
-      (SpectrumAnalyst &analyst,
-       const ViewInfo &viewInfo, const WaveTrack *pTrack);
+      (const ViewInfo &viewInfo, const WaveTrack *pTrack);
 private:
    //void ResetFreqSelectionPin
    //   (const ViewInfo &viewInfo, double hintFrequency, bool logF);
@@ -146,7 +144,6 @@ private:
    // FREQ_SEL_BOTTOM_FREE,
    // and is ignored otherwise.
    double mFreqSelPin{ -1.0 };
-   std::shared_ptr<SpectrumAnalyst> mFrequencySnapper;
 
    int mMostRecentX{ -1 }, mMostRecentY{ -1 };
 

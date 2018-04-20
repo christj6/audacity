@@ -63,7 +63,6 @@ class TrackList;
 class Tags;
 
 class TrackPanel;
-class FreqWindow;
 class MeterPanel;
 
 // toolbar classes
@@ -613,8 +612,6 @@ private:
 
    MacrosWindow *mMacrosWindow{};
    HistoryWindow *mHistoryWindow{};
-
-   Destroy_ptr<FreqWindow> mFreqWindow;
 
    // dialog for missing alias warnings
    wxDialog            *mAliasMissingWarningDialog{};
