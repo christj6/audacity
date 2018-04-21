@@ -2611,7 +2611,7 @@ bool AudacityProject::IsAlreadyOpen(const wxString & projPathName)
 }
 
 AudacityProject *AudacityProject::OpenProject(
-   AudacityProject *pProject, const wxString &fileNameArg, bool addtohistory)
+   AudacityProject *pProject, const wxString &fileNameArg)
 {
    return pProject;
 }

@@ -64,6 +64,8 @@ struct ExposedFormat
 	   fmtid(fmtid1), name(name1), extension(extension1), shortname(shortname1),
 	   maxchannels(maxchannels1), canmetadata(canmetadata1), canutf8(canutf81), description_(description_1), codecid(codecid1),
 	   compiledIn(compiledIn1) {}
+
+   // ExposedFormat(const int canmetadata1) : canmetadata(canmetadata1) {} // fails to compile
 };
 
 

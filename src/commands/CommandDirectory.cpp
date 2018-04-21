@@ -28,39 +28,7 @@ CommandDirectory::CommandDirectory()
 {
    // Create the command map.
    // First we have commands which return information
-   //AddCommand(make_movable<MessageCommandType>());
    AddCommand(make_movable<BatchEvalCommandType>());
-
-
-   // Legacy adapter commands that previously was needed to 
-   // access menu items.
-   //AddCommand(make_movable<ExecMenuCommandType>());
-
-   // Not needed.  Sets selected/solo/mute on multiple tracks.
-   //AddCommand(make_movable<SetProjectInfoCommandType>());
-
-//   Moved to AudacityCommand
-//   AddCommand(make_movable<OpenProjectCommandType>());
-//   AddCommand(make_movable<SaveProjectCommandType>());
-//   AddCommand(make_movable<ImportCommandType>());
-//   AddCommand(make_movable<ExportCommandType>());
-//   AddCommand(make_movable<HelpCommandType>());
-//   AddCommand(make_movable<GetInfoCommandType>("GetAll"));
-//   AddCommand(make_movable<GetInfoCommandType>("GetCommands"));
-//   AddCommand(make_movable<GetInfoCommandType>("GetMenus"));
-//   AddCommand(make_movable<GetInfoCommandType>("GetMenusPlus"));
-//   AddCommand(make_movable<GetInfoCommandType>("GetBoxes"));
-//   AddCommand(make_movable<GetInfoCommandType>("GetClips"));
-
-//   AddCommand(make_movable<GetTrackInfoCommandType>());
-//   AddCommand(make_movable<GetProjectInfoCommandType>());
-//   AddCommand(make_movable<CompareAudioCommandType>());
-//   AddCommand(make_movable<GetPreferenceCommandType>());
-//   AddCommand(make_movable<SetPreferenceCommandType>());
-//   AddCommand(make_movable<ScreenshotCommandType>());
-//   AddCommand(make_movable<SelectCommandType>());
-//   AddCommand(make_movable<SetTrackInfoCommandType>());
-
 }
 
 CommandDirectory::~CommandDirectory()

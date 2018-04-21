@@ -253,7 +253,7 @@ class AUDACITY_DLL_API AudacityProject final : public wxFrame,
    // But if an exception escapes this function, create no NEW project.
    static AudacityProject *OpenProject(
       AudacityProject *pProject,
-      const wxString &fileNameArg, bool addtohistory = true);
+      const wxString &fileNameArg);
 
    void OpenFile(const wxString &fileName, bool addtohistory = true);
 
