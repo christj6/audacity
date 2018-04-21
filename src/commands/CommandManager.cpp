@@ -1391,7 +1391,11 @@ bool CommandManager::FilterKeyEvent(AudacityProject *project, const wxKeyEvent &
       bool bIntercept = pWnd !=  pTrackPanel;
       // Intercept keys from windows
       if( bIntercept ){
-		  bIntercept = pWnd;
+		  // bIntercept = pWnd; // causes warning
+		  if (pWnd)
+		  {
+			  bIntercept = TRUE;
+		  }
       }
       //wxLogDebug("Focus: %p TrackPanel: %p", pWnd, pTrackPanel );
       // We allow the keystrokes below to be handled by wxWidgets controls IF we are 

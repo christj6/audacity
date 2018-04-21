@@ -3042,13 +3042,6 @@ bool AudacityProject::Save()
    if ( !IsProjectSaved() )
       return SaveAs();
 
-   return DoSave(false, false);
-}
-
-// Assumes AudacityProject::mFileName has been set to the desired path.
-bool AudacityProject::DoSave
-   (const bool fromSaveAs, const bool bWantSaveCompressed)
-{
    return true;
 }
 
@@ -3356,7 +3349,7 @@ bool AudacityProject::SaveAs(const wxString & newFileName, bool bWantSaveCompres
    //Don't change the title, unless we succeed.
    //SetProjectTitle();
 
-   success = DoSave(!bOwnsNewAupName || bWantSaveCompressed, bWantSaveCompressed);
+   success = true;
 
    if (success && addToHistory) {
       wxGetApp().AddFileToHistory(mFileName);
@@ -4114,7 +4107,7 @@ bool AudacityProject::SaveFromTimerRecording(wxFileName fnFile) {
          mFileName = sOldFilename;
    } );
 
-   bSuccess = DoSave(true, false);
+   bSuccess = true;
 
    if (bSuccess) {
       wxGetApp().AddFileToHistory(mFileName);

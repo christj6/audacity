@@ -54,7 +54,16 @@ struct ExposedFormat
    AVCodecID codecid;         //!< codec ID (see libavcodec/avcodec.h)
    bool compiledIn;           //!< support for this codec/format is compiled in (checked at runtime)
 
+   // const wxString Description(); // fails to compile
    wxString Description() const; // get translation
+
+   // address warning over "constructor could not be generated"
+   ExposedFormat(FFmpegExposedFormat fmtid1, const wxChar *name1, const wxChar *extension1, const wxChar *shortname1,
+	   unsigned maxchannels1, const int canmetadata1, bool canutf81, const wxChar *description_1, AVCodecID codecid1,
+	   bool compiledIn1) :
+	   fmtid(fmtid1), name(name1), extension(extension1), shortname(shortname1),
+	   maxchannels(maxchannels1), canmetadata(canmetadata1), canutf8(canutf81), description_(description_1), codecid(codecid1),
+	   compiledIn(compiledIn1) {}
 };
 
 

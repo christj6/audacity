@@ -2120,7 +2120,6 @@ void TrackInfo::WideMuteDrawFunction
    wxRect bev = rect;
    GetWideMuteSoloHorizontalBounds( rect, bev );
    auto target = dynamic_cast<MuteButtonHandle*>( context.target.get() );
-   bool hit = target && target->GetTrack().get() == pTrack;
 }
 
 void TrackInfo::WideSoloDrawFunction
@@ -2130,7 +2129,6 @@ void TrackInfo::WideSoloDrawFunction
    wxRect bev = rect;
    GetWideMuteSoloHorizontalBounds( rect, bev );
    auto target = dynamic_cast<SoloButtonHandle*>( context.target.get() );
-   bool hit = target && target->GetTrack().get() == pTrack;
 }
 
 void TrackInfo::StatusDrawFunction
