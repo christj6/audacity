@@ -83,7 +83,6 @@ class AUDACITY_DLL_API Tags final : public XMLTagHandler {
 
    bool ShowEditDialog(wxWindow *parent, const wxString &title, bool force = false);
 
-   bool HandleXMLTag(const wxChar *tag, const wxChar **attrs) override;
    XMLTagHandler *HandleXMLChild(const wxChar *tag) override;
    void WriteXML(XMLWriter &xmlFile) const /* not override */;
 

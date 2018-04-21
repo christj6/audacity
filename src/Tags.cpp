@@ -496,47 +496,6 @@ void Tags::SetTag(const wxString & name, const int & value)
    SetTag(name, wxString::Format(wxT("%d"), value));
 }
 
-bool Tags::HandleXMLTag(const wxChar *tag, const wxChar **attrs)
-{
-   if (wxStrcmp(tag, wxT("tags")) == 0) {
-      return true;
-   }
-
-   if (wxStrcmp(tag, wxT("tag")) == 0) {
-      wxString n, v;
-
-      while (*attrs) {
-         wxString attr = *attrs++;
-         if (attr.IsEmpty())
-            break;
-         wxString value = *attrs++;
-
-         if (!XMLValueChecker::IsGoodString(attr) ||
-             !XMLValueChecker::IsGoodString(value)) {
-            break;
-         }
-
-         if (attr == wxT("name")) {
-            n = value;
-         }
-         else if (attr == wxT("value")) {
-            v = value;
-         }
-      }
-
-      if (n == wxT("id3v2")) {
-         // LLL:  This is obsolete, but it must be handled and ignored.
-      }
-      else {
-         SetTag(n, v);
-      }
-
-      return true;
-   }
-
-   return false;
-}
-
 XMLTagHandler *Tags::HandleXMLChild(const wxChar *tag)
 {
    if (wxStrcmp(tag, wxT("tags")) == 0) {

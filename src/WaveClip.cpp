@@ -1500,42 +1500,6 @@ void WaveClip::Flush()
    //wxLogDebug(wxT("now sample count %lli"), (long long) mSequence->GetNumSamples());
 }
 
-bool WaveClip::HandleXMLTag(const wxChar *tag, const wxChar **attrs)
-{
-   if (!wxStrcmp(tag, wxT("waveclip")))
-   {
-      double dblValue;
-      long longValue;
-      while (*attrs)
-      {
-         const wxChar *attr = *attrs++;
-         const wxChar *value = *attrs++;
-
-         if (!value)
-            break;
-
-         const wxString strValue = value;
-         if (!wxStrcmp(attr, wxT("offset")))
-         {
-            if (!XMLValueChecker::IsGoodString(strValue) ||
-                  !Internat::CompatibleToDouble(strValue, &dblValue))
-               return false;
-            SetOffset(dblValue);
-         }
-         if (!wxStrcmp(attr, wxT("colorindex")))
-         {
-            if (!XMLValueChecker::IsGoodString(strValue) ||
-                  !strValue.ToLong( &longValue))
-               return false;
-            SetColourIndex(longValue);
-         }
-      }
-      return true;
-   }
-
-   return false;
-}
-
 void WaveClip::HandleXMLEndTag(const wxChar *tag)
 {
    if (!wxStrcmp(tag, wxT("waveclip")))

@@ -43,23 +43,6 @@ public:
    double GetVal() const { return mVal; }
    inline void SetVal( Envelope *pEnvelope, double val );
 
-   bool HandleXMLTag(const wxChar *tag, const wxChar **attrs) override
-   {
-      if (!wxStrcmp(tag, wxT("controlpoint"))) {
-         while (*attrs) {
-            const wxChar *attr = *attrs++;
-            const wxChar *value = *attrs++;
-            if (!wxStrcmp(attr, wxT("t")))
-               SetT(Internat::CompatibleToDouble(value));
-            else if (!wxStrcmp(attr, wxT("val")))
-               SetVal( nullptr, Internat::CompatibleToDouble(value) );
-         }
-         return true;
-      }
-      else
-         return false;
-   }
-
    XMLTagHandler *HandleXMLChild(const wxChar * WXUNUSED(tag)) override
    {
       return NULL;
@@ -107,7 +90,6 @@ public:
    double ClampValue(double value) { return std::max(mMinValue, std::min(mMaxValue, value)); }
 
    // Newfangled XML file I/O
-   bool HandleXMLTag(const wxChar *tag, const wxChar **attrs) override;
    XMLTagHandler *HandleXMLChild(const wxChar *tag) override;
    void WriteXML(XMLWriter &xmlFile) const /* not override */;
 

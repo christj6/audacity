@@ -72,13 +72,6 @@ class AUDACITY_DLL_API XMLTagHandler /* not final */ {
    // Methods to override
    //
 
-   // This method will be called on your class if your class has
-   // been registered to handle this particular tag.  Parse the
-   // tag and the attribute-value pairs (null-terminated), and
-   // return true on success, and false on failure.  If you return
-   // false, you will not get any calls about children.
-   virtual bool HandleXMLTag(const wxChar *tag, const wxChar **attrs) = 0;
-
    // This method will be called when a closing tag is encountered.
    // It is optional to override this method.
    virtual void HandleXMLEndTag(const wxChar * WXUNUSED(tag)) {}

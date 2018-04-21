@@ -371,33 +371,6 @@ void Envelope::DrawPoints
    }
 }
 
-bool Envelope::HandleXMLTag(const wxChar *tag, const wxChar **attrs)
-{
-   // Return unless it's the envelope tag.
-   if (wxStrcmp(tag, wxT("envelope")))
-      return false;
-
-   int numPoints = 0;
-   long nValue = -1;
-
-   while (*attrs) {
-      const wxChar *attr = *attrs++;
-      const wxChar *value = *attrs++;
-      if (!value)
-         break;
-      const wxString strValue = value;
-      if( !wxStrcmp(attr, wxT("numpoints")) &&
-            XMLValueChecker::IsGoodInt(strValue) && strValue.ToLong(&nValue))
-         numPoints = nValue;
-   }
-   if (numPoints < 0)
-      return false;
-
-   mEnv.clear();
-   mEnv.reserve(numPoints);
-   return true;
-}
-
 XMLTagHandler *Envelope::HandleXMLChild(const wxChar *tag)
 {
    if (wxStrcmp(tag, wxT("controlpoint")))

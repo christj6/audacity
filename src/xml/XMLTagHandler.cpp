@@ -191,7 +191,8 @@ bool XMLTagHandler::ReadXMLTag(const char *tag, const char **attrs)
    }
    out_attrs[tmp_attrs.GetCount()] = 0;
 
-   bool result = HandleXMLTag(UTF8CTOWX(tag), out_attrs.get());
+   // bool result = HandleXMLTag(UTF8CTOWX(tag), out_attrs.get());
+   bool result = true;
 
    return result;
 }

@@ -134,7 +134,6 @@ class ImportXMLTagHandler final : public XMLTagHandler
  public:
    ImportXMLTagHandler(AudacityProject* pProject) { mProject = pProject; }
 
-   bool HandleXMLTag(const wxChar *tag, const wxChar **attrs) override;
    XMLTagHandler *HandleXMLChild(const wxChar * WXUNUSED(tag))  override
       { return NULL; }
 
@@ -481,7 +480,6 @@ public:
 
    // XMLTagHandler callback methods
 
-   bool HandleXMLTag(const wxChar *tag, const wxChar **attrs) override;
    XMLTagHandler *HandleXMLChild(const wxChar *tag) override;
    void WriteXML(
       XMLWriter &xmlFile, bool bWantSaveCompressed) /* not override */;

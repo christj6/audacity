@@ -1698,40 +1698,6 @@ NormalizedKeyString CommandManager::GetDefaultKeyFromName(const wxString &name)
    return entry->defaultKey;
 }
 
-bool CommandManager::HandleXMLTag(const wxChar *tag, const wxChar **attrs)
-{
-   if (!wxStrcmp(tag, wxT("audacitykeyboard"))) {
-      mXMLKeysRead = 0;
-   }
-
-   if (!wxStrcmp(tag, wxT("command"))) {
-      wxString name;
-      NormalizedKeyString key;
-
-      while(*attrs) {
-         const wxChar *attr = *attrs++;
-         const wxChar *value = *attrs++;
-
-         if (!value)
-            break;
-
-         if (!wxStrcmp(attr, wxT("name")) && XMLValueChecker::IsGoodString(value))
-            name = value;
-         if (!wxStrcmp(attr, wxT("key")) && XMLValueChecker::IsGoodString(value))
-            key = NormalizedKeyString{ value };
-      }
-
-      if (mCommandNameHash[name]) {
-         if (GetDefaultKeyFromName(name) != key) {
-            mCommandNameHash[name]->key = key;
-            mXMLKeysRead++;
-         }
-      }
-   }
-
-   return true;
-}
-
 void CommandManager::HandleXMLEndTag(const wxChar *tag)
 {
    if (!wxStrcmp(tag, wxT("audacitykeyboard"))) {
