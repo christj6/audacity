@@ -888,16 +888,6 @@ void Sequence::HandleXMLEndTag(const wxChar *tag)
    }
 }
 
-XMLTagHandler *Sequence::HandleXMLChild(const wxChar *tag)
-{
-   if (!wxStrcmp(tag, wxT("waveblock")))
-      return this;
-   else {
-      mDirManager->SetLoadingFormat(mSampleFormat);
-      return mDirManager.get();
-   }
-}
-
 // Throws exceptions rather than reporting errors.
 void Sequence::WriteXML(XMLWriter &xmlFile) const
 // may throw

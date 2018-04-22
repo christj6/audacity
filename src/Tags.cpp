@@ -496,19 +496,6 @@ void Tags::SetTag(const wxString & name, const int & value)
    SetTag(name, wxString::Format(wxT("%d"), value));
 }
 
-XMLTagHandler *Tags::HandleXMLChild(const wxChar *tag)
-{
-   if (wxStrcmp(tag, wxT("tags")) == 0) {
-      return this;
-   }
-
-   if (wxStrcmp(tag, wxT("tag")) == 0) {
-      return this;
-   }
-
-   return NULL;
-}
-
 void Tags::WriteXML(XMLWriter &xmlFile) const
 // may throw
 {

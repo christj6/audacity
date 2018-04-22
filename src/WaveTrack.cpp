@@ -1667,42 +1667,6 @@ void WaveTrack::HandleXMLEndTag(const wxChar * WXUNUSED(tag))
    NewestOrNewClip()->HandleXMLEndTag(wxT("waveclip"));
 }
 
-XMLTagHandler *WaveTrack::HandleXMLChild(const wxChar *tag)
-{
-   //
-   // This is legacy code (1.2 and previous) and is not called for NEW projects!
-   //
-   if (!wxStrcmp(tag, wxT("sequence")) || !wxStrcmp(tag, wxT("envelope")))
-   {
-      // This is a legacy project, so set the cached offset
-      NewestOrNewClip()->SetOffset(mLegacyProjectFileOffset);
-
-      // Legacy project file tracks are imported as one single wave clip
-      if (!wxStrcmp(tag, wxT("sequence")))
-         return NewestOrNewClip()->GetSequence();
-      else if (!wxStrcmp(tag, wxT("envelope")))
-         return NewestOrNewClip()->GetEnvelope();
-   }
-
-   // JKC... for 1.1.0, one step better than what we had, but still badly broken.
-   //If we see a waveblock at this level, we'd better generate a sequence.
-   if( !wxStrcmp( tag, wxT("waveblock" )))
-   {
-      // This is a legacy project, so set the cached offset
-      NewestOrNewClip()->SetOffset(mLegacyProjectFileOffset);
-      Sequence *pSeq = NewestOrNewClip()->GetSequence();
-      return pSeq;
-   }
-
-   //
-   // This is for the NEW file format (post-1.2)
-   //
-   if (!wxStrcmp(tag, wxT("waveclip")))
-      return CreateClip();
-   else
-      return NULL;
-}
-
 void WaveTrack::WriteXML(XMLWriter &xmlFile) const
 // may throw
 {

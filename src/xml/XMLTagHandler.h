@@ -81,19 +81,10 @@ class AUDACITY_DLL_API XMLTagHandler /* not final */ {
    // It is optional to override this method.
    virtual void HandleXMLContent(const wxString & WXUNUSED(content)) {}
 
-   // If the XML document has children of your tag, this method
-   // should be called.  Typically you should construct a NEW
-   // object for the child, insert it into your own local data
-   // structures, and then return it.  If you do not wish to
-   // handle this child, return NULL and it will be ignored.
-   virtual XMLTagHandler *HandleXMLChild(const wxChar *tag) = 0;
-
    // These functions recieve data from expat.  They do charset
    // conversion and then pass the data to the handlers above.
-   bool ReadXMLTag(const char *tag, const char **attrs);
    void ReadXMLEndTag(const char *tag);
    void ReadXMLContent(const char *s, int len);
-   XMLTagHandler *ReadXMLChild(const char *tag);
 };
 
 #endif // define __AUDACITY_XML_TAG_HANDLER__

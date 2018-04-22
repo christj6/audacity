@@ -735,24 +735,6 @@ void FFmpegPresets::LoadPreset(ExportFFmpegOptions *parent, wxString &name)
    }
 }
 
-XMLTagHandler *FFmpegPresets::HandleXMLChild(const wxChar *tag)
-{
-   if (mAbortImport)
-   {
-      return NULL;
-   }
-
-   if (!wxStrcmp(tag, wxT("preset")))
-   {
-      return this;
-   }
-   else if (!wxStrcmp(tag, wxT("setctrlstate")))
-   {
-      return this;
-   }
-   return NULL;
-}
-
 void FFmpegPresets::WriteXMLHeader(XMLWriter &xmlFile) const
 // may throw
 {

@@ -299,7 +299,6 @@ private:
    //
 
    void HandleXMLEndTag(const wxChar *tag) override;
-   XMLTagHandler *HandleXMLChild(const wxChar *tag) override;
    void WriteXML(XMLWriter &xmlFile) const override;
 
    // Returns true if an error occurred while reading from XML

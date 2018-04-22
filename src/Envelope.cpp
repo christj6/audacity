@@ -371,15 +371,6 @@ void Envelope::DrawPoints
    }
 }
 
-XMLTagHandler *Envelope::HandleXMLChild(const wxChar *tag)
-{
-   if (wxStrcmp(tag, wxT("controlpoint")))
-      return NULL;
-
-   mEnv.push_back( EnvPoint{} );
-   return &mEnv.back();
-}
-
 void Envelope::WriteXML(XMLWriter &xmlFile) const
 // may throw
 {

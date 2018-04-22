@@ -25,15 +25,6 @@ class AUDACITY_DLL_API XMLFileReader final {
 
    wxString GetErrorStr();
 
-   // Callback functions for expat
-
-   static void startElement(void *userData, const char *name,
-                            const char **atts);
-
-   static void endElement(void *userData, const char *name);
-
-   static void charHandler(void *userData, const char *s, int len);
-
  private:
    XML_Parser       mParser;
    XMLTagHandler   *mBaseHandler;

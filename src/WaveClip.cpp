@@ -1506,24 +1506,6 @@ void WaveClip::HandleXMLEndTag(const wxChar *tag)
       UpdateEnvelopeTrackLen();
 }
 
-XMLTagHandler *WaveClip::HandleXMLChild(const wxChar *tag)
-{
-   if (!wxStrcmp(tag, wxT("sequence")))
-      return mSequence.get();
-   else if (!wxStrcmp(tag, wxT("envelope")))
-      return mEnvelope.get();
-   else if (!wxStrcmp(tag, wxT("waveclip")))
-   {
-      // Nested wave clips are cut lines
-      mCutLines.push_back(
-         make_movable<WaveClip>(mSequence->GetDirManager(),
-            mSequence->GetSampleFormat(), mRate, 0 /*colourindex*/));
-      return mCutLines.back().get();
-   }
-   else
-      return NULL;
-}
-
 void WaveClip::WriteXML(XMLWriter &xmlFile) const
 // may throw
 {

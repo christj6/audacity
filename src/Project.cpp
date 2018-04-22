@@ -2617,35 +2617,6 @@ void AudacityProject::EnqueueODTasks()
    }
 }
 
-XMLTagHandler *AudacityProject::HandleXMLChild(const wxChar *tag)
-{
-   if (!wxStrcmp(tag, wxT("tags"))) {
-      return mTags.get();
-   }
-
-   // Note that TrackList::Add includes assignment of unique in-session TrackId
-   // to a reloaded track, though no promise that it equals the id it originally
-   // had
-
-   if (!wxStrcmp(tag, wxT("wavetrack"))) {
-      return mTracks->Add(mTrackFactory->NewWaveTrack());
-   }
-
-   if (!wxStrcmp(tag, wxT("recordingrecovery"))) {
-      if (!mRecordingRecoveryHandler)
-         mRecordingRecoveryHandler = std::make_unique<RecordingRecoveryHandler>(this);
-      return mRecordingRecoveryHandler.get();
-   }
-
-   if (!wxStrcmp(tag, wxT("import"))) {
-      if (!mImportXMLTagHandler)
-         mImportXMLTagHandler = std::make_unique<ImportXMLTagHandler>(this);
-      return mImportXMLTagHandler.get();
-   }
-
-   return NULL;
-}
-
 void AudacityProject::WriteXMLHeader(XMLWriter &xmlFile) const
 {
    xmlFile.Write(wxT("<?xml "));

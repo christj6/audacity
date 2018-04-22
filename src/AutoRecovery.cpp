@@ -208,14 +208,6 @@ void RecordingRecoveryHandler::HandleXMLEndTag(const wxChar *tag)
    }
 }
 
-XMLTagHandler* RecordingRecoveryHandler::HandleXMLChild(const wxChar *tag)
-{
-   if (wxStrcmp(tag, wxT("simpleblockfile")) == 0)
-      return this; // HandleXMLTag also handles <simpleblockfile>
-
-   return NULL;
-}
-
 ///
 /// AutoSaveFile class
 ///

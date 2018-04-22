@@ -43,11 +43,6 @@ public:
    double GetVal() const { return mVal; }
    inline void SetVal( Envelope *pEnvelope, double val );
 
-   XMLTagHandler *HandleXMLChild(const wxChar * WXUNUSED(tag)) override
-   {
-      return NULL;
-   }
-
 private:
    double mT {};
    double mVal {};
@@ -90,7 +85,6 @@ public:
    double ClampValue(double value) { return std::max(mMinValue, std::min(mMaxValue, value)); }
 
    // Newfangled XML file I/O
-   XMLTagHandler *HandleXMLChild(const wxChar *tag) override;
    void WriteXML(XMLWriter &xmlFile) const /* not override */;
 
    void DrawPoints(

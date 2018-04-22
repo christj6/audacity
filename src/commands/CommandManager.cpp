@@ -1708,11 +1708,6 @@ void CommandManager::HandleXMLEndTag(const wxChar *tag)
    }
 }
 
-XMLTagHandler *CommandManager::HandleXMLChild(const wxChar * WXUNUSED(tag))
-{
-   return this;
-}
-
 void CommandManager::WriteXML(XMLWriter &xmlFile) const
 // may throw
 {

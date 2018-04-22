@@ -399,7 +399,6 @@ protected:
    //
 
    void HandleXMLEndTag(const wxChar *tag) override;
-   XMLTagHandler *HandleXMLChild(const wxChar *tag) override;
 
 private:
    // mMaxList only holds shortcuts that should not be added (by default)

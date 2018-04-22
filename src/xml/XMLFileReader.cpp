@@ -26,8 +26,6 @@ XMLFileReader::XMLFileReader()
 {
    mParser = XML_ParserCreate(NULL);
    XML_SetUserData(mParser, (void *)this);
-   XML_SetElementHandler(mParser, startElement, endElement);
-   XML_SetCharacterDataHandler(mParser, charHandler);
    mBaseHandler = NULL;
    mErrorStr = wxT("");
    mHandler.reserve(128);
@@ -80,52 +78,4 @@ bool XMLFileReader::Parse(XMLTagHandler *baseHandler,
 wxString XMLFileReader::GetErrorStr()
 {
    return mErrorStr;
-}
-
-// static
-void XMLFileReader::startElement(void *userData, const char *name,
-                                 const char **atts)
-{
-   XMLFileReader *This = (XMLFileReader *)userData;
-   Handlers &handlers = This->mHandler;
-
-   if (handlers.empty()) {
-      handlers.push_back(This->mBaseHandler);
-   }
-   else {
-      if (XMLTagHandler *const handler = handlers.back())
-         handlers.push_back(handler->ReadXMLChild(name));
-      else
-         handlers.push_back(NULL);
-   }
-
-   if (XMLTagHandler *& handler = handlers.back()) {
-      if (!handler->ReadXMLTag(name, atts)) {
-         handler = nullptr;
-         if (handlers.size() == 1)
-            This->mBaseHandler = nullptr;
-      }
-   }
-}
-
-// static
-void XMLFileReader::endElement(void *userData, const char *name)
-{
-   XMLFileReader *This = (XMLFileReader *)userData;
-   Handlers &handlers = This->mHandler;
-
-   if (XMLTagHandler *const handler = handlers.back())
-      handler->ReadXMLEndTag(name);
-
-   handlers.pop_back();
-}
-
-// static
-void XMLFileReader::charHandler(void *userData, const char *s, int len)
-{
-   XMLFileReader *This = (XMLFileReader *)userData;
-   Handlers &handlers = This->mHandler;
-
-   if (XMLTagHandler *const handler = handlers.back())
-      handler->ReadXMLContent(s, len);
 }

@@ -33,7 +33,6 @@ class RecordingRecoveryHandler final : public XMLTagHandler
 public:
    RecordingRecoveryHandler(AudacityProject* proj);
    void HandleXMLEndTag(const wxChar *tag) override;
-   XMLTagHandler *HandleXMLChild(const wxChar *tag) override;
 
    // This class only knows reading tags
 
