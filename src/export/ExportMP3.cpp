@@ -1765,8 +1765,6 @@ ProgressResult ExportMP3::Export(AudacityProject *project,
       }
 
       InitProgress( pDialog, wxFileName(fName).GetName(), title );
-      auto &progress = *pDialog;
-
       while (updateResult == ProgressResult::Success) {
          auto blockLen = mixer->Process(inSamples);
 
@@ -1807,8 +1805,6 @@ ProgressResult ExportMP3::Export(AudacityProject *project,
             updateResult = ProgressResult::Cancelled;
             break;
          }
-
-         updateResult = progress.Update(mixer->MixGetCurrentTime() - t0, t1 - t0);
       }
    }
 

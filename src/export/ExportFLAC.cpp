@@ -359,8 +359,6 @@ ProgressResult ExportFLAC::Export(AudacityProject *project,
       selectionOnly
          ? _("Exporting the selected audio as FLAC")
          : _("Exporting the audio as FLAC") );
-   auto &progress = *pDialog;
-
    while (updateResult == ProgressResult::Success) {
       auto samplesThisRun = mixer->Process(SAMPLES_PER_RUN);
       if (samplesThisRun == 0) { //stop encoding
@@ -388,9 +386,6 @@ ProgressResult ExportFLAC::Export(AudacityProject *project,
             updateResult = ProgressResult::Cancelled;
             break;
          }
-         if (updateResult == ProgressResult::Success)
-            updateResult =
-               progress.Update(mixer->MixGetCurrentTime() - t0, t1 - t0);
       }
    }
 

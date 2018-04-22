@@ -453,8 +453,6 @@ ProgressResult ExportCL::Export(AudacityProject *project,
          selectionOnly
             ? _("Exporting the selected audio using command-line encoder")
             : _("Exporting the audio using command-line encoder") );
-      auto &progress = *pDialog;
-
       // Start piping the mixed data to the command
       while (updateResult == ProgressResult::Success && process.IsActive() && os->IsOk()) {
          // Capture any stdout and stderr from the command
@@ -495,9 +493,6 @@ ProgressResult ExportCL::Export(AudacityProject *project,
             bytes -= os->LastWrite();
             mixed += os->LastWrite();
          }
-
-         // Update the progress display
-         updateResult = progress.Update(mixer->MixGetCurrentTime() - t0, t1 - t0);
       }
       // Done with the progress display
    }

@@ -463,11 +463,6 @@ samplePtr Mixer::GetBuffer(int channel)
    return mBuffer[channel].ptr();
 }
 
-double Mixer::MixGetCurrentTime()
-{
-   return mTime;
-}
-
 void Mixer::Restart()
 {
    mTime = mT0;

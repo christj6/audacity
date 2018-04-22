@@ -279,8 +279,6 @@ ProgressResult ExportMP2::Export(AudacityProject *project,
                bitrate)
             : wxString::Format(_("Exporting the audio at %ld kbps"),
                bitrate) );
-      auto &progress = *pDialog;
-
       while (updateResult == ProgressResult::Success) {
          auto pcmNumSamples = mixer->Process(pcmBufferSize);
 
@@ -308,8 +306,6 @@ ProgressResult ExportMP2::Export(AudacityProject *project,
             AudacityMessageBox(_("Unable to export"));
             return ProgressResult::Cancelled;
          }
-
-         updateResult = progress.Update(mixer->MixGetCurrentTime() - t0, t1 - t0);
       }
    }
 

@@ -113,10 +113,6 @@ class AUDACITY_DLL_API Mixer {
    // Used in scrubbing.
    void SetTimesAndSpeed(double t0, double t1, double speed);
 
-   /// Current time in seconds (unwarped, i.e. always between startTime and stopTime)
-   /// This value is not accurate, it's useful for progress bars and indicators, but nothing else.
-   double MixGetCurrentTime();
-
    /// Retrieve the main buffer or the interleaved buffer
    samplePtr GetBuffer();
 

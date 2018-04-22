@@ -286,8 +286,6 @@ ProgressResult ExportOGG::Export(AudacityProject *project,
          selectionOnly
             ? _("Exporting the selected audio as Ogg Vorbis")
             : _("Exporting the audio as Ogg Vorbis") );
-      auto &progress = *pDialog;
-
       while (updateResult == ProgressResult::Success && !eos) {
          float **vorbis_buffer = vorbis_analysis_buffer(&dsp, SAMPLES_PER_RUN);
          auto samplesThisRun = mixer->Process(SAMPLES_PER_RUN);
@@ -356,8 +354,6 @@ ProgressResult ExportOGG::Export(AudacityProject *project,
             AudacityMessageBox(_("Unable to export"));
             break;
          }
-
-         updateResult = progress.Update(mixer->MixGetCurrentTime() - t0, t1 - t0);
       }
    }
 

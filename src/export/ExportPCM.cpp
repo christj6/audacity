@@ -496,8 +496,6 @@ ProgressResult ExportPCM::Export(AudacityProject *project,
                   formatStr)
                : wxString::Format(_("Exporting the audio as %s"),
                   formatStr) );
-         auto &progress = *pDialog;
-
          while (updateResult == ProgressResult::Success) {
             sf_count_t samplesWritten;
             size_t numSamples = mixer->Process(maxBlockLen);
@@ -525,8 +523,6 @@ ProgressResult ExportPCM::Export(AudacityProject *project,
                updateResult = ProgressResult::Cancelled;
                break;
             }
-            
-            updateResult = progress.Update(mixer->MixGetCurrentTime() - t0, t1 - t0);
          }
       }
       
