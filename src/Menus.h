@@ -409,7 +409,6 @@ void OnManual(const CommandContext &context );
 void OnShowLog(const CommandContext &context );
 void OnHelpWelcome(const CommandContext &context );
 void OnBenchmark(const CommandContext &context );
-void OnSimulateRecordingErrors(const CommandContext &context );
 void OnDetectUpstreamDropouts(const CommandContext &context );
 void OnScreenshot(const CommandContext &context );
 void OnAudioDeviceInfo(const CommandContext &context );

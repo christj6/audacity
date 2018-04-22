@@ -928,10 +928,6 @@ void AudacityProject::CreateMenusAndCommands()
 //#endif
 
 #ifdef IS_ALPHA
-      c->AddCheck(wxT("SimulateRecordingErrors"),
-                  XXO("Simulate Recording Errors"),
-                  FN(OnSimulateRecordingErrors),
-                  gAudioIO->mSimulateRecordingErrors);
       c->AddCheck(wxT("DetectUpstreamDropouts"),
                   XXO("Detect Upstream Dropouts"),
                   FN(OnDetectUpstreamDropouts),
@@ -6286,13 +6282,6 @@ void AudacityProject::OnShowLog(const CommandContext &WXUNUSED(context) )
 void AudacityProject::OnBenchmark(const CommandContext &WXUNUSED(context) )
 {
    ::RunBenchmark(this);
-}
-
-void AudacityProject::OnSimulateRecordingErrors(const CommandContext &WXUNUSED(context) )
-{
-   bool &setting = gAudioIO->mSimulateRecordingErrors;
-   mCommandManager.Check(wxT("SimulateRecordingErrors"), !setting);
-   setting = !setting;
 }
 
 void AudacityProject::OnDetectUpstreamDropouts(const CommandContext &WXUNUSED(context) )
