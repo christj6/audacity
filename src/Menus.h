@@ -328,10 +328,6 @@ void OnImport(const CommandContext &context );
 
 void OnImportRaw(const CommandContext &context );
 
-void OnMixAndRender(const CommandContext &context );
-void OnMixAndRenderToNewTrack(const CommandContext &context );
-void HandleMixAndRender(bool toNewTrack);
-
 private:
    bool mCursorPositionHasBeenStored{false};
    double mCursorPositionStored;

@@ -2395,7 +2395,6 @@ void Effect::Preview(bool dryOnly)
    // Generators need to generate per track.
    if (mIsLinearEffect && !isGenerator) {
       WaveTrack::Holder mixLeft, mixRight;
-      MixAndRender(saveTracks, mFactory, rate, floatSample, mT0, t1, mixLeft, mixRight);
       if (!mixLeft)
          return;
 

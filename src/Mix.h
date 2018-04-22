@@ -45,11 +45,6 @@ class WaveTrackCache;
  * no explicit time range to process, and the whole occupied length of the
  * input tracks is processed.
  */
-void MixAndRender(TrackList * tracks, TrackFactory *factory,
-                  double rate, sampleFormat format,
-                  double startTime, double endTime,
-                  std::unique_ptr<WaveTrack> &uLeft, std::unique_ptr<WaveTrack> &uRight);
-
 void MixBuffers(unsigned numChannels, int *channelFlags, float *gains,
                 samplePtr src,
                 samplePtr *dests, int len, bool interleaved);
