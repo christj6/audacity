@@ -286,26 +286,8 @@ MacroCommandsCatalog::MacroCommandsCatalog( const AudacityProject *project )
          { command.second, GetCustomTranslation( command.first ) },
          _("Special Command")
       } );
-
    // end CLEANSPEECH remnant
-   /*
-   PluginManager & pm = PluginManager::Get();
-   EffectManager & em = EffectManager::Get();
-   {
-      const PluginDescriptor *plug = pm.GetFirstPlugin(PluginTypeEffect|PluginTypeAudacityCommand);
-      while (plug)
-      {
-         auto command = em.GetCommandIdentifier(plug->GetID());
-         if (!command.IsEmpty())
-            commands.push_back( {
-               { command, plug->GetTranslatedName() },
-               plug->GetPluginType() == PluginTypeEffect ?
-                  _("Effect") : _("Menu Command (With Parameters)")
-            } );
-         plug = pm.GetNextPlugin(PluginTypeEffect|PluginTypeAudacityCommand);
-      }
-   }
-   */
+
    auto mManager = project->GetCommandManager();
    wxArrayString mLabels;
    wxArrayString mNames;
@@ -687,55 +669,6 @@ bool MacroCommands::ApplySpecialCommand(
 }
 // end CLEANSPEECH remnant
 
-bool MacroCommands::ApplyEffectCommand(
-   const PluginID & ID, const wxString &friendlyCommand,
-   const wxString & command, const wxString & params,
-   const CommandContext & Context)
-{
-   (void*)&command;//compiler food.
-
-   //Possibly end processing here, if in batch-debug
-   if( ReportAndSkip(friendlyCommand, params))
-      return true;
-
-   const PluginDescriptor *plug = PluginManager::Get().GetPlugin(ID);
-   if (!plug)
-      return false;
-
-   AudacityProject *project = GetActiveProject();
-
-   // FIXME: for later versions may want to not select-all in batch mode.
-   // IF nothing selected, THEN select everything
-   // (most effects require that you have something selected).
-   if( plug->GetPluginType() != PluginTypeAudacityCommand )
-      project->SelectAllIfNone();
-
-   bool res = false;
-
-   auto cleanup = EffectManager::Get().SetBatchProcessing(ID);
-
-   // transfer the parameters to the effect...
-   if (EffectManager::Get().SetEffectParameters(ID, params))
-   {
-      if( plug->GetPluginType() == PluginTypeAudacityCommand )
-         // and apply the effect...
-         res = project->DoAudacityCommand(ID, 
-            Context,
-            AudacityProject::OnEffectFlags::kConfigured |
-            AudacityProject::OnEffectFlags::kSkipState |
-            AudacityProject::OnEffectFlags::kDontRepeatLast);
-      else
-         // and apply the effect...
-         res = project->DoEffect(ID, 
-            Context,
-            AudacityProject::OnEffectFlags::kConfigured |
-            AudacityProject::OnEffectFlags::kSkipState |
-            AudacityProject::OnEffectFlags::kDontRepeatLast);
-   }
-
-   return res;
-}
-
 bool MacroCommands::ApplyCommand( const wxString &friendlyCommand,
    const wxString & command, const wxString & params,
    CommandContext const * pContext)
@@ -754,12 +687,7 @@ bool MacroCommands::ApplyCommand( const wxString &friendlyCommand,
    const PluginID & ID = EffectManager::Get().GetEffectByIdentifier( command );
    if (!ID.empty())
    {
-      if( pContext )
-         return ApplyEffectCommand(
-            ID, friendlyCommand, command, params, *pContext);
-      const CommandContext context(  *GetActiveProject() );
-      return ApplyEffectCommand(
-         ID, friendlyCommand, command, params, context);
+	   return false;
    }
 
    AudacityProject *project = GetActiveProject();

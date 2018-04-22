@@ -64,10 +64,6 @@ class MacroCommands final {
    bool ApplySpecialCommand(
       int iCommand, const wxString &friendlyCommand,
       const wxString & command, const wxString & params);
-   bool ApplyEffectCommand(
-      const PluginID & ID, const wxString &friendlyCommand,
-      const wxString & command,
-      const wxString & params, const CommandContext & Context);
    bool ReportAndSkip( const wxString & friendlyCommand, const wxString & params );
    void AbortBatch();
 
