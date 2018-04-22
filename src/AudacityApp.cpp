@@ -242,8 +242,6 @@ void QuitAudacity(bool bForce)
 
    ModuleManager::Get().Dispatch(AppQuiting);
 
-   CloseScreenshotTools();
-
    //release ODManager Threads
    ODManager::Quit();
 

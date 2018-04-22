@@ -111,27 +111,6 @@ ScreenFramePtr mFrame;
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void OpenScreenshotTools()
-{
-   if (!mFrame) {
-      auto parent = wxGetApp().GetTopWindow();
-      if (!parent) {
-         wxASSERT(false);
-         return;
-      }
-      mFrame = ScreenFramePtr{ safenew ScreenFrame(parent, -1) };
-   }
-   mFrame->Show();
-   mFrame->Raise();
-}
-
-void CloseScreenshotTools()
-{
-   mFrame = nullptr;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
 class ScreenFrameTimer final : public wxTimer
 {
  public:

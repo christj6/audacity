@@ -132,124 +132,6 @@ enum {
 
 #include "BatchCommands.h"
 
-
-//
-// Effects menu arrays
-//
-static bool SortEffectsByName(const PluginDescriptor *a, const PluginDescriptor *b)
-{
-   wxString akey = a->GetTranslatedName();
-   wxString bkey = b->GetTranslatedName();
-
-   akey += a->GetPath();
-   bkey += b->GetPath();
-
-   return akey.CmpNoCase(bkey) < 0;
-}
-
-static bool SortEffectsByPublisher(const PluginDescriptor *a, const PluginDescriptor *b)
-{
-   wxString akey = a->GetTranslatedVendor();
-   wxString bkey = b->GetTranslatedVendor();
-
-   if (akey.IsEmpty())
-   {
-      akey = _("Uncategorized");
-   }
-   if (bkey.IsEmpty())
-   {
-      bkey = _("Uncategorized");
-   }
-
-   akey += a->GetTranslatedName();
-   bkey += b->GetTranslatedName();
-
-   akey += a->GetPath();
-   bkey += b->GetPath();
-
-   return akey.CmpNoCase(bkey) < 0;
-}
-
-static bool SortEffectsByPublisherAndName(const PluginDescriptor *a, const PluginDescriptor *b)
-{
-   wxString akey = a->GetTranslatedVendor();
-   wxString bkey = b->GetTranslatedVendor();
-
-   if (a->IsEffectDefault())
-   {
-      akey = wxEmptyString;
-   }
-   if (b->IsEffectDefault())
-   {
-      bkey = wxEmptyString;
-   }
-
-   akey += a->GetTranslatedName();
-   bkey += b->GetTranslatedName();
-
-   akey += a->GetPath();
-   bkey += b->GetPath();
-
-   return akey.CmpNoCase(bkey) < 0;
-}
-
-static bool SortEffectsByTypeAndName(const PluginDescriptor *a, const PluginDescriptor *b)
-{
-   auto &em = EffectManager::Get();
-   auto akey = em.GetEffectFamilyName(a->GetID());
-   auto bkey = em.GetEffectFamilyName(b->GetID());
-
-   if (akey.IsEmpty())
-   {
-      akey = _("Uncategorized");
-   }
-   if (bkey.IsEmpty())
-   {
-      bkey = _("Uncategorized");
-   }
-
-   if (a->IsEffectDefault())
-   {
-      akey = wxEmptyString;
-   }
-   if (b->IsEffectDefault())
-   {
-      bkey = wxEmptyString;
-   }
-
-   akey += a->GetTranslatedName();
-   bkey += b->GetTranslatedName();
-
-   akey += a->GetPath();
-   bkey += b->GetPath();
-
-   return akey.CmpNoCase(bkey) < 0;
-}
-
-static bool SortEffectsByType(const PluginDescriptor *a, const PluginDescriptor *b)
-{
-   auto &em = EffectManager::Get();
-   auto akey = em.GetEffectFamilyName(a->GetID());
-   auto bkey = em.GetEffectFamilyName(b->GetID());
-
-   if (akey.IsEmpty())
-   {
-      akey = _("Uncategorized");
-   }
-   if (bkey.IsEmpty())
-   {
-      bkey = _("Uncategorized");
-   }
-
-   akey += a->GetTranslatedName();
-   bkey += b->GetTranslatedName();
-
-   akey += a->GetPath();
-   bkey += b->GetPath();
-
-   return akey.CmpNoCase(bkey) < 0;
-}
-
 /// CreateMenusAndCommands builds the menus, and also rebuilds them after
 /// changes in configured preferences - for example changes in key-bindings
 /// affect the short-cut key legend that appears beside each command,
@@ -839,8 +721,6 @@ void AudacityProject::CreateMenusAndCommands()
       PopulateMacrosMenu( c, AudioIONotBusyFlag );
       c->EndSubMenu();
       c->AddSeparator();
-
-      c->AddItem(wxT("FancyScreenshot"), XXO("&Screenshot..."), FN(OnScreenshot));
 
 // PRL: team consensus for 2.2.0 was, we let end users have this diagnostic,
 // as they used to in 1.3.x
@@ -6117,11 +5997,6 @@ void AudacityProject::OnDetectUpstreamDropouts(const CommandContext &WXUNUSED(co
    bool &setting = gAudioIO->mDetectUpstreamDropouts;
    mCommandManager.Check(wxT("DetectUpstreamDropouts"), !setting);
    setting = !setting;
-}
-
-void AudacityProject::OnScreenshot(const CommandContext &WXUNUSED(context) )
-{
-   ::OpenScreenshotTools();
 }
 
 void AudacityProject::OnAudioDeviceInfo(const CommandContext &WXUNUSED(context) )
