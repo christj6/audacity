@@ -148,10 +148,6 @@ class AUDACITY_DLL_API Effect /* not final */ : public wxEvtHandler,
    bool HideUI() override;
    bool CloseUI() override;
 
-   bool CanExportPresets() override;
-   void ExportPresets() override;
-   void ImportPresets() override;
-
    bool HasOptions() override;
    void ShowOptions() override;
 
@@ -566,7 +562,6 @@ private:
 
    void UpdateControls();
    wxBitmap CreateBitmap(const char *xpm[], bool up, bool pusher);
-   void LoadUserPresets();
 
    void InitializeRealtime();
    void CleanupRealtime();

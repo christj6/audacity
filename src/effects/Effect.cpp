@@ -670,19 +670,6 @@ bool Effect::CloseUI()
    return true;
 }
 
-bool Effect::CanExportPresets()
-{
-   return false;
-}
-
-void Effect::ExportPresets()
-{
-}
-
-void Effect::ImportPresets()
-{
-}
-
 bool Effect::HasOptions()
 {
    return false;
@@ -3041,8 +3028,6 @@ bool EffectUIHost::Initialize()
 
    w->SetAccept(!mIsGUI);
    (!mIsGUI ? w : FindWindow(wxID_APPLY))->SetFocus();
- 
-   LoadUserPresets();
 
    InitializeRealtime();
 
@@ -3206,8 +3191,6 @@ void EffectUIHost::OnMenu(wxCommandEvent & WXUNUSED(evt))
    if( !mEffect )
       return;
 
-   LoadUserPresets();
-
    if (mUserPresets.GetCount() == 0)
    {
       menu.Append(kUserPresetsDummyID, _("User Presets"))->Enable(false);
@@ -3262,9 +3245,6 @@ void EffectUIHost::OnMenu(wxCommandEvent & WXUNUSED(evt))
       menu.Append(0, _("Factory Presets"), sub.release());
    }
 
-   menu.AppendSeparator();
-   menu.Append(kImportID, _("Import..."))->Enable(mClient->CanExportPresets());
-   menu.Append(kExportID, _("Export..."))->Enable(mClient->CanExportPresets());
    menu.AppendSeparator();
    menu.Append(kOptionsID, _("Options..."))->Enable(mClient->HasOptions());
    menu.AppendSeparator();
@@ -3490,8 +3470,6 @@ void EffectUIHost::OnDeletePreset(wxCommandEvent & evt)
       mEffect->RemovePrivateConfigSubgroup(mEffect->GetUserPresetsGroup(preset));
    }
 
-   LoadUserPresets();
-
    return;
 }
 
@@ -3562,7 +3540,6 @@ void EffectUIHost::OnSaveAs(wxCommandEvent & WXUNUSED(evt))
       }
 
       mEffect->SaveUserPreset(mEffect->GetUserPresetsGroup(name));
-      LoadUserPresets();
 
       break;
    }
@@ -3572,19 +3549,11 @@ void EffectUIHost::OnSaveAs(wxCommandEvent & WXUNUSED(evt))
 
 void EffectUIHost::OnImport(wxCommandEvent & WXUNUSED(evt))
 {
-   mClient->ImportPresets();
-
-   LoadUserPresets();
-
    return;
 }
 
 void EffectUIHost::OnExport(wxCommandEvent & WXUNUSED(evt))
 {
-   // may throw
-   // exceptions are handled in AudacityApp::OnExceptionInMainLoop
-   mClient->ExportPresets();
-
    return;
 }
 
@@ -3714,18 +3683,6 @@ void EffectUIHost::UpdateControls()
          }
       }
    }
-}
-
-void EffectUIHost::LoadUserPresets()
-{
-   mUserPresets.Clear();
-
-   if( mEffect )
-      mEffect->GetPrivateConfigSubgroups(mEffect->GetUserPresetsGroup(wxEmptyString), mUserPresets);
-
-   mUserPresets.Sort();
-
-   return;
 }
 
 void EffectUIHost::InitializeRealtime()

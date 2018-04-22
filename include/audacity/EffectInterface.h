@@ -250,10 +250,6 @@ public:
    virtual bool HideUI() = 0;
    virtual bool CloseUI() = 0;
 
-   virtual bool CanExportPresets() = 0;
-   virtual void ExportPresets() = 0;
-   virtual void ImportPresets() = 0;
-
    virtual bool HasOptions() = 0;
    virtual void ShowOptions() = 0;
 };
