@@ -130,11 +130,6 @@ void BuiltinEffectsModule::Terminate()
    return;
 }
 
-wxArrayString BuiltinEffectsModule::FindPluginPaths(PluginManagerInterface & WXUNUSED(pm))
-{
-   return mNames;
-}
-
 unsigned BuiltinEffectsModule::DiscoverPluginsAtPath(
    const wxString & path, wxString &errMsg,
    const RegistrationCallback &callback)

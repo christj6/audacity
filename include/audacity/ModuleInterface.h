@@ -98,11 +98,6 @@ public:
    // this function returns nonempty.
    virtual wxString InstallPath() = 0;
 
-   // For modules providing an interface to other dynamically loaded plugins,
-   // the module returns a list of path names that will be presented to the
-   // user as "New" for enablement.
-   virtual wxArrayString FindPluginPaths(PluginManagerInterface & pluginManager) = 0;
-
    // Once the user selects desired paths from FindPluginPaths(),
    // a call to DiscoverPluginsAtPath()
    // will be made to request registration of one or more plugins.  If the module must create

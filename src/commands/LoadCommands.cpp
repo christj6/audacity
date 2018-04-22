@@ -226,11 +226,6 @@ void BuiltinCommandsModule::Terminate()
    return;
 }
 
-wxArrayString BuiltinCommandsModule::FindPluginPaths(PluginManagerInterface & WXUNUSED(pm))
-{
-   return mNames;
-}
-
 unsigned BuiltinCommandsModule::DiscoverPluginsAtPath(
    const wxString & path, wxString &errMsg,
    const RegistrationCallback &callback)

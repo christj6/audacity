@@ -44,7 +44,6 @@ public:
    wxArrayString FileExtensions() override { return {}; }
    wxString InstallPath() override { return {}; }
 
-   wxArrayString FindPluginPaths(PluginManagerInterface & pm) override;
    unsigned DiscoverPluginsAtPath(
       const wxString & path, wxString &errMsg,
       const RegistrationCallback &callback)

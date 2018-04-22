@@ -95,7 +95,6 @@ public:
    // PluginManager use
    bool DiscoverProviders();
 
-   wxArrayString FindPluginsForProvider(const PluginID & provider, const wxString & path);
    bool RegisterEffectPlugin(const PluginID & provider, const wxString & path,
                        wxString &errMsg);
 

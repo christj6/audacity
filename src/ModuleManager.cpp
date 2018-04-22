@@ -484,22 +484,6 @@ void ModuleManager::RegisterModule(ModuleInterface *inModule)
    PluginManager::Get().RegisterPlugin(inModule);
 }
 
-wxArrayString ModuleManager::FindPluginsForProvider(const PluginID & providerID,
-                                                    const wxString & path)
-{
-   // Instantiate if it hasn't already been done
-   if (mDynModules.find(providerID) == mDynModules.end())
-   {
-      // If it couldn't be created, just give up and return an empty list
-      if (!CreateProviderInstance(providerID, path))
-      {
-         return wxArrayString();
-      }
-   }
-
-   return mDynModules[providerID]->FindPluginPaths(PluginManager::Get());
-}
-
 bool ModuleManager::RegisterEffectPlugin(const PluginID & providerID, const wxString & path, wxString &errMsg)
 {
    errMsg.clear();
@@ -508,9 +492,9 @@ bool ModuleManager::RegisterEffectPlugin(const PluginID & providerID, const wxSt
       return false;
    }
 
-   auto nFound = mDynModules[providerID]->DiscoverPluginsAtPath(path, errMsg, PluginManagerInterface::DefaultRegistrationCallback);
+   // auto nFound = mDynModules[providerID]->DiscoverPluginsAtPath(path, errMsg, PluginManagerInterface::DefaultRegistrationCallback);
 
-   return nFound > 0;
+   return false;
 }
 
 IdentInterface *ModuleManager::CreateProviderInstance(const PluginID & providerID,
