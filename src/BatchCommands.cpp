@@ -30,7 +30,6 @@ processing.  See also MacrosWindow and ApplyMacroDialog.
 #include "effects/EffectManager.h"
 #include "FileNames.h"
 #include "Internat.h"
-#include "PluginManager.h"
 #include "Prefs.h"
 #include "Shuttle.h"
 #include "export/ExportFLAC.h"

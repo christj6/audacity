@@ -792,18 +792,6 @@ void AudacityProject::CreateMenusAndCommands()
       c->AddSeparator();
 
       c->BeginSubMenu(_("Mi&x") );
-	  /*
-      {
-         // Stereo to Mono is an oddball command that is also subject to control by the
-         // plug-in manager, as if an effect.  Decide whether to show or hide it.
-         const PluginID ID = EffectManager::Get().GetEffectByIdentifier(wxT("StereoToMono"));
-         const PluginDescriptor *plug = PluginManager::Get().GetPlugin(ID);
-         if (plug && plug->IsEnabled())
-            c->AddItem(wxT("Stereo to Mono"), XXO("Mix Stereo Down to &Mono"), FN(OnStereoToMono),
-            AudioIONotBusyFlag | StereoRequiredFlag | WaveTracksSelectedFlag,
-            AudioIONotBusyFlag | StereoRequiredFlag | WaveTracksSelectedFlag);
-      }
-	  */
       c->AddItem(wxT("MixAndRender"), XXO("Mi&x and Render"), FN(OnMixAndRender),
          AudioIONotBusyFlag | WaveTracksSelectedFlag,
          AudioIONotBusyFlag | WaveTracksSelectedFlag);
@@ -838,75 +826,10 @@ void AudacityProject::CreateMenusAndCommands()
       wxArrayString defaults;
 
       //////////////////////////////////////////////////////////////////////////
-      // Generate Menu
-      //////////////////////////////////////////////////////////////////////////
-
-      c->BeginMenu(_("&Generate"));
-      c->SetDefaultFlags(AudioIONotBusyFlag, AudioIONotBusyFlag);
-
-      c->AddItem(wxT("ManageGenerators"), XXO("Add / Remove Plug-ins..."), FN(OnManageGenerators));
-      c->AddSeparator();
-
-      PopulateEffectsMenu(c,
-         EffectTypeGenerate,
-         AudioIONotBusyFlag,
-         AudioIONotBusyFlag);
-
-      c->EndMenu();
-
-      /////////////////////////////////////////////////////////////////////////////
-      // Effect Menu
-      /////////////////////////////////////////////////////////////////////////////
-
-      c->BeginMenu(_("Effe&ct"));
-
-      wxString buildMenuLabel;
-      if (!mLastEffect.IsEmpty()) {
-         buildMenuLabel.Printf(_("Repeat %s"),
-            EffectManager::Get().GetCommandName(mLastEffect));
-      }
-      else
-         buildMenuLabel = _("Repeat Last Effect");
-
-      c->AddItem(wxT("ManageEffects"), XXO("Add / Remove Plug-ins..."), FN(OnManageEffects));
-      c->AddSeparator();
-
-      c->AddItem(wxT("RepeatLastEffect"), buildMenuLabel, false, FN(OnRepeatLastEffect), wxT("Ctrl+R"),
-         AudioIONotBusyFlag | TimeSelectedFlag | WaveTracksSelectedFlag | HasLastEffectFlag,
-         AudioIONotBusyFlag | TimeSelectedFlag | WaveTracksSelectedFlag | HasLastEffectFlag);
-
-      c->AddSeparator();
-
-      PopulateEffectsMenu(c,
-         EffectTypeProcess,
-         AudioIONotBusyFlag | TimeSelectedFlag | WaveTracksSelectedFlag,
-         IsRealtimeNotActiveFlag);
-
-      c->EndMenu();
-
-      //////////////////////////////////////////////////////////////////////////
-      // Analyze Menu
-      //////////////////////////////////////////////////////////////////////////
-
-      c->BeginMenu(_("&Analyze"));
-
-      c->AddItem(wxT("ManageAnalyzers"), XXO("Add / Remove Plug-ins..."), FN(OnManageAnalyzers));
-      c->AddSeparator();
-
-      PopulateEffectsMenu(c,
-         EffectTypeAnalyze,
-         AudioIONotBusyFlag | TimeSelectedFlag | WaveTracksSelectedFlag,
-         IsRealtimeNotActiveFlag);
-
-      c->EndMenu();
-
-      //////////////////////////////////////////////////////////////////////////
       // Tools Menu
       //////////////////////////////////////////////////////////////////////////
 
       c->BeginMenu(_("T&ools"));
-
-      c->AddItem(wxT("ManageTools"), XXO("Add / Remove Plug-ins..."), FN(OnManageTools));
 
       c->AddItem(wxT("ManageMacros"), XXO("&Macros..."), FN(OnManageMacros));
 
@@ -933,12 +856,6 @@ void AudacityProject::CreateMenusAndCommands()
                   FN(OnDetectUpstreamDropouts),
                   gAudioIO->mDetectUpstreamDropouts);
 #endif
-      c->AddSeparator();
-
-      PopulateEffectsMenu(c,
-         EffectTypeTool,
-         AudioIONotBusyFlag,
-         AudioIONotBusyFlag);
 
       c->EndMenu();
 
@@ -1400,65 +1317,6 @@ void AudacityProject::PopulateMacrosMenu( CommandManager* c, CommandFlag flags  
          flags);
    }
 
-}
-
-
-/// The effects come from a plug in list
-/// This code iterates through the list, adding effects into
-/// the menu.
-void AudacityProject::PopulateEffectsMenu(CommandManager* c,
-                                          EffectType type,
-                                          CommandFlag batchflags,
-                                          CommandFlag realflags)
-{
-   PluginManager & pm = PluginManager::Get();
-
-   std::vector<const PluginDescriptor*> defplugs;
-   std::vector<const PluginDescriptor*> optplugs;
-
-   const PluginDescriptor *plug = pm.GetFirstPluginForEffectType(type);
-   while (plug)
-   {
-      if ( !plug->IsEnabled() ){
-         ;// don't add to menus!
-      }
-      else if (plug->IsEffectDefault())
-         defplugs.push_back(plug);
-      else
-         optplugs.push_back(plug);
-      plug = pm.GetNextPluginForEffectType(type);
-   }
-
-   wxString groupby = gPrefs->Read(wxT("/Effects/GroupBy"), wxT("name"));
-
-   using Comparator = bool(*)(const PluginDescriptor*, const PluginDescriptor*);
-   Comparator comp1, comp2;
-   if (groupby == wxT("sortby:name"))
-      comp1 = comp2 = SortEffectsByName;
-   else if (groupby == wxT("sortby:publisher:name"))
-      comp1 = SortEffectsByName, comp2 = SortEffectsByPublisherAndName;
-   else if (groupby == wxT("sortby:type:name"))
-      comp1 = SortEffectsByName, comp2 = SortEffectsByTypeAndName;
-   else if (groupby == wxT("groupby:publisher"))
-      comp1 = comp2 = SortEffectsByPublisher;
-   else if (groupby == wxT("groupby:type"))
-      comp1 = comp2 = SortEffectsByType;
-   else // name
-      comp1 = comp2 = SortEffectsByName;
-
-   std::sort( defplugs.begin(), defplugs.end(), comp1 );
-   std::sort( optplugs.begin(), optplugs.end(), comp2 );
-
-   AddEffectMenuItems(c, defplugs, batchflags, realflags, true);
-
-   if (defplugs.size() && optplugs.size())
-   {
-      c->AddSeparator();
-   }
-
-   AddEffectMenuItems(c, optplugs, batchflags, realflags, false);
-
-   return;
 }
 
 void AudacityProject::AddEffectMenuItems(CommandManager *c,
@@ -3932,15 +3790,6 @@ void AudacityProject::OnEffect(const CommandContext &context)
    DoEffect(context.parameter, context, 0);
 }
 
-void AudacityProject::OnRepeatLastEffect(const CommandContext &context)
-{
-   if (!mLastEffect.IsEmpty())
-   {
-      DoEffect(mLastEffect, context, OnEffectFlags::kConfigured);
-   }
-}
-
-
 void AudacityProject::RebuildAllMenuBars(){
    for( size_t i = 0; i < gAudacityProjects.size(); i++ ) {
       AudacityProject *p = gAudacityProjects[i].get();
@@ -3958,27 +3807,6 @@ void AudacityProject::RebuildAllMenuBars(){
 #endif
    }
 }
-
-void AudacityProject::OnManageGenerators(const CommandContext &WXUNUSED(context) )
-{
-   // OnManagePluginsMenu(EffectTypeGenerate);
-}
-
-void AudacityProject::OnManageEffects(const CommandContext &WXUNUSED(context) )
-{
-   // OnManagePluginsMenu(EffectTypeProcess);
-}
-
-void AudacityProject::OnManageAnalyzers(const CommandContext &WXUNUSED(context) )
-{
-   // OnManagePluginsMenu(EffectTypeAnalyze);
-}
-
-void AudacityProject::OnManageTools(const CommandContext &WXUNUSED(context) )
-{
-   // OnManagePluginsMenu(EffectTypeTool);
-}
-
 
 void AudacityProject::OnStereoToMono(const CommandContext &context)
 {

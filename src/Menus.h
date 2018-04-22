@@ -25,8 +25,6 @@
 private:
 void CreateMenusAndCommands();
 void PopulateMacrosMenu( CommandManager* c, CommandFlag flags );
-void PopulateEffectsMenu(CommandManager *c, EffectType type,
-                         CommandFlag batchflags, CommandFlag realflags);
 void AddEffectMenuItems(CommandManager *c,
                         std::vector<const PluginDescriptor*> & plugs,
                         CommandFlag batchflags, CommandFlag realflags, bool isDefault);
@@ -386,7 +384,6 @@ public:
 
 bool DoEffect(const PluginID & ID, const CommandContext & context, int flags);
 void OnEffect(const CommandContext &context );
-void OnRepeatLastEffect(const CommandContext &context );
 bool DoAudacityCommand(const PluginID & ID, const CommandContext &, int flags);
 void OnApplyMacroDirectly(const CommandContext &context );
 void OnApplyMacrosPalette(const CommandContext &context );
@@ -394,10 +391,6 @@ void OnManageMacros(const CommandContext &context );
 void OnStereoToMono(const CommandContext &context );
 void OnAudacityCommand(const CommandContext &context );
 static void RebuildAllMenuBars();
-void OnManageGenerators(const CommandContext &context );
-void OnManageEffects(const CommandContext &context );
-void OnManageAnalyzers(const CommandContext &context );
-void OnManageTools(const CommandContext &context );
 
 
 
