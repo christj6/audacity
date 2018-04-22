@@ -68,7 +68,6 @@ It handles initialization and termination by subclassing wxApp.
 #include "Internat.h"
 #include "LangChoice.h"
 #include "Languages.h"
-#include "PluginManager.h"
 #include "Prefs.h"
 #include "Project.h"
 #include "Screenshot.h"
@@ -1282,12 +1281,6 @@ bool AudacityApp::OnInit()
 
    // Initialize the CommandHandler
    InitCommandHandler();
-
-   // Initialize the PluginManager
-   PluginManager::Get().Initialize();
-
-   // Initialize the ModuleManager, including loading found modules
-   ModuleManager::Get().Initialize(*mCmdHandler);
 
    // Parse command line and handle options that might require
    // immediate exit...no need to initialize all of the audio
