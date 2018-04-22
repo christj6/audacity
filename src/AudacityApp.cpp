@@ -1955,9 +1955,6 @@ int AudacityApp::OnExit()
 
    DeinitAudioIO();
 
-   // Terminate the PluginManager (must be done before deleting the locale)
-   PluginManager::Get().Terminate();
-
    if (mIPCServ)
    {
 #if defined(__UNIX__)

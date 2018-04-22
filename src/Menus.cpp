@@ -792,6 +792,7 @@ void AudacityProject::CreateMenusAndCommands()
       c->AddSeparator();
 
       c->BeginSubMenu(_("Mi&x") );
+	  /*
       {
          // Stereo to Mono is an oddball command that is also subject to control by the
          // plug-in manager, as if an effect.  Decide whether to show or hide it.
@@ -802,6 +803,7 @@ void AudacityProject::CreateMenusAndCommands()
             AudioIONotBusyFlag | StereoRequiredFlag | WaveTracksSelectedFlag,
             AudioIONotBusyFlag | StereoRequiredFlag | WaveTracksSelectedFlag);
       }
+	  */
       c->AddItem(wxT("MixAndRender"), XXO("Mi&x and Render"), FN(OnMixAndRender),
          AudioIONotBusyFlag | WaveTracksSelectedFlag,
          AudioIONotBusyFlag | WaveTracksSelectedFlag);
@@ -3961,30 +3963,24 @@ void AudacityProject::RebuildAllMenuBars(){
    }
 }
 
-void AudacityProject::OnManagePluginsMenu(EffectType type)
-{
-   if (PluginManager::Get().ShowManager(this, type))
-      RebuildAllMenuBars();
-}
-
 void AudacityProject::OnManageGenerators(const CommandContext &WXUNUSED(context) )
 {
-   OnManagePluginsMenu(EffectTypeGenerate);
+   // OnManagePluginsMenu(EffectTypeGenerate);
 }
 
 void AudacityProject::OnManageEffects(const CommandContext &WXUNUSED(context) )
 {
-   OnManagePluginsMenu(EffectTypeProcess);
+   // OnManagePluginsMenu(EffectTypeProcess);
 }
 
 void AudacityProject::OnManageAnalyzers(const CommandContext &WXUNUSED(context) )
 {
-   OnManagePluginsMenu(EffectTypeAnalyze);
+   // OnManagePluginsMenu(EffectTypeAnalyze);
 }
 
 void AudacityProject::OnManageTools(const CommandContext &WXUNUSED(context) )
 {
-   OnManagePluginsMenu(EffectTypeTool);
+   // OnManagePluginsMenu(EffectTypeTool);
 }
 
 

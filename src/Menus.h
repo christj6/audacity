@@ -393,7 +393,6 @@ void OnApplyMacrosPalette(const CommandContext &context );
 void OnManageMacros(const CommandContext &context );
 void OnStereoToMono(const CommandContext &context );
 void OnAudacityCommand(const CommandContext &context );
-void OnManagePluginsMenu(EffectType Type);
 static void RebuildAllMenuBars();
 void OnManageGenerators(const CommandContext &context );
 void OnManageEffects(const CommandContext &context );

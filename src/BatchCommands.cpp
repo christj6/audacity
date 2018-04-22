@@ -288,7 +288,7 @@ MacroCommandsCatalog::MacroCommandsCatalog( const AudacityProject *project )
       } );
 
    // end CLEANSPEECH remnant
-
+   /*
    PluginManager & pm = PluginManager::Get();
    EffectManager & em = EffectManager::Get();
    {
@@ -305,7 +305,7 @@ MacroCommandsCatalog::MacroCommandsCatalog( const AudacityProject *project )
          plug = pm.GetNextPlugin(PluginTypeEffect|PluginTypeAudacityCommand);
       }
    }
-
+   */
    auto mManager = project->GetCommandManager();
    wxArrayString mLabels;
    wxArrayString mNames;
