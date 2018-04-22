@@ -92,9 +92,6 @@ public:
    void Initialize(CommandHandler & cmdHandler);
    int Dispatch(ModuleDispatchTypes type);
 
-   // PluginManager use
-   bool DiscoverProviders();
-
    bool RegisterEffectPlugin(const PluginID & provider, const wxString & path,
                        wxString &errMsg);
 

@@ -1734,11 +1734,6 @@ PluginManager & PluginManager::Get()
 
 void PluginManager::Initialize()
 {
-   // Always load the registry first
-   Load();
-
-   // Then look for providers (they may autoregister plugins)
-   ModuleManager::Get().DiscoverProviders();
 }
 
 void PluginManager::Terminate()
@@ -1763,49 +1758,6 @@ void PluginManager::Terminate()
    {
       mPlugins.erase(iter++);
    }
-}
-
-void PluginManager::Load()
-{
-   // Create/Open the registry
-   wxFileConfig registry(wxEmptyString, wxEmptyString, FileNames::PluginRegistry());
-
-   // If this group doesn't exist then we have something that's not a registry.
-   // We should probably warn the user, but it's pretty unlikely that this will happen.
-   if (!registry.HasGroup(REGROOT))
-   {
-      // Must start over
-      registry.DeleteAll();
-      return;
-   }
-
-   // Check for a registry version that we can understand
-   wxString regver = registry.Read(REGVERKEY);
-   if (regver < REGVERCUR )
-   {
-      // This is where we'd put in conversion code when the
-      // registry version changes.
-      //
-      // Should also check for a registry file that is newer than
-      // what we can understand.
-   }
-
-   // Load all provider plugins first
-   LoadGroup(&registry, PluginTypeModule);
-
-   // Now the rest
-   LoadGroup(&registry, PluginTypeEffect);
-   LoadGroup(&registry, PluginTypeAudacityCommand );
-   LoadGroup(&registry, PluginTypeExporter);
-   LoadGroup(&registry, PluginTypeImporter);
-
-   LoadGroup(&registry, PluginTypeStub);
-
-   // Not used by 2.1.1 or greater, but must load to allow users to switch between 2.1.0
-   // and 2.1.1+.  This should be removed after a few releases past 2.1.0.
-   LoadGroup(&registry, PluginTypeNone);
-
-   return;
 }
 
 void PluginManager::LoadGroup(wxFileConfig *pRegistry, PluginType type)

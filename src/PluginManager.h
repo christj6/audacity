@@ -272,7 +272,6 @@ private:
    PluginManager();
    ~PluginManager();
 
-   void Load();
    void LoadGroup(wxFileConfig *pRegistry, PluginType type);
    void Save();
    void SaveGroup(wxFileConfig *pRegistry, PluginType type);

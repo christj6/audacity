@@ -345,48 +345,6 @@ ModuleManager & ModuleManager::Get()
    return *mInstance;
 }
 
-bool ModuleManager::DiscoverProviders()
-{
-   InitializeBuiltins();
-
-   wxArrayString provList;
-   wxArrayString pathList;
-
-   // Code from LoadLadspa that might be useful in load modules.
-   wxString pathVar = wxString::FromUTF8(getenv("AUDACITY_MODULES_PATH"));
-
-   if (pathVar != wxT(""))
-   {
-      wxGetApp().AddMultiPathsToPathList(pathVar, pathList);
-   }
-   else
-   {
-      wxGetApp().AddUniquePathToPathList(FileNames::ModulesDir(), pathList);
-   }
-
-#if defined(__WXMSW__)
-   wxGetApp().FindFilesInPathList(wxT("*.dll"), pathList, provList);
-#elif defined(__WXMAC__)
-   wxGetApp().FindFilesInPathList(wxT("*.dylib"), pathList, provList);
-#else
-   wxGetApp().FindFilesInPathList(wxT("*.so"), pathList, provList);
-#endif
-
-   PluginManager & pm = PluginManager::Get();
-
-   for (int i = 0, cnt = provList.GetCount(); i < cnt; i++)
-   {
-      ModuleInterface *module = LoadModule(provList[i]);
-      if (module)
-      {
-         // Register the provider
-         pm.RegisterPlugin(module);
-      }
-   }
-
-   return true;
-}
-
 void ModuleManager::InitializeBuiltins()
 {
    PluginManager & pm = PluginManager::Get();
