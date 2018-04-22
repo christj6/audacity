@@ -407,8 +407,6 @@ void OnManageTools(const CommandContext &context );
 void OnAbout(const CommandContext &context );
 void OnQuickHelp(const CommandContext &context );
 void OnManual(const CommandContext &context );
-void OnCheckForUpdates(const CommandContext &context );
-void MayCheckForUpdates();
 void OnShowLog(const CommandContext &context );
 void OnHelpWelcome(const CommandContext &context );
 void OnBenchmark(const CommandContext &context );

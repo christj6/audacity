@@ -1739,14 +1739,6 @@ void PluginManager::Initialize()
 
    // Then look for providers (they may autoregister plugins)
    ModuleManager::Get().DiscoverProviders();
-
-   // And finally check for updates
-#ifndef EXPERIMENTAL_EFFECT_MANAGEMENT
-   CheckForUpdates();
-#else
-   const bool kFast = true;
-   CheckForUpdates( kFast );
-#endif
 }
 
 void PluginManager::Terminate()
@@ -2280,103 +2272,8 @@ void PluginManager::SaveGroup(wxFileConfig *pRegistry, PluginType type)
    return;
 }
 
-// If bFast is true, do not do a full check.  Just check the ones
-// that are quick to check.  Currently (Feb 2017) just Nyquist
-// and built-ins.
-void PluginManager::CheckForUpdates(bool bFast)
-{
-   // Get ModuleManager reference
-   ModuleManager & mm = ModuleManager::Get();
-
-   wxArrayString pathIndex;
-   for (PluginMap::iterator iter = mPlugins.begin(); iter != mPlugins.end(); ++iter)
-   {
-      PluginDescriptor & plug = iter->second;
-
-      // Bypass 2.1.0 placeholders...remove this after a few releases past 2.1.0
-      if (plug.GetPluginType() == PluginTypeNone)
-      {
-         continue;
-      }
-
-      pathIndex.Add(plug.GetPath().BeforeFirst(wxT(';')));
-   }
-
-   // Check all known plugins to ensure they are still valid and scan for NEW ones.
-   // 
-   // All NEW plugins get a stub entry created that will remain in place until the
-   // user enables or disables the plugin.
-   //
-   // Becuase we use the plugins "path" as returned by the providers, we can actually
-   // have multiple providers report the same path since, at this point, they only
-   // know that the path might possibly be one supported by the provider.
-   //
-   // When the user enables the plugin, each provider that reported it will be asked
-   // to register the plugin.
-   for (PluginMap::iterator iter = mPlugins.begin(); iter != mPlugins.end(); ++iter)
-   {
-      PluginDescriptor & plug = iter->second;
-      const PluginID & plugID = plug.GetID();
-      const wxString & plugPath = plug.GetPath();
-      PluginType plugType = plug.GetPluginType();
-
-      // Bypass 2.1.0 placeholders...remove this after a few releases past 2.1.0
-      if (plugType == PluginTypeNone)
-      {
-         continue;
-      }
-
-      if ( plugType == PluginTypeModule  )
-      {
-         if( bFast ) 
-         {
-            // Skip modules, when doing a fast refresh/check.
-         } 
-         else if (!mm.IsProviderValid(plugID, plugPath))
-         {
-            plug.SetEnabled(false);
-            plug.SetValid(false);
-         }
-         else
-         {
-            // Collect plugin paths
-            wxArrayString paths = mm.FindPluginsForProvider(plugID, plugPath);
-            for (size_t i = 0, cnt = paths.GetCount(); i < cnt; i++)
-            {
-               wxString path = paths[i].BeforeFirst(wxT(';'));;
-               if (pathIndex.Index(path) == wxNOT_FOUND)
-               {
-                  PluginID ID = plugID + wxT("_") + path;
-                  PluginDescriptor & plug = mPlugins[ID];  // This will create a NEW descriptor
-                  plug.SetPluginType(PluginTypeStub);
-                  plug.SetID(ID);
-                  plug.SetProviderID(plugID);
-                  plug.SetPath(path);
-                  plug.SetEnabled(false);
-                  plug.SetValid(false);
-               }
-            }
-         }
-      }
-      else if (plugType != PluginTypeNone && plugType != PluginTypeStub)
-      {
-         plug.SetValid(mm.IsPluginValid(plug.GetProviderID(), plugPath, bFast));
-         if (!plug.IsValid())
-         {
-            plug.SetEnabled(false);
-         }
-      }
-   }
-
-   Save();
-
-   return;
-}
-
 bool PluginManager::ShowManager(wxWindow *parent, EffectType type)
 {
-   CheckForUpdates();
-
    PluginRegistrationDialog dlg(parent, type);
    return dlg.ShowModal() == wxID_OK;
 }

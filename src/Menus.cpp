@@ -842,11 +842,8 @@ void AudacityProject::CreateMenusAndCommands()
       c->BeginMenu(_("&Generate"));
       c->SetDefaultFlags(AudioIONotBusyFlag, AudioIONotBusyFlag);
 
-#ifdef EXPERIMENTAL_EFFECT_MANAGEMENT
       c->AddItem(wxT("ManageGenerators"), XXO("Add / Remove Plug-ins..."), FN(OnManageGenerators));
       c->AddSeparator();
-#endif
-
 
       PopulateEffectsMenu(c,
          EffectTypeGenerate,
@@ -869,10 +866,8 @@ void AudacityProject::CreateMenusAndCommands()
       else
          buildMenuLabel = _("Repeat Last Effect");
 
-#ifdef EXPERIMENTAL_EFFECT_MANAGEMENT
       c->AddItem(wxT("ManageEffects"), XXO("Add / Remove Plug-ins..."), FN(OnManageEffects));
       c->AddSeparator();
-#endif
 
       c->AddItem(wxT("RepeatLastEffect"), buildMenuLabel, false, FN(OnRepeatLastEffect), wxT("Ctrl+R"),
          AudioIONotBusyFlag | TimeSelectedFlag | WaveTracksSelectedFlag | HasLastEffectFlag,
@@ -893,10 +888,9 @@ void AudacityProject::CreateMenusAndCommands()
 
       c->BeginMenu(_("&Analyze"));
 
-#ifdef EXPERIMENTAL_EFFECT_MANAGEMENT
       c->AddItem(wxT("ManageAnalyzers"), XXO("Add / Remove Plug-ins..."), FN(OnManageAnalyzers));
       c->AddSeparator();
-#endif
+
       PopulateEffectsMenu(c,
          EffectTypeAnalyze,
          AudioIONotBusyFlag | TimeSelectedFlag | WaveTracksSelectedFlag,
@@ -910,10 +904,7 @@ void AudacityProject::CreateMenusAndCommands()
 
       c->BeginMenu(_("T&ools"));
 
-#ifdef EXPERIMENTAL_EFFECT_MANAGEMENT
       c->AddItem(wxT("ManageTools"), XXO("Add / Remove Plug-ins..."), FN(OnManageTools));
-      //c->AddSeparator();
-#endif
 
       c->AddItem(wxT("ManageMacros"), XXO("&Macros..."), FN(OnManageMacros));
 
@@ -1009,7 +1000,6 @@ void AudacityProject::CreateMenusAndCommands()
       c->AddSeparator();
 #endif
 
-      c->AddItem(wxT("Updates"), XXO("&Check for Updates..."), FN(OnCheckForUpdates));
       c->AddItem(wxT("About"), XXO("&About Audacity..."), FN(OnAbout));
 
       c->EndMenu();
@@ -6287,19 +6277,6 @@ void AudacityProject::OnManual(const CommandContext &WXUNUSED(context) )
    HelpSystem::ShowHelp(
       this,
       wxT("Main_Page"));
-}
-
-void AudacityProject::OnCheckForUpdates(const CommandContext &WXUNUSED(context) )
-{
-   ::OpenInDefaultBrowser( VerCheckUrl());
-}
-
-// Only does the update checks if it's an ALPHA build and not disabled by preferences.
-void AudacityProject::MayCheckForUpdates()
-{
-#ifdef IS_ALPHA
-   OnCheckForUpdates(*this);
-#endif
 }
 
 void AudacityProject::OnShowLog(const CommandContext &WXUNUSED(context) )

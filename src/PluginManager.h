@@ -264,8 +264,6 @@ public:
    wxString GetName(const PluginID & ID);
    IdentInterface *GetInstance(const PluginID & ID);
 
-   void CheckForUpdates(bool bFast = false);
-
    bool ShowManager(wxWindow *parent, EffectType type = EffectTypeNone);
 
    const PluginID & RegisterPlugin(EffectDefinitionInterface *effect, PluginType type );

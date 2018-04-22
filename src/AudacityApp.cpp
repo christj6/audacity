@@ -1435,10 +1435,6 @@ bool AudacityApp::OnInit()
    }
 
    if( project->mShowSplashScreen ){
-      // This may do a check-for-updates at every start up.
-      // Mainly this is to tell users of ALPHAS who don't know that they have an ALPHA.
-      // Disabled for now, after discussion.
-      // project->MayCheckForUpdates();
       project->OnHelpWelcome(*project);
    }
 

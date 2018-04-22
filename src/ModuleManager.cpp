@@ -484,39 +484,6 @@ void ModuleManager::RegisterModule(ModuleInterface *inModule)
    PluginManager::Get().RegisterPlugin(inModule);
 }
 
-void ModuleManager::FindAllPlugins(PluginIDList & providers, wxArrayString & paths)
-{
-   PluginManager & pm = PluginManager::Get();
-
-   wxArrayString modIDs;
-   wxArrayString modPaths;
-   const PluginDescriptor *plug = pm.GetFirstPlugin(PluginTypeModule);
-   while (plug)
-   {
-      modIDs.push_back(plug->GetID());
-      modPaths.push_back(plug->GetPath());
-      plug = pm.GetNextPlugin(PluginTypeModule);
-   }
-
-   for (size_t i = 0, cnt = modIDs.size(); i < cnt; i++)
-   {
-      PluginID providerID = modIDs[i];
-
-      ModuleInterface *module =
-         static_cast<ModuleInterface *>(CreateProviderInstance(providerID, modPaths[i]));
-
-      if (!module)
-         continue;
-
-      wxArrayString newpaths = module->FindPluginPaths(pm);
-      for (size_t i = 0, cnt = newpaths.size(); i < cnt; i++)
-      {
-         providers.push_back(providerID);
-         paths.push_back(newpaths[i]);
-      }
-   }
-}
-
 wxArrayString ModuleManager::FindPluginsForProvider(const PluginID & providerID,
                                                     const wxString & path)
 {

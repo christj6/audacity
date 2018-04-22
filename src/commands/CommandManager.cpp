@@ -92,7 +92,6 @@ CommandManager.  It holds the callback for one command.
 #include "../Project.h"
 
 #include "Keyboard.h"
-#include "../PluginManager.h"
 #include "../widgets/LinkingHtmlWindow.h"
 #include "../widgets/ErrorDialog.h"
 #include "../widgets/HelpSystem.h"

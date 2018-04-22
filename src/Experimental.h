@@ -77,9 +77,6 @@
 // preferrably disabled until other work is done.  Martyn 22/12/2008.
 // 
 
-// JKC Apr 2015, Menu item to manage effects.
-#define EXPERIMENTAL_EFFECT_MANAGEMENT
-
 #ifdef EXPERIMENTAL_NYQUIST_INSPECTOR
    #include "NyquistAdapter.h"
 #endif
