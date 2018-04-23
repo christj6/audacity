@@ -215,8 +215,7 @@ namespace
    }
 
    void SetTipAndCursorForBoundary
-      (SelectionBoundary boundary, bool frequencySnapping,
-       wxString &tip, wxCursor *&pCursor)
+      (SelectionBoundary boundary, wxString &tip, wxCursor *&pCursor)
    {
       static wxCursor adjustLeftSelectionCursor{ wxCURSOR_POINT_LEFT };
       static wxCursor adjustRightSelectionCursor{ wxCURSOR_POINT_RIGHT };
@@ -669,10 +668,7 @@ HitTestPreview SelectHandle::Preview
    wxCursor *pCursor = SelectCursor();
    if ( IsClicked() )
       // Use same cursor as at the clck
-      SetTipAndCursorForBoundary
-         (SelectionBoundary(mSelectionBoundary),
-          (mFreqSelMode == FREQ_SEL_SNAPPING_CENTER),
-          tip, pCursor);
+      SetTipAndCursorForBoundary(SelectionBoundary(mSelectionBoundary), tip, pCursor);
    else {
       // Choose one of many cursors for mouse-over
 
@@ -717,7 +713,7 @@ HitTestPreview SelectHandle::Preview
             SelectionBoundary boundary =
             ChooseBoundary(viewInfo, xx, rect, !bModifierDown);
 
-            SetTipAndCursorForBoundary(boundary, !bShiftDown, tip, pCursor);
+            SetTipAndCursorForBoundary(boundary, tip, pCursor);
          }
       }
 
@@ -730,7 +726,7 @@ HitTestPreview SelectHandle::Preview
          const bool bModifierDown = bShiftDown || bCtrlDown;
          SelectionBoundary boundary = ChooseBoundary(
             viewInfo, xx, rect, !bModifierDown);
-         SetTipAndCursorForBoundary(boundary, !bShiftDown, tip, pCursor);
+         SetTipAndCursorForBoundary(boundary, tip, pCursor);
       }
 
       MaySetOnDemandTip(pTrack.get(), tip);
@@ -951,66 +947,6 @@ void SelectHandle::AssignSelection
    if (pTrack && (pTrack->GetKind() == Track::Wave) && ODManager::IsInstanceCreated())
       ODManager::Instance()->DemandTrackUpdate
          (static_cast<WaveTrack*>(pTrack),sel0); //sel0 is sometimes less than mSelStart
-}
-
-void SelectHandle::StartFreqSelection(ViewInfo &viewInfo,
-   int mouseYCoordinate, int trackTopEdge,
-   int trackHeight, Track *pTrack)
-{
-   mFreqSelTrack.reset();
-   mFreqSelMode = FREQ_SEL_INVALID;
-   mFreqSelPin = SelectedRegion::UndefinedFrequency;
-
-   if (isSpectralSelectionTrack(pTrack)) {
-      // Spectral selection track is always wave
-      auto shTrack = Track::Pointer<const WaveTrack>( pTrack );
-      mFreqSelTrack = shTrack;
-      mFreqSelMode = FREQ_SEL_FREE;
-      mFreqSelPin =
-         PositionToFrequency(shTrack.get(), false, mouseYCoordinate,
-         trackTopEdge, trackHeight);
-   }
-}
-
-void SelectHandle::AdjustFreqSelection(
-   const WaveTrack *wt, ViewInfo &viewInfo,
-   int mouseYCoordinate, int trackTopEdge,
-   int trackHeight)
-{
-   if (mFreqSelMode == FREQ_SEL_INVALID ||
-       mFreqSelMode == FREQ_SEL_SNAPPING_CENTER)
-      return;
-
-   // Extension happens only when dragging in the same track in which we
-   // started, and that is of a spectrogram display type.
-
-   const double rate =  wt->GetRate();
-   const double frequency =
-      PositionToFrequency(wt, true, mouseYCoordinate,
-         trackTopEdge, trackHeight);
-
-   // Dragging center?
-   if (mFreqSelMode == FREQ_SEL_DRAG_CENTER) {
-   }
-   else if (mFreqSelMode == FREQ_SEL_PINNED_CENTER) {
-      if (mFreqSelPin >= 0) {
-         // Change both upper and lower edges leaving centre where it is.
-         if (frequency == rate || frequency < 1.0)
-		 { 
-			 // ???
-		 }
-         else {
-            // Given center and mouse position, find ratio of the larger to the
-            // smaller, limit that to the frequency scale bounds, and adjust
-            // top and bottom accordingly.
-            const double maxRatio = findMaxRatio(mFreqSelPin, rate);
-            double ratio = frequency / mFreqSelPin;
-            if (ratio < 1.0)
-               ratio = 1.0 / ratio;
-            ratio = std::min(maxRatio, ratio);
-         }
-      }
-   }
 }
 
 void SelectHandle::HandleCenterFrequencyClick

@@ -94,14 +94,6 @@ private:
        Track *pTrack);
    void AssignSelection(ViewInfo &viewInfo, double selend, Track *pTrack);
 
-   void StartFreqSelection
-      (ViewInfo &viewInfo, int mouseYCoordinate, int trackTopEdge,
-      int trackHeight, Track *pTrack);
-   void AdjustFreqSelection
-      (const WaveTrack *wt,
-       ViewInfo &viewInfo, int mouseYCoordinate, int trackTopEdge,
-       int trackHeight);
-
    void HandleCenterFrequencyClick
       (const ViewInfo &viewInfo, bool shiftDown,
        const WaveTrack *pTrack, double value);
