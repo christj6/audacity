@@ -81,7 +81,7 @@ ToolsToolBar::ToolsToolBar()
    wxASSERT( envelopeTool == envelopeTool - firstTool );
    wxASSERT( slideTool    == slideTool    - firstTool );
    wxASSERT( zoomTool     == zoomTool     - firstTool );
-   wxASSERT( drawTool     == drawTool     - firstTool );
+   // wxASSERT( drawTool     == drawTool     - firstTool );
    wxASSERT( multiTool    == multiTool    - firstTool );
 
    bool multiToolActive = false;
@@ -132,7 +132,7 @@ void ToolsToolBar::RegenerateTooltips()
       { envelopeTool, wxT("EnvelopeTool"),  XO("Envelope Tool")   },
       { slideTool,    wxT("TimeShiftTool"), XO("Time Shift Tool") },
       { zoomTool,     wxT("ZoomTool"),      XO("Zoom Tool")       },
-      { drawTool,     wxT("DrawTool"),      XO("Draw Tool")       },
+      // { drawTool,     wxT("DrawTool"),      XO("Draw Tool")       },
       { multiTool,    wxT("MultiTool"),     XO("Multi Tool")      },
    };
 
@@ -182,7 +182,7 @@ void ToolsToolBar::Populate()
    /* Tools */
    mTool[ selectTool   ] = MakeTool( this, bmpIBeam, selectTool, _("Selection Tool") );
    mTool[ envelopeTool ] = MakeTool( this, bmpEnvelope, envelopeTool, _("Envelope Tool") );
-   mTool[ drawTool     ] = MakeTool( this, bmpDraw, drawTool, _("Draw Tool") );
+   // mTool[ drawTool     ] = MakeTool( this, bmpDraw, drawTool, _("Draw Tool") );
    mTool[ zoomTool     ] = MakeTool( this, bmpZoom, zoomTool, _("Zoom Tool") );
    mTool[ slideTool    ] = MakeTool( this, bmpTimeShift, slideTool, _("Slide Tool") );
    mTool[ multiTool    ] = MakeTool( this, bmpMulti, multiTool, _("Multi Tool") );

@@ -852,7 +852,7 @@ void AudacityProject::CreateMenusAndCommands()
 
       c->AddItem(wxT("SelectTool"), XXO("&Selection Tool"), FN(OnSelectTool), wxT("F1"));
       c->AddItem(wxT("EnvelopeTool"), XXO("&Envelope Tool"), FN(OnEnvelopeTool), wxT("F2"));
-      c->AddItem(wxT("DrawTool"), XXO("&Draw Tool"), FN(OnDrawTool), wxT("F3"));
+      // c->AddItem(wxT("DrawTool"), XXO("&Draw Tool"), FN(OnDrawTool), wxT("F3"));
       c->AddItem(wxT("ZoomTool"), XXO("&Zoom Tool"), FN(OnZoomTool), wxT("F4"));
       c->AddItem(wxT("TimeShiftTool"), XXO("&Time Shift Tool"), FN(OnTimeShiftTool), wxT("F5"));
       c->AddItem(wxT("MultiTool"), XXO("&Multi Tool"), FN(OnMultiTool), wxT("F6"));
@@ -1794,11 +1794,6 @@ void AudacityProject::OnEnvelopeTool(const CommandContext &WXUNUSED(context) )
 void AudacityProject::OnTimeShiftTool(const CommandContext &WXUNUSED(context) )
 {
    SetTool(slideTool);
-}
-
-void AudacityProject::OnDrawTool(const CommandContext &WXUNUSED(context) )
-{
-   SetTool(drawTool);
 }
 
 void AudacityProject::OnMultiTool(const CommandContext &WXUNUSED(context) )
