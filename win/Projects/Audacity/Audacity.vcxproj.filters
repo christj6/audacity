@@ -665,9 +665,6 @@
     <ClCompile Include="..\..\..\src\tracks\ui\TimeShiftHandle.cpp">
       <Filter>src\tracks\ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\tracks\ui\EnvelopeHandle.cpp">
-      <Filter>src\tracks\ui</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\tracks\ui\TrackVRulerControls.cpp">
       <Filter>src\tracks\ui</Filter>
     </ClCompile>
@@ -1496,9 +1493,6 @@
       <Filter>src\widgets</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\tracks\ui\TimeShiftHandle.h">
-      <Filter>src\tracks\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\tracks\ui\EnvelopeHandle.h">
       <Filter>src\tracks\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\tracks\playabletrack\wavetrack\ui\CutlineHandle.h">

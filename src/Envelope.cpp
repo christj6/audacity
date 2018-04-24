@@ -302,7 +302,6 @@ static void DrawPoint(wxDC & dc, const wxRect & r, int x, int y, bool top)
 }
 
 #include "TrackPanelDrawingContext.h"
-#include "tracks/ui/EnvelopeHandle.h"
 
 /// TODO: This should probably move to track artist.
 void Envelope::DrawPoints

@@ -1549,7 +1549,6 @@ void FindWavePortions
 }
 }
 
-#include "tracks/ui/EnvelopeHandle.h"
 void TrackArtist::DrawClipWaveform(TrackPanelDrawingContext &context,
                                    const WaveTrack *track,
                                    const WaveClip *clip,

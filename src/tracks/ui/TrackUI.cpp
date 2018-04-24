@@ -18,7 +18,6 @@ Paul Licameli split from TrackPanel.cpp
 #include "../../toolbars/ToolsToolBar.h"
 
 #include "../ui/SelectHandle.h"
-#include "EnvelopeHandle.h"
 #include "ZoomHandle.h"
 #include "TimeShiftHandle.h"
 #include "../../TrackPanelResizerCell.h"

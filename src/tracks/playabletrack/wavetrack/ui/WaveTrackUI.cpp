@@ -19,7 +19,6 @@ Paul Licameli split from TrackPanel.cpp
 
 #include "CutlineHandle.h"
 #include "../../../ui/SelectHandle.h"
-#include "../../../ui/EnvelopeHandle.h"
 #include "../../../ui/TimeShiftHandle.h"
 
 std::vector<UIHandlePtr> WaveTrack::DetailedHitTest
@@ -60,10 +59,6 @@ std::vector<UIHandlePtr> WaveTrack::DetailedHitTest
          // If Tools toolbar were eliminated, we would keep these
          // The priority of these, in case more than one might apply at one
          // point, seems arbitrary
-         if (NULL != (result = EnvelopeHandle::WaveTrackHitTest(
-            mEnvelopeHandle, st.state, st.rect,
-            pProject, Pointer<WaveTrack>(this))))
-            results.push_back(result);
          if (NULL != (result = TimeShiftHandle::HitTest(
             mTimeShiftHandle, st.state, st.rect, Pointer(this))))
             // This is the hit test on the "grips" drawn left and
@@ -74,12 +69,6 @@ std::vector<UIHandlePtr> WaveTrack::DetailedHitTest
          switch ( currentTool ) {
                // Unconditional hits appropriate to the tool
                // If tools toolbar were eliminated, we would eliminate these
-            case envelopeTool: {
-               auto envelope = GetEnvelopeAtX( st.state.m_x );
-               result = EnvelopeHandle::HitAnywhere(
-                  mEnvelopeHandle, envelope, false);
-               break;
-            }
             default:
                result = {};
                break;

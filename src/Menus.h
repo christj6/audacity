@@ -50,7 +50,6 @@ double NearestZeroCrossing(double t0);
 void SetTool(int tool);
 void OnSelectTool(const CommandContext &context );
 void OnZoomTool(const CommandContext &context );
-void OnEnvelopeTool(const CommandContext &context );
 void OnTimeShiftTool(const CommandContext &context );
 void OnMultiTool(const CommandContext &context );
 

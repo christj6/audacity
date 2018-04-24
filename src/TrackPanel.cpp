@@ -1747,7 +1747,7 @@ void TrackPanel::DrawTracks(wxDC * dc)
 
    ToolsToolBar *pTtb = mListener->TP_GetToolsToolBar();
    bool bMultiToolDown = pTtb->IsDown(multiTool);
-   bool envelopeFlag   = pTtb->IsDown(envelopeTool) || bMultiToolDown;
+   bool envelopeFlag   = bMultiToolDown;
    bool sliderFlag     = bMultiToolDown;
 
    TrackPanelDrawingContext context{ *dc, Target(), mLastMouseState };

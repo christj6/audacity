@@ -29,7 +29,6 @@ class WaveformSettings;
 class TimeWarper;
 
 class CutlineHandle;
-class EnvelopeHandle;
 
 //
 // Tolerance for merging wave tracks (in seconds)
@@ -650,7 +649,6 @@ private:
    std::unique_ptr<WaveformSettings> mpWaveformSettings;
 
    std::weak_ptr<CutlineHandle> mCutlineHandle;
-   std::weak_ptr<EnvelopeHandle> mEnvelopeHandle;
 
 protected:
    std::shared_ptr<TrackControls> GetControls() override;
