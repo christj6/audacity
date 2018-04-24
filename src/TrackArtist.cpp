@@ -1552,7 +1552,7 @@ void FindWavePortions
 }
 }
 
-#include "tracks/playabletrack/wavetrack/ui/SampleHandle.h"
+// #include "tracks/playabletrack/wavetrack/ui/SampleHandle.h"
 #include "tracks/ui/EnvelopeHandle.h"
 void TrackArtist::DrawClipWaveform(TrackPanelDrawingContext &context,
                                    const WaveTrack *track,

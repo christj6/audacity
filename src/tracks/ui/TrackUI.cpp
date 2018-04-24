@@ -19,7 +19,7 @@ Paul Licameli split from TrackPanel.cpp
 
 #include "../ui/SelectHandle.h"
 #include "EnvelopeHandle.h"
-#include "../playabletrack/wavetrack/ui/SampleHandle.h"
+// #include "../playabletrack/wavetrack/ui/SampleHandle.h"
 #include "ZoomHandle.h"
 #include "TimeShiftHandle.h"
 #include "../../TrackPanelResizerCell.h"
