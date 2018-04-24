@@ -311,7 +311,6 @@ void TrackArtist::DrawTracks(TrackPanelDrawingContext &context,
                              const SelectedRegion &selectedRegion,
                              const ZoomInfo &zoomInfo,
                              bool drawEnvelope,
-                             bool bigPoints,
                              bool drawSliders)
 {
    wxRect trackRect = rect;
@@ -393,7 +392,7 @@ void TrackArtist::DrawTracks(TrackPanelDrawingContext &context,
          rr.height -= (mMarginTop + mMarginBottom);
          DrawTrack(context, t, rr,
                    selectedRegion, zoomInfo,
-                   drawEnvelope, bigPoints, drawSliders, hasSolo);
+                   drawEnvelope, drawSliders, hasSolo);
       }
 
       t = iter.Next();
@@ -406,7 +405,6 @@ void TrackArtist::DrawTrack(TrackPanelDrawingContext &context,
                             const SelectedRegion &selectedRegion,
                             const ZoomInfo &zoomInfo,
                             bool drawEnvelope,
-                            bool bigPoints,
                             bool drawSliders,
                             bool hasSolo)
 {
@@ -429,7 +427,7 @@ void TrackArtist::DrawTrack(TrackPanelDrawingContext &context,
       switch (wt->GetDisplay()) {
       case WaveTrack::Waveform:
          DrawWaveform(context, wt, rect, selectedRegion, zoomInfo,
-                      drawEnvelope,  bigPoints, drawSliders, muted);
+                      drawEnvelope, drawSliders, muted);
          break;
       case WaveTrack::Spectrum:
          DrawSpectrum(wt, dc, rect, selectedRegion, zoomInfo);
@@ -1116,7 +1114,7 @@ void TrackArtist::DrawIndividualSamples(wxDC &dc, int leftOffset, const wxRect &
                                         bool dB, float dBRange,
                                         const WaveClip *clip,
                                         const ZoomInfo &zoomInfo,
-                                        bool bigPoints, bool showPoints, bool muted,
+                                        bool showPoints, bool muted,
                                         bool highlight)
 {
    const double toffset = clip->GetOffset();
@@ -1177,14 +1175,14 @@ void TrackArtist::DrawIndividualSamples(wxDC &dc, int leftOffset, const wxRect &
 
    if (showPoints) {
       // Draw points where spacing is enough
-      const int tickSize = bigPoints ? 4 : 3;// Bigger ellipses when draggable.
+      const int tickSize = 3; // Bigger ellipses when draggable.
       wxRect pr;
       pr.width = tickSize;
       pr.height = tickSize;
       //different colour when draggable.
       auto &brush = highlight
          ? AColor::uglyBrush
-         : bigPoints ? dragsampleBrush : sampleBrush;
+         : sampleBrush;
       dc.SetBrush( brush );
       for (decltype(slen) s = 0; s < slen; s++) {
          if (ypos[s] >= 0 && ypos[s] < rect.height) {
@@ -1291,7 +1289,6 @@ void TrackArtist::DrawWaveform(TrackPanelDrawingContext &context,
                                const SelectedRegion &selectedRegion,
                                const ZoomInfo &zoomInfo,
                                bool drawEnvelope,
-                               bool bigPoints,
                                bool drawSliders,
                                bool muted)
 {
@@ -1307,7 +1304,7 @@ void TrackArtist::DrawWaveform(TrackPanelDrawingContext &context,
 
    for (const auto &clip: track->GetClips())
       DrawClipWaveform(context, track, clip.get(), rect, selectedRegion, zoomInfo,
-                       drawEnvelope, bigPoints,
+                       drawEnvelope,
                        dB, muted);
 
    // Update cache for locations, e.g. cutlines and merge points
@@ -1560,7 +1557,6 @@ void TrackArtist::DrawClipWaveform(TrackPanelDrawingContext &context,
                                    const SelectedRegion &selectedRegion,
                                    const ZoomInfo &zoomInfo,
                                    bool drawEnvelope,
-                                   bool bigPoints,
                                    bool dB,
                                    bool muted)
 {
@@ -1764,7 +1760,7 @@ void TrackArtist::DrawClipWaveform(TrackPanelDrawingContext &context,
             DrawIndividualSamples(dc, leftOffset, rect, zoomMin, zoomMax,
                dB, dBRange,
                clip, zoomInfo,
-               bigPoints, showPoints, muted, highlight);
+               showPoints, muted, highlight);
          }
       }
 

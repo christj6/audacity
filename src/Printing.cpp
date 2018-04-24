@@ -100,7 +100,7 @@ bool AudacityPrintout::OnPrintPage(int WXUNUSED(page))
 
       TrackPanelDrawingContext context{ *dc, {}, {} };
       artist.DrawTrack(
-         context, n, r, SelectedRegion(), zoomInfo, false, false, false, false);
+         context, n, r, SelectedRegion(), zoomInfo, false, false, false);
 
       dc->SetPen(*wxBLACK_PEN);
       AColor::Line(*dc, 0, r.y, width, r.y);

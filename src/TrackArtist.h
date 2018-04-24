@@ -56,13 +56,13 @@ class AUDACITY_DLL_API TrackArtist {
                    const wxRegion & reg,
                    const wxRect & rect, const wxRect & clip,
                    const SelectedRegion &selectedRegion, const ZoomInfo &zoomInfo,
-                   bool drawEnvelope, bool bigPoints, bool drawSliders);
+                   bool drawEnvelope, bool drawSliders);
 
    void DrawTrack(TrackPanelDrawingContext &context,
                   const Track *t,
                   const wxRect & rect,
                   const SelectedRegion &selectedRegion, const ZoomInfo &zoomInfo,
-                  bool drawEnvelope, bool bigPoints, bool drawSliders,
+                  bool drawEnvelope, bool drawSliders,
                   bool hasSolo);
 
    void DrawVRuler(TrackPanelDrawingContext &context,
@@ -100,7 +100,7 @@ class AUDACITY_DLL_API TrackArtist {
                      const WaveTrack *track,
                      const wxRect & rect,
                      const SelectedRegion &selectedRegion, const ZoomInfo &zoomInfo,
-                     bool drawEnvelope, bool bigPoints, bool drawSliders,
+                     bool drawEnvelope, bool drawSliders,
                      bool muted);
 
    void DrawSpectrum(const WaveTrack *track,
@@ -114,7 +114,7 @@ class AUDACITY_DLL_API TrackArtist {
                          const WaveTrack *track, const WaveClip *clip,
                          const wxRect & rect,
                          const SelectedRegion &selectedRegion, const ZoomInfo &zoomInfo,
-                         bool drawEnvelope, bool bigPoints,
+                         bool drawEnvelope,
                          bool dB, bool muted);
 
    void DrawClipSpectrum(WaveTrackCache &cache, const WaveClip *clip,
@@ -141,7 +141,7 @@ class AUDACITY_DLL_API TrackArtist {
                               bool dB, float dBRange,
                               const WaveClip *clip,
                               const ZoomInfo &zoomInfo,
-                              bool bigPoints, bool showPoints, bool muted,
+                              bool showPoints, bool muted,
                               bool highlight);
 
    void DrawNegativeOffsetTrackArrows(wxDC & dc, const wxRect & rect);

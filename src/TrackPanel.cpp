@@ -1748,7 +1748,6 @@ void TrackPanel::DrawTracks(wxDC * dc)
    ToolsToolBar *pTtb = mListener->TP_GetToolsToolBar();
    bool bMultiToolDown = pTtb->IsDown(multiTool);
    bool envelopeFlag   = pTtb->IsDown(envelopeTool) || bMultiToolDown;
-   bool bigPointsFlag  = bMultiToolDown;
    bool sliderFlag     = bMultiToolDown;
 
    TrackPanelDrawingContext context{ *dc, Target(), mLastMouseState };
@@ -1758,7 +1757,7 @@ void TrackPanel::DrawTracks(wxDC * dc)
    mTrackArtist->DrawTracks(context, GetTracks(), first.get(),
                             region, tracksRect, clip,
                             mViewInfo->selectedRegion, *mViewInfo,
-                            envelopeFlag, bigPointsFlag, sliderFlag);
+                            envelopeFlag, sliderFlag);
 
    DrawEverythingElse(context, region, clip);
 }
