@@ -20,7 +20,6 @@ Paul Licameli split from TrackPanel.cpp
 #include "CutlineHandle.h"
 #include "../../../ui/SelectHandle.h"
 #include "../../../ui/EnvelopeHandle.h"
-#include "SampleHandle.h"
 #include "../../../ui/TimeShiftHandle.h"
 
 std::vector<UIHandlePtr> WaveTrack::DetailedHitTest
@@ -70,12 +69,6 @@ std::vector<UIHandlePtr> WaveTrack::DetailedHitTest
             // This is the hit test on the "grips" drawn left and
             // right in Multi only
             results.push_back(result);
-		 /*
-         if (NULL != (result = SampleHandle::HitTest(
-            mSampleHandle, st.state, st.rect,
-            pProject, Pointer<WaveTrack>(this))))
-            results.push_back(result);
-			*/
       }
       else {
          switch ( currentTool ) {
@@ -87,12 +80,6 @@ std::vector<UIHandlePtr> WaveTrack::DetailedHitTest
                   mEnvelopeHandle, envelope, false);
                break;
             }
-			/*
-            case drawTool:
-               result = SampleHandle::HitAnywhere(
-                  mSampleHandle, st.state, Pointer<WaveTrack>(this));
-               break;
-			*/
             default:
                result = {};
                break;

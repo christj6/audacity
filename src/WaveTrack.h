@@ -29,7 +29,6 @@ class WaveformSettings;
 class TimeWarper;
 
 class CutlineHandle;
-// class SampleHandle;
 class EnvelopeHandle;
 
 //
@@ -651,7 +650,6 @@ private:
    std::unique_ptr<WaveformSettings> mpWaveformSettings;
 
    std::weak_ptr<CutlineHandle> mCutlineHandle;
-   // std::weak_ptr<SampleHandle> mSampleHandle;
    std::weak_ptr<EnvelopeHandle> mEnvelopeHandle;
 
 protected:

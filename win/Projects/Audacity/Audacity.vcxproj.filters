@@ -689,9 +689,6 @@
     <ClCompile Include="..\..\..\src\widgets\PopupMenuTable.cpp">
       <Filter>src\widgets</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\tracks\playabletrack\wavetrack\ui\SampleHandle.cpp">
-      <Filter>src\tracks\playabletrack\wavetrack\ui</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\tracks\playabletrack\wavetrack\ui\CutlineHandle.cpp">
       <Filter>src\tracks\playabletrack\wavetrack\ui</Filter>
     </ClCompile>
@@ -1497,9 +1494,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\widgets\PopupMenuTable.h">
       <Filter>src\widgets</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\tracks\playabletrack\wavetrack\ui\SampleHandle.h">
-      <Filter>src\tracks\playabletrack\wavetrack\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\tracks\ui\TimeShiftHandle.h">
       <Filter>src\tracks\ui</Filter>
