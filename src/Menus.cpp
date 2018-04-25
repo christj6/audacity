@@ -852,7 +852,6 @@ void AudacityProject::CreateMenusAndCommands()
 
       c->AddItem(wxT("SelectTool"), XXO("&Selection Tool"), FN(OnSelectTool), wxT("F1"));
       c->AddItem(wxT("ZoomTool"), XXO("&Zoom Tool"), FN(OnZoomTool), wxT("F4"));
-      c->AddItem(wxT("TimeShiftTool"), XXO("&Time Shift Tool"), FN(OnTimeShiftTool), wxT("F5"));
       c->AddItem(wxT("MultiTool"), XXO("&Multi Tool"), FN(OnMultiTool), wxT("F6"));
 
       c->AddItem(wxT("PrevTool"), XXO("&Previous Tool"), FN(OnPrevTool), wxT("A"));
@@ -1003,12 +1002,6 @@ void AudacityProject::CreateMenusAndCommands()
                  TracksExistFlag | TrackPanelHasFocus,
                  TracksExistFlag | TrackPanelHasFocus);
 
-      c->AddItem(wxT("ClipLeft"), XXO("Clip L&eft"), FN(OnClipLeft), wxT("\twantKeyup"),
-                 TracksExistFlag | TrackPanelHasFocus,
-                 TracksExistFlag | TrackPanelHasFocus);
-      c->AddItem(wxT("ClipRight"), XXO("Clip Rig&ht"), FN(OnClipRight), wxT("\twantKeyup"),
-                 TracksExistFlag | TrackPanelHasFocus,
-                 TracksExistFlag | TrackPanelHasFocus);
       c->EndSubMenu();
 
       //////////////////////////////////////////////////////////////////////////
@@ -1780,12 +1773,6 @@ void AudacityProject::OnSelectTool(const CommandContext &WXUNUSED(context) )
 void AudacityProject::OnZoomTool(const CommandContext &WXUNUSED(context) )
 {
    SetTool(zoomTool);
-}
-
-/// Handler to set the Time shift tool active
-void AudacityProject::OnTimeShiftTool(const CommandContext &WXUNUSED(context) )
-{
-   SetTool(slideTool);
 }
 
 void AudacityProject::OnMultiTool(const CommandContext &WXUNUSED(context) )
@@ -2756,121 +2743,6 @@ void AudacityProject::OnSelContractRight(const CommandContext &context)
 {
    if( !OnlyHandleKeyUp( context ) )
       SeekLeftOrRight( DIRECTION_RIGHT, SELECTION_CONTRACT );
-}
-
-#include "tracks/ui/TimeShiftHandle.h"
-
-// This function returns the amount moved.  Possibly 0.0.
-double AudacityProject::OnClipMove
-   ( ViewInfo &viewInfo, Track *track,
-     TrackList &trackList, bool syncLocked, bool right )
-{
-   // just dealing with clips in wave tracks for the moment. Note tracks??
-   if (track && track->GetKind() == Track::Wave) {
-      ClipMoveState state;
-
-      auto wt = static_cast<WaveTrack*>(track);
-      auto t0 = viewInfo.selectedRegion.t0();
-
-      state.capturedClip = wt->GetClipAtTime( t0 );
-      if (state.capturedClip == nullptr && track->GetLinked() && track->GetLink()) {
-         // the clips in the right channel may be different from the left
-         track = track->GetLink();
-         wt = static_cast<WaveTrack*>(track);
-         state.capturedClip = wt->GetClipAtTime(t0);
-      }
-      if (state.capturedClip == nullptr)
-         return 0.0;
-
-      state.capturedClipIsSelection =
-         track->GetSelected() && !viewInfo.selectedRegion.isPoint();
-      state.trackExclusions.clear();
-
-      TimeShiftHandle::CreateListOfCapturedClips
-         ( state, viewInfo, *track, trackList, syncLocked, t0 );
-
-      auto desiredT0 = viewInfo.OffsetTimeByPixels( t0, ( right ? 1 : -1 ) );
-      auto desiredSlideAmount = desiredT0 - t0;
-
-      // set it to a sample point, and minimum of 1 sample point
-      if (!right)
-         desiredSlideAmount *= -1;
-      double nSamples = rint(wt->GetRate() * desiredSlideAmount);
-      nSamples = std::max(nSamples, 1.0);
-      desiredSlideAmount = nSamples / wt->GetRate();
-      if (!right)
-         desiredSlideAmount *= -1;
-
-      state.hSlideAmount = desiredSlideAmount;
-      TimeShiftHandle::DoSlideHorizontal( state, trackList, *track );
-
-      // update t0 and t1. There is the possibility that the updated
-      // t0 may no longer be within the clip due to rounding errors,
-      // so t0 is adjusted so that it is.
-      double newT0 = t0 + state.hSlideAmount;
-      if (newT0 < state.capturedClip->GetStartTime())
-         newT0 = state.capturedClip->GetStartTime();
-      if (newT0 > state.capturedClip->GetEndTime())
-         newT0 = state.capturedClip->GetEndTime();
-      double diff = viewInfo.selectedRegion.duration();
-      viewInfo.selectedRegion.setTimes(newT0, newT0 + diff);
-
-      return state.hSlideAmount;
-   }
-   return 0.0;
-}
-
-void AudacityProject::DoClipLeftOrRight(bool right, bool keyUp )
-{
-   if (keyUp) {
-      GetUndoManager()->StopConsolidating();
-      return;
-   }
-
-   auto &panel = *GetTrackPanel();
-
-   auto amount = OnClipMove
-      ( mViewInfo, panel.GetFocusedTrack(),
-        *GetTracks(), IsSyncLocked(), right );
-
-   panel.ScrollIntoView(mViewInfo.selectedRegion.t0());
-   panel.Refresh(false);
-
-   if (amount != 0.0) {
-      wxString message = right? _("Time shifted clips to the right") :
-         _("Time shifted clips to the left");
-
-      // The following use of the UndoPush flags is so that both a single
-      // keypress (keydown, then keyup), and holding down a key
-      // (multiple keydowns followed by a keyup) result in a single
-      // entry in Audacity's history dialog.
-      PushState(message, _("Time-Shift"), UndoPush::CONSOLIDATE);
-   }
-
-   if ( amount == 0.0 )
-      panel.MessageForScreenReader( _("clip not moved"));
-}
-
-void AudacityProject::OnClipLeft(const CommandContext &context)
-{
-   auto evt = context.pEvt;
-   if (evt)
-      DoClipLeftOrRight( false, evt->GetEventType() == wxEVT_KEY_UP );
-   else  {              // called from menu, so simulate keydown and keyup
-      DoClipLeftOrRight( false, false );
-      DoClipLeftOrRight( false, true );
-   }
-}
-
-void AudacityProject::OnClipRight(const CommandContext &context)
-{
-   auto evt = context.pEvt;
-   if (evt)
-      DoClipLeftOrRight( true, evt->GetEventType() == wxEVT_KEY_UP );
-   else  {              // called from menu, so simulate keydown and keyup
-      DoClipLeftOrRight( true, false );
-      DoClipLeftOrRight( true, true );
-   }
 }
 
 //this pops up a dialog which allows the left selection to be set.

@@ -78,7 +78,6 @@ ToolsToolBar::ToolsToolBar()
 {
    //Read the following wxASSERTs as documentating a design decision
    wxASSERT( selectTool   == selectTool   - firstTool );
-   wxASSERT( slideTool    == slideTool    - firstTool );
    wxASSERT( zoomTool     == zoomTool     - firstTool );
    wxASSERT( multiTool    == multiTool    - firstTool );
 
@@ -127,7 +126,6 @@ void ToolsToolBar::RegenerateTooltips()
       wxString untranslatedLabel;
    } table[] = {
       { selectTool,   wxT("SelectTool"),    XO("Selection Tool")  },
-      { slideTool,    wxT("TimeShiftTool"), XO("Time Shift Tool") },
       { zoomTool,     wxT("ZoomTool"),      XO("Zoom Tool")       },
       { multiTool,    wxT("MultiTool"),     XO("Multi Tool")      },
    };
@@ -178,7 +176,6 @@ void ToolsToolBar::Populate()
    /* Tools */
    mTool[ selectTool   ] = MakeTool( this, bmpIBeam, selectTool, _("Selection Tool") );
    mTool[ zoomTool     ] = MakeTool( this, bmpZoom, zoomTool, _("Zoom Tool") );
-   mTool[ slideTool    ] = MakeTool( this, bmpTimeShift, slideTool, _("Slide Tool") );
    mTool[ multiTool    ] = MakeTool( this, bmpMulti, multiTool, _("Multi Tool") );
 
    mTool[mCurrentTool]->PushDown();

@@ -34,7 +34,6 @@ class AButton;
 enum {
    selectTool,
    zoomTool,
-   slideTool,
    multiTool,
    numTools,
 

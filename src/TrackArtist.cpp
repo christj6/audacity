@@ -1281,7 +1281,6 @@ void TrackArtist::DrawEnvLine(wxDC &dc, const wxRect &rect, int x0, int y0, int 
    }
 }
 
-#include "tracks/ui/TimeShiftHandle.h"
 #include "tracks/playabletrack/wavetrack/ui/CutlineHandle.h"
 void TrackArtist::DrawWaveform(TrackPanelDrawingContext &context,
                                const WaveTrack *track,

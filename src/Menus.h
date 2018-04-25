@@ -50,7 +50,6 @@ double NearestZeroCrossing(double t0);
 void SetTool(int tool);
 void OnSelectTool(const CommandContext &context );
 void OnZoomTool(const CommandContext &context );
-void OnTimeShiftTool(const CommandContext &context );
 void OnMultiTool(const CommandContext &context );
 
 void OnNextTool(const CommandContext &context );
@@ -146,13 +145,6 @@ void OnSelContractLeft(const CommandContext &context );
 void OnSelContractRight(const CommandContext &context );
 
 public:
-static double OnClipMove
-   (ViewInfo &viewInfo, Track *track,
-    TrackList &trackList, bool syncLocked, bool right);
-
-void DoClipLeftOrRight(bool right, bool keyUp );
-void OnClipLeft(const CommandContext &context );
-void OnClipRight(const CommandContext &context );
 
 void OnCursorShortJumpLeft(const CommandContext &context );
 void OnCursorShortJumpRight(const CommandContext &context );

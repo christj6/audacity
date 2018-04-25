@@ -42,7 +42,6 @@ class AudacityProject;
 class ZoomInfo;
 
 class SelectHandle;
-class TimeShiftHandle;
 
 WX_DEFINE_USER_EXPORTED_ARRAY(Track*, TrackArray, class AUDACITY_DLL_API);
 using WaveTrackArray = std::vector < std::shared_ptr< WaveTrack > > ;
@@ -343,7 +342,6 @@ protected:
    std::shared_ptr<TrackPanelResizerCell> mpResizer;
 
    std::weak_ptr<SelectHandle> mSelectHandle;
-   std::weak_ptr<TimeShiftHandle> mTimeShiftHandle;
 };
 
 class AUDACITY_DLL_API AudioTrack /* not final */ : public Track

@@ -19,7 +19,6 @@ Paul Licameli split from TrackPanel.cpp
 
 #include "../ui/SelectHandle.h"
 #include "ZoomHandle.h"
-#include "TimeShiftHandle.h"
 #include "../../TrackPanelResizerCell.h"
 #include "BackgroundCell.h"
 
@@ -47,14 +46,6 @@ std::vector<UIHandlePtr> Track::HitTest
       DetailedHitTest( st, pProject, currentTool, isMultiTool );
 
    // There are still some general cases.
-
-   // Sliding applies in more than one track type.
-   if ( !isMultiTool && currentTool == slideTool ) {
-      result = TimeShiftHandle::HitAnywhere(
-         mTimeShiftHandle, Pointer(this), false);
-      if (result)
-         results.push_back(result);
-   }
 
    // Let the multi-tool right-click handler apply only in default of all
    // other detailed hits.
