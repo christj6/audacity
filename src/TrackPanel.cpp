@@ -3031,9 +3031,6 @@ TrackPanelCellIterator &TrackPanelCellIterator::operator++ ()
          case CellType::Label:
             mpCell = mpTrack->GetTrackControl();
             break;
-         case CellType::VRuler:
-            mpCell = mpTrack->GetVRulerControl();
-            break;
          case CellType::Resizer: {
             mpCell = mpTrack->GetResizer();
             break;
