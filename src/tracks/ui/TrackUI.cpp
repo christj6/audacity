@@ -18,7 +18,6 @@ Paul Licameli split from TrackPanel.cpp
 #include "../../toolbars/ToolsToolBar.h"
 
 #include "../ui/SelectHandle.h"
-#include "ZoomHandle.h"
 #include "../../TrackPanelResizerCell.h"
 #include "BackgroundCell.h"
 
@@ -32,29 +31,11 @@ std::vector<UIHandlePtr> Track::HitTest
    const bool isMultiTool = pTtb->IsDown(multiTool);
    const auto currentTool = pTtb->GetCurrentTool();
 
-   if ( !isMultiTool && currentTool == zoomTool ) {
-      // Zoom tool is a non-selecting tool that takes precedence in all tracks
-      // over all other tools, no matter what detail you point at.
-      result = ZoomHandle::HitAnywhere(
-         pProject->GetBackgroundCell()->mZoomHandle);
-      results.push_back(result);
-      return results;
-   }
-
    // In other tools, let subclasses determine detailed hits.
    results =
       DetailedHitTest( st, pProject, currentTool, isMultiTool );
 
    // There are still some general cases.
-
-   // Let the multi-tool right-click handler apply only in default of all
-   // other detailed hits.
-   if ( isMultiTool ) {
-      result = ZoomHandle::HitTest(
-         pProject->GetBackgroundCell()->mZoomHandle, st.state);
-      if (result)
-         results.push_back(result);
-   }
 
    // Finally, default of all is adjustment of the selection box.
    if ( isMultiTool || currentTool == selectTool ) {

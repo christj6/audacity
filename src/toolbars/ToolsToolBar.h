@@ -33,7 +33,6 @@ class AButton;
 
 enum {
    selectTool,
-   zoomTool,
    multiTool,
    numTools,
 

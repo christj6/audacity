@@ -851,7 +851,6 @@ void AudacityProject::CreateMenusAndCommands()
       c->BeginSubMenu(_("T&ools"));
 
       c->AddItem(wxT("SelectTool"), XXO("&Selection Tool"), FN(OnSelectTool), wxT("F1"));
-      c->AddItem(wxT("ZoomTool"), XXO("&Zoom Tool"), FN(OnZoomTool), wxT("F4"));
       c->AddItem(wxT("MultiTool"), XXO("&Multi Tool"), FN(OnMultiTool), wxT("F6"));
 
       c->AddItem(wxT("PrevTool"), XXO("&Previous Tool"), FN(OnPrevTool), wxT("A"));
@@ -1767,12 +1766,6 @@ void AudacityProject::SetTool(int tool)
 void AudacityProject::OnSelectTool(const CommandContext &WXUNUSED(context) )
 {
    SetTool(selectTool);
-}
-
-/// Handler to set the Zoom tool active
-void AudacityProject::OnZoomTool(const CommandContext &WXUNUSED(context) )
-{
-   SetTool(zoomTool);
 }
 
 void AudacityProject::OnMultiTool(const CommandContext &WXUNUSED(context) )

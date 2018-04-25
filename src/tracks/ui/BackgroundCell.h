@@ -17,7 +17,6 @@ Paul Licameli split from TrackPanel.cpp
 class AudacityProject;
 
 class BackgroundHandle;
-class ZoomHandle;
 
 class BackgroundCell final : public CommonTrackPanelCell
 {
@@ -39,10 +38,6 @@ private:
    AudacityProject *mpProject;
 
    std::weak_ptr<BackgroundHandle> mHandle;
-
-public:
-   // For want of a better place...
-   std::weak_ptr<ZoomHandle> mZoomHandle;
 };
 
 #endif
