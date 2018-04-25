@@ -31,8 +31,6 @@ enum {
    ETBCutID,
    ETBCopyID,
    ETBPasteID,
-   ETBTrimID,
-   ETBSilenceID,
 
    ETBUndoID,
    ETBRedoID,

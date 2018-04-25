@@ -137,10 +137,6 @@ void EditToolBar::Populate()
       _("Copy selection"));
    AddButton(this, bmpPaste, bmpPaste, bmpPasteDisabled, ETBPasteID,
       _("Paste"));
-   AddButton(this, bmpTrim, bmpTrim, bmpTrimDisabled, ETBTrimID,
-      _("Trim audio outside selection"));
-   AddButton(this, bmpSilence, bmpSilence, bmpSilenceDisabled, ETBSilenceID,
-      _("Silence audio selection"));
 
    AddSeparator();
 
@@ -223,8 +219,6 @@ static const struct Entry {
    { ETBCutID,      wxT("Cut"),         XO("Cut")  },
    { ETBCopyID,     wxT("Copy"),        XO("Copy")  },
    { ETBPasteID,    wxT("Paste"),       XO("Paste")  },
-   { ETBTrimID,     wxT("Trim"),        XO("Trim audio outside selection")  },
-   { ETBSilenceID,  wxT("Silence"),     XO("Silence audio selection")  },
    { ETBUndoID,     wxT("Undo"),        XO("Undo")  },
    { ETBRedoID,     wxT("Redo"),        XO("Redo")  },
 
