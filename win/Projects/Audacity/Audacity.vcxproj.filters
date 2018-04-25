@@ -659,9 +659,6 @@
     <ClCompile Include="..\..\..\src\tracks\ui\TrackControls.cpp">
       <Filter>src\tracks\ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\tracks\ui\ZoomHandle.cpp">
-      <Filter>src\tracks\ui</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\tracks\ui\TrackVRulerControls.cpp">
       <Filter>src\tracks\ui</Filter>
     </ClCompile>
@@ -1427,9 +1424,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\tracks\ui\TrackControls.h">
-      <Filter>src\tracks\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\tracks\ui\ZoomHandle.h">
       <Filter>src\tracks\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\tracks\ui\TrackVRulerControls.h">
