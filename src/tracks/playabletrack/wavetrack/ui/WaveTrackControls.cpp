@@ -65,21 +65,6 @@ std::vector<UIHandlePtr> WaveTrackControls::HitTest
       std::vector<UIHandlePtr> results;
       auto result = [&]{
          UIHandlePtr result;
-         if (NULL != (result = MuteButtonHandle::HitTest(
-            mMuteHandle, state, rect, pProject, track)))
-            return result;
-
-         if (NULL != (result = SoloButtonHandle::HitTest(
-            mSoloHandle, state, rect, pProject, track)))
-            return result;
-
-         if (NULL != (result = GainSliderHandle::HitTest(
-            mGainHandle, state, rect, track)))
-            return result;
-
-         if (NULL != (result = PanSliderHandle::HitTest(
-            mPanHandle, state, rect, track)))
-            return result;
 
          return result;
       }();
