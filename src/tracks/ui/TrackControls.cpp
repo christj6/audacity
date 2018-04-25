@@ -57,10 +57,6 @@ std::vector<UIHandlePtr> TrackControls::HitTest
       mMenuHandle, state, rect, sThis)))
       results.push_back(result);
 
-   if (NULL != (result = MinimizeButtonHandle::HitTest(
-      mMinimizeHandle, state, rect, this)))
-      results.push_back(result);
-
    if (results.empty()) {
       if (NULL != (result = TrackSelectHandle::HitAnywhere(
          mSelectHandle, pTrack)))

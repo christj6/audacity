@@ -15,32 +15,6 @@ Paul Licameli split from TrackPanel.cpp
 
 class wxMouseState;
 
-class MinimizeButtonHandle final : public ButtonHandle
-{
-   MinimizeButtonHandle(const MinimizeButtonHandle&) = delete;
-
-protected:
-   Result CommitChanges
-      (const wxMouseEvent &event, AudacityProject *pProject, wxWindow *pParent)
-      override;
-
-   wxString Tip(const wxMouseState &state) const override;
-
-public:
-   explicit MinimizeButtonHandle
-      ( const std::shared_ptr<Track> &pTrack, const wxRect &rect );
-
-   MinimizeButtonHandle &operator=(const MinimizeButtonHandle&) = default;
-
-   virtual ~MinimizeButtonHandle();
-
-   static UIHandlePtr HitTest
-      (std::weak_ptr<MinimizeButtonHandle> &holder,
-       const wxMouseState &state, const wxRect &rect, TrackPanelCell *pCell);
-};
-
-////////////////////////////////////////////////////////////////////////////////
-
 class CloseButtonHandle final : public ButtonHandle
 {
    CloseButtonHandle(const CloseButtonHandle&) = delete;

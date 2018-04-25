@@ -2023,52 +2023,7 @@ void TrackInfo::MinimizeSyncLockDrawFunction
 ( TrackPanelDrawingContext &context,
   const wxRect &rect, const Track *pTrack )
 {
-   auto dc = &context.dc;
-   bool selected = pTrack ? pTrack->GetSelected() : true;
-   bool syncLockSelected = pTrack ? pTrack->IsSyncLockSelected() : true;
-   bool minimized = pTrack ? pTrack->GetMinimized() : false;
-   {
-      wxRect bev = rect;
-      GetMinimizeHorizontalBounds(rect, bev);
-      auto target = dynamic_cast<MinimizeButtonHandle*>( context.target.get() );
-      bool hit = target && target->GetTrack().get() == pTrack;
-      bool captured = hit && target->IsClicked();
-      bool down = captured && bev.Contains( context.lastState.GetPosition());
-
-      // Clear background to get rid of previous arrow
-      //AColor::MediumTrackInfo(dc, t->GetSelected());
-      //dc->DrawRectangle(bev);
-
-      AColor::Bevel2(*dc, !down, bev, selected, hit);
-
-#ifdef EXPERIMENTAL_THEMING
-      wxColour c = theTheme.Colour(clrTrackPanelText);
-      dc->SetBrush(c);
-      dc->SetPen(c);
-#else
-      AColor::Dark(dc, selected);
-#endif
-
-      AColor::Arrow(*dc,
-                    bev.x - 5 + bev.width / 2,
-                    bev.y - 2 + bev.height / 2,
-                    10,
-                    minimized);
-   }
-
-   // Draw the sync-lock indicator if this track is in a sync-lock selected group.
-   if (syncLockSelected)
-   {
-      wxRect syncLockIconRect = rect;
-	
-      GetSyncLockHorizontalBounds( rect, syncLockIconRect );
-      wxBitmap syncLockBitmap(theTheme.Image(bmpSyncLockIcon));
-      // Icon is 12x12 and syncLockIconRect is 16x16.
-      dc->DrawBitmap(syncLockBitmap,
-                     syncLockIconRect.x + 3,
-                     syncLockIconRect.y + 2,
-                     true);
-   }
+	// removal pending
 }
 
 template<typename TrackClass>

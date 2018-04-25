@@ -19,7 +19,6 @@ class Track;
 
 class CloseButtonHandle;
 class MenuButtonHandle;
-class MinimizeButtonHandle;
 class TrackSelectHandle;
 
 class TrackControls /* not final */ : public CommonTrackPanelCell
@@ -59,7 +58,6 @@ protected:
 
    std::weak_ptr<CloseButtonHandle> mCloseHandle;
    std::weak_ptr<MenuButtonHandle> mMenuHandle;
-   std::weak_ptr<MinimizeButtonHandle> mMinimizeHandle;
    std::weak_ptr<TrackSelectHandle> mSelectHandle;
 };
 
