@@ -286,24 +286,6 @@ Track *Track::GetLink() const
    return nullptr;
 }
 
-void Track::SyncLockAdjust(double oldT1, double newT1)
-{
-   if (newT1 > oldT1) {
-      // Insert space within the track
-
-      if (oldT1 > GetEndTime())
-         return;
-
-      auto tmp = Cut(oldT1, GetEndTime());
-
-      Paste(newT1, tmp.get());
-   }
-   else if (newT1 < oldT1) {
-      // Remove from the track
-      Clear(newT1, oldT1);
-   }
-}
-
 std::shared_ptr<Track> Track::FindTrack()
 {
    return Pointer( this );

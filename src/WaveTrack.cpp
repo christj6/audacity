@@ -1133,51 +1133,6 @@ void WaveTrack::HandleClear(double t0, double t1,
       mClips.push_back(std::move(clip)); // transfer ownership
 }
 
-void WaveTrack::SyncLockAdjust(double oldT1, double newT1)
-{
-   if (newT1 > oldT1) {
-      // Insert space within the track
-
-      // JKC: This is a rare case where using >= rather than > on a float matters.
-      // GetEndTime() looks through the clips and may give us EXACTLY the same
-      // value as T1, when T1 was set to be at the end of one of those clips.
-      if (oldT1 >= GetEndTime())
-         return;
-
-      // If track is empty at oldT1 insert whitespace; otherwise, silence
-      if (IsEmpty(oldT1, oldT1))
-      {
-         // Check if clips can move
-         bool clipsCanMove = true;
-         gPrefs->Read(wxT("/GUI/EditClipCanMove"), &clipsCanMove);
-         if (clipsCanMove) {
-            auto tmp = Cut (oldT1, GetEndTime() + 1.0/GetRate());
-
-            Paste(newT1, tmp.get());
-         }
-         return;
-      }
-      else {
-         // AWD: Could just use InsertSilence() on its own here, but it doesn't
-         // follow EditClipCanMove rules (Paste() does it right)
-         AudacityProject *p = GetActiveProject();
-         if (!p)
-            THROW_INCONSISTENCY_EXCEPTION;
-         TrackFactory *f = p->GetTrackFactory();
-         if (!f)
-            THROW_INCONSISTENCY_EXCEPTION;
-         auto tmp = f->NewWaveTrack(GetSampleFormat(), GetRate());
-
-         tmp->InsertSilence(0.0, newT1 - oldT1);
-         tmp->Flush();
-         Paste(oldT1, tmp.get());
-      }
-   }
-   else if (newT1 < oldT1) {
-      Clear(newT1, oldT1);
-   }
-}
-
 void WaveTrack::Paste(double t0, const Track *src)
 // WEAK-GUARANTEE
 {

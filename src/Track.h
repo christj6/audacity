@@ -304,10 +304,6 @@ public:
 
    virtual void Paste(double WXUNUSED(t), const Track * WXUNUSED(src)) = 0;
 
-   // This can be used to adjust a sync-lock selected track when the selection
-   // is replaced by one of a different length.
-   virtual void SyncLockAdjust(double oldT1, double newT1);
-
    // May assume precondition: t0 <= t1
    virtual void Silence(double WXUNUSED(t0), double WXUNUSED(t1)) = 0;
 

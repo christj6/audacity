@@ -198,8 +198,6 @@ private:
    // May assume precondition: t0 <= t1
    void HandleClear(double t0, double t1, bool addCutLines, bool split);
 
-   void SyncLockAdjust(double oldT1, double newT1) override;
-
    /** @brief Returns true if there are no WaveClips in the specified region
     *
     * @return true if no clips in the track overlap the specified time range,
