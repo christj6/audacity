@@ -286,31 +286,6 @@ Track *Track::GetLink() const
    return nullptr;
 }
 
-bool Track::IsSyncLockSelected() const
-{
-#ifdef EXPERIMENTAL_SYNC_LOCK
-   AudacityProject *p = GetActiveProject();
-   if (!p || !p->IsSyncLocked())
-      return false;
-
-   auto pList = mList.lock();
-   SyncLockedTracksIterator git(pList.get());
-   Track *t = git.StartWith(const_cast<Track*>(this));
-
-   if (!t) {
-      // Not in a sync-locked group.
-      return ((this->GetKind() == Track::Wave) || (this->GetKind() == Track::Label)) && GetSelected();
-   }
-
-   for (; t; t = git.Next()) {
-      if (t->GetSelected())
-         return true;
-   }
-#endif
-
-   return false;
-}
-
 void Track::SyncLockAdjust(double oldT1, double newT1)
 {
    if (newT1 > oldT1) {

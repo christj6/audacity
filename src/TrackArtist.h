@@ -129,7 +129,7 @@ class AUDACITY_DLL_API TrackArtist {
                                int zeroLevelYCoordinate,
                                bool dB, float dBRange,
                                double t0, double t1, const ZoomInfo &zoomInfo,
-                               bool drawEnvelope, bool bIsSyncLockSelected,
+                               bool drawEnvelope,
                                bool highlightEnvelope);
    void DrawMinMaxRMS(wxDC &dc, const wxRect & rect, const double env[],
                       float zoomMin, float zoomMax,

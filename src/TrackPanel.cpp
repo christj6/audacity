@@ -2151,15 +2151,6 @@ void TrackPanel::DrawOutside
       int vrul = GetVRulerOffset();
       mTrackInfo.DrawBackground(dc, rect, t->GetSelected(), bIsWave, labelw, vrul);
 
-      // Vaughan, 2010-08-24: No longer doing this.
-      // Draw sync-lock tiles in ruler area.
-      //if (t->IsSyncLockSelected()) {
-      //   wxRect tileFill = rect;
-      //   tileFill.x = GetVRulerOffset();
-      //   tileFill.width = GetVRulerWidth();
-      //   TrackArtist::DrawSyncLockTiles(dc, tileFill);
-      //}
-
       DrawBordersAroundTrack(t, dc, rect, labelw, vrul);
       DrawShadow(t, dc, rect);
    }

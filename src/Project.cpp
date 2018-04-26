@@ -3234,7 +3234,7 @@ void AudacityProject::Clear()
    Track *n = iter.First();
 
    while (n) {
-      if (n->GetSelected() || n->IsSyncLockSelected()) {
+      if (n->GetSelected()) {
          n->Clear(mViewInfo.selectedRegion.t0(), mViewInfo.selectedRegion.t1());
       }
       n = iter.Next();
@@ -3633,11 +3633,7 @@ int AudacityProject::GetSnapTo() const
 
 bool AudacityProject::IsSyncLocked()
 {
-#ifdef EXPERIMENTAL_SYNC_LOCK
-   return mIsSyncLocked;
-#else
    return false;
-#endif
 }
 
 void AudacityProject::SetSyncLock(bool flag)

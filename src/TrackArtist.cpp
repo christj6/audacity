@@ -852,7 +852,7 @@ void TrackArtist::DrawWaveformBackground(wxDC &dc, int leftOffset, const wxRect 
                                          bool dB, float dBRange,
                                          double t0, double t1,
                                          const ZoomInfo &zoomInfo,
-                                         bool drawEnvelope, bool bIsSyncLockSelected,
+                                         bool drawEnvelope,
                                          bool highlightEnvelope)
 {
 
@@ -906,7 +906,7 @@ void TrackArtist::DrawWaveformBackground(wxDC &dc, int leftOffset, const wxRect 
       }
 
       // We don't draw selection color for sync-lock selected tracks.
-      sel = (t0 <= time && nextTime < t1) && !bIsSyncLockSelected;
+      sel = (t0 <= time && nextTime < t1);
 
       if (lmaxtop == maxtop &&
           lmintop == mintop &&
@@ -954,13 +954,6 @@ void TrackArtist::DrawWaveformBackground(wxDC &dc, int leftOffset, const wxRect 
    if (highlightEnvelope && lmaxbot < lmintop - 1) {
       dc.SetBrush( AColor::uglyBrush );
       dc.DrawRectangle(l, rect.y + lmaxbot, w, lmintop - lmaxbot);
-   }
-
-   // If sync-lock selected, draw in linked graphics.
-   if (bIsSyncLockSelected && t0 < t1) {
-      const int begin = std::max(0, std::min(rect.width, (int)(zoomInfo.TimeToPosition(t0, -leftOffset))));
-      const int end = std::max(0, std::min(rect.width, (int)(zoomInfo.TimeToPosition(t1, -leftOffset))));
-      DrawSyncLockTiles(&dc, wxRect(rect.x + begin, rect.y, end - 1 - begin, rect.height));
    }
 
    //OK, the display bounds are between min and max, which
@@ -1356,8 +1349,7 @@ struct ClipParameters
       double sel1 = selectedRegion.t1();    //right selection bound
 
       //If the track isn't selected, make the selection empty
-      if (!track->GetSelected() &&
-         (spectrum || !track->IsSyncLockSelected())) { // PRL: why was there a difference for spectrum?
+      if (!track->GetSelected() && spectrum) { // PRL: why was there a difference for spectrum?
          sel0 = sel1 = 0.0;
       }
 
@@ -1615,7 +1607,7 @@ void TrackArtist::DrawClipWaveform(TrackPanelDrawingContext &context,
    // part of the waveform
    {
       double t0, t1;
-      if (track->GetSelected() || track->IsSyncLockSelected()) {
+      if (track->GetSelected()) {
          t0 = track->LongSamplesToTime(track->TimeToLongSamples(selectedRegion.t0())),
             t1 = track->LongSamplesToTime(track->TimeToLongSamples(selectedRegion.t1()));
       }
@@ -1627,7 +1619,7 @@ void TrackArtist::DrawClipWaveform(TrackPanelDrawingContext &context,
          track->ZeroLevelYCoordinate(mid),
          dB, dBRange,
          t0, t1, zoomInfo, drawEnvelope,
-         !track->GetSelected(), highlightEnvelope);
+         highlightEnvelope);
    }
 
    WaveDisplay display(hiddenMid.width);
@@ -2315,7 +2307,7 @@ void TrackArtist::DrawBackgroundWithSelection(wxDC *dc, const wxRect &rect,
    const double sel1 = selectedRegion.t1();
 
    dc->SetPen(*wxTRANSPARENT_PEN);
-   if (track->GetSelected() || track->IsSyncLockSelected())
+   if (track->GetSelected())
    {
       // Rectangles before, within, after the selction
       wxRect before = rect;

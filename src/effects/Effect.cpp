@@ -1288,10 +1288,6 @@ bool Effect::ProcessPass()
    {
       if (t->GetKind() != Track::Wave || !t->GetSelected())
       {
-         if (t->IsSyncLockSelected())
-         {
-            t->SyncLockAdjust(mT1, mT0 + mDuration);
-         }
          continue;
       }
 
@@ -1996,9 +1992,8 @@ void Effect::CopyInputTracks(int trackType)
 
    for (Track *aTrack = aIt.First(); aTrack; aTrack = aIt.Next())
    {
-      // Include selected tracks, plus sync-lock selected tracks for Track::All.
-      if (aTrack->GetSelected() ||
-            (trackType == Track::All && aTrack->IsSyncLockSelected()))
+      // Include selected tracks
+      if (aTrack->GetSelected())
       {
          Track *o = mOutputTracks->Add(aTrack->Duplicate());
          mIMap.push_back(aTrack);

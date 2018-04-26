@@ -683,14 +683,6 @@ void AudacityProject::CreateMenusAndCommands()
          AudioIONotBusyFlag | TracksSelectedFlag,
          AudioIONotBusyFlag | TracksSelectedFlag);
 
-      c->AddSeparator();
-
-      //////////////////////////////////////////////////////////////////////////
-
-#ifdef EXPERIMENTAL_SYNC_LOCK
-
-#endif
-
       c->EndMenu();
 
       // All of this is a bit hacky until we can get more things connected into
@@ -3812,8 +3804,8 @@ void AudacityProject::OnCut(const CommandContext &WXUNUSED(context) )
 
    n = iter.First();
    while (n) {
-      // We clear from selected and sync-lock selected tracks.
-      if (n->GetSelected() || n->IsSyncLockSelected()) {
+      // We clear from selected tracks.
+      if (n->GetSelected()) {
          switch (n->GetKind())
          {
             case Track::Wave:
@@ -3944,14 +3936,6 @@ void AudacityProject::OnPaste(const CommandContext &WXUNUSED(context) )
             c = mismatchedClip;
             while (n && (c->GetKind() != n->GetKind() || !n->GetSelected()))
             {
-               // Must perform sync-lock adjustment before incrementing n
-               if (n->IsSyncLockSelected()) {
-                  auto newT1 = t0 + (msClipT1 - msClipT0);
-                  if (t1 != newT1 && t1 <= n->GetEndTime()) {
-                     n->SyncLockAdjust(t1, newT1);
-                     bPastedSomething = true;
-                  }
-               }
                n = iter.Next();
             }
             if (!n)
@@ -4023,15 +4007,6 @@ void AudacityProject::OnPaste(const CommandContext &WXUNUSED(context) )
             c = clipIter.Next();
          }
       } // if (n->GetSelected())
-      else if (n->IsSyncLockSelected())
-      {
-         auto newT1 = t0 + (msClipT1 - msClipT0);
-         if (t1 != newT1 && t1 <= n->GetEndTime()) {
-            n->SyncLockAdjust(t1, newT1);
-            bPastedSomething = true;
-         }
-      }
-
       n = iter.Next();
    }
 
@@ -4060,11 +4035,6 @@ void AudacityProject::OnPaste(const CommandContext &WXUNUSED(context) )
                ((WaveTrack *)n)->ClearAndPaste(t0, t1, tmp.get(), true, true);
             }
          }
-         else if (n->IsSyncLockSelected())
-         {
-            n->SyncLockAdjust(t1, t0 + msClipT1 - msClipT0);
-         }
-
          n = iter.Next();
       }
    }

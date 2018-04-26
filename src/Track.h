@@ -326,9 +326,6 @@ public:
    virtual double GetStartTime() const = 0;
    virtual double GetEndTime() const = 0;
 
-   // Checks if sync-lock is on and any track in its sync-lock group is selected.
-   bool IsSyncLockSelected() const;
-
 protected:
    std::shared_ptr<Track> FindTrack() override;
 
