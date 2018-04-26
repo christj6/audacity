@@ -35,10 +35,6 @@ enum {
    ETBUndoID,
    ETBRedoID,
 
-#ifdef OPTION_SYNC_LOCK_BUTTON
-   ETBSyncLockID,
-#endif
-
    ETBZoomInID,
    ETBZoomOutID,
 #ifdef EXPERIMENTAL_ZOOM_TOGGLE_BUTTON

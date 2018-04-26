@@ -20,7 +20,7 @@ class SelectionState
 {
 public:
    static void SelectTrackLength
-      ( TrackList &tracks, ViewInfo &viewInfo, Track &track, bool syncLocked );
+      ( TrackList &tracks, ViewInfo &viewInfo, Track &track );
 
    void SelectTrack
       ( TrackList &tracks, Track &track,
@@ -33,7 +33,7 @@ public:
       ( TrackList &tracks, Track &track );
    void HandleListSelection
       ( TrackList &tracks, ViewInfo &viewInfo, Track &track,
-        bool shift, bool ctrl, bool syncLocked );
+        bool shift, bool ctrl );
 
 private:
    friend class SelectionStateChanger;

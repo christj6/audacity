@@ -15,36 +15,21 @@
 // on, use the largest possible selection in the sync-lock group.
 // If it's a stereo track, do the same for the stereo channels.
 void SelectionState::SelectTrackLength
-( TrackList &tracks, ViewInfo &viewInfo, Track &track, bool syncLocked )
+( TrackList &tracks, ViewInfo &viewInfo, Track &track )
 {
    SyncLockedTracksIterator it( &tracks );
    Track *t1 = it.StartWith( &track );
    double minOffset = track.GetOffset();
    double maxEnd = track.GetEndTime();
 
-   // If we have a sync-lock group and sync-lock linking is on,
-   // check the sync-lock group tracks.
-   if ( syncLocked && t1 != NULL )
+   // Check for a stereo pair
+   t1 = track.GetLink();
+   if (t1)
    {
-      for ( ; t1; t1 = it.Next())
-      {
-         if (t1->GetOffset() < minOffset)
-            minOffset = t1->GetOffset();
-         if (t1->GetEndTime() > maxEnd)
-            maxEnd = t1->GetEndTime();
-      }
-   }
-   else
-   {
-      // Otherwise, check for a stereo pair
-      t1 = track.GetLink();
-      if (t1)
-      {
-         if (t1->GetOffset() < minOffset)
-            minOffset = t1->GetOffset();
-         if (t1->GetEndTime() > maxEnd)
-            maxEnd = t1->GetEndTime();
-      }
+      if (t1->GetOffset() < minOffset)
+         minOffset = t1->GetOffset();
+      if (t1->GetEndTime() > maxEnd)
+         maxEnd = t1->GetEndTime();
    }
 
    // PRL: double click or click on track control.
@@ -134,7 +119,7 @@ void SelectionState::ChangeSelectionOnShiftClick
 
 void SelectionState::HandleListSelection
 ( TrackList &tracks, ViewInfo &viewInfo,
-  Track &track, bool shift, bool ctrl, bool syncLocked )
+  Track &track, bool shift, bool ctrl )
 {
    // AS: If the shift button is being held down, invert
    //  the selection on this track.
@@ -146,7 +131,7 @@ void SelectionState::HandleListSelection
       else {
          SelectNone( tracks );
          SelectTrack( tracks, track, true, true );
-         SelectTrackLength( tracks, viewInfo, track, syncLocked );
+         SelectTrackLength( tracks, viewInfo, track );
       }
    }
 }

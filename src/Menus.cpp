@@ -1630,10 +1630,7 @@ CommandFlag AudacityProject::GetUpdateFlags(bool checkActive)
    if (wxGetApp().GetRecentFiles()->GetCount() > 0)
       flags |= HaveRecentFiles;
 
-   if (IsSyncLocked())
-      flags |= IsSyncLockedFlag;
-   else
-      flags |= IsNotSyncLockedFlag;
+   flags |= IsNotSyncLockedFlag;
 
    if (!EffectManager::Get().RealtimeIsActive())
       flags |= IsRealtimeNotActiveFlag;
@@ -2638,7 +2635,7 @@ void AudacityProject::HandleListSelection(Track *t, bool shift, bool ctrl,
 {
    GetSelectionState().HandleListSelection
       ( *GetTracks(), mViewInfo, *t,
-        shift, ctrl, IsSyncLocked() );
+        shift, ctrl );
 
    if (! ctrl )
       mTrackPanel->SetFocusedTrack(t);

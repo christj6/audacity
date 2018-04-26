@@ -147,13 +147,6 @@ void EditToolBar::Populate()
 
    AddSeparator();
 
-#ifdef OPTION_SYNC_LOCK_BUTTON
-   AddButton(this, bmpSyncLockTracksUp, bmpSyncLockTracksDown, bmpSyncLockTracksUp, ETBSyncLockID,
-               _("Sync-Lock Tracks"), true);
-
-   AddSeparator();
-#endif
-
    // Tooltips match menu entries.
    // We previously had longer tooltips which were not more clear.
    AddButton(this, bmpZoomIn, bmpZoomIn, bmpZoomInDisabled, ETBZoomInID,
@@ -181,10 +174,6 @@ void EditToolBar::Populate()
    mButtons[ETBZoomSelID]->SetEnabled(false);
    mButtons[ETBZoomFitID]->SetEnabled(false);
    mButtons[ETBPasteID]->SetEnabled(false);
-
-#ifdef OPTION_SYNC_LOCK_BUTTON
-   mButtons[ETBSyncLockID]->PushDown();
-#endif
 
    RegenerateTooltips();
 }
@@ -222,10 +211,6 @@ static const struct Entry {
    { ETBUndoID,     wxT("Undo"),        XO("Undo")  },
    { ETBRedoID,     wxT("Redo"),        XO("Redo")  },
 
-#ifdef OPTION_SYNC_LOCK_BUTTON
-   { ETBSyncLockID, wxT("SyncLock"),    XO("Sync-Lock Tracks")  },
-#endif
-
    { ETBZoomInID,   wxT("ZoomIn"),      XO("Zoom In")  },
    { ETBZoomOutID,  wxT("ZoomOut"),     XO("Zoom Out")  },
 #ifdef EXPERIMENTAL_ZOOM_TOGGLE_BUTTON
@@ -246,15 +231,6 @@ void EditToolBar::ForAllButtons(int Action)
       if (!p) return;
       cm = p->GetCommandManager();
       if (!cm) return;
-#ifdef OPTION_SYNC_LOCK_BUTTON
-      bool bSyncLockTracks;
-      gPrefs->Read(wxT("/GUI/SyncLockTracks"), &bSyncLockTracks, false);
-
-      if (bSyncLockTracks)
-         mButtons[ETBSyncLockID]->PushDown();
-      else
-         mButtons[ETBSyncLockID]->PopUp();
-#endif
    }
 
 
