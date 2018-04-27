@@ -1893,14 +1893,7 @@ void AudioIO::StopStream()
                }
             } );
          }
-		 /*
-         for (auto &interval : mLostCaptureIntervals) {
-            auto &start = interval.first;
-            if (mPlaybackTracks.size() > 0)
-               // only do latency correction if some tracks are being played back
-               start += recordingOffset;
-         }
-		 */
+
          AudacityProject *p = GetActiveProject();
          ControlToolBar *bar = p->GetControlToolBar();
          bar->CommitRecording();

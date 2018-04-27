@@ -94,10 +94,6 @@ public:
       ( TrackPanelDrawingContext &context,
         const wxRect &rect, const Track *pTrack );
 
-   static void MinimizeSyncLockDrawFunction
-      ( TrackPanelDrawingContext &context,
-        const wxRect &rect, const Track *pTrack );
-
    template<typename TrackClass>
    static void SliderDrawFunction
       ( LWSlider *(*Selector)
@@ -162,9 +158,6 @@ public:
 
    static void GetMinimizeHorizontalBounds( const wxRect &rect, wxRect &dest );
    static void GetMinimizeRect(const wxRect & rect, wxRect &dest);
-
-   static void GetSyncLockHorizontalBounds( const wxRect &rect, wxRect &dest );
-   static void GetSyncLockIconRect(const wxRect & rect, wxRect &dest);
 
    static bool HideTopItem( const wxRect &rect, const wxRect &subRect,
                                int allowance = 0 );

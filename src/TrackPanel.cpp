@@ -1229,8 +1229,7 @@ std::pair< int, int > CalcItemY( const TCPLines &lines, unsigned iItem )
 const TrackInfo::TCPLine defaultCommonTrackTCPBottomLines[] = {
    // The '0' avoids impinging on bottom line of TCP
    // Use -1 if you do want to do so.
-   { kItemSyncLock | kItemMinimize, kTrackInfoBtnSize, 0,
-     &TrackInfo::MinimizeSyncLockDrawFunction },
+   { kItemSyncLock | kItemMinimize, kTrackInfoBtnSize, 0 },
 };
 TCPLines commonTrackTCPBottomLines{ RANGE(defaultCommonTrackTCPBottomLines) };
 
@@ -2019,13 +2018,6 @@ void TrackInfo::CloseTitleDrawFunction
    }
 }
 
-void TrackInfo::MinimizeSyncLockDrawFunction
-( TrackPanelDrawingContext &context,
-  const wxRect &rect, const Track *pTrack )
-{
-	// removal pending
-}
-
 template<typename TrackClass>
 void TrackInfo::SliderDrawFunction
 ( LWSlider *(*Selector)
@@ -2766,7 +2758,6 @@ void TrackInfo::GetMinimizeHorizontalBounds( const wxRect &rect, wxRect &dest )
    dest.x = rect.x + space;
 
    wxRect syncLockRect;
-   GetSyncLockHorizontalBounds( rect, syncLockRect );
 
    // Width is rect.width less space on left for track select
    // and on right for sync-lock icon.
@@ -2778,21 +2769,6 @@ void TrackInfo::GetMinimizeRect(const wxRect & rect, wxRect &dest)
    GetMinimizeHorizontalBounds( rect, dest );
    auto results = CalcBottomItemY
       ( commonTrackTCPBottomLines, kItemMinimize, rect.height);
-   dest.y = rect.y + results.first;
-   dest.height = results.second;
-}
-
-void TrackInfo::GetSyncLockHorizontalBounds( const wxRect &rect, wxRect &dest )
-{
-   dest.width = kTrackInfoBtnSize;
-   dest.x = rect.x + rect.width - dest.width;
-}
-
-void TrackInfo::GetSyncLockIconRect(const wxRect & rect, wxRect &dest)
-{
-   GetSyncLockHorizontalBounds( rect, dest );
-   auto results = CalcBottomItemY
-      ( commonTrackTCPBottomLines, kItemSyncLock, rect.height);
    dest.y = rect.y + results.first;
    dest.height = results.second;
 }

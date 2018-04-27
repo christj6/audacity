@@ -388,9 +388,6 @@ public:
    typedef void (WaveTrack::* EditFunction)(double, double);
    typedef std::unique_ptr<Track> (WaveTrack::* EditDestFunction)(double, double);
 
-   bool IsSyncLocked();
-   void SetSyncLock(bool flag);
-
    void SetTrackGain(WaveTrack * track, LWSlider * slider);
    void SetTrackPan(WaveTrack * track, LWSlider * slider);
 
@@ -645,8 +642,6 @@ private:
    // 0 is grey out, 1 is Autoselect, 2 is Give warnings.
    int  mWhatIfNoSelection;
    bool mStopIfWasPaused;
-
-   bool mIsSyncLocked;
 
    bool mLockPlayRegion;
 

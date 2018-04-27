@@ -865,11 +865,6 @@ AudacityProject::AudacityProject(wxWindow * parent, wxWindowID id,
 
    mLockPlayRegion = false;
 
-   // Make sure valgrind sees mIsSyncLocked is initialized, even
-   // though we're about to set it from prefs.
-   mIsSyncLocked = false;
-   gPrefs->Read(wxT("/GUI/SyncLockTracks"), &mIsSyncLocked, false);
-
    // LLL:  Read this!!!
    //
    // Until the time (and cpu) required to refresh the track panel is
@@ -3629,20 +3624,6 @@ void AudacityProject::SetSnapTo(int snap)
 int AudacityProject::GetSnapTo() const
 {
    return mSnapTo;
-}
-
-bool AudacityProject::IsSyncLocked()
-{
-   return false;
-}
-
-void AudacityProject::SetSyncLock(bool flag)
-{
-   if (flag != mIsSyncLocked) {
-      mIsSyncLocked = flag;
-      if (GetTrackPanel())
-         GetTrackPanel()->Refresh(false);
-   }
 }
 
 void AudacityProject::SetTrackGain(WaveTrack * wt, LWSlider * slider)

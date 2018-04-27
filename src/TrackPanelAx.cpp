@@ -388,8 +388,7 @@ wxAccStatus TrackPanelAx::GetName( int childId, wxString* name )
             auto pt = dynamic_cast<PlayableTrack *>(t.get());
             if( pt && pt->GetMute() )
             {
-               // The following comment also applies to the solo, selected,
-               // and synclockselected states.
+               // The following comment also applies to the solo and selected states.
                // Many of translations of the strings with a leading space omitted
                // the leading space. Therefore a space has been added using wxT(" ").
                // Because screen readers won't be affected by multiple spaces, the

@@ -1630,8 +1630,6 @@ CommandFlag AudacityProject::GetUpdateFlags(bool checkActive)
    if (wxGetApp().GetRecentFiles()->GetCount() > 0)
       flags |= HaveRecentFiles;
 
-   flags |= IsNotSyncLockedFlag;
-
    if (!EffectManager::Get().RealtimeIsActive())
       flags |= IsRealtimeNotActiveFlag;
 
