@@ -2496,19 +2496,31 @@ void TrackPanel::DrawShadow(Track * /* t */ , wxDC * dc, const wxRect & rect)
 ///  @param mouseY - mouse Y position.
 TrackPanel::FoundCell TrackPanel::FindCell(int mouseX, int mouseY)
 {
+	// note: this function is crashing frequently.
+	// something to do with moving the mouse around too much...
+	//
+	// Without making a selection, move the mouse to the line between where the Track Mixer used to be,
+	// and where the track itself starts. When the mouse is right on that line, move it just a bit to the left. Crash.
    auto range = Cells();
    auto &iter = range.first, &end = range.second;
    auto prev = iter;
-   while
-      ( iter != end &&
-        !(*iter).second.Contains( mouseX, mouseY ) )
-      prev = iter++;
-   if ( iter == end )
-      // Default to the background cell, which is always last in the sequence,
-      // even if it does not contain the point
-      iter = prev;
+
+   while (iter != end && !(*iter).second.Contains(mouseX, mouseY))
+   {
+	   prev = iter++;
+   }
+
+   if (iter == end)
+   {
+	   // Default to the background cell, which is always last in the sequence,
+	   // even if it does not contain the point
+	   iter = prev;
+   }
+
    auto found = *iter;
-   return {
+
+   return 
+   {
       static_cast<CommonTrackPanelCell*>( found.first.get() )->FindTrack(),
       found.first,
       found.second
