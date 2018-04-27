@@ -603,13 +603,6 @@ SyncLockedTracksIterator::SyncLockedTracksIterator(TrackList * val)
 {
 }
 
-namespace {
-   inline bool IsSyncLockableNonLabelTrack( const Track *pTrack )
-   {
-      return nullptr != dynamic_cast< const AudioTrack * >( pTrack );
-   }
-}
-
 Track *SyncLockedTracksIterator::StartWith(Track * member)
 {
    Track *t = NULL;
@@ -620,11 +613,6 @@ Track *SyncLockedTracksIterator::StartWith(Track * member)
    // and then through the wave tracks above them.
 
    while (member && member->GetKind() == Track::Label) {
-      member = l->GetPrev(member);
-   }
-
-   while (member && IsSyncLockableNonLabelTrack(member)) {
-      t = member;
       member = l->GetPrev(member);
    }
 
@@ -644,9 +632,8 @@ bool SyncLockedTracksIterator::IsGoodNextTrack(const Track *t) const
       return false;
 
    const bool isLabel = ( t->GetKind() == Track::Label );
-   const bool isSyncLockable = IsSyncLockableNonLabelTrack( t );
 
-   if ( !( isLabel || isSyncLockable ) ) {
+   if ( !isLabel ) {
       return false;
    }
 
@@ -687,9 +674,8 @@ Track *SyncLockedTracksIterator::Prev(bool skiplinked)
       return nullptr;
 
    const bool isLabel = ( t->GetKind() == Track::Label );
-   const bool isSyncLockable = IsSyncLockableNonLabelTrack( t );
 
-   if ( !( isLabel || isSyncLockable ) ) {
+   if ( !isLabel ) {
       cur = l->getEnd();
       return nullptr;
    }
