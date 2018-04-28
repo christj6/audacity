@@ -59,7 +59,6 @@ std::vector<UIHandlePtr> WaveTrackControls::HitTest
 {
    // Hits are mutually exclusive, results single
    const wxMouseState &state = st.state;
-   const wxRect &rect = st.rect;
    if (state.ButtonIsDown(wxMOUSE_BTN_LEFT)) {
       auto track = FindTrack();
       std::vector<UIHandlePtr> results;
