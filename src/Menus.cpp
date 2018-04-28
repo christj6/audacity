@@ -216,10 +216,6 @@ void AudacityProject::CreateMenusAndCommands()
       c->AddItem(wxT("ExportMultiple"), XXO("Export &Multiple..."), FN(OnExportMultiple), wxT("Ctrl+Shift+L"),
          AudioIONotBusyFlag | WaveTracksExistFlag,
          AudioIONotBusyFlag | WaveTracksExistFlag);
-#ifdef USE_LIBVORBIS
-      c->AddSeparator();
-      c->AddItem(wxT("SaveCompressed"), XXO("&Save Compressed Copy of Project..."), FN(OnSaveCompressed));
-#endif
       c->EndSubMenu();
       c->AddSeparator();
       c->BeginSubMenu(_("&Import"));
@@ -3520,13 +3516,6 @@ void AudacityProject::OnSaveAs(const CommandContext &WXUNUSED(context) )
 {
    SaveAs();
 }
-
-#ifdef USE_LIBVORBIS
-   void AudacityProject::OnSaveCompressed(const CommandContext &WXUNUSED(context) )
-   {
-      SaveAs(true);
-   }
-#endif
 
 void AudacityProject::OnCheckDependencies(const CommandContext &WXUNUSED(context) )
 {

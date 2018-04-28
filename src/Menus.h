@@ -183,9 +183,6 @@ void OnOpen(const CommandContext &context );
 void OnClose(const CommandContext &context );
 void OnSave(const CommandContext &context );
 void OnSaveAs(const CommandContext &context );
-#ifdef USE_LIBVORBIS
-   void OnSaveCompressed(const CommandContext &context );
-#endif
 
 void OnCheckDependencies(const CommandContext &context );
 
