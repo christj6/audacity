@@ -1868,9 +1868,6 @@ void TrackPanel::DrawEverythingElse(TrackPanelDrawingContext &context,
       target->DrawExtras(UIHandle::Panel, dc, region, clip);
 }
 
-// Make this #include go away!
-#include "tracks/ui/TrackControls.h"
-
 void TrackInfo::DrawItems
 ( TrackPanelDrawingContext &context,
   const wxRect &rect, const Track &track  )

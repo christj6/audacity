@@ -86,24 +86,18 @@ private:
 protected:
    InitMenuData *mpData {};
 
-   void OnZoom( int iZoomCode );
-   void OnZoomFitVertical(wxCommandEvent&){ OnZoom( kZoom1to1 );};
-   void OnZoomReset(wxCommandEvent&){ OnZoom( kZoomReset );};
-   void OnZoomDiv2Vertical(wxCommandEvent&){ OnZoom( kZoomDiv2 );};
-   void OnZoomTimes2Vertical(wxCommandEvent&){ OnZoom( kZoomTimes2 );};
-   void OnZoomHalfWave(wxCommandEvent&){ OnZoom( kZoomHalfWave );};
-   void OnZoomInVertical(wxCommandEvent&){ OnZoom( kZoomIn );};
-   void OnZoomOutVertical(wxCommandEvent&){ OnZoom( kZoomOut );};
+   void OnZoomFitVertical(wxCommandEvent&){ };
+   void OnZoomReset(wxCommandEvent&){ };
+   void OnZoomDiv2Vertical(wxCommandEvent&){ };
+   void OnZoomTimes2Vertical(wxCommandEvent&){ };
+   void OnZoomHalfWave(wxCommandEvent&){ };
+   void OnZoomInVertical(wxCommandEvent&){ };
+   void OnZoomOutVertical(wxCommandEvent&){ };
 };
 
 void WaveTrackVRulerMenuTable::InitMenu(Menu *, void *pUserData)
 {
    mpData = static_cast<InitMenuData*>(pUserData);
-}
-
-
-void WaveTrackVRulerMenuTable::OnZoom( int iZoomCode )
-{
 }
 
 ///////////////////////////////////////////////////////////////////////////////
