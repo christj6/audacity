@@ -25,10 +25,6 @@ public:
    WaveTrackVRulerControls( std::shared_ptr<Track> pTrack )
       : TrackVRulerControls( pTrack ) {}
    ~WaveTrackVRulerControls();
-
-   std::vector<UIHandlePtr> HitTest
-      (const TrackPanelMouseState &state,
-       const AudacityProject *) override;
 private:
    std::weak_ptr<WaveTrackVZoomHandle> mVZoomHandle;
 };

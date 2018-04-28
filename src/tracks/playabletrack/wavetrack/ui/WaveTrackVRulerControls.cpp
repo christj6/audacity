@@ -25,25 +25,3 @@ Paul Licameli split from TrackPanel.cpp
 WaveTrackVRulerControls::~WaveTrackVRulerControls()
 {
 }
-
-std::vector<UIHandlePtr> WaveTrackVRulerControls::HitTest
-(const TrackPanelMouseState &st,
- const AudacityProject *pProject)
-{
-   std::vector<UIHandlePtr> results;
-
-   if ( st.state.GetX() <= st.rect.GetRight() - kGuard ) {
-      auto pTrack = Track::Pointer<WaveTrack>( FindTrack().get() );
-      if (pTrack) {
-         auto result = std::make_shared<WaveTrackVZoomHandle>(
-            pTrack, st.rect, st.state.m_y );
-         result = AssignUIHandlePtr(mVZoomHandle, result);
-         results.push_back(result);
-      }
-   }
-
-   auto more = TrackVRulerControls::HitTest(st, pProject);
-   std::copy(more.begin(), more.end(), std::back_inserter(results));
-
-   return results;
-}
