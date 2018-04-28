@@ -37,17 +37,6 @@ public:
    int yy;
 };
 
-bool IsDragZooming(int zoomStart, int zoomEnd)
-{
-	/*
-   const int DragThreshold = 3;// Anything over 3 pixels is a drag, else a click.
-   bool bVZoom;
-   gPrefs->Read(wxT("/GUI/VerticalZooming"), &bVZoom, false);
-   return bVZoom && (abs(zoomEnd - zoomStart) > DragThreshold);
-   */
-	return false;
-}
-
 }
 
 WaveTrackVZoomHandle::WaveTrackVZoomHandle
@@ -311,8 +300,6 @@ UIHandle::Result WaveTrackVZoomHandle::Drag
    if ( event.RightIsDown() )
       return RefreshNone;
    mZoomEnd = event.m_y;
-   if (IsDragZooming(mZoomStart, mZoomEnd))
-      return RefreshAll;
    return RefreshNone;
 }
 
@@ -395,17 +382,5 @@ UIHandle::Result WaveTrackVZoomHandle::Cancel(AudacityProject*)
    // Cancel is implemented!  And there is no initial state to restore,
    // so just return a code.
    return RefreshCode::RefreshAll;
-}
-
-void WaveTrackVZoomHandle::DrawExtras
-(DrawingPass pass, wxDC * dc, const wxRegion &, const wxRect &panelRect)
-{
-   if (!mpTrack.lock()) // TrackList::Lock()?
-      return;
-
-   if ( pass == UIHandle::Cells &&
-        IsDragZooming( mZoomStart, mZoomEnd ) )
-      TrackVRulerControls::DrawZooming
-         ( dc, mRect, panelRect, mZoomStart, mZoomEnd );
 }
 

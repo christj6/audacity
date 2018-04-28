@@ -62,11 +62,6 @@ public:
 
    Result Cancel(AudacityProject *pProject) override;
 
-   void DrawExtras
-      (DrawingPass pass,
-       wxDC * dc, const wxRegion &updateRegion, const wxRect &panelRect)
-      override;
-
 private:
    std::weak_ptr<WaveTrack> mpTrack;
 
