@@ -475,10 +475,6 @@ float WaveTrack::GetChannelGain(int channel) const
       return right*mGain;
 }
 
-void WaveTrack::DoSetMinimized(bool isMinimized){
-   PlayableTrack::DoSetMinimized( isMinimized );
-}
-
 void WaveTrack::SetWaveColorIndex(int colorIndex)
 // STRONG-GUARANTEE
 {

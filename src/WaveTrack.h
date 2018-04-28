@@ -136,8 +136,6 @@ private:
    // Takes gain and pan into account
    float GetChannelGain(int channel) const;
 
-   void DoSetMinimized(bool isMinimized) override;
-
    int GetWaveColorIndex() const { return mWaveColorIndex; };
    void SetWaveColorIndex(int colorIndex);
 
