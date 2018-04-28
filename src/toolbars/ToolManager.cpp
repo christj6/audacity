@@ -470,8 +470,6 @@ static struct DefaultConfigEntry {
    { MixerBarID,             PlayMeterBarID,         NoBarID                },
    { EditBarID,              MixerBarID,             NoBarID                },
 
-   { NoBarID, EditBarID, NoBarID },
-
    // Hidden by default in top dock
    { MeterBarID,             NoBarID,                NoBarID                },
 
@@ -509,11 +507,7 @@ void ToolManager::Reset()
       }
 
       // Decide which dock.
-      if (ndx == SelectionBarID 
-#ifdef EXPERIMENTAL_SPECTRAL_EDITING
-         || ndx == SpectralSelectionBarID
-#endif
-         )
+      if (ndx == SelectionBarID)
          dock = mBotDock;
       else
          dock = mTopDock;
