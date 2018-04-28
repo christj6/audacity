@@ -484,8 +484,6 @@ void WaveTrack::DoSetMinimized(bool isMinimized){
    // An awkward workaround for a function that lives 'in the wrong place'.
    // We use magic numbers, 0 and 1, to tell it to zoom reset or zoom half-wave.
    WaveTrackVRulerControls * pWtvc = reinterpret_cast<WaveTrackVRulerControls*>(pTvc.get());
-   if( pWtvc )
-      pWtvc->DoZoomPreset( isMinimized ? 1:0);
 #endif
 
    PlayableTrack::DoSetMinimized( isMinimized );

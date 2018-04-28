@@ -47,15 +47,3 @@ std::vector<UIHandlePtr> WaveTrackVRulerControls::HitTest
 
    return results;
 }
-
-void WaveTrackVRulerControls::DoZoomPreset( int i)
-{
-	/*
-   const auto pTrack = FindTrack();
-   if (!pTrack)
-      return;
-   wxASSERT(pTrack->GetKind() == Track::Wave);
-
-   const auto wt = static_cast<WaveTrack*>(pTrack.get());
-		 */
-}

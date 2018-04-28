@@ -29,8 +29,6 @@ public:
    std::vector<UIHandlePtr> HitTest
       (const TrackPanelMouseState &state,
        const AudacityProject *) override;
-
-   void DoZoomPreset( int i);
 private:
    std::weak_ptr<WaveTrackVZoomHandle> mVZoomHandle;
 };
