@@ -320,34 +320,6 @@ void AudacityProject::CreateMenusAndCommands()
 
       /////////////////////////////////////////////////////////////////////////////
 
-      c->BeginSubMenu(_("&Labels"));
-
-      c->AddSeparator();
-
-      c->AddItem(wxT("AddLabel"), XXO("Add Label at &Selection"), FN(OnAddLabel), wxT("Ctrl+B"),
-         AlwaysEnabledFlag, AlwaysEnabledFlag);
-      c->AddItem(wxT("AddLabelPlaying"), XXO("Add Label at &Playback Position"),
-         FN(OnAddLabelPlaying),
-#ifdef __WXMAC__
-         wxT("Ctrl+."),
-#else
-         wxT("Ctrl+M"),
-#endif
-         AudioIOBusyFlag,
-         AudioIOBusyFlag);
-      c->SetDefaultFlags(AudioIONotBusyFlag, AudioIONotBusyFlag);
-      c->AddItem(wxT("PasteNewLabel"), XXO("Paste Te&xt to New Label"), FN(OnPasteNewLabel), wxT("Ctrl+Alt+V"),
-         AudioIONotBusyFlag, AudioIONotBusyFlag);
-
-      c->AddSeparator();
-
-      c->AddCheck(wxT("TypeToCreateLabel"), XXO("&Type to Create a Label (on/off)"),
-                  FN(OnToggleTypeToCreateLabel), 0, AlwaysEnabledFlag, AlwaysEnabledFlag);
-
-      c->EndSubMenu();
-
-      /////////////////////////////////////////////////////////////////////////////
-
 #ifndef __WXMAC__
       c->AddSeparator();
 #endif
@@ -4144,45 +4116,6 @@ bool AudacityProject::HandlePasteNothingSelected()
    }
 }
 
-
-// Creates a NEW label in each selected label track with text from the system
-// clipboard
-void AudacityProject::OnPasteNewLabel(const CommandContext &WXUNUSED(context) )
-{
-   bool bPastedSomething = false;
-
-   SelectedTrackListOfKindIterator iter(Track::Label, GetTracks());
-   Track *t = iter.First();
-   if (!t)
-   {
-      // If there are no selected label tracks, try to choose the first label
-      // track after some other selected track
-      TrackListIterator iter1(GetTracks());
-      for (Track *t1 = iter1.First(); t1; t1 = iter1.Next()) {
-         if (t1->GetSelected()) {
-            // Look for a label track
-            while (0 != (t1 = iter1.Next())) {
-               if (t1->GetKind() == Track::Label) {
-                  t = t1;
-                  break;
-               }
-            }
-            if (t) break;
-         }
-      }
-
-      // Select this track so the loop picks it up
-      t->SetSelected(true);
-   }
-
-   if (bPastedSomething) {
-      PushState(_("Pasted from the clipboard"), _("Paste Text to New Label"));
-
-      // Is this necessary? (carried over from former logic in OnPaste())
-      RedrawProject();
-   }
-}
-
 void AudacityProject::OnPasteOver(const CommandContext &context) // not currently in use it appears
 {
    if((msClipT1 - msClipT0) > 0.0)
@@ -5605,25 +5538,6 @@ void AudacityProject::OnRescanDevices(const CommandContext &WXUNUSED(context) )
 {
    DeviceManager::Instance()->Rescan();
 }
-
-
-
-void AudacityProject::OnAddLabel(const CommandContext &WXUNUSED(context) )
-{
-}
-
-void AudacityProject::OnAddLabelPlaying(const CommandContext &WXUNUSED(context) )
-{
-}
-
-void AudacityProject::OnToggleTypeToCreateLabel(const CommandContext &WXUNUSED(context) )
-{
-   bool typeToCreateLabel;
-   gPrefs->Read(wxT("/GUI/TypeToCreateLabel"), &typeToCreateLabel, true);
-   gPrefs->Write(wxT("/GUI/TypeToCreateLabel"), !typeToCreateLabel);
-   gPrefs->Flush();
-}
-
 
 void AudacityProject::OnRemoveTracks(const CommandContext &WXUNUSED(context) )
 {

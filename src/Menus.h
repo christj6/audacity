@@ -225,7 +225,6 @@ bool HandlePasteText(); // Handle text paste (into active label), if any. Return
 bool HandlePasteNothingSelected(); // Return true if nothing selected, regardless of paste result.
 public:
 
-void OnPasteNewLabel(const CommandContext &context );
 void OnPasteOver(const CommandContext &context );
 
 void OnDelete(const CommandContext &context );
@@ -348,9 +347,6 @@ static wxString ClipBoundaryMessage(const std::vector<FoundClipBoundary>& result
 // Tracks menu
 void OnNewStereoTrack(const CommandContext &context );
 void OnRemoveTracks(const CommandContext &context );
-void OnAddLabel(const CommandContext &context );
-void OnAddLabelPlaying(const CommandContext &context );
-void OnToggleTypeToCreateLabel(const CommandContext &context );
 
         // Effect Menu
 
