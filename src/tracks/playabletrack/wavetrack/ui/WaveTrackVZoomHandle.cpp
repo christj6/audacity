@@ -39,10 +39,13 @@ public:
 
 bool IsDragZooming(int zoomStart, int zoomEnd)
 {
+	/*
    const int DragThreshold = 3;// Anything over 3 pixels is a drag, else a click.
    bool bVZoom;
    gPrefs->Read(wxT("/GUI/VerticalZooming"), &bVZoom, false);
    return bVZoom && (abs(zoomEnd - zoomStart) > DragThreshold);
+   */
+	return false;
 }
 
 }
@@ -66,6 +69,7 @@ void WaveTrackVZoomHandle::DoZoom
     const wxRect &rect, int zoomStart, int zoomEnd,
     bool fixedMousePoint)
 {
+	/*
    static const float ZOOMLIMIT = 0.001f;
    int height = rect.height;
    int ypos = rect.y;
@@ -329,6 +333,7 @@ void WaveTrackVZoomHandle::DoZoom
    zoomEnd = zoomStart = 0;
    if( pProject )
       pProject->ModifyState();
+	  */
 }
 
 enum {
@@ -386,6 +391,7 @@ void WaveTrackVRulerMenuTable::InitMenu(Menu *, void *pUserData)
 
 void WaveTrackVRulerMenuTable::OnZoom( int iZoomCode )
 {
+	/*
    // Assume linked track is wave or null
    const auto partner = static_cast<WaveTrack *>(mpData->pTrack->GetLink());
    WaveTrackVZoomHandle::DoZoom
@@ -394,6 +400,7 @@ void WaveTrackVRulerMenuTable::OnZoom( int iZoomCode )
 
    using namespace RefreshCode;
    mpData->result = UpdateVRuler | RefreshAll;
+   */
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -444,6 +451,7 @@ END_POPUP_MENU()
 
 void WaveformVRulerMenuTable::OnWaveformScaleType(wxCommandEvent &evt)
 {
+	/*
    WaveTrack *const wt = mpData->pTrack;
    // Assume linked track is wave or null
    const auto partner = static_cast<WaveTrack*>(wt->GetLink());
@@ -463,6 +471,7 @@ void WaveformVRulerMenuTable::OnWaveformScaleType(wxCommandEvent &evt)
       using namespace RefreshCode;
       mpData->result = UpdateVRuler | RefreshAll;
    }
+   */
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -491,12 +500,14 @@ SpectrumVRulerMenuTable &SpectrumVRulerMenuTable::Instance()
 
 void SpectrumVRulerMenuTable::InitMenu(Menu *pMenu, void *pUserData)
 {
+	/*
    WaveTrackVRulerMenuTable::InitMenu(pMenu, pUserData);
 
    WaveTrack *const wt = mpData->pTrack;
    const int id =
       OnFirstSpectrumScaleID + (int)(wt->GetSpectrogramSettings().scaleType);
    pMenu->Check(id, true);
+   */
 }
 
 BEGIN_POPUP_MENU(SpectrumVRulerMenuTable)
@@ -518,6 +529,7 @@ END_POPUP_MENU()
 
 void SpectrumVRulerMenuTable::OnSpectrumScaleType(wxCommandEvent &evt)
 {
+	/*
    WaveTrack *const wt = mpData->pTrack;
    // Assume linked track is wave or null
    const auto partner = static_cast<WaveTrack*>(wt->GetLink());
@@ -537,6 +549,7 @@ void SpectrumVRulerMenuTable::OnSpectrumScaleType(wxCommandEvent &evt)
       using namespace RefreshCode;
       mpData->result = UpdateVRuler | RefreshAll;
    }
+   */
 }
 
 ///////////////////////////////////////////////////////////////////////////////

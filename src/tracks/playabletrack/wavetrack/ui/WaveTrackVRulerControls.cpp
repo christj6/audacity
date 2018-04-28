@@ -50,7 +50,7 @@ std::vector<UIHandlePtr> WaveTrackVRulerControls::HitTest
 
 void WaveTrackVRulerControls::DoZoomPreset( int i)
 {
-
+	/*
    const auto pTrack = FindTrack();
    if (!pTrack)
       return;
@@ -66,6 +66,7 @@ void WaveTrackVRulerControls::DoZoomPreset( int i)
    WaveTrackVZoomHandle::DoZoom(
          NULL, wt, partner, (i==1)?kZoomHalfWave: kZoom1to1,
          wxRect(0,0,0,0), 0,0, true);
+		 */
 }
 
 
