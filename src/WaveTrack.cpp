@@ -476,16 +476,6 @@ float WaveTrack::GetChannelGain(int channel) const
 }
 
 void WaveTrack::DoSetMinimized(bool isMinimized){
-
-#ifdef EXPERIMENTAL_HALF_WAVE
-   // Show half wave on collapse, full on restore.
-   std::shared_ptr<TrackVRulerControls> pTvc = GetVRulerControls();
-
-   // An awkward workaround for a function that lives 'in the wrong place'.
-   // We use magic numbers, 0 and 1, to tell it to zoom reset or zoom half-wave.
-   WaveTrackVRulerControls * pWtvc = reinterpret_cast<WaveTrackVRulerControls*>(pTvc.get());
-#endif
-
    PlayableTrack::DoSetMinimized( isMinimized );
 }
 
