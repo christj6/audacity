@@ -73,7 +73,6 @@ simplifies construction of menu items.
 #include "ModuleManager.h"
 #include "PluginManager.h"
 #include "Prefs.h"
-#include "Printing.h"
 #include "Tags.h"
 #include "Mix.h"
 #include "AboutDialog.h"
@@ -229,18 +228,6 @@ void AudacityProject::CreateMenusAndCommands()
       c->AddItem(wxT("ImportRaw"), XXO("&Raw Data..."), FN(OnImportRaw));
 
       c->EndSubMenu();
-      c->AddSeparator();
-
-      /////////////////////////////////////////////////////////////////////////////
-
-      c->AddItem(wxT("PageSetup"), XXO("Pa&ge Setup..."), FN(OnPageSetup),
-         AudioIONotBusyFlag | TracksExistFlag,
-         AudioIONotBusyFlag | TracksExistFlag);
-      /* i18n-hint: (verb) It's item on a menu. */
-      c->AddItem(wxT("Print"), XXO("&Print..."), FN(OnPrint),
-         AudioIONotBusyFlag | TracksExistFlag,
-         AudioIONotBusyFlag | TracksExistFlag);
-
       c->AddSeparator();
 
       // On the Mac, the Exit item doesn't actually go here...wxMac will pull it out
@@ -3652,16 +3639,6 @@ void AudacityProject::OnReloadPreferences(const CommandContext &WXUNUSED(context
       p->SetSize(r.GetSize());
 #endif
    }
-}
-
-void AudacityProject::OnPageSetup(const CommandContext &WXUNUSED(context) )
-{
-   HandlePageSetup(this);
-}
-
-void AudacityProject::OnPrint(const CommandContext &WXUNUSED(context) )
-{
-   HandlePrint(this, GetName(), GetTracks());
 }
 
 //

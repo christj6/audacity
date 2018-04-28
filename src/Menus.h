@@ -200,9 +200,6 @@ void OnExportMultiple(const CommandContext &context );
 void OnPreferences(const CommandContext &context );
 void OnReloadPreferences(const CommandContext &context );
 
-void OnPageSetup(const CommandContext &context );
-void OnPrint(const CommandContext &context );
-
 void OnExit(const CommandContext &context );
 
         // Edit Menu
