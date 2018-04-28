@@ -50,8 +50,7 @@ void WaveTrackVZoomHandle::Enter(bool)
 }
 
 enum {
-   OnZoomFitVerticalID = 20000,
-   OnZoomResetID,
+   OnZoomResetID = 20000,
    OnZoomDiv2ID,
    OnZoomTimes2ID,
    OnZoomHalfWaveID,
@@ -86,7 +85,6 @@ private:
 protected:
    InitMenuData *mpData {};
 
-   void OnZoomFitVertical(wxCommandEvent&){ };
    void OnZoomReset(wxCommandEvent&){ };
    void OnZoomDiv2Vertical(wxCommandEvent&){ };
    void OnZoomTimes2Vertical(wxCommandEvent&){ };
@@ -114,8 +112,6 @@ public:
 
 private:
    virtual void InitMenu(Menu *pMenu, void *pUserData);
-
-   void OnWaveformScaleType(wxCommandEvent &evt);
 };
 
 WaveformVRulerMenuTable &WaveformVRulerMenuTable::Instance()
@@ -131,7 +127,6 @@ void WaveformVRulerMenuTable::InitMenu(Menu *pMenu, void *pUserData)
 
 BEGIN_POPUP_MENU(WaveformVRulerMenuTable)
 
-   POPUP_MENU_ITEM(OnZoomFitVerticalID, _("Zoom Reset\tShift-Right-Click"), OnZoomReset)
    POPUP_MENU_ITEM(OnZoomDiv2ID,        _("Zoom x1/2"),                     OnZoomDiv2Vertical)
    POPUP_MENU_ITEM(OnZoomTimes2ID,      _("Zoom x2"),                       OnZoomTimes2Vertical)
 
@@ -145,31 +140,6 @@ BEGIN_POPUP_MENU(WaveformVRulerMenuTable)
 // The log and linear options are already available as waveform db.
 // So don't repeat them here.
 END_POPUP_MENU()
-
-void WaveformVRulerMenuTable::OnWaveformScaleType(wxCommandEvent &evt)
-{
-	/*
-   WaveTrack *const wt = mpData->pTrack;
-   // Assume linked track is wave or null
-   const auto partner = static_cast<WaveTrack*>(wt->GetLink());
-   const WaveformSettings::ScaleType newScaleType =
-      WaveformSettings::ScaleType(
-         std::max(0,
-            std::min((int)(WaveformSettings::stNumScaleTypes) - 1,
-               evt.GetId() - OnFirstWaveformScaleID
-      )));
-   if (wt->GetWaveformSettings().scaleType != newScaleType) {
-      wt->GetIndependentWaveformSettings().scaleType = newScaleType;
-      if (partner)
-         partner->GetIndependentWaveformSettings().scaleType = newScaleType;
-
-      ::GetActiveProject()->ModifyState();
-
-      using namespace RefreshCode;
-      mpData->result = UpdateVRuler | RefreshAll;
-   }
-   */
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Table class
@@ -219,7 +189,6 @@ BEGIN_POPUP_MENU(SpectrumVRulerMenuTable)
 
 POPUP_MENU_SEPARATOR()
    POPUP_MENU_ITEM(OnZoomResetID,         _("Zoom Reset"),                     OnZoomReset)
-   POPUP_MENU_ITEM(OnZoomFitVerticalID,   _("Zoom to Fit\tShift-Right-Click"), OnZoomFitVertical)
    POPUP_MENU_ITEM(OnZoomInVerticalID,    _("Zoom In\tLeft-Click/Left-Drag"),  OnZoomInVertical)
    POPUP_MENU_ITEM(OnZoomOutVerticalID,   _("Zoom Out\tShift-Left-Click"),     OnZoomOutVertical)
 END_POPUP_MENU()
