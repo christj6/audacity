@@ -2995,17 +2995,6 @@ bool AudacityProject::Import(const wxString &fileName, WaveTrackArray* pTrackArr
       }
    }
 
-   int mode = gPrefs->Read(wxT("/AudioFiles/NormalizeOnLoad"), 0L);
-   if (mode == 1) {
-      //TODO: All we want is a SelectAll()
-      SelectNone();
-      SelectAllIfNone();
-      const CommandContext context( *this);
-      DoEffect(EffectManager::Get().GetEffectByIdentifier(wxT("Normalize")),
-         context,
-         OnEffectFlags::kConfigured);
-   }
-
    // This is a no-fail:
    GetDirManager()->FillBlockfilesCache();
    return true;
