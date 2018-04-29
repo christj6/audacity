@@ -25,13 +25,6 @@
 private:
 void CreateMenusAndCommands();
 void PopulateMacrosMenu( CommandManager* c, CommandFlag flags );
-void AddEffectMenuItems(CommandManager *c,
-                        std::vector<const PluginDescriptor*> & plugs,
-                        CommandFlag batchflags, CommandFlag realflags, bool isDefault);
-void AddEffectMenuItemGroup(CommandManager *c, const wxArrayString & names,
-                            const std::vector<bool> &vHasDialog,
-                            const PluginIDList & plugs,
-                            const std::vector<CommandFlag> & flags, bool isDefault);
 void CreateRecentFilesMenu(CommandManager *c);
 void ModifyUndoMenuItems();
 

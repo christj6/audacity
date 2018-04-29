@@ -29,7 +29,6 @@
 #include "TrackPanelListener.h"
 #include "AudioIOListener.h"
 #include "commands/CommandManager.h"
-#include "effects/EffectManager.h"
 #include "xml/XMLTagHandler.h"
 
 #include "MemoryX.h"

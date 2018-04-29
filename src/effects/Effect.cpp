@@ -779,154 +779,151 @@ wxString Effect::GetSavedStateGroup()
 // ConfigClientInterface implementation
 bool Effect::HasSharedConfigGroup(const wxString & group)
 {
-   return PluginManager::Get().HasSharedConfigGroup(GetID(), group);
+   return false;
 }
 
 bool Effect::GetSharedConfigSubgroups(const wxString & group, wxArrayString & subgroups)
 {
-   return PluginManager::Get().GetSharedConfigSubgroups(GetID(), group, subgroups);
+	return false;
 }
 
 bool Effect::GetSharedConfig(const wxString & group, const wxString & key, wxString & value, const wxString & defval)
 {
-   return PluginManager::Get().GetSharedConfig(GetID(), group, key, value, defval);
+	return false;
 }
 
 bool Effect::GetSharedConfig(const wxString & group, const wxString & key, int & value, int defval)
 {
-   return PluginManager::Get().GetSharedConfig(GetID(), group, key, value, defval);
+	return false;
 }
 
 bool Effect::GetSharedConfig(const wxString & group, const wxString & key, bool & value, bool defval)
 {
-   return PluginManager::Get().GetSharedConfig(GetID(), group, key, value, defval);
+	return false;
 }
 
 bool Effect::GetSharedConfig(const wxString & group, const wxString & key, float & value, float defval)
 {
-   return PluginManager::Get().GetSharedConfig(GetID(), group, key, value, defval);
+	return false;
 }
 
 bool Effect::GetSharedConfig(const wxString & group, const wxString & key, double & value, double defval)
 {
-   return PluginManager::Get().GetSharedConfig(GetID(), group, key, value, defval);
+	return false;
 }
 
 bool Effect::SetSharedConfig(const wxString & group, const wxString & key, const wxString & value)
 {
-   return PluginManager::Get().SetSharedConfig(GetID(), group, key, value);
+	return false;
 }
 
 bool Effect::SetSharedConfig(const wxString & group, const wxString & key, const int & value)
 {
-   return PluginManager::Get().SetSharedConfig(GetID(), group, key, value);
+	return false;
 }
 
 bool Effect::SetSharedConfig(const wxString & group, const wxString & key, const bool & value)
 {
-   return PluginManager::Get().SetSharedConfig(GetID(), group, key, value);
+	return false;
 }
 
 bool Effect::SetSharedConfig(const wxString & group, const wxString & key, const float & value)
 {
-   return PluginManager::Get().SetSharedConfig(GetID(), group, key, value);
+	return false;
 }
 
 bool Effect::SetSharedConfig(const wxString & group, const wxString & key, const double & value)
 {
-   return PluginManager::Get().SetSharedConfig(GetID(), group, key, value);
+	return false;
 }
 
 bool Effect::RemoveSharedConfigSubgroup(const wxString & group)
 {
-   return PluginManager::Get().RemoveSharedConfigSubgroup(GetID(), group);
+	return false;
 }
 
 bool Effect::RemoveSharedConfig(const wxString & group, const wxString & key)
 {
-   return PluginManager::Get().RemoveSharedConfig(GetID(), group, key);
+	return false;
 }
 
 bool Effect::HasPrivateConfigGroup(const wxString & group)
 {
-   return PluginManager::Get().HasPrivateConfigGroup(GetID(), group);
+	return false;
 }
 
 bool Effect::GetPrivateConfigSubgroups(const wxString & group, wxArrayString & subgroups)
 {
-   return PluginManager::Get().GetPrivateConfigSubgroups(GetID(), group, subgroups);
+	return false;
 }
 
 bool Effect::GetPrivateConfig(const wxString & group, const wxString & key, wxString & value, const wxString & defval)
 {
-   return PluginManager::Get().GetPrivateConfig(GetID(), group, key, value, defval);
+	return false;
 }
 
 bool Effect::GetPrivateConfig(const wxString & group, const wxString & key, int & value, int defval)
 {
-   return PluginManager::Get().GetPrivateConfig(GetID(), group, key, value, defval);
+	return false;
 }
 
 bool Effect::GetPrivateConfig(const wxString & group, const wxString & key, bool & value, bool defval)
 {
-   return PluginManager::Get().GetPrivateConfig(GetID(), group, key, value, defval);
+	return false;
 }
 
 bool Effect::GetPrivateConfig(const wxString & group, const wxString & key, float & value, float defval)
 {
-   return PluginManager::Get().GetPrivateConfig(GetID(), group, key, value, defval);
+	return false;
 }
 
 bool Effect::GetPrivateConfig(const wxString & group, const wxString & key, double & value, double defval)
 {
-   return PluginManager::Get().GetPrivateConfig(GetID(), group, key, value, defval);
+	return false;
 }
 
 bool Effect::SetPrivateConfig(const wxString & group, const wxString & key, const wxString & value)
 {
-   return PluginManager::Get().SetPrivateConfig(GetID(), group, key, value);
+	return false;
 }
 
 bool Effect::SetPrivateConfig(const wxString & group, const wxString & key, const int & value)
 {
-   return PluginManager::Get().SetPrivateConfig(GetID(), group, key, value);
+	return false;
 }
 
 bool Effect::SetPrivateConfig(const wxString & group, const wxString & key, const bool & value)
 {
-   return PluginManager::Get().SetPrivateConfig(GetID(), group, key, value);
+	return false;
 }
 
 bool Effect::SetPrivateConfig(const wxString & group, const wxString & key, const float & value)
 {
-   return PluginManager::Get().SetPrivateConfig(GetID(), group, key, value);
+	return false;
 }
 
 bool Effect::SetPrivateConfig(const wxString & group, const wxString & key, const double & value)
 {
-   return PluginManager::Get().SetPrivateConfig(GetID(), group, key, value);
+	return false;
 }
 
 bool Effect::RemovePrivateConfigSubgroup(const wxString & group)
 {
-   return PluginManager::Get().RemovePrivateConfigSubgroup(GetID(), group);
+	return false;
 }
 
 bool Effect::RemovePrivateConfig(const wxString & group, const wxString & key)
 {
-   return PluginManager::Get().RemovePrivateConfig(GetID(), group, key);
+	return false;
 }
 
 // Effect implementation
 
 PluginID Effect::GetID()
 {
-   if (mClient)
-   {
-      return PluginManager::GetID(mClient);
-   }
+   PluginID fakePluginID = ""; // I doubt this will work
 
-   return PluginManager::GetID(this);
+   return fakePluginID;
 }
 
 bool Effect::Startup(EffectClientInterface *client)
@@ -3672,8 +3669,6 @@ void EffectUIHost::InitializeRealtime()
 {
    if (mSupportsRealtime && !mInitialized)
    {
-      EffectManager::Get().RealtimeAddEffect(mEffect);
-
       wxTheApp->Bind(EVT_AUDIOIO_PLAYBACK,
                         &EffectUIHost::OnPlayback,
                         this);
@@ -3690,8 +3685,6 @@ void EffectUIHost::CleanupRealtime()
 {
    if (mSupportsRealtime && mInitialized)
    {
-      EffectManager::Get().RealtimeRemoveEffect(mEffect);
-
       mInitialized = false;
    }
 }
