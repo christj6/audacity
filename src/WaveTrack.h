@@ -170,9 +170,7 @@ private:
    // May assume precondition: t0 <= t1
    void ClearAndPaste(double t0, double t1,
                               const Track *src,
-                              bool preserve = true,
-                              bool merge = true,
-                              const TimeWarper *effectWarper = NULL) /* not override */;
+                              bool merge = true) /* not override */;
 
    void Silence(double t0, double t1) override;
    void InsertSilence(double t, double len) override;

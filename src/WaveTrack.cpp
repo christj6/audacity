@@ -767,9 +767,7 @@ void WaveTrack::SetWaveformSettings(std::unique_ptr<WaveformSettings> &&pSetting
 void WaveTrack::ClearAndPaste(double t0, // Start of time to clear
                               double t1, // End of time to clear
                               const Track *src, // What to paste
-                              bool preserve, // Whether to reinsert splits/cuts
-                              bool merge, // Whether to remove 'extra' splits
-                              const TimeWarper *effectWarper // How does time change
+                              bool merge // Whether to remove 'extra' splits
                               )
 // WEAK-GUARANTEE
 // this WaveTrack remains destructible in case of AudacityException.
@@ -786,10 +784,6 @@ void WaveTrack::ClearAndPaste(double t0, // Start of time to clear
 
    std::vector<double> splits;
    WaveClipHolders cuts;
-
-   // If provided time warper was NULL, use a default one that does nothing
-   IdentityTimeWarper localWarper;
-   const TimeWarper *warper = (effectWarper ? effectWarper : &localWarper);
 
    // Align to a sample
    t0 = LongSamplesToTime(TimeToLongSamples(t0));
@@ -889,40 +883,6 @@ void WaveTrack::ClearAndPaste(double t0, // Start of time to clear
                   prev = clip;
                else
                   prev = nullptr;
-            }
-         }
-      }
-
-      // Restore cut/split lines
-      if (preserve) {
-
-         // Restore the split lines, transforming the position appropriately
-         for (const auto split: splits) {
-            SplitAt(warper->Warp(split));
-         }
-
-         // Restore the saved cut lines, also transforming if time altered
-         for (const auto &clip : mClips) {
-            double st;
-            double et;
-
-            st = clip->GetStartTime();
-            et = clip->GetEndTime();
-
-            // Scan the cuts for any that live within this clip
-            for (auto it = cuts.begin(); it != cuts.end();) {
-               WaveClip *cut = it->get();
-               double cs = cut->GetOffset();
-
-               // Offset the cut from the start of the clip and add it to
-               // this clips cutlines.
-               if (cs >= st && cs <= et) {
-                  cut->SetOffset(warper->Warp(cs) - st);
-                  clip->GetCutLines().push_back( std::move(*it) ); // transfer ownership!
-                  it = cuts.erase(it);
-               }
-               else
-                  ++it;
             }
          }
       }

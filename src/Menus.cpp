@@ -3657,7 +3657,7 @@ void AudacityProject::OnPaste(const CommandContext &WXUNUSED(context) )
          if (c->GetKind() == Track::Wave && n->GetKind() == Track::Wave)
          {
             bPastedSomething = true;
-            ((WaveTrack*)n)->ClearAndPaste(t0, t1, (WaveTrack*)c, true, true);
+            ((WaveTrack*)n)->ClearAndPaste(t0, t1, (WaveTrack*)c, true);
          }
          else
          {
@@ -3674,7 +3674,7 @@ void AudacityProject::OnPaste(const CommandContext &WXUNUSED(context) )
 
             if (n->GetKind() == Track::Wave) {
                bPastedSomething = true;
-               ((WaveTrack *)n)->ClearAndPaste(t0, t1, c, true, true);
+               ((WaveTrack *)n)->ClearAndPaste(t0, t1, c, true);
             }
             else
             {
@@ -3706,7 +3706,7 @@ void AudacityProject::OnPaste(const CommandContext &WXUNUSED(context) )
             if (c) {
                wxASSERT(c->GetKind() == Track::Wave);
                bPastedSomething = true;
-               ((WaveTrack *)n)->ClearAndPaste(t0, t1, (WaveTrack *)c, true, true);
+               ((WaveTrack *)n)->ClearAndPaste(t0, t1, (WaveTrack *)c, true);
             }
             else {
                auto tmp = mTrackFactory->NewWaveTrack( ((WaveTrack*)n)->GetSampleFormat(), ((WaveTrack*)n)->GetRate());
@@ -3714,7 +3714,7 @@ void AudacityProject::OnPaste(const CommandContext &WXUNUSED(context) )
                tmp->Flush();
 
                bPastedSomething = true;
-               ((WaveTrack *)n)->ClearAndPaste(t0, t1, tmp.get(), true, true);
+               ((WaveTrack *)n)->ClearAndPaste(t0, t1, tmp.get(), true);
             }
          }
          n = iter.Next();
