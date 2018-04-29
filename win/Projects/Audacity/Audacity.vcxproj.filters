@@ -539,9 +539,6 @@
     <ClCompile Include="..\..\..\src\toolbars\ToolManager.cpp">
       <Filter>src\toolbars</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\toolbars\ToolsToolBar.cpp">
-      <Filter>src\toolbars</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\ondemand\ODComputeSummaryTask.cpp">
       <Filter>src\ondemand</Filter>
     </ClCompile>
@@ -1268,9 +1265,6 @@
       <Filter>src\toolbars</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\toolbars\ToolManager.h">
-      <Filter>src\toolbars</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\toolbars\ToolsToolBar.h">
       <Filter>src\toolbars</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\ondemand\ODComputeSummaryTask.h">

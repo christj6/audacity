@@ -26,7 +26,6 @@ Paul Licameli split from TrackPanel.cpp
 #include "../../commands/Keyboard.h"
 #include "../../ondemand/ODManager.h"
 #include "../../prefs/SpectrogramSettings.h"
-#include "../../toolbars/ToolsToolBar.h"
 #include "../../../images/Cursors.h"
 
 #include <wx/event.h>

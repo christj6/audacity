@@ -173,7 +173,6 @@ is time to refresh some aspect of the screen.
 #include "WaveTrack.h"
 
 #include "toolbars/ControlToolBar.h"
-#include "toolbars/ToolsToolBar.h"
 
 //This loads the appropriate set of cursors, depending on platform.
 #include "../images/Cursors.h"
@@ -1744,11 +1743,6 @@ void TrackPanel::DrawTracks(wxDC * dc)
    tracksRect.x += GetLabelWidth();
    tracksRect.width -= GetLabelWidth();
 
-   ToolsToolBar *pTtb = mListener->TP_GetToolsToolBar();
-   bool bMultiToolDown = pTtb->IsDown(multiTool);
-   bool envelopeFlag   = bMultiToolDown;
-   bool sliderFlag     = bMultiToolDown;
-
    TrackPanelDrawingContext context{ *dc, Target(), mLastMouseState };
 
    // The track artist actually draws the stuff inside each track
@@ -1756,7 +1750,7 @@ void TrackPanel::DrawTracks(wxDC * dc)
    mTrackArtist->DrawTracks(context, GetTracks(), first.get(),
                             region, tracksRect, clip,
                             mViewInfo->selectedRegion, *mViewInfo,
-                            envelopeFlag, sliderFlag);
+                            false, false);
 
    DrawEverythingElse(context, region, clip);
 }

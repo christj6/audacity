@@ -74,7 +74,6 @@ class MixerToolBar;
 class SelectionBar;
 class SpectralSelectionBar;
 class ToolManager;
-class ToolsToolBar;
 
 // windows and frames
 class AdornedRulerPanel;
@@ -436,8 +435,6 @@ public:
    void TP_DisplaySelection() override;
    void TP_DisplayStatusMessage(const wxString &msg) override;
 
-   ToolsToolBar * TP_GetToolsToolBar() override;
-
    void TP_PushState(const wxString &longDesc, const wxString &shortDesc,
                              UndoPush flags) override;
    void TP_ModifyState() override;
@@ -457,8 +454,6 @@ public:
    EditToolBar *GetEditToolBar();
    MixerToolBar *GetMixerToolBar();
    SelectionBar *GetSelectionBar();
-   ToolsToolBar *GetToolsToolBar();
-   const ToolsToolBar *GetToolsToolBar() const;
 
    MeterPanel *GetPlaybackMeter();
    void SetPlaybackMeter(MeterPanel *playback);

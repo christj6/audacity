@@ -285,7 +285,6 @@ void OnShowRecordMeterToolBar(const CommandContext &context );
 void OnShowPlayMeterToolBar(const CommandContext &context );
 void OnShowMixerToolBar(const CommandContext &context );
 void OnShowSelectionToolBar(const CommandContext &context );
-void OnShowToolsToolBar(const CommandContext &context );
 void OnResetToolBars(const CommandContext &context );
 
         // Transport Menu

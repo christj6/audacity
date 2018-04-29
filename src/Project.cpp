@@ -138,7 +138,6 @@ scroll information.  It also has some status flags.
 #include "toolbars/MeterToolBar.h"
 #include "toolbars/MixerToolBar.h"
 #include "toolbars/SelectionBar.h"
-#include "toolbars/ToolsToolBar.h"
 
 #include "tracks/ui/BackgroundCell.h"
 #include "tracks/ui/EditCursorOverlay.h"
@@ -3323,11 +3322,6 @@ ControlToolBar *AudacityProject::GetControlToolBar()
            NULL);
 }
 
-ToolsToolBar * AudacityProject::TP_GetToolsToolBar()
-{
-   return GetToolsToolBar();
-}
-
 DeviceToolBar *AudacityProject::GetDeviceToolBar()
 {
    return (DeviceToolBar *)
@@ -3357,22 +3351,6 @@ SelectionBar *AudacityProject::GetSelectionBar()
    return (SelectionBar *)
       (mToolManager ?
       mToolManager->GetToolBar(SelectionBarID) :
-      NULL);
-}
-
-ToolsToolBar *AudacityProject::GetToolsToolBar()
-{
-   return (ToolsToolBar *)
-          (mToolManager ?
-           mToolManager->GetToolBar(ToolsBarID) :
-           NULL);
-}
-
-const ToolsToolBar *AudacityProject::GetToolsToolBar() const
-{
-   return (ToolsToolBar *)
-      (mToolManager ?
-      mToolManager->GetToolBar(ToolsBarID) :
       NULL);
 }
 

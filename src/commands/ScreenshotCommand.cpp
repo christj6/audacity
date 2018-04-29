@@ -38,7 +38,6 @@ small calculations of rectangles.
 #include "../toolbars/MeterToolBar.h"
 #include "../toolbars/MixerToolBar.h"
 #include "../toolbars/SelectionBar.h"
-#include "../toolbars/ToolsToolBar.h"
 #include "../widgets/Ruler.h"
 #include "../Prefs.h"
 #include "../ShuttleGui.h"
@@ -859,8 +858,6 @@ bool ScreenshotCommand::Apply(const CommandContext & context)
       CapturePreferences(context, context.GetProject(), mFileName);
    else if (mCaptureMode.IsSameAs(wxT("Selectionbar")))
       return CaptureToolbar(context, context.GetProject()->GetToolManager(), SelectionBarID, mFileName);
-   else if (mCaptureMode.IsSameAs(wxT("Tools")))
-      return CaptureToolbar(context, context.GetProject()->GetToolManager(), ToolsBarID, mFileName);
    else if (mCaptureMode.IsSameAs(wxT("Transport")))
       return CaptureToolbar(context, context.GetProject()->GetToolManager(), TransportBarID, mFileName);
    else if (mCaptureMode.IsSameAs(wxT("Mixer")))

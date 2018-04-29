@@ -86,7 +86,6 @@ simplifies construction of menu items.
 
 #include "toolbars/ToolManager.h"
 #include "toolbars/ControlToolBar.h"
-#include "toolbars/ToolsToolBar.h"
 #include "toolbars/EditToolBar.h"
 #include "toolbars/DeviceToolBar.h"
 #include "toolbars/MixerToolBar.h"
@@ -471,8 +470,6 @@ void AudacityProject::CreateMenusAndCommands()
 
       /* i18n-hint: Clicking this menu item shows the toolbar with the big buttons on it (play record etc)*/
       c->AddCheck(wxT("ShowTransportTB"), XXO("&Transport Toolbar"), FN(OnShowTransportToolBar), 0, AlwaysEnabledFlag, AlwaysEnabledFlag);
-      /* i18n-hint: Clicking this menu item shows a toolbar that has some tools in it*/
-      c->AddCheck(wxT("ShowToolsTB"), XXO("T&ools Toolbar"), FN(OnShowToolsToolBar), 0, AlwaysEnabledFlag, AlwaysEnabledFlag);
       /* i18n-hint: Clicking this menu item shows the toolbar with the recording level meters*/
       c->AddCheck(wxT("ShowRecordMeterTB"), XXO("&Recording Meter Toolbar"), FN(OnShowRecordMeterToolBar), 0, AlwaysEnabledFlag, AlwaysEnabledFlag);
       /* i18n-hint: Clicking this menu item shows the toolbar with the playback level meter*/
@@ -4942,11 +4939,6 @@ void AudacityProject::OnShowMixerToolBar(const CommandContext &WXUNUSED(context)
 void AudacityProject::OnShowSelectionToolBar(const CommandContext &WXUNUSED(context) )
 {
    mToolManager->ShowHide( SelectionBarID );
-}
-
-void AudacityProject::OnShowToolsToolBar(const CommandContext &WXUNUSED(context) )
-{
-   mToolManager->ShowHide( ToolsBarID );
 }
 
 void AudacityProject::OnResetToolBars(const CommandContext &WXUNUSED(context) )

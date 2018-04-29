@@ -15,7 +15,6 @@ Paul Licameli split from TrackPanel.cpp
 
 #include "../../HitTestResult.h"
 #include "../../Project.h"
-#include "../../toolbars/ToolsToolBar.h"
 
 #include "../ui/SelectHandle.h"
 #include "../../TrackPanelResizerCell.h"
@@ -27,9 +26,8 @@ std::vector<UIHandlePtr> Track::HitTest
 {
    UIHandlePtr result;
    std::vector<UIHandlePtr> results;
-   const ToolsToolBar * pTtb = pProject->GetToolsToolBar();
-   const bool isMultiTool = pTtb->IsDown(multiTool);
-   const auto currentTool = pTtb->GetCurrentTool();
+   const bool isMultiTool = false;
+   const auto currentTool = false;
 
    // In other tools, let subclasses determine detailed hits.
    results =

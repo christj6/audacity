@@ -56,7 +56,6 @@
 #include "MeterToolBar.h"
 #include "MixerToolBar.h"
 #include "SelectionBar.h"
-#include "ToolsToolBar.h"
 
 #include "../AColor.h"
 #include "../AllThemeResources.h"
@@ -410,7 +409,6 @@ ToolManager::ToolManager( AudacityProject *parent, wxWindow *topDockParent )
    // Create all of the toolbars
    // All have the project as parent window
    wxASSERT(parent);
-   mBars[ ToolsBarID ]         =  ToolBar::Holder{ safenew ToolsToolBar() };
    mBars[ TransportBarID ]     =  ToolBar::Holder{ safenew ControlToolBar() };
    mBars[ RecordMeterBarID ]   =  ToolBar::Holder{ safenew MeterToolBar( parent, RecordMeterBarID ) };
    mBars[ PlayMeterBarID ]     =  ToolBar::Holder{ safenew MeterToolBar( parent, PlayMeterBarID ) };
@@ -464,11 +462,10 @@ static struct DefaultConfigEntry {
 } DefaultConfigTable [] = {
    // Top dock row, may wrap
    { TransportBarID,         NoBarID,                NoBarID                },
-   { ToolsBarID,             TransportBarID,         NoBarID                },
-   { RecordMeterBarID,       ToolsBarID,             NoBarID                },
-   { PlayMeterBarID,         RecordMeterBarID,       NoBarID                },
-   { MixerBarID,             PlayMeterBarID,         NoBarID                },
-   { EditBarID,              MixerBarID,             NoBarID                },
+   { RecordMeterBarID,		 TransportBarID,		 NoBarID				},
+   { PlayMeterBarID,		 RecordMeterBarID,		 NoBarID				},
+   { EditBarID,				 TransportBarID,		 RecordMeterBarID		},
+   { MixerBarID,			 EditBarID,				 PlayMeterBarID			},
 
    // Hidden by default in top dock
    { MeterBarID,             NoBarID,                NoBarID                },
