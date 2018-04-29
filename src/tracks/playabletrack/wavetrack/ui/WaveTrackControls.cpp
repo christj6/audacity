@@ -104,7 +104,6 @@ enum {
    OnChannelRightID,
    OnChannelMonoID,
 
-   OnMergeStereoID,
    OnWaveColorID,
    OnInstrument1ID,
    OnInstrument2ID,
@@ -112,8 +111,6 @@ enum {
    OnInstrument4ID,
 
    OnSwapChannelsID,
-   OnSplitStereoID,
-   OnSplitStereoMonoID,
 
    ChannelMenuID,
 };
@@ -551,15 +548,9 @@ protected:
 
    void OnSetDisplay(wxCommandEvent & event);
    void OnSpectrogramSettings(wxCommandEvent & event);
-
    void OnChannelChange(wxCommandEvent & event);
-   void OnMergeStereo(wxCommandEvent & event);
-
    void SplitStereo(bool stereo);
-
    void OnSwapChannels(wxCommandEvent & event);
-   void OnSplitStereo(wxCommandEvent & event);
-   void OnSplitStereoMono(wxCommandEvent & event);
 };
 
 WaveTrackMenuTable &WaveTrackMenuTable::Instance( Track * pTrack )
@@ -611,7 +602,6 @@ void WaveTrackMenuTable::InitMenu(Menu *pMenu, void *pUserData)
          (next && !next->GetLinked()
           && pTrack->GetKind() == Track::Wave
           && next->GetKind() == Track::Wave);
-         pMenu->Enable(OnMergeStereoID, canMakeStereo);
 
          int itemId;
          switch (pTrack->GetChannel()) {
@@ -628,10 +618,6 @@ void WaveTrackMenuTable::InitMenu(Menu *pMenu, void *pUserData)
          checkedIds.push_back(itemId);
       }
    }
-   else
-   {
-      pMenu->Enable(OnMergeStereoID, false);
-   }
 
    SetMenuChecks(*pMenu, [&](int id){
       auto end = checkedIds.end();
@@ -640,10 +626,6 @@ void WaveTrackMenuTable::InitMenu(Menu *pMenu, void *pUserData)
 
 
    pMenu->Enable(OnSwapChannelsID, !isMono);
-   pMenu->Enable(OnSplitStereoID, !isMono);
-
-   // Can be achieved by split stereo and then dragging pan slider.
-   pMenu->Enable(OnSplitStereoMonoID, !isMono);
 }
 
 BEGIN_POPUP_MENU(WaveTrackMenuTable)
@@ -655,15 +637,7 @@ BEGIN_POPUP_MENU(WaveTrackMenuTable)
    POPUP_MENU_ITEM(OnSpectrogramSettingsID, _("S&pectrogram Settings..."), OnSpectrogramSettings)
    POPUP_MENU_SEPARATOR()
 
-//   POPUP_MENU_RADIO_ITEM(OnChannelMonoID, _("&Mono"), OnChannelChange)
-//   POPUP_MENU_RADIO_ITEM(OnChannelLeftID, _("&Left Channel"), OnChannelChange)
-//   POPUP_MENU_RADIO_ITEM(OnChannelRightID, _("R&ight Channel"), OnChannelChange)
-   POPUP_MENU_ITEM(OnMergeStereoID, _("Ma&ke Stereo Track"), OnMergeStereo)
-
    POPUP_MENU_ITEM(OnSwapChannelsID, _("Swap Stereo &Channels"), OnSwapChannels)
-   POPUP_MENU_ITEM(OnSplitStereoID, _("Spl&it Stereo Track"), OnSplitStereo)
-// DA: Uses split stereo track and then drag pan sliders for split-stereo-to-mono
-   POPUP_MENU_ITEM(OnSplitStereoMonoID, _("Split Stereo to Mo&no"), OnSplitStereoMono)
 
    WaveTrack *const pTrack = static_cast<WaveTrack*>(mpTrack);
    if( pTrack && pTrack->GetDisplay() != WaveTrack::Spectrum  ){
@@ -818,57 +792,6 @@ void WaveTrackMenuTable::OnChannelChange(wxCommandEvent & event)
    mpData->result = RefreshCode::RefreshAll;
 }
 
-/// Merge two tracks into one stereo track ??
-void WaveTrackMenuTable::OnMergeStereo(wxCommandEvent &)
-{
-   WaveTrack *const pTrack = static_cast<WaveTrack*>(mpData->pTrack);
-   wxASSERT(pTrack);
-   pTrack->SetLinked(true);
-   // Assume partner is wave or null
-   const auto partner = static_cast<WaveTrack*>(pTrack->GetLink());
-
-   if (partner) {
-      // Set partner's parameters to match target.
-      partner->Merge(*pTrack);
-
-      pTrack->SetPan( 0.0f );
-      pTrack->SetChannel(Track::LeftChannel);
-      partner->SetPan( 0.0f );
-      partner->SetChannel(Track::RightChannel);
-
-      // Set NEW track heights and minimized state
-      bool bBothMinimizedp = ((pTrack->GetMinimized()) && (partner->GetMinimized()));
-      pTrack->SetMinimized(false);
-      partner->SetMinimized(false);
-      int AverageHeight = (pTrack->GetHeight() + partner->GetHeight()) / 2;
-      pTrack->SetHeight(AverageHeight);
-      partner->SetHeight(AverageHeight);
-      pTrack->SetMinimized(bBothMinimizedp);
-      partner->SetMinimized(bBothMinimizedp);
-
-      //On Demand - join the queues together.
-      if (ODManager::IsInstanceCreated())
-         if (!ODManager::Instance()->MakeWaveTrackDependent(partner, pTrack))
-         {
-            ;
-            //TODO: in the future, we will have to check the return value of MakeWaveTrackDependent -
-            //if the tracks cannot merge, it returns false, and in that case we should not allow a merging.
-            //for example it returns false when there are two different types of ODTasks on each track's queue.
-            //we will need to display this to the user.
-         }
-
-      AudacityProject *const project = ::GetActiveProject();
-      /* i18n-hint: The string names a track */
-      project->PushState(wxString::Format(_("Made '%s' a stereo track"),
-         pTrack->GetName()),
-         _("Make Stereo"));
-   }
-   else
-      pTrack->SetLinked(false);
-
-   mpData->result = RefreshCode::RefreshAll;
-}
-
 /// Split a stereo track into two tracks...
 void WaveTrackMenuTable::SplitStereo(bool stereo)
 {
@@ -945,34 +868,6 @@ void WaveTrackMenuTable::OnSwapChannels(wxCommandEvent &)
    project->PushState(wxString::Format(_("Swapped Channels in '%s'"),
       pTrack->GetName()),
       _("Swap Channels"));
-
-   mpData->result = RefreshCode::RefreshAll;
-}
-
-/// Split a stereo track into two tracks...
-void WaveTrackMenuTable::OnSplitStereo(wxCommandEvent &)
-{
-   SplitStereo(true);
-   WaveTrack *const pTrack = static_cast<WaveTrack*>(mpData->pTrack);
-   AudacityProject *const project = ::GetActiveProject();
-   /* i18n-hint: The string names a track  */
-   project->PushState(wxString::Format(_("Split stereo track '%s'"),
-      pTrack->GetName()),
-      _("Split"));
-
-   mpData->result = RefreshCode::RefreshAll;
-}
-
-/// Split a stereo track into two mono tracks...
-void WaveTrackMenuTable::OnSplitStereoMono(wxCommandEvent &)
-{
-   SplitStereo(false);
-   WaveTrack *const pTrack = static_cast<WaveTrack*>(mpData->pTrack);
-   AudacityProject *const project = ::GetActiveProject();
-   /* i18n-hint: The string names a track  */
-   project->PushState(wxString::Format(_("Split Stereo to Mono '%s'"),
-      pTrack->GetName()),
-      _("Split to Mono"));
 
    mpData->result = RefreshCode::RefreshAll;
 }
