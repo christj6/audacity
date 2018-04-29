@@ -243,7 +243,7 @@ class AUDACITY_DLL_API EffectUIClientInterface /* not final */
 public:
    virtual ~EffectUIClientInterface() {};
 
-   virtual void SetHostUI(EffectUIHostInterface *host) = 0;
+   // virtual void SetHostUI(EffectUIHostInterface *host) = 0;
    virtual bool IsGraphicalUI() = 0;
    virtual bool PopulateUI(wxWindow *parent) = 0;
    virtual bool ValidateUI() = 0;
