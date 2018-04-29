@@ -35,15 +35,9 @@ std::vector<UIHandlePtr> Track::HitTest
    results =
       DetailedHitTest( st, pProject, currentTool, isMultiTool );
 
-   // There are still some general cases.
-
-   // Finally, default of all is adjustment of the selection box.
-   if ( isMultiTool || currentTool == selectTool ) {
-      result = SelectHandle::HitTest(
-         mSelectHandle, st, pProject, Pointer(this));
-      if (result)
-         results.push_back(result);
-   }
+   result = SelectHandle::HitTest(mSelectHandle, st, pProject, Pointer(this));
+   if (result)
+      results.push_back(result);
 
    return results;
 }

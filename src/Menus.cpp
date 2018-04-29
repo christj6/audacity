@@ -795,18 +795,6 @@ void AudacityProject::CreateMenusAndCommands()
       //////////////////////////////////////////////////////////////////////////
 
       c->SetDefaultFlags(AlwaysEnabledFlag, AlwaysEnabledFlag);
-      c->BeginSubMenu(_("T&ools"));
-
-      c->AddItem(wxT("SelectTool"), XXO("&Selection Tool"), FN(OnSelectTool), wxT("F1"));
-      c->AddItem(wxT("MultiTool"), XXO("&Multi Tool"), FN(OnMultiTool), wxT("F6"));
-
-      c->AddItem(wxT("PrevTool"), XXO("&Previous Tool"), FN(OnPrevTool), wxT("A"));
-      c->AddItem(wxT("NextTool"), XXO("&Next Tool"), FN(OnNextTool), wxT("D"));
-      c->EndSubMenu();
-
-      //////////////////////////////////////////////////////////////////////////
-
-      c->SetDefaultFlags(AlwaysEnabledFlag, AlwaysEnabledFlag);
       c->BeginSubMenu(_("Mi&xer"));
 
       c->AddItem(wxT("OutputGain"), XXO("Ad&just Playback Volume..."), FN(OnOutputGain));
@@ -1689,55 +1677,6 @@ void AudacityProject::UpdateMenus(bool checkActive)
       }
    }
 }
-
-//
-// Tool selection commands
-//
-
-/// Called by handlers that set tools.
-void AudacityProject::SetTool(int tool)
-{
-   ToolsToolBar *toolbar = GetToolsToolBar();
-   if (toolbar) {
-      toolbar->SetCurrentTool(tool);
-      mTrackPanel->Refresh(false);
-   }
-}
-
-/// Handler to set the select tool active
-void AudacityProject::OnSelectTool(const CommandContext &WXUNUSED(context) )
-{
-   SetTool(selectTool);
-}
-
-void AudacityProject::OnMultiTool(const CommandContext &WXUNUSED(context) )
-{
-   SetTool(multiTool);
-}
-
-
-void AudacityProject::OnNextTool(const CommandContext &WXUNUSED(context) )
-{
-   ToolsToolBar *toolbar = GetToolsToolBar();
-   if (toolbar) {
-      // Use GetDownTool() here since GetCurrentTool() can return a value that
-      // doesn't represent the real tool if the Multi-tool is being used.
-      toolbar->SetCurrentTool((toolbar->GetDownTool()+1)%numTools);
-      mTrackPanel->Refresh(false);
-   }
-}
-
-void AudacityProject::OnPrevTool(const CommandContext &WXUNUSED(context) )
-{
-   ToolsToolBar *toolbar = GetToolsToolBar();
-   if (toolbar) {
-      // Use GetDownTool() here since GetCurrentTool() can return a value that
-      // doesn't represent the real tool if the Multi-tool is being used.
-      toolbar->SetCurrentTool((toolbar->GetDownTool()+(numTools-1))%numTools);
-      mTrackPanel->Refresh(false);
-   }
-}
-
 
 //
 // Audio I/O Commands

@@ -678,45 +678,6 @@ HitTestPreview SelectHandle::Preview
       auto time = mUseSnap ? mSnapStart.outTime : mSnapStart.timeSnappedTime;
       auto xx = viewInfo.TimeToPosition(time, mRect.x);
 
-      const bool bMultiToolMode =
-         pProject->GetToolsToolBar()->IsDown(multiTool);
-
-      //In Multi-tool mode, give multitool prompt if no-special-hit.
-      if (bMultiToolMode) {
-         // Look up the current key binding for Preferences.
-         // (Don't assume it's the default!)
-         auto keyStr =
-            pProject->GetCommandManager()->GetKeyFromName(wxT("Preferences"))
-            .Display( true );
-         if (keyStr.empty())
-            // No keyboard preference defined for opening Preferences dialog
-            /* i18n-hint: These are the names of a menu and a command in that menu */
-            keyStr = _("Edit, Preferences...");
-         
-         /* i18n-hint: %s is usually replaced by "Ctrl+P" for Windows/Linux, "Command+," for Mac */
-         tip = wxString::Format(
-            _("Multi-Tool Mode: %s for Mouse and Keyboard Preferences."),
-            keyStr);
-         // Later in this function we may point to some other string instead.
-         if (!pTrack->GetSelected() ||
-             !viewInfo.bAdjustSelectionEdges)
-            ;
-         else {
-            const wxRect &rect = st.rect;
-            const bool bShiftDown = state.ShiftDown();
-            const bool bCtrlDown = state.ControlDown();
-            const bool bModifierDown = bShiftDown || bCtrlDown;
-
-            // If not shift-down and not snapping center, then
-            // choose boundaries only in snapping tolerance,
-            // and may choose center.
-            SelectionBoundary boundary =
-            ChooseBoundary(viewInfo, xx, rect, !bModifierDown);
-
-            SetTipAndCursorForBoundary(boundary, tip, pCursor);
-         }
-      }
-
       if (!pTrack->GetSelected() || !viewInfo.bAdjustSelectionEdges)
          ;
       else {

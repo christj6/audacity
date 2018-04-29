@@ -45,15 +45,6 @@ CommandFlag GetUpdateFlags(bool checkActive = false);
 private:
 double NearestZeroCrossing(double t0);
 
-        // Selecting a tool from the keyboard
-
-void SetTool(int tool);
-void OnSelectTool(const CommandContext &context );
-void OnMultiTool(const CommandContext &context );
-
-void OnNextTool(const CommandContext &context );
-void OnPrevTool(const CommandContext &context );
-
 public:
         // Audio I/O Commands
 
