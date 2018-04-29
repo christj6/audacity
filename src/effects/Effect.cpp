@@ -777,11 +777,6 @@ wxString Effect::GetSavedStateGroup()
 }
 
 // ConfigClientInterface implementation
-bool Effect::HasSharedConfigGroup(const wxString & group)
-{
-   return false;
-}
-
 bool Effect::GetSharedConfigSubgroups(const wxString & group, wxArrayString & subgroups)
 {
 	return false;

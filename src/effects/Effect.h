@@ -169,8 +169,6 @@ class AUDACITY_DLL_API Effect /* not final */ : public wxEvtHandler,
    virtual wxString GetSavedStateGroup() /* not override? */;
 
    // ConfigClientInterface implementation
-
-   bool HasSharedConfigGroup(const wxString & group) override;
    bool GetSharedConfigSubgroups(const wxString & group, wxArrayString & subgroups) override;
 
    bool GetSharedConfig(const wxString & group, const wxString & key, wxString & value, const wxString & defval = wxEmptyString) override;

@@ -56,7 +56,6 @@ class AUDACITY_DLL_API ConfigClientInterface /* not final */
 public:
    virtual ~ConfigClientInterface() {};
 
-   virtual bool HasSharedConfigGroup(const wxString & group) = 0;
    virtual bool GetSharedConfigSubgroups(const wxString & group, wxArrayString & subgroups) = 0;
 
    virtual bool GetSharedConfig(const wxString & group, const wxString & key, wxString & value, const wxString & defval) = 0;
