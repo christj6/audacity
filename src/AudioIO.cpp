@@ -1610,11 +1610,6 @@ int AudioIO::StartStream(const WaveTrackConstArray &playbackTracks,
 
 void AudioIO::StartStreamCleanup(bool bOnlyBuffers)
 {
-   if (mNumPlaybackChannels > 0)
-   {
-      EffectManager::Get().RealtimeFinalize();
-   }
-
    mPlaybackBuffers.reset();
    mPlaybackMixers.reset();
    mCaptureBuffers.reset();
@@ -1684,12 +1679,6 @@ void AudioIO::StopStream()
       return;
 
    wxMutexLocker locker(mSuspendAudioThread);
-
-   // No longer need effects processing
-   if (mNumPlaybackChannels > 0)
-   {
-      EffectManager::Get().RealtimeFinalize();
-   }
 
    //
    // We got here in one of two ways:
@@ -1926,18 +1915,6 @@ void AudioIO::StopStream()
 
 void AudioIO::SetPaused(bool state)
 {
-   if (state != mPaused)
-   {
-      if (state)
-      {
-         EffectManager::Get().RealtimeSuspend();
-      }
-      else
-      {
-         EffectManager::Get().RealtimeResume();
-      }
-   }
-
    mPaused = state;
 }
 
@@ -3175,9 +3152,6 @@ int audacityAudioCallback(const void *inputBuffer, void *outputBuffer,
             tempBufs[c] = (float *) alloca(framesPerBuffer * sizeof(float));
          }
 
-         EffectManager & em = EffectManager::Get();
-         em.RealtimeProcessStart();
-
          bool selected = false;
          int group = 0;
          int chanCnt = 0;
@@ -3262,11 +3236,6 @@ int audacityAudioCallback(const void *inputBuffer, void *outputBuffer,
 
             // Last channel seen now
             len = maxLen;
-
-            if( !cut && selected )
-            {
-               len = em.RealtimeProcess(group, chanCnt, tempBufs, len);
-            }
             group++;
 
             // If our buffer is empty and the time indicator is past
@@ -3341,8 +3310,6 @@ int audacityAudioCallback(const void *inputBuffer, void *outputBuffer,
                callbackReturn = paComplete;
             }
          }
-
-         em.RealtimeProcessEnd();
 
          gAudioIO->mLastPlaybackTimeMillis = ::wxGetLocalTimeMillis();
 

@@ -193,13 +193,5 @@ void MacroCommandDialog::SetCommandAndParams(const wxString &Command, const wxSt
       mDetails->SetValue( iter->name.Internal() + "\r\n" + iter->category  );
       mChoices->SetItemState(iter - mCatalog.begin(),
                              wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-
-      EffectManager & em = EffectManager::Get();
-      PluginID ID = em.GetEffectByIdentifier(Command);
-
-      // If ID is empty, then the effect wasn't found, in which case, the user must have
-      // selected one of the "special" commands.
-      mEditParams->Enable(!ID.IsEmpty());
-      mUsePreset->Enable(em.HasPresets(ID));
    }
 }
