@@ -939,41 +939,10 @@ void AudacityProject::CreateMenusAndCommands()
 
       c->SetDefaultFlags(AlwaysEnabledFlag, AlwaysEnabledFlag);
       c->BeginSubMenu(_("&Track"));
-
-      c->AddItem(wxT("TrackPan"), XXO("Change P&an on Focused Track..."), FN(OnTrackPan), wxT("Shift+P"),
-                 TrackPanelHasFocus | TracksExistFlag,
-                 TrackPanelHasFocus | TracksExistFlag);
-      c->AddItem(wxT("TrackPanLeft"), XXO("Pan &Left on Focused Track"), FN(OnTrackPanLeft), wxT("Alt+Shift+Left"),
-                 TrackPanelHasFocus | TracksExistFlag,
-                 TrackPanelHasFocus | TracksExistFlag);
-      c->AddItem(wxT("TrackPanRight"), XXO("Pan &Right on Focused Track"), FN(OnTrackPanRight), wxT("Alt+Shift+Right"),
-                 TrackPanelHasFocus | TracksExistFlag,
-                 TrackPanelHasFocus | TracksExistFlag);
-      c->AddItem(wxT("TrackGain"), XXO("Change Gai&n on Focused Track..."), FN(OnTrackGain), wxT("Shift+G"),
-                 TrackPanelHasFocus | TracksExistFlag,
-                 TrackPanelHasFocus | TracksExistFlag);
-      c->AddItem(wxT("TrackGainInc"), XXO("&Increase Gain on Focused Track"), FN(OnTrackGainInc), wxT("Alt+Shift+Up"),
-                 TrackPanelHasFocus | TracksExistFlag,
-                 TrackPanelHasFocus | TracksExistFlag);
-      c->AddItem(wxT("TrackGainDec"), XXO("&Decrease Gain on Focused Track"), FN(OnTrackGainDec), wxT("Alt+Shift+Down"),
-                 TrackPanelHasFocus | TracksExistFlag,
-                 TrackPanelHasFocus | TracksExistFlag);
       c->AddItem(wxT("TrackMenu"), XXO("Op&en Menu on Focused Track..."), FN(OnTrackMenu), wxT("Shift+M\tskipKeydown"),
                  TracksExistFlag | TrackPanelHasFocus,
                  TracksExistFlag | TrackPanelHasFocus);
       c->AddItem(wxT("TrackClose"), XXO("&Close Focused Track"), FN(OnTrackClose), wxT("Shift+C"),
-                 AudioIONotBusyFlag | TrackPanelHasFocus | TracksExistFlag,
-                 AudioIONotBusyFlag | TrackPanelHasFocus | TracksExistFlag);
-      c->AddItem(wxT("TrackMoveUp"), XXO("Move Focused Track U&p"), FN(OnTrackMoveUp),
-                 AudioIONotBusyFlag | TrackPanelHasFocus | TracksExistFlag,
-                 AudioIONotBusyFlag | TrackPanelHasFocus | TracksExistFlag);
-      c->AddItem(wxT("TrackMoveDown"), XXO("Move Focused Track Do&wn"), FN(OnTrackMoveDown),
-                 AudioIONotBusyFlag | TrackPanelHasFocus | TracksExistFlag,
-                 AudioIONotBusyFlag | TrackPanelHasFocus | TracksExistFlag);
-      c->AddItem(wxT("TrackMoveTop"), XXO("Move Focused Track to T&op"), FN(OnTrackMoveTop),
-                 AudioIONotBusyFlag | TrackPanelHasFocus | TracksExistFlag,
-                 AudioIONotBusyFlag | TrackPanelHasFocus | TracksExistFlag);
-      c->AddItem(wxT("TrackMoveBottom"), XXO("Move Focused Track to &Bottom"), FN(OnTrackMoveBottom),
                  AudioIONotBusyFlag | TrackPanelHasFocus | TracksExistFlag,
                  AudioIONotBusyFlag | TrackPanelHasFocus | TracksExistFlag);
       c->EndSubMenu();
@@ -2861,89 +2830,6 @@ void AudacityProject::PrevWindow(const CommandContext &WXUNUSED(context) )
 #endif
 }
 
-///The following methods operate controls on specified tracks,
-///This will pop up the track panning dialog for specified track
-void AudacityProject::OnTrackPan(const CommandContext &WXUNUSED(context) )
-{
-   Track *const track = mTrackPanel->GetFocusedTrack();
-   if (!track || (track->GetKind() != Track::Wave)) {
-      return;
-   }
-   const auto wt = static_cast<WaveTrack*>(track);
-
-   LWSlider *slider = mTrackPanel->PanSlider(wt);
-   if (slider->ShowDialog()) {
-      SetTrackPan(wt, slider);
-   }
-}
-
-void AudacityProject::OnTrackPanLeft(const CommandContext &WXUNUSED(context) )
-{
-   Track *const track = mTrackPanel->GetFocusedTrack();
-   if (!track || (track->GetKind() != Track::Wave)) {
-      return;
-   }
-   const auto wt = static_cast<WaveTrack*>(track);
-
-   LWSlider *slider = mTrackPanel->PanSlider(wt);
-   slider->Decrease(1);
-   SetTrackPan(wt, slider);
-}
-
-void AudacityProject::OnTrackPanRight(const CommandContext &WXUNUSED(context) )
-{
-   Track *const track = mTrackPanel->GetFocusedTrack();
-   if (!track || (track->GetKind() != Track::Wave)) {
-      return;
-   }
-   const auto wt = static_cast<WaveTrack*>(track);
-
-   LWSlider *slider = mTrackPanel->PanSlider(wt);
-   slider->Increase(1);
-   SetTrackPan(wt, slider);
-}
-
-void AudacityProject::OnTrackGain(const CommandContext &WXUNUSED(context) )
-{
-   /// This will pop up the track gain dialog for specified track
-   Track *const track = mTrackPanel->GetFocusedTrack();
-   if (!track || (track->GetKind() != Track::Wave)) {
-      return;
-   }
-   const auto wt = static_cast<WaveTrack*>(track);
-
-   LWSlider *slider = mTrackPanel->GainSlider(wt);
-   if (slider->ShowDialog()) {
-      SetTrackGain(wt, slider);
-   }
-}
-
-void AudacityProject::OnTrackGainInc(const CommandContext &WXUNUSED(context) )
-{
-   Track *const track = mTrackPanel->GetFocusedTrack();
-   if (!track || (track->GetKind() != Track::Wave)) {
-      return;
-   }
-   const auto wt = static_cast<WaveTrack*>(track);
-
-   LWSlider *slider = mTrackPanel->GainSlider(wt);
-   slider->Increase(1);
-   SetTrackGain(wt, slider);
-}
-
-void AudacityProject::OnTrackGainDec(const CommandContext &WXUNUSED(context) )
-{
-   Track *const track = mTrackPanel->GetFocusedTrack();
-   if (!track || (track->GetKind() != Track::Wave)) {
-      return;
-   }
-   const auto wt = static_cast<WaveTrack*>(track);
-
-   LWSlider *slider = mTrackPanel->GainSlider(wt);
-   slider->Decrease(1);
-   SetTrackGain(wt, slider);
-}
-
 void AudacityProject::OnTrackMenu(const CommandContext &WXUNUSED(context) )
 {
    mTrackPanel->OnTrackMenu();
@@ -2965,79 +2851,6 @@ void AudacityProject::OnTrackClose(const CommandContext &WXUNUSED(context) )
    RemoveTrack(t);
 
    GetTrackPanel()->UpdateViewIfNoTracks();
-   GetTrackPanel()->Refresh(false);
-}
-
-void AudacityProject::OnTrackMoveUp(const CommandContext &WXUNUSED(context) )
-{
-   Track *const focusedTrack = mTrackPanel->GetFocusedTrack();
-   if (mTracks->CanMoveUp(focusedTrack)) {
-      MoveTrack(focusedTrack, OnMoveUpID);
-      mTrackPanel->Refresh(false);
-   }
-}
-
-void AudacityProject::OnTrackMoveDown(const CommandContext &WXUNUSED(context) )
-{
-   Track *const focusedTrack = mTrackPanel->GetFocusedTrack();
-   if (mTracks->CanMoveDown(focusedTrack)) {
-      MoveTrack(focusedTrack, OnMoveDownID);
-      mTrackPanel->Refresh(false);
-   }
-}
-
-void AudacityProject::OnTrackMoveTop(const CommandContext &WXUNUSED(context) )
-{
-   Track *const focusedTrack = mTrackPanel->GetFocusedTrack();
-   if (mTracks->CanMoveUp(focusedTrack)) {
-      MoveTrack(focusedTrack, OnMoveTopID);
-      mTrackPanel->Refresh(false);
-   }
-}
-
-void AudacityProject::OnTrackMoveBottom(const CommandContext &WXUNUSED(context) )
-{
-   Track *const focusedTrack = mTrackPanel->GetFocusedTrack();
-   if (mTracks->CanMoveDown(focusedTrack)) {
-      MoveTrack(focusedTrack, OnMoveBottomID);
-      mTrackPanel->Refresh(false);
-   }
-}
-
-/// Move a track up, down, to top or to bottom.
-
-void AudacityProject::MoveTrack(Track* target, MoveChoice choice)
-{
-   wxString longDesc, shortDesc;
-
-   switch (choice)
-   {
-   case OnMoveTopID:
-      /* i18n-hint: Past tense of 'to move', as in 'moved audio track up'.*/
-      longDesc = _("Moved '%s' to Top");
-      shortDesc = _("Move Track to Top");
-      break;
-   case OnMoveBottomID:
-      /* i18n-hint: Past tense of 'to move', as in 'moved audio track up'.*/
-      longDesc = _("Moved '%s' to Bottom");
-      shortDesc = _("Move Track to Bottom");
-      break;
-   default:
-      bool bUp = (OnMoveUpID == choice);
-      longDesc =
-         /* i18n-hint: Past tense of 'to move', as in 'moved audio track up'.*/
-         bUp? _("Moved '%s' Up")
-         : _("Moved '%s' Down");
-      shortDesc =
-         /* i18n-hint: Past tense of 'to move', as in 'moved audio track up'.*/
-         bUp? _("Move Track Up")
-         : _("Move Track Down");
-
-   }
-
-   longDesc = longDesc.Format(target->GetName());
-
-   PushState(longDesc, shortDesc);
    GetTrackPanel()->Refresh(false);
 }
 

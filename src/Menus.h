@@ -78,22 +78,8 @@ void OnPlayLooped(const CommandContext &context );
 void OnPlayCutPreview(const CommandContext &context );
 
         // Wave track control
-
-void OnTrackPan(const CommandContext &context );
-void OnTrackPanLeft(const CommandContext &context );
-void OnTrackPanRight(const CommandContext &context );
-void OnTrackGain(const CommandContext &context );
-void OnTrackGainInc(const CommandContext &context );
-void OnTrackGainDec(const CommandContext &context );
 void OnTrackMenu(const CommandContext &context );
 void OnTrackClose(const CommandContext &context );
-void OnTrackMoveUp(const CommandContext &context );
-void OnTrackMoveDown(const CommandContext &context );
-void OnTrackMoveTop(const CommandContext &context );
-void OnTrackMoveBottom(const CommandContext &context );
-
-enum MoveChoice { OnMoveUpID, OnMoveDownID, OnMoveTopID, OnMoveBottomID };
-void MoveTrack(Track* target, MoveChoice choice);
 
         // Device control
 void OnInputDevice(const CommandContext &context );

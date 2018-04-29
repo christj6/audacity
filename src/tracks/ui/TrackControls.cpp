@@ -69,10 +69,6 @@ std::vector<UIHandlePtr> TrackControls::HitTest
 enum
 {
    OnSetNameID = 2000,
-   OnMoveUpID,
-   OnMoveDownID,
-   OnMoveTopID,
-   OnMoveBottomID,
 };
 
 class TrackMenuTable : public PopupMenuTable
@@ -108,11 +104,6 @@ void TrackMenuTable::InitMenu(Menu *pMenu, void *pUserData)
    Track *const pTrack = mpData->pTrack;
 
    TrackList *const tracks = GetActiveProject()->GetTracks();
-
-   pMenu->Enable(OnMoveUpID, tracks->CanMoveUp(pTrack));
-   pMenu->Enable(OnMoveDownID, tracks->CanMoveDown(pTrack));
-   pMenu->Enable(OnMoveTopID, tracks->CanMoveUp(pTrack));
-   pMenu->Enable(OnMoveBottomID, tracks->CanMoveDown(pTrack));
 }
 
 BEGIN_POPUP_MENU(TrackMenuTable)
