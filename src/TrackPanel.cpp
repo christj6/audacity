@@ -2145,8 +2145,6 @@ void TrackPanel::DrawOutside
    rect.height -= (kBottomMargin + kTopMargin);
 
    TrackInfo::DrawItems( context, rect, *t );
-
-   //mTrackInfo.DrawBordersWithin( dc, rect, *t );
 }
 
 // Given rectangle should be the whole track rectangle
@@ -2754,27 +2752,6 @@ void TrackInfo::GetPanRect(const wxPoint &topleft, wxRect & dest)
    dest.y = topleft.y + results.first;
 }
 
-void TrackInfo::GetMinimizeHorizontalBounds( const wxRect &rect, wxRect &dest )
-{
-   const int space = 0;// was 3.
-   dest.x = rect.x + space;
-
-   wxRect syncLockRect;
-
-   // Width is rect.width less space on left for track select
-   // and on right for sync-lock icon.
-   dest.width = rect.width - (space + syncLockRect.width);
-}
-
-void TrackInfo::GetMinimizeRect(const wxRect & rect, wxRect &dest)
-{
-   GetMinimizeHorizontalBounds( rect, dest );
-   auto results = CalcBottomItemY
-      ( commonTrackTCPBottomLines, kItemMinimize, rect.height);
-   dest.y = rect.y + results.first;
-   dest.height = results.second;
-}
-
 wxFont TrackInfo::gFont;
 
 /// \todo Probably should move to 'Utils.cpp'.
@@ -2820,16 +2797,6 @@ void TrackInfo::DrawBordersWithin
          (*dc, rect.x,          buttonRect.y + buttonRect.height,
                rect.width - 1,  buttonRect.y + buttonRect.height);
    }
-
-   // left of and above minimize button
-   wxRect minimizeRect;
-   this->GetMinimizeRect(rect, minimizeRect);
-   AColor::Line
-      (*dc, minimizeRect.x - 1, minimizeRect.y,
-            minimizeRect.x - 1, minimizeRect.y + minimizeRect.height - 1);
-   AColor::Line
-      (*dc, minimizeRect.x,                          minimizeRect.y - 1,
-            minimizeRect.x + minimizeRect.width - 1, minimizeRect.y - 1);
 }
 
 //#define USE_BEVELS

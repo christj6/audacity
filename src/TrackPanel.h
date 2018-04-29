@@ -155,9 +155,6 @@ public:
 
    static void GetPanRect(const wxPoint & topLeft, wxRect &dest);
 
-   static void GetMinimizeHorizontalBounds( const wxRect &rect, wxRect &dest );
-   static void GetMinimizeRect(const wxRect & rect, wxRect &dest);
-
    static bool HideTopItem( const wxRect &rect, const wxRect &subRect,
                                int allowance = 0 );
 
