@@ -54,8 +54,6 @@ BEGIN_EVENT_TABLE(MacroCommandDialog, wxDialogWrapper)
    EVT_BUTTON(wxID_HELP,                   MacroCommandDialog::OnHelp)
    EVT_BUTTON(EditParamsButtonID,          MacroCommandDialog::OnEditParams)
    EVT_BUTTON(UsePresetButtonID,           MacroCommandDialog::OnUsePreset)
-   EVT_LIST_ITEM_ACTIVATED(CommandsListID, MacroCommandDialog::OnItemSelected)
-   EVT_LIST_ITEM_SELECTED(CommandsListID,  MacroCommandDialog::OnItemSelected)
 END_EVENT_TABLE();
 
 MacroCommandDialog::MacroCommandDialog(wxWindow * parent, wxWindowID id):
@@ -155,37 +153,6 @@ void MacroCommandDialog::OnHelp(wxCommandEvent & WXUNUSED(event))
 {
    wxString page = GetHelpPageName();
    HelpSystem::ShowHelp(this, page, true);
-}
-
-void MacroCommandDialog::OnItemSelected(wxListEvent &event)
-{
-   const auto &command = mCatalog[ event.GetIndex() ];
-
-   EffectManager & em = EffectManager::Get();
-   PluginID ID = em.GetEffectByIdentifier( command.name.Internal() );
-
-   // If ID is empty, then the effect wasn't found, in which case, the user must have
-   // selected one of the "special" commands.
-   mEditParams->Enable(!ID.IsEmpty());
-   mUsePreset->Enable(em.HasPresets(ID));
-
-   if ( command.name.Translated() == mCommand->GetValue() )
-      // This uses the assumption of uniqueness of translated names!
-      return;
-
-   mCommand->SetValue(command.name.Translated());
-   mInternalCommandName = command.name.Internal();
-
-   wxString params = MacroCommands::GetCurrentParamsFor(mInternalCommandName);
-   if (params.IsEmpty())
-   {
-      params = em.GetDefaultPreset(ID);
-   }
-
-   // Cryptic command and category.
-   // Later we can put help information there, perhaps.
-   mDetails->SetValue( mInternalCommandName + "\r\n" + command.category  );
-   mParameters->SetValue(params);
 }
 
 void MacroCommandDialog::OnEditParams(wxCommandEvent & WXUNUSED(event))
