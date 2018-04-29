@@ -44,7 +44,7 @@ enum CommandFlag : unsigned long long
    NoteTracksExistFlag    = 0x00800000,  //gsw
    NoteTracksSelectedFlag = 0x01000000,  //gsw
    HaveRecentFiles        = 0x02000000,
-   IsRealtimeNotActiveFlag= 0x10000000,  //lll
+   // IsRealtimeNotActiveFlag= 0x10000000,  //lll
    CaptureNotBusyFlag     = 0x20000000,
    CanStopAudioStreamFlag = 0x40000000,
    RulerHasFocus          = 0x80000000ULL, // prl

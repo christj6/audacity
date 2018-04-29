@@ -38,7 +38,6 @@ selected command.
 #include "Project.h"
 #include "BatchCommandDialog.h"
 #include "commands/CommandManager.h"
-#include "effects/EffectManager.h"
 #include "BatchCommands.h"
 #include "ShuttleGui.h"
 #include "widgets/HelpSystem.h"

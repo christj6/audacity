@@ -332,7 +332,6 @@ bool DoAudacityCommand(const PluginID & ID, const CommandContext &, int flags);
 void OnApplyMacroDirectly(const CommandContext &context );
 void OnApplyMacrosPalette(const CommandContext &context );
 void OnManageMacros(const CommandContext &context );
-void OnStereoToMono(const CommandContext &context );
 void OnAudacityCommand(const CommandContext &context );
 static void RebuildAllMenuBars();
 

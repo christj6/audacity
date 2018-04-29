@@ -1295,9 +1295,6 @@ CommandFlag AudacityProject::GetUpdateFlags(bool checkActive)
    if (wxGetApp().GetRecentFiles()->GetCount() > 0)
       flags |= HaveRecentFiles;
 
-   if (!EffectManager::Get().RealtimeIsActive())
-      flags |= IsRealtimeNotActiveFlag;
-
   if (!mIsCapturing)
       flags |= CaptureNotBusyFlag;
 
@@ -2976,13 +2973,6 @@ void AudacityProject::RebuildAllMenuBars(){
       p->SetSize(r.GetSize());
 #endif
    }
-}
-
-void AudacityProject::OnStereoToMono(const CommandContext &context)
-{
-   DoEffect(EffectManager::Get().GetEffectByIdentifier(wxT("StereoToMono")),
-      context,
-      OnEffectFlags::kConfigured);
 }
 
 void AudacityProject::OnAudacityCommand(const CommandContext & ctx)

@@ -918,12 +918,9 @@ bool Effect::RemovePrivateConfig(const wxString & group, const wxString & key)
 }
 
 // Effect implementation
-
 PluginID Effect::GetID()
 {
-   PluginID fakePluginID = ""; // I doubt this will work
-
-   return fakePluginID;
+   return wxEmptyString;
 }
 
 bool Effect::Startup(EffectClientInterface *client)
