@@ -26,7 +26,6 @@
 
 class SpectrogramSettings;
 class WaveformSettings;
-class TimeWarper;
 
 class CutlineHandle;
 
