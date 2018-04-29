@@ -309,9 +309,7 @@ void TrackArtist::DrawTracks(TrackPanelDrawingContext &context,
                              const wxRect & rect,
                              const wxRect & clip,
                              const SelectedRegion &selectedRegion,
-                             const ZoomInfo &zoomInfo,
-                             bool drawEnvelope,
-                             bool drawSliders)
+                             const ZoomInfo &zoomInfo)
 {
    wxRect trackRect = rect;
    wxRect stereoTrackRect;
@@ -391,8 +389,7 @@ void TrackArtist::DrawTracks(TrackPanelDrawingContext &context,
          rr.width -= (mMarginLeft + mMarginRight);
          rr.height -= (mMarginTop + mMarginBottom);
          DrawTrack(context, t, rr,
-                   selectedRegion, zoomInfo,
-                   drawEnvelope, drawSliders, hasSolo);
+                   selectedRegion, zoomInfo, hasSolo);
       }
 
       t = iter.Next();
@@ -404,8 +401,6 @@ void TrackArtist::DrawTrack(TrackPanelDrawingContext &context,
                             const wxRect & rect,
                             const SelectedRegion &selectedRegion,
                             const ZoomInfo &zoomInfo,
-                            bool drawEnvelope,
-                            bool drawSliders,
                             bool hasSolo)
 {
    auto &dc = context.dc;
@@ -426,8 +421,7 @@ void TrackArtist::DrawTrack(TrackPanelDrawingContext &context,
 
       switch (wt->GetDisplay()) {
       case WaveTrack::Waveform:
-         DrawWaveform(context, wt, rect, selectedRegion, zoomInfo,
-                      drawEnvelope, drawSliders, muted);
+         DrawWaveform(context, wt, rect, selectedRegion, zoomInfo, muted);
          break;
       case WaveTrack::Spectrum:
          DrawSpectrum(wt, dc, rect, selectedRegion, zoomInfo);
@@ -852,7 +846,6 @@ void TrackArtist::DrawWaveformBackground(wxDC &dc, int leftOffset, const wxRect 
                                          bool dB, float dBRange,
                                          double t0, double t1,
                                          const ZoomInfo &zoomInfo,
-                                         bool drawEnvelope,
                                          bool highlightEnvelope)
 {
 
@@ -900,10 +893,8 @@ void TrackArtist::DrawWaveformBackground(wxDC &dc, int leftOffset, const wxRect 
       mintop +=1;
       minbot +=1;
 
-      if (!drawEnvelope || maxbot > mintop) {
-         maxbot = halfHeight;
-         mintop = halfHeight;
-      }
+      maxbot = halfHeight;
+      mintop = halfHeight;
 
       // We don't draw selection color for sync-lock selected tracks.
       sel = (t0 <= time && nextTime < t1);
@@ -1215,73 +1206,12 @@ void TrackArtist::DrawIndividualSamples(wxDC &dc, int leftOffset, const wxRect &
    }
 }
 
-void TrackArtist::DrawEnvelope(wxDC &dc, const wxRect &rect, const double env[],
-                               float zoomMin, float zoomMax,
-                               bool dB, float dBRange, bool highlight)
-{
-   int h = rect.height;
-
-   auto &pen = highlight ? AColor::uglyPen : AColor::envelopePen;
-   dc.SetPen( pen );
-
-   for (int x0 = 0; x0 < rect.width; ++x0) {
-      int cenvTop = GetWaveYPos(env[x0], zoomMin, zoomMax,
-                                h, dB, true, dBRange, true);
-
-      int cenvBot = GetWaveYPos(-env[x0], zoomMin, zoomMax,
-                                h, dB, true, dBRange, true);
-
-      int envTop = GetWaveYPos(env[x0], zoomMin, zoomMax,
-                               h, dB, true, dBRange, false);
-
-      int envBot = GetWaveYPos(-env[x0], zoomMin, zoomMax,
-                               h, dB, true, dBRange, false);
-
-      // Make the collision at zero actually look solid
-      if (cenvBot - cenvTop < 9) {
-         int value = (int)((zoomMax / (zoomMax - zoomMin)) * h);
-         cenvTop = value - 4;
-         cenvBot = value + 4;
-      }
-
-      DrawEnvLine(dc, rect, x0, envTop, cenvTop, true);
-      DrawEnvLine(dc, rect, x0, envBot, cenvBot, false);
-   }
-}
-
-void TrackArtist::DrawEnvLine(wxDC &dc, const wxRect &rect, int x0, int y0, int cy, bool top)
-{
-   int xx = rect.x + x0;
-   int yy = rect.y + cy;
-
-   if (y0 < 0) {
-      if (x0 % 4 != 3) {
-         AColor::Line(dc, xx, yy, xx, yy + 3);
-      }
-   }
-   else if (y0 > rect.height) {
-      if (x0 % 4 != 3) {
-         AColor::Line(dc, xx, yy - 3, xx, yy);
-      }
-   }
-   else {
-      if (top) {
-         AColor::Line(dc, xx, yy, xx, yy + 3);
-      }
-      else {
-         AColor::Line(dc, xx, yy - 3, xx, yy);
-      }
-   }
-}
-
 #include "tracks/playabletrack/wavetrack/ui/CutlineHandle.h"
 void TrackArtist::DrawWaveform(TrackPanelDrawingContext &context,
                                const WaveTrack *track,
                                const wxRect & rect,
                                const SelectedRegion &selectedRegion,
                                const ZoomInfo &zoomInfo,
-                               bool drawEnvelope,
-                               bool drawSliders,
                                bool muted)
 {
    auto &dc = context.dc;
@@ -1296,7 +1226,6 @@ void TrackArtist::DrawWaveform(TrackPanelDrawingContext &context,
 
    for (const auto &clip: track->GetClips())
       DrawClipWaveform(context, track, clip.get(), rect, selectedRegion, zoomInfo,
-                       drawEnvelope,
                        dB, muted);
 
    // Update cache for locations, e.g. cutlines and merge points
@@ -1319,13 +1248,7 @@ void TrackArtist::DrawWaveform(TrackPanelDrawingContext &context,
          AColor::Line(dc, (int) (rect.x + xx + 1), rect.y, (int) (rect.x + xx + 1), rect.y + rect.height);
       }
    }
-
-   if (drawSliders) {
-      DrawTimeSlider(dc, rect, true, highlight && gripHit);  // directed right
-      DrawTimeSlider(dc, rect, false, highlight && gripHit); // directed left
-   }
 }
-
 
 namespace {
 struct ClipParameters
@@ -1546,7 +1469,6 @@ void TrackArtist::DrawClipWaveform(TrackPanelDrawingContext &context,
                                    const wxRect & rect,
                                    const SelectedRegion &selectedRegion,
                                    const ZoomInfo &zoomInfo,
-                                   bool drawEnvelope,
                                    bool dB,
                                    bool muted)
 {
@@ -1618,7 +1540,7 @@ void TrackArtist::DrawClipWaveform(TrackPanelDrawingContext &context,
          zoomMin, zoomMax,
          track->ZeroLevelYCoordinate(mid),
          dB, dBRange,
-         t0, t1, zoomInfo, drawEnvelope,
+         t0, t1, zoomInfo,
          highlightEnvelope);
    }
 
@@ -1757,12 +1679,6 @@ void TrackArtist::DrawClipWaveform(TrackPanelDrawingContext &context,
       leftOffset += rect.width + skippedRight;
    }
 
-   if (drawEnvelope) {
-      DrawEnvelope(dc, mid, env, zoomMin, zoomMax, dB, dBRange, highlightEnvelope);
-      clip->GetEnvelope()->DrawPoints
-         (context, rect, zoomInfo, dB, dBRange, zoomMin, zoomMax, true);
-   }
-
    // Draw arrows on the left side if the track extends to the left of the
    // beginning of time.  :)
    if (h == 0.0 && tOffset < 0.0) {
@@ -1780,63 +1696,6 @@ void TrackArtist::DrawClipWaveform(TrackPanelDrawingContext &context,
       AColor::Line(dc,
                    mid.x + mid.width, mid.y,
                    mid.x + mid.width, mid.y + rect.height);
-   }
-}
-
-
-void TrackArtist::DrawTimeSlider(wxDC & dc,
-                                 const wxRect & rect,
-                                 bool rightwards, bool highlight)
-{
-   const int border = 3; // 3 pixels all round.
-   const int width = 6; // width of the drag box.
-   const int taper = 6; // how much the box tapers by.
-   const int barSpacing = 4; // how far apart the bars are.
-   const int barWidth = 3;
-   const int xFlat = 3;
-
-   //Enough space to draw in?
-   if (rect.height <= ((taper+border + barSpacing) * 2)) {
-      return;
-   }
-   if (rect.width <= (width * 2 + border * 3)) {
-      return;
-   }
-
-   // The draggable box is tapered towards the direction you drag it.
-   int leftTaper  = rightwards ? 0 : 6;
-   int rightTaper = rightwards ? 6 : 0;
-
-   int xLeft = rightwards ? (rect.x + border - 2)
-                          : (rect.x + rect.width + 1 - (border + width));
-   int yTop  = rect.y + border;
-   int yBot  = rect.y + rect.height - border - 1;
-
-   AColor::Light(&dc, false, highlight);
-   AColor::Line(dc, xLeft,         yBot - leftTaper, xLeft,         yTop + leftTaper);
-   AColor::Line(dc, xLeft,         yTop + leftTaper, xLeft + xFlat, yTop);
-   AColor::Line(dc, xLeft + xFlat, yTop,             xLeft + width, yTop + rightTaper);
-
-   AColor::Dark(&dc, false, highlight);
-   AColor::Line(dc, xLeft + width,         yTop + rightTaper, xLeft + width,       yBot - rightTaper);
-   AColor::Line(dc, xLeft + width,         yBot - rightTaper, xLeft + width-xFlat, yBot);
-   AColor::Line(dc, xLeft + width - xFlat, yBot,              xLeft,               yBot - leftTaper);
-
-   int firstBar = yTop + taper + taper / 2;
-   int nBars    = (yBot - yTop - taper * 3) / barSpacing + 1;
-   xLeft += (width - barWidth + 1) / 2;
-   int yy;
-   int i;
-
-   AColor::Light(&dc, false, highlight);
-   for (i = 0;i < nBars; i++) {
-      yy = firstBar + barSpacing * i;
-      AColor::Line(dc, xLeft, yy, xLeft + barWidth, yy);
-   }
-   AColor::Dark(&dc, false, highlight);
-   for(i = 0;i < nBars; i++){
-      yy = firstBar + barSpacing * i + 1;
-      AColor::Line(dc, xLeft, yy, xLeft + barWidth, yy);
    }
 }
 

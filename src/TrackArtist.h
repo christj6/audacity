@@ -55,14 +55,12 @@ class AUDACITY_DLL_API TrackArtist {
                    TrackList *tracks, Track *start,
                    const wxRegion & reg,
                    const wxRect & rect, const wxRect & clip,
-                   const SelectedRegion &selectedRegion, const ZoomInfo &zoomInfo,
-                   bool drawEnvelope, bool drawSliders);
+                   const SelectedRegion &selectedRegion, const ZoomInfo &zoomInfo);
 
    void DrawTrack(TrackPanelDrawingContext &context,
                   const Track *t,
                   const wxRect & rect,
                   const SelectedRegion &selectedRegion, const ZoomInfo &zoomInfo,
-                  bool drawEnvelope, bool drawSliders,
                   bool hasSolo);
 
    void DrawVRuler(TrackPanelDrawingContext &context,
@@ -97,21 +95,16 @@ class AUDACITY_DLL_API TrackArtist {
                      const WaveTrack *track,
                      const wxRect & rect,
                      const SelectedRegion &selectedRegion, const ZoomInfo &zoomInfo,
-                     bool drawEnvelope, bool drawSliders,
                      bool muted);
 
    void DrawSpectrum(const WaveTrack *track,
                      wxDC & dc, const wxRect & rect,
                      const SelectedRegion &selectedRegion, const ZoomInfo &zoomInfo);
 
-   void DrawTimeSlider(wxDC & dc, const wxRect & rect,
-                       bool rightwards, bool highlight);
-
    void DrawClipWaveform(TrackPanelDrawingContext &context,
                          const WaveTrack *track, const WaveClip *clip,
                          const wxRect & rect,
                          const SelectedRegion &selectedRegion, const ZoomInfo &zoomInfo,
-                         bool drawEnvelope,
                          bool dB, bool muted);
 
    void DrawClipSpectrum(WaveTrackCache &cache, const WaveClip *clip,
@@ -126,7 +119,6 @@ class AUDACITY_DLL_API TrackArtist {
                                int zeroLevelYCoordinate,
                                bool dB, float dBRange,
                                double t0, double t1, const ZoomInfo &zoomInfo,
-                               bool drawEnvelope,
                                bool highlightEnvelope);
    void DrawMinMaxRMS(wxDC &dc, const wxRect & rect, const double env[],
                       float zoomMin, float zoomMax,
@@ -142,11 +134,6 @@ class AUDACITY_DLL_API TrackArtist {
                               bool highlight);
 
    void DrawNegativeOffsetTrackArrows(wxDC & dc, const wxRect & rect);
-
-   void DrawEnvelope(wxDC & dc, const wxRect & rect, const double env[],
-                     float zoomMin, float zoomMax,
-                     bool dB, float dBRange, bool highlight);
-   void DrawEnvLine(wxDC & dc, const wxRect & rect, int x0, int y0, int cy, bool top);
 
    // Preference values
    float mdBrange;            // "/GUI/EnvdBRange"

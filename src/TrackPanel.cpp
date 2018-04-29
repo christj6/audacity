@@ -1749,8 +1749,7 @@ void TrackPanel::DrawTracks(wxDC * dc)
    auto first = GetProject()->GetFirstVisible();
    mTrackArtist->DrawTracks(context, GetTracks(), first.get(),
                             region, tracksRect, clip,
-                            mViewInfo->selectedRegion, *mViewInfo,
-                            false, false);
+                            mViewInfo->selectedRegion, *mViewInfo);
 
    DrawEverythingElse(context, region, clip);
 }
