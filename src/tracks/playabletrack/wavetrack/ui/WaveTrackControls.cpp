@@ -596,8 +596,6 @@ void WaveTrackMenuTable::InitMenu(Menu *pMenu, void *pUserData)
       (display == WaveTrack::Spectrum) && !bAudioBusy);
 
    AudacityProject *const project = ::GetActiveProject();
-   bool unsafe = EffectManager::Get().RealtimeIsActive() &&
-      project->IsAudioActive();
 
    const bool isMono = !pTrack->GetLink();
    if ( isMono )
@@ -613,7 +611,7 @@ void WaveTrackMenuTable::InitMenu(Menu *pMenu, void *pUserData)
          (next && !next->GetLinked()
           && pTrack->GetKind() == Track::Wave
           && next->GetKind() == Track::Wave);
-         pMenu->Enable(OnMergeStereoID, canMakeStereo && !unsafe);
+         pMenu->Enable(OnMergeStereoID, canMakeStereo);
 
          int itemId;
          switch (pTrack->GetChannel()) {
@@ -641,11 +639,11 @@ void WaveTrackMenuTable::InitMenu(Menu *pMenu, void *pUserData)
    });
 
 
-   pMenu->Enable(OnSwapChannelsID, !isMono && !unsafe);
-   pMenu->Enable(OnSplitStereoID, !isMono && !unsafe);
+   pMenu->Enable(OnSwapChannelsID, !isMono);
+   pMenu->Enable(OnSplitStereoID, !isMono);
 
    // Can be achieved by split stereo and then dragging pan slider.
-   pMenu->Enable(OnSplitStereoMonoID, !isMono && !unsafe);
+   pMenu->Enable(OnSplitStereoMonoID, !isMono);
 }
 
 BEGIN_POPUP_MENU(WaveTrackMenuTable)

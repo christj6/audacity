@@ -18,7 +18,6 @@
 #include "HelpCommand.h"
 #include "../ShuttleGui.h"
 #include "CommandContext.h"
-#include "../effects/EffectManager.h"
 
 bool HelpCommand::DefineParams( ShuttleParams & S ){
    S.Define( mCommandName, wxT("Command"),  "Help" );
@@ -37,12 +36,7 @@ void HelpCommand::PopulateOrExchange(ShuttleGui & S)
 }
 
 bool HelpCommand::Apply(const CommandContext & context){
-   EffectManager & em = EffectManager::Get();
-   PluginID ID = em.GetEffectByIdentifier( mCommandName );
-   if( ID.IsEmpty() )
-      context.Status( "Command not found" );
-   else
-      em.GetCommandDefinition( ID, context, 1);
+   context.Status( "Command not found" );
    return true;
 }
 

@@ -1491,11 +1491,6 @@ int AudioIO::StartStream(const WaveTrackConstArray &playbackTracks,
 
    if (mNumPlaybackChannels > 0)
    {
-      EffectManager & em = EffectManager::Get();
-      // Setup for realtime playback at the rate of the realtime
-      // stream, not the rate of the track.
-      em.RealtimeInitialize(mRate);
-
       // The following adds a NEW effect processor for each logical track and the
       // group determination should mimic what is done in audacityAudioCallback()
       // when calling RealtimeProcess().
@@ -1510,10 +1505,6 @@ int AudioIO::StartStream(const WaveTrackConstArray &playbackTracks,
             i++;
             chanCnt++;
          }
-
-         // Setup for realtime playback at the rate of the realtime
-         // stream, not the rate of the track.
-         em.RealtimeAddProcessor(group++, chanCnt, mRate);
       }
    }
 
