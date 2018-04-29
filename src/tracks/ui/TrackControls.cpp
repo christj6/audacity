@@ -85,7 +85,6 @@ public:
 
 private:
    void OnSetName(wxCommandEvent &);
-   void OnMoveTrack(wxCommandEvent &event);
 
    void InitMenu(Menu *pMenu, void *pUserData) override;
 
@@ -118,34 +117,6 @@ void TrackMenuTable::InitMenu(Menu *pMenu, void *pUserData)
 
 BEGIN_POPUP_MENU(TrackMenuTable)
    POPUP_MENU_ITEM(OnSetNameID, _("&Name..."), OnSetName)
-   POPUP_MENU_SEPARATOR()
-   POPUP_MENU_ITEM(
-      // It is not correct to use NormalizedKeyString::Display here --
-      // wxWidgets will apply its equivalent to the key names passed to menu
-      // functions.
-      OnMoveUpID,
-      _("Move Track &Up") + wxT("\t") +
-         (GetActiveProject()->GetCommandManager()->
-          GetKeyFromName(wxT("TrackMoveUp")).Raw()),
-      OnMoveTrack)
-   POPUP_MENU_ITEM(
-      OnMoveDownID,
-      _("Move Track &Down") + wxT("\t") +
-         (GetActiveProject()->GetCommandManager()->
-          GetKeyFromName(wxT("TrackMoveDown")).Raw()),
-      OnMoveTrack)
-   POPUP_MENU_ITEM(
-      OnMoveTopID,
-      _("Move Track to &Top") + wxT("\t") +
-         (GetActiveProject()->GetCommandManager()->
-          GetKeyFromName(wxT("TrackMoveTop")).Raw()),
-      OnMoveTrack)
-   POPUP_MENU_ITEM(
-      OnMoveBottomID,
-      _("Move Track to &Bottom") + wxT("\t") +
-         (GetActiveProject()->GetCommandManager()->
-          GetKeyFromName(wxT("TrackMoveBottom")).Raw()),
-      OnMoveTrack)
 END_POPUP_MENU()
 
 void TrackMenuTable::OnSetName(wxCommandEvent &)
@@ -174,30 +145,6 @@ void TrackMenuTable::OnSetName(wxCommandEvent &)
          mpData->result = RefreshCode::RefreshAll;
       }
    }
-}
-
-void TrackMenuTable::OnMoveTrack(wxCommandEvent &event)
-{
-   AudacityProject *const project = GetActiveProject();
-   AudacityProject::MoveChoice choice;
-   switch (event.GetId()) {
-   default:
-      wxASSERT(false);
-   case OnMoveUpID:
-      choice = AudacityProject::OnMoveUpID; break;
-   case OnMoveDownID:
-      choice = AudacityProject::OnMoveDownID; break;
-   case OnMoveTopID:
-      choice = AudacityProject::OnMoveTopID; break;
-   case OnMoveBottomID:
-      choice = AudacityProject::OnMoveBottomID; break;
-   }
-
-   project->MoveTrack(mpData->pTrack, choice);
-
-   // MoveTrack already refreshed TrackPanel, which means repaint will happen.
-   // This is a harmless redundancy:
-   mpData->result = RefreshCode::RefreshAll;
 }
 
 unsigned TrackControls::DoContextMenu
