@@ -74,18 +74,6 @@ public:
 
    virtual bool GetSharedConfigSubgroups(const PluginID & ID, const wxString & group, wxArrayString & subgroups) = 0;
 
-   virtual bool GetSharedConfig(const PluginID & ID, const wxString & group, const wxString & key, wxString & value, const wxString & defval = wxString()) = 0;
-   virtual bool GetSharedConfig(const PluginID & ID, const wxString & group, const wxString & key, int & value, int defval = 0) = 0;
-   virtual bool GetSharedConfig(const PluginID & ID, const wxString & group, const wxString & key, bool & value, bool defval = false) = 0;
-   virtual bool GetSharedConfig(const PluginID & ID, const wxString & group, const wxString & key, float & value, float defval = 0.0) = 0;
-   virtual bool GetSharedConfig(const PluginID & ID, const wxString & group, const wxString & key, double & value, double defval = 0.0) = 0;
-
-   virtual bool SetSharedConfig(const PluginID & ID, const wxString & group, const wxString & key, const wxString & value) = 0;
-   virtual bool SetSharedConfig(const PluginID & ID, const wxString & group, const wxString & key, const int & value) = 0;
-   virtual bool SetSharedConfig(const PluginID & ID, const wxString & group, const wxString & key, const bool & value) = 0;
-   virtual bool SetSharedConfig(const PluginID & ID, const wxString & group, const wxString & key, const float & value) = 0;
-   virtual bool SetSharedConfig(const PluginID & ID, const wxString & group, const wxString & key, const double & value) = 0;
-
    virtual bool RemoveSharedConfigSubgroup(const PluginID & ID, const wxString & group) = 0;
    virtual bool RemoveSharedConfig(const PluginID & ID, const wxString & group, const wxString & key) = 0;
 

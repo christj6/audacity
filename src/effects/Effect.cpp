@@ -782,56 +782,6 @@ bool Effect::GetSharedConfigSubgroups(const wxString & group, wxArrayString & su
 	return false;
 }
 
-bool Effect::GetSharedConfig(const wxString & group, const wxString & key, wxString & value, const wxString & defval)
-{
-	return false;
-}
-
-bool Effect::GetSharedConfig(const wxString & group, const wxString & key, int & value, int defval)
-{
-	return false;
-}
-
-bool Effect::GetSharedConfig(const wxString & group, const wxString & key, bool & value, bool defval)
-{
-	return false;
-}
-
-bool Effect::GetSharedConfig(const wxString & group, const wxString & key, float & value, float defval)
-{
-	return false;
-}
-
-bool Effect::GetSharedConfig(const wxString & group, const wxString & key, double & value, double defval)
-{
-	return false;
-}
-
-bool Effect::SetSharedConfig(const wxString & group, const wxString & key, const wxString & value)
-{
-	return false;
-}
-
-bool Effect::SetSharedConfig(const wxString & group, const wxString & key, const int & value)
-{
-	return false;
-}
-
-bool Effect::SetSharedConfig(const wxString & group, const wxString & key, const bool & value)
-{
-	return false;
-}
-
-bool Effect::SetSharedConfig(const wxString & group, const wxString & key, const float & value)
-{
-	return false;
-}
-
-bool Effect::SetSharedConfig(const wxString & group, const wxString & key, const double & value)
-{
-	return false;
-}
-
 bool Effect::RemoveSharedConfigSubgroup(const wxString & group)
 {
 	return false;

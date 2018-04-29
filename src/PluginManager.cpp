@@ -1532,56 +1532,6 @@ bool PluginManager::GetSharedConfigSubgroups(const PluginID & ID, const wxString
    return GetSubgroups(SharedGroup(ID, group), subgroups);
 }
 
-bool PluginManager::GetSharedConfig(const PluginID & ID, const wxString & group, const wxString & key, wxString & value, const wxString & defval)
-{
-   return GetConfig(SharedKey(ID, group, key), value, defval);
-}
-
-bool PluginManager::GetSharedConfig(const PluginID & ID, const wxString & group, const wxString & key, int & value, int defval)
-{
-   return GetConfig(SharedKey(ID, group, key), value, defval);
-}
-
-bool PluginManager::GetSharedConfig(const PluginID & ID, const wxString & group, const wxString & key, bool & value, bool defval)
-{
-   return GetConfig(SharedKey(ID, group, key), value, defval);
-}
-
-bool PluginManager::GetSharedConfig(const PluginID & ID, const wxString & group, const wxString & key, float & value, float defval)
-{
-   return GetConfig(SharedKey(ID, group, key), value, defval);
-}
-
-bool PluginManager::GetSharedConfig(const PluginID & ID, const wxString & group, const wxString & key, double & value, double defval)
-{
-   return GetConfig(SharedKey(ID, group, key), value, defval);
-}
-
-bool PluginManager::SetSharedConfig(const PluginID & ID, const wxString & group, const wxString & key, const wxString & value)
-{
-   return SetConfig(SharedKey(ID, group, key), value);
-}
-
-bool PluginManager::SetSharedConfig(const PluginID & ID, const wxString & group, const wxString & key, const int & value) 
-{
-   return SetConfig(SharedKey(ID, group, key), value);
-}
-
-bool PluginManager::SetSharedConfig(const PluginID & ID, const wxString & group, const wxString & key, const bool & value)
-{
-   return SetConfig(SharedKey(ID, group, key), value);
-}
-
-bool PluginManager::SetSharedConfig(const PluginID & ID, const wxString & group, const wxString & key, const float & value)
-{
-   return SetConfig(SharedKey(ID, group, key), value);
-}
-
-bool PluginManager::SetSharedConfig(const PluginID & ID, const wxString & group, const wxString & key, const double & value)
-{
-   return SetConfig(SharedKey(ID, group, key), value);
-}
-
 bool PluginManager::RemoveSharedConfigSubgroup(const PluginID & ID, const wxString & group)
 {
    bool result = GetSettings()->DeleteGroup(SharedGroup(ID, group));
