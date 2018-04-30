@@ -1527,33 +1527,6 @@ bool PluginManager::HasSharedConfigGroup(const PluginID & ID, const wxString & g
    return HasGroup(SharedGroup(ID, group));
 }
 
-bool PluginManager::GetSharedConfigSubgroups(const PluginID & ID, const wxString & group, wxArrayString & subgroups)
-{
-   return GetSubgroups(SharedGroup(ID, group), subgroups);
-}
-
-bool PluginManager::RemoveSharedConfigSubgroup(const PluginID & ID, const wxString & group)
-{
-   bool result = GetSettings()->DeleteGroup(SharedGroup(ID, group));
-   if (result)
-   {
-      GetSettings()->Flush();
-   }
-
-   return result;
-}
-
-bool PluginManager::RemoveSharedConfig(const PluginID & ID, const wxString & group, const wxString & key)
-{
-   bool result = GetSettings()->DeleteEntry(SharedKey(ID, group, key));
-   if (result)
-   {
-      GetSettings()->Flush();
-   }
-
-   return result;
-}
-
 bool PluginManager::HasPrivateConfigGroup(const PluginID & ID, const wxString & group)
 {
    return HasGroup(PrivateGroup(ID, group));
@@ -1562,56 +1535,6 @@ bool PluginManager::HasPrivateConfigGroup(const PluginID & ID, const wxString & 
 bool PluginManager::GetPrivateConfigSubgroups(const PluginID & ID, const wxString & group, wxArrayString & subgroups)
 {
    return GetSubgroups(PrivateGroup(ID, group), subgroups);
-}
-
-bool PluginManager::GetPrivateConfig(const PluginID & ID, const wxString & group, const wxString & key, wxString & value, const wxString & defval)
-{
-   return GetConfig(PrivateKey(ID, group, key), value, defval);
-}
-
-bool PluginManager::GetPrivateConfig(const PluginID & ID, const wxString & group, const wxString & key, int & value, int defval)
-{
-   return GetConfig(PrivateKey(ID, group, key), value, defval);
-}
-
-bool PluginManager::GetPrivateConfig(const PluginID & ID, const wxString & group, const wxString & key, bool & value, bool defval)
-{
-   return GetConfig(PrivateKey(ID, group, key), value, defval);
-}
-
-bool PluginManager::GetPrivateConfig(const PluginID & ID, const wxString & group, const wxString & key, float & value, float defval)
-{
-   return GetConfig(PrivateKey(ID, group, key), value, defval);
-}
-
-bool PluginManager::GetPrivateConfig(const PluginID & ID, const wxString & group, const wxString & key, double & value, double defval)
-{
-   return GetConfig(PrivateKey(ID, group, key), value, defval);
-}
-
-bool PluginManager::SetPrivateConfig(const PluginID & ID, const wxString & group, const wxString & key, const wxString & value)
-{
-   return SetConfig(PrivateKey(ID, group, key), value);
-}
-
-bool PluginManager::SetPrivateConfig(const PluginID & ID, const wxString & group, const wxString & key, const int & value) 
-{
-   return SetConfig(PrivateKey(ID, group, key), value);
-}
-
-bool PluginManager::SetPrivateConfig(const PluginID & ID, const wxString & group, const wxString & key, const bool & value)
-{
-   return SetConfig(PrivateKey(ID, group, key), value);
-}
-
-bool PluginManager::SetPrivateConfig(const PluginID & ID, const wxString & group, const wxString & key, const float & value)
-{
-   return SetConfig(PrivateKey(ID, group, key), value);
-}
-
-bool PluginManager::SetPrivateConfig(const PluginID & ID, const wxString & group, const wxString & key, const double & value)
-{
-   return SetConfig(PrivateKey(ID, group, key), value);
 }
 
 bool PluginManager::RemovePrivateConfigSubgroup(const PluginID & ID, const wxString & group)

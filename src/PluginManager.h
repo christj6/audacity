@@ -193,25 +193,9 @@ public:
                                     bool directories = false) override;
 
    bool HasSharedConfigGroup(const PluginID & ID, const wxString & group) /* not override */;
-   bool GetSharedConfigSubgroups(const PluginID & ID, const wxString & group, wxArrayString & subgroups) override;
-
-   bool RemoveSharedConfigSubgroup(const PluginID & ID, const wxString & group) override;
-   bool RemoveSharedConfig(const PluginID & ID, const wxString & group, const wxString & key) override;
 
    bool HasPrivateConfigGroup(const PluginID & ID, const wxString & group) /* not override */;
    bool GetPrivateConfigSubgroups(const PluginID & ID, const wxString & group, wxArrayString & subgroups) override;
-
-   bool GetPrivateConfig(const PluginID & ID, const wxString & group, const wxString & key, wxString & value, const wxString & defval = _T("")) override;
-   bool GetPrivateConfig(const PluginID & ID, const wxString & group, const wxString & key, int & value, int defval = 0) override;
-   bool GetPrivateConfig(const PluginID & ID, const wxString & group, const wxString & key, bool & value, bool defval = false) override;
-   bool GetPrivateConfig(const PluginID & ID, const wxString & group, const wxString & key, float & value, float defval = 0.0) override;
-   bool GetPrivateConfig(const PluginID & ID, const wxString & group, const wxString & key, double & value, double defval = 0.0) override;
-
-   bool SetPrivateConfig(const PluginID & ID, const wxString & group, const wxString & key, const wxString & value) override;
-   bool SetPrivateConfig(const PluginID & ID, const wxString & group, const wxString & key, const int & value) override;
-   bool SetPrivateConfig(const PluginID & ID, const wxString & group, const wxString & key, const bool & value) override;
-   bool SetPrivateConfig(const PluginID & ID, const wxString & group, const wxString & key, const float & value) override;
-   bool SetPrivateConfig(const PluginID & ID, const wxString & group, const wxString & key, const double & value) override;
 
    bool RemovePrivateConfigSubgroup(const PluginID & ID, const wxString & group) override;
    bool RemovePrivateConfig(const PluginID & ID, const wxString & group, const wxString & key) override;

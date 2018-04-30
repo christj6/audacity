@@ -568,13 +568,7 @@ bool Effect::LoadUserPreset(const wxString & name)
       return mClient->LoadUserPreset(name);
    }
 
-   wxString parms;
-   if (!GetPrivateConfig(name, wxT("Parameters"), parms))
-   {
-      return false;
-   }
-
-   return SetAutomationParameters(parms);
+   return false;
 }
 
 bool Effect::SaveUserPreset(const wxString & name)
@@ -584,13 +578,7 @@ bool Effect::SaveUserPreset(const wxString & name)
       return mClient->SaveUserPreset(name);
    }
 
-   wxString parms;
-   if (!GetAutomationParameters(parms))
-   {
-      return false;
-   }
-
-   return SetPrivateConfig(name, wxT("Parameters"), parms);
+   return false;
 }
 
 wxArrayString Effect::GetFactoryPresets()
@@ -709,11 +697,6 @@ void Effect::SetDuration(double seconds)
       seconds = 0.0;
    }
 
-   if (GetType() == EffectTypeGenerate)
-   {
-      SetPrivateConfig(GetCurrentSettingsGroup(), wxT("LastUsedDuration"), seconds);
-   }
-
    mDuration = seconds;
 
    mIsSelection = false;
@@ -777,77 +760,12 @@ wxString Effect::GetSavedStateGroup()
 }
 
 // ConfigClientInterface implementation
-bool Effect::GetSharedConfigSubgroups(const wxString & group, wxArrayString & subgroups)
-{
-	return false;
-}
-
-bool Effect::RemoveSharedConfigSubgroup(const wxString & group)
-{
-	return false;
-}
-
-bool Effect::RemoveSharedConfig(const wxString & group, const wxString & key)
-{
-	return false;
-}
-
 bool Effect::HasPrivateConfigGroup(const wxString & group)
 {
 	return false;
 }
 
 bool Effect::GetPrivateConfigSubgroups(const wxString & group, wxArrayString & subgroups)
-{
-	return false;
-}
-
-bool Effect::GetPrivateConfig(const wxString & group, const wxString & key, wxString & value, const wxString & defval)
-{
-	return false;
-}
-
-bool Effect::GetPrivateConfig(const wxString & group, const wxString & key, int & value, int defval)
-{
-	return false;
-}
-
-bool Effect::GetPrivateConfig(const wxString & group, const wxString & key, bool & value, bool defval)
-{
-	return false;
-}
-
-bool Effect::GetPrivateConfig(const wxString & group, const wxString & key, float & value, float defval)
-{
-	return false;
-}
-
-bool Effect::GetPrivateConfig(const wxString & group, const wxString & key, double & value, double defval)
-{
-	return false;
-}
-
-bool Effect::SetPrivateConfig(const wxString & group, const wxString & key, const wxString & value)
-{
-	return false;
-}
-
-bool Effect::SetPrivateConfig(const wxString & group, const wxString & key, const int & value)
-{
-	return false;
-}
-
-bool Effect::SetPrivateConfig(const wxString & group, const wxString & key, const bool & value)
-{
-	return false;
-}
-
-bool Effect::SetPrivateConfig(const wxString & group, const wxString & key, const float & value)
-{
-	return false;
-}
-
-bool Effect::SetPrivateConfig(const wxString & group, const wxString & key, const double & value)
 {
 	return false;
 }
@@ -883,15 +801,6 @@ bool Effect::Startup(EffectClientInterface *client)
 
    mNumAudioIn = GetAudioInCount();
    mNumAudioOut = GetAudioOutCount();
-
-   bool haveDefaults;
-   GetPrivateConfig(GetFactoryDefaultsGroup(), wxT("Initialized"), haveDefaults, false);
-   if (!haveDefaults)
-   {
-      SaveUserPreset(GetFactoryDefaultsGroup());
-      SetPrivateConfig(GetFactoryDefaultsGroup(), wxT("Initialized"), true);
-   }
-   LoadUserPreset(GetCurrentSettingsGroup());
 
    return Startup();
 }
@@ -1074,11 +983,6 @@ bool Effect::DoEffect(wxWindow *parent,
    bool isSelection = false;
 
    mDuration = 0.0;
-
-   if (GetType() == EffectTypeGenerate)
-   {
-      GetPrivateConfig(GetCurrentSettingsGroup(), wxT("LastUsedDuration"), mDuration, GetDefaultDuration());
-   }
 
    mT0 = selectedRegion->t0();
    mT1 = selectedRegion->t1();
