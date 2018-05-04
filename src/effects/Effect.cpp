@@ -765,11 +765,6 @@ bool Effect::HasPrivateConfigGroup(const wxString & group)
 	return false;
 }
 
-bool Effect::RemovePrivateConfigSubgroup(const wxString & group)
-{
-	return false;
-}
-
 bool Effect::RemovePrivateConfig(const wxString & group, const wxString & key)
 {
 	return false;
@@ -2503,7 +2498,6 @@ BEGIN_EVENT_TABLE(EffectUIHost, wxDialogWrapper)
    EVT_MENU(kOptionsID, EffectUIHost::OnOptions)
    EVT_MENU(kDefaultsID, EffectUIHost::OnDefaults)
    EVT_MENU_RANGE(kUserPresetsID, kUserPresetsID + 999, EffectUIHost::OnUserPreset)
-   EVT_MENU_RANGE(kDeletePresetID, kDeletePresetID + 999, EffectUIHost::OnDeletePreset)
    EVT_MENU_RANGE(kFactoryPresetsID, kFactoryPresetsID + 999, EffectUIHost::OnFactoryPreset)
 END_EVENT_TABLE()
 
@@ -3273,21 +3267,6 @@ void EffectUIHost::OnUserPreset(wxCommandEvent & evt)
 void EffectUIHost::OnFactoryPreset(wxCommandEvent & evt)
 {
    mEffect->LoadFactoryPreset(evt.GetId() - kFactoryPresetsID);
-
-   return;
-}
-
-void EffectUIHost::OnDeletePreset(wxCommandEvent & evt)
-{
-   wxString preset = mUserPresets[evt.GetId() - kDeletePresetID];
-
-   int res = AudacityMessageBox(wxString::Format(_("Are you sure you want to delete \"%s\"?"), preset),
-                          _("Delete Preset"),
-                          wxICON_QUESTION | wxYES_NO);
-   if (res == wxYES)
-   {
-      mEffect->RemovePrivateConfigSubgroup(mEffect->GetUserPresetsGroup(preset));
-   }
 
    return;
 }

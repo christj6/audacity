@@ -1532,17 +1532,6 @@ bool PluginManager::HasPrivateConfigGroup(const PluginID & ID, const wxString & 
    return HasGroup(PrivateGroup(ID, group));
 }
 
-bool PluginManager::RemovePrivateConfigSubgroup(const PluginID & ID, const wxString & group)
-{
-   bool result = GetSettings()->DeleteGroup(PrivateGroup(ID, group));
-   if (result)
-   {
-      GetSettings()->Flush();
-   }
-
-   return result;
-}
-
 bool PluginManager::RemovePrivateConfig(const PluginID & ID, const wxString & group, const wxString & key)
 {
    bool result = GetSettings()->DeleteEntry(PrivateKey(ID, group, key));

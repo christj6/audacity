@@ -196,7 +196,6 @@ public:
 
    bool HasPrivateConfigGroup(const PluginID & ID, const wxString & group) /* not override */;
 
-   bool RemovePrivateConfigSubgroup(const PluginID & ID, const wxString & group) override;
    bool RemovePrivateConfig(const PluginID & ID, const wxString & group, const wxString & key) override;
 
    // PluginManager implementation
