@@ -765,11 +765,6 @@ bool Effect::HasPrivateConfigGroup(const wxString & group)
 	return false;
 }
 
-bool Effect::GetPrivateConfigSubgroups(const wxString & group, wxArrayString & subgroups)
-{
-	return false;
-}
-
 bool Effect::RemovePrivateConfigSubgroup(const wxString & group)
 {
 	return false;
@@ -900,8 +895,6 @@ bool Effect::SetAutomationParameters(const wxString & parms)
 wxArrayString Effect::GetUserPresets()
 {
    wxArrayString presets;
-
-   GetPrivateConfigSubgroups(GetUserPresetsGroup(wxEmptyString), presets);
 
    presets.Sort();
 

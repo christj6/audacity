@@ -170,7 +170,6 @@ class AUDACITY_DLL_API Effect /* not final */ : public wxEvtHandler,
 
    // ConfigClientInterface implementation
    bool HasPrivateConfigGroup(const wxString & group) override;
-   bool GetPrivateConfigSubgroups(const wxString & group, wxArrayString & subgroups) override;
 
    bool RemovePrivateConfigSubgroup(const wxString & group) override;
    bool RemovePrivateConfig(const wxString & group, const wxString & key) override;

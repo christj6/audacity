@@ -72,8 +72,6 @@ public:
                                     wxArrayString & files,
                                     bool directories = false) = 0;
 
-   virtual bool GetPrivateConfigSubgroups(const PluginID & ID, const wxString & group, wxArrayString & subgroups) = 0;
-
    virtual bool RemovePrivateConfigSubgroup(const PluginID & ID, const wxString & group) = 0;
    virtual bool RemovePrivateConfig(const PluginID & ID, const wxString & group, const wxString & key) = 0;
 };

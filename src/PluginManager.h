@@ -195,7 +195,6 @@ public:
    bool HasSharedConfigGroup(const PluginID & ID, const wxString & group) /* not override */;
 
    bool HasPrivateConfigGroup(const PluginID & ID, const wxString & group) /* not override */;
-   bool GetPrivateConfigSubgroups(const PluginID & ID, const wxString & group, wxArrayString & subgroups) override;
 
    bool RemovePrivateConfigSubgroup(const PluginID & ID, const wxString & group) override;
    bool RemovePrivateConfig(const PluginID & ID, const wxString & group, const wxString & key) override;
