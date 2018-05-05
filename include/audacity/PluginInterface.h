@@ -71,8 +71,6 @@ public:
                                     const wxArrayString & pathList,
                                     wxArrayString & files,
                                     bool directories = false) = 0;
-
-   virtual bool RemovePrivateConfig(const PluginID & ID, const wxString & group, const wxString & key) = 0;
 };
 
 #endif // __AUDACITY_PLUGININTERFACE_H__

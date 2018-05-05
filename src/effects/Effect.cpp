@@ -765,11 +765,6 @@ bool Effect::HasPrivateConfigGroup(const wxString & group)
 	return false;
 }
 
-bool Effect::RemovePrivateConfig(const wxString & group, const wxString & key)
-{
-	return false;
-}
-
 // Effect implementation
 PluginID Effect::GetID()
 {

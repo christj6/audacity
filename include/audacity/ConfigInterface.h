@@ -57,7 +57,6 @@ public:
    virtual ~ConfigClientInterface() {};
 
    virtual bool HasPrivateConfigGroup(const wxString & group) = 0;
-   virtual bool RemovePrivateConfig(const wxString & group, const wxString & key) = 0;
 };
 
 #endif // __AUDACITY_CONFIGINTERFACE_H__
