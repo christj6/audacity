@@ -1527,11 +1527,6 @@ bool PluginManager::HasSharedConfigGroup(const PluginID & ID, const wxString & g
    return HasGroup(SharedGroup(ID, group));
 }
 
-bool PluginManager::HasPrivateConfigGroup(const PluginID & ID, const wxString & group)
-{
-   return HasGroup(PrivateGroup(ID, group));
-}
-
 // ============================================================================
 //
 // PluginManager

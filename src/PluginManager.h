@@ -194,8 +194,6 @@ public:
 
    bool HasSharedConfigGroup(const PluginID & ID, const wxString & group) /* not override */;
 
-   bool HasPrivateConfigGroup(const PluginID & ID, const wxString & group) /* not override */;
-
    // PluginManager implementation
 
    void Initialize();

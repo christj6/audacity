@@ -55,8 +55,6 @@ class AUDACITY_DLL_API ConfigClientInterface /* not final */
 {
 public:
    virtual ~ConfigClientInterface() {};
-
-   virtual bool HasPrivateConfigGroup(const wxString & group) = 0;
 };
 
 #endif // __AUDACITY_CONFIGINTERFACE_H__

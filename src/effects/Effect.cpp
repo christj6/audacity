@@ -759,12 +759,6 @@ wxString Effect::GetSavedStateGroup()
    return wxT("SavedState");
 }
 
-// ConfigClientInterface implementation
-bool Effect::HasPrivateConfigGroup(const wxString & group)
-{
-	return false;
-}
-
 // Effect implementation
 PluginID Effect::GetID()
 {
@@ -889,16 +883,6 @@ wxArrayString Effect::GetUserPresets()
    presets.Sort();
 
    return presets;
-}
-
-bool Effect::HasCurrentSettings()
-{
-   return HasPrivateConfigGroup(GetCurrentSettingsGroup());
-}
-
-bool Effect::HasFactoryDefaults()
-{
-   return HasPrivateConfigGroup(GetFactoryDefaultsGroup());
 }
 
 wxString Effect::GetPreset(wxWindow * parent, const wxString & parms)
@@ -3555,16 +3539,6 @@ EffectPresetsDialog::EffectPresetsDialog(wxWindow *parent, Effect *effect)
    if (mFactoryPresets.GetCount() > 0)
    {
       mType->Append(_("Factory Presets"));
-   }
-
-   if (effect->HasCurrentSettings())
-   {
-      mType->Append(_("Current Settings"));
-   }
-
-   if (effect->HasFactoryDefaults())
-   {
-      mType->Append(_("Factory Defaults"));
    }
 
    UpdateUI();

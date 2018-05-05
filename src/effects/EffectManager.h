@@ -103,7 +103,6 @@ public:
    bool PromptUser(const PluginID & ID, wxWindow *parent);
    bool HasPresets(const PluginID & ID);
    wxString GetPreset(const PluginID & ID, const wxString & params, wxWindow * parent);
-   wxString GetDefaultPreset(const PluginID & ID);
 
 private:
    void SetBatchProcessing(const PluginID & ID, bool start);

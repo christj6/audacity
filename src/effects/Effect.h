@@ -168,9 +168,6 @@ class AUDACITY_DLL_API Effect /* not final */ : public wxEvtHandler,
    wxString GetFactoryDefaultsGroup() override;
    virtual wxString GetSavedStateGroup() /* not override? */;
 
-   // ConfigClientInterface implementation
-   bool HasPrivateConfigGroup(const wxString & group) override;
-
    // Effect implementation
 
    // NEW virtuals
@@ -183,8 +180,6 @@ class AUDACITY_DLL_API Effect /* not final */ : public wxEvtHandler,
    virtual bool SetAutomationParameters(const wxString & parms);
 
    virtual wxArrayString GetUserPresets();
-   virtual bool HasCurrentSettings();
-   virtual bool HasFactoryDefaults();
    virtual wxString GetPreset(wxWindow * parent, const wxString & parms);
 
    // Name of page in the Audacity alpha manual
