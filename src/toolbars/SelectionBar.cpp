@@ -860,5 +860,5 @@ void SelectionBar::OnCaptureKey(wxCommandEvent &event)
 
 void SelectionBar::OnSnapTo(wxCommandEvent & WXUNUSED(event))
 {
-   mListener->AS_SetSnapTo(mSnapTo->GetSelection());
+   // mListener->AS_SetSnapTo(mSnapTo->GetSelection()); // revert 6bc757a1c2920c53a591b4303182dbda28a4d7cb to fix the crash here
 }
