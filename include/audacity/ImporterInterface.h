@@ -43,7 +43,6 @@
 #define __AUDACITY_IMPORTERINTERFACE_H__
 
 #include "audacity/Types.h"
-#include "audacity/ConfigInterface.h"
 #include "audacity/IdentInterface.h"
 
 // ============================================================================

@@ -1294,9 +1294,6 @@
     <ClInclude Include="..\..\..\src\import\MultiFormatReader.h">
       <Filter>src\import</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\audacity\ConfigInterface.h">
-      <Filter>includes\audacity</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\audacity\EffectInterface.h">
       <Filter>includes\audacity</Filter>
     </ClInclude>

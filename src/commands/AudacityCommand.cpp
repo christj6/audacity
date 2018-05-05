@@ -34,8 +34,6 @@ ShuttleGui.
 #include <wx/utils.h>
 #include <wx/log.h>
 
-#include "audacity/ConfigInterface.h"
-
 #include "../AudacityException.h"
 #include "../AudioIO.h"
 #include "../Mix.h"

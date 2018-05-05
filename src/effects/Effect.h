@@ -29,7 +29,6 @@ class wxChoice;
 class wxListBox;
 class wxWindow;
 
-#include "audacity/ConfigInterface.h"
 #include "audacity/EffectInterface.h"
 
 #include "../Experimental.h"

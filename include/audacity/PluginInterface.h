@@ -42,7 +42,6 @@
 #ifndef __AUDACITY_PLUGININTERFACE_H__
 #define __AUDACITY_PLUGININTERFACE_H__
 
-#include "audacity/ConfigInterface.h"
 #include "audacity/EffectInterface.h"
 #include "audacity/IdentInterface.h"
 #include "audacity/ImporterInterface.h"

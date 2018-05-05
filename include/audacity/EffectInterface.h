@@ -44,7 +44,6 @@
 
 #include "audacity/Types.h"
 #include "audacity/IdentInterface.h"
-#include "audacity/ConfigInterface.h"
 #include "audacity/EffectAutomationParameters.h" // for command automation
 
 #include <wx/dialog.h>
@@ -130,11 +129,10 @@ class EffectUIClientInterface;
 \class EffectHostInterface 
 
 \brief EffectHostInterface is a decorator of a EffectUIClientInterface.  It adds 
-virtual (abstract) functions to get presets and actually apply the effect.  It uses
-ConfigClientInterface to add Getters/setters for private and shared configs. 
+virtual (abstract) functions to get presets and actually apply the effect.
 
 *******************************************************************************************/
-class AUDACITY_DLL_API EffectHostInterface  /* not final */ : public ConfigClientInterface
+class AUDACITY_DLL_API EffectHostInterface  /* not final */
 {
 public:
    virtual ~EffectHostInterface() {};
