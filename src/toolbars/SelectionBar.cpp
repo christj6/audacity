@@ -105,7 +105,6 @@ BEGIN_EVENT_TABLE(SelectionBar, ToolBar)
    EVT_TEXT(LengthTimeID, SelectionBar::OnChangedTime)
    EVT_TEXT(CenterTimeID, SelectionBar::OnChangedTime)
    EVT_TEXT(EndTimeID, SelectionBar::OnChangedTime)
-   EVT_CHOICE(SnapToID, SelectionBar::OnSnapTo)
    EVT_CHOICE(ChoiceID, SelectionBar::OnChoice )
    EVT_COMBOBOX(RateID, SelectionBar::OnRate)
    EVT_TEXT(RateID, SelectionBar::OnRate)
@@ -856,9 +855,4 @@ void SelectionBar::OnCaptureKey(wxCommandEvent &event)
    }
 
    event.Skip();
-}
-
-void SelectionBar::OnSnapTo(wxCommandEvent & WXUNUSED(event))
-{
-   // mListener->AS_SetSnapTo(mSnapTo->GetSelection()); // revert 6bc757a1c2920c53a591b4303182dbda28a4d7cb to fix the crash here
 }

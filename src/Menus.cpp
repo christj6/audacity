@@ -851,10 +851,6 @@ void AudacityProject::CreateMenusAndCommands()
       c->SetDefaultFlags(AlwaysEnabledFlag, AlwaysEnabledFlag);
       c->BeginSubMenu(_("&Selection"));
 
-      c->AddItem(wxT("SnapToOff"), XXO("Snap-To &Off"), FN(OnSnapToOff));
-      c->AddItem(wxT("SnapToNearest"), XXO("Snap-To &Nearest"), FN(OnSnapToNearest));
-      c->AddItem(wxT("SnapToPrior"), XXO("Snap-To &Prior"), FN(OnSnapToPrior));
-
       c->AddItem(wxT("SelStart"), XXO("Selection to &Start"), FN(OnSelToStart), wxT("Shift+Home"));
       c->AddItem(wxT("SelEnd"), XXO("Selection to En&d"), FN(OnSelToEnd), wxT("Shift+End"));
       c->AddItem(wxT("SelExtLeft"), XXO("Selection Extend &Left"), FN(OnSelExtendLeft), wxT("Shift+Left\twantKeyup\tallowDup"),
@@ -5288,21 +5284,6 @@ void AudacityProject::OnResample(const CommandContext &WXUNUSED(context) )
 
    // Need to reset
    FinishAutoScroll();
-}
-
-void AudacityProject::OnSnapToOff(const CommandContext &WXUNUSED(context) )
-{
-   SetSnapTo(SNAP_OFF);
-}
-
-void AudacityProject::OnSnapToNearest(const CommandContext &WXUNUSED(context) )
-{
-   SetSnapTo(SNAP_NEAREST);
-}
-
-void AudacityProject::OnSnapToPrior(const CommandContext &WXUNUSED(context) )
-{
-   SetSnapTo(SNAP_PRIOR);
 }
 
 void AudacityProject::OnFullScreen(const CommandContext &WXUNUSED(context) )

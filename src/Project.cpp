@@ -1353,16 +1353,6 @@ bool AudacityProject::SnapSelection()
    return false;
 }
 
-const wxString & AudacityProject::GetFrequencySelectionFormatName() const
-{
-   return mFrequencySelectionFormatName;
-}
-
-const wxString & AudacityProject::GetBandwidthSelectionFormatName() const
-{
-   return mBandwidthSelectionFormatName;
-}
-
 void AudacityProject::SetSelectionFormat(const wxString & format)
 {
    if (GetSelectionBar()) {
@@ -2666,8 +2656,6 @@ void AudacityProject::WriteXML(XMLWriter &xmlFile, bool bWantSaveCompressed)
    xmlFile.WriteAttr(wxT("rate"), mRate);
    xmlFile.WriteAttr(wxT("snapto"), GetSnapTo() ? wxT("on") : wxT("off"));
    xmlFile.WriteAttr(wxT("selectionformat"), GetSelectionFormat());
-   xmlFile.WriteAttr(wxT("frequencyformat"), GetFrequencySelectionFormatName());
-   xmlFile.WriteAttr(wxT("bandwidthformat"), GetBandwidthSelectionFormatName());
 
    mTags->WriteXML(xmlFile);
 

@@ -135,9 +135,6 @@ void OnUnlockPlayRegion(const CommandContext &context );
 
 double GetTime(const Track *t);
 
-void OnSnapToOff(const CommandContext &context );
-void OnSnapToNearest(const CommandContext &context );
-void OnSnapToPrior(const CommandContext &context );
 void OnFullScreen(const CommandContext &context );
 
 static void DoMacMinimize(AudacityProject *project);

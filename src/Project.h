@@ -401,12 +401,6 @@ public:
    void SetSelectionFormat(const wxString & format);
    const wxString & GetSelectionFormat() const;
 
-   // Spectral Selection Formats
-
-   const wxString & GetFrequencySelectionFormatName() const;
-
-   const wxString & GetBandwidthSelectionFormatName() const;
-
    // Scrollbars
 
    void OnScrollLeft();

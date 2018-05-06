@@ -91,7 +91,6 @@ class SelectionBar final : public ToolBar {
    void OnChooserTitleClicked(wxMouseEvent & event);
 
    void OnRate(wxCommandEvent & event);
-   void OnSnapTo(wxCommandEvent & event);
    void OnChoice(wxCommandEvent & event);
    void OnFocus(wxFocusEvent &event);
    void OnCaptureKey(wxCommandEvent &event);
