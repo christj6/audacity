@@ -255,12 +255,12 @@ void SelectionBar::Populate()
    wxColour clrText2 = *wxBLUE;
    AddTitle( _("Project Rate (Hz)"), mainSizer );
    AddVLine( mainSizer );
-   AddTitle( _("Snap-To"), mainSizer );
+   AddTitle( _("Snap-To"), mainSizer ); // remove this
 #ifdef OPTIONS_BUTTON
    // Not enough room to say 'Selection Options".  There is a tooltip instead.
    AddTitle( wxT(""), mainSizer );
 #endif
-   AddVLine( mainSizer );
+   AddVLine( mainSizer ); // remove this
    AddTitle( _("Audio Position"), mainSizer );
    AddVLine( mainSizer );
 
@@ -348,22 +348,10 @@ void SelectionBar::Populate()
    sz.SetHeight( sz.y-4);
    mSnapTo->SetMinSize( sz );
 #endif
-
-   mainSizer->Add(mSnapTo,
-                  0, wxALIGN_TOP | wxRIGHT, 5);
-   mSnapTo->SetName(_("Snap To"));
-   //mSnapTo->SetForegroundColour( clrText2 );
-   mSnapTo->SetSelection(mListener ? mListener->AS_GetSnapTo() : SNAP_OFF);
-
-   mSnapTo->Bind(wxEVT_SET_FOCUS,
-                    &SelectionBar::OnFocus,
-                    this);
-   mSnapTo->Bind(wxEVT_KILL_FOCUS,
-                    &SelectionBar::OnFocus,
-                    this);
-
-   AddVLine( mainSizer );
-
+	
+   mainSizer->Add(mSnapTo, 0, wxALIGN_TOP | wxRIGHT, 5); // remove this
+   AddVLine( mainSizer ); // remove this
+   
    mAudioTime = AddTime(_("Audio Position"), AudioTimeID, mainSizer );
    // This vertical line is NOT just for decoration!
    // It works around a wxWidgets-on-Windows RadioButton bug, where tabbing
