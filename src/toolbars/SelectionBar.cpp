@@ -414,14 +414,6 @@ void SelectionBar::UpdatePrefs()
    ToolBar::UpdatePrefs();
 }
 
-void SelectionBar::SetListener(SelectionBarListener *l)
-{
-   mListener = l;
-   SetRate(mListener->AS_GetRate());
-   SetSnapTo(mListener->AS_GetSnapTo());
-   SetSelectionFormat(mListener->AS_GetSelectionFormat());
-};
-
 void SelectionBar::RegenerateTooltips()
 {
 #if wxUSE_TOOLTIPS

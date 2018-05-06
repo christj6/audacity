@@ -62,7 +62,6 @@ class SelectionBar final : public ToolBar {
    void SetSnapTo(int);
    void SetSelectionFormat(const wxString & format);
    void SetRate(double rate);
-   void SetListener(SelectionBarListener *l);
    void RegenerateTooltips() override;
    void OnButton(wxCommandEvent & event);
 

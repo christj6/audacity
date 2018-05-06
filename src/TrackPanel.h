@@ -242,10 +242,6 @@ class AUDACITY_DLL_API TrackPanel final : public OverlayPanel {
 
    void DisplaySelection();
 
-   // These two are neither used nor defined as of Nov-2011
-   // void SetSelectionFormat(int iformat)
-   // void SetSnapTo(int snapto)
-
    void HandleInterruptedDrag();
    void Uncapture( wxMouseState *pState = nullptr );
    bool CancelDragging();
