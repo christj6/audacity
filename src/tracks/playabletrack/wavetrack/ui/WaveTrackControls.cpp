@@ -598,11 +598,6 @@ void WaveTrackMenuTable::InitMenu(Menu *pMenu, void *pUserData)
       Track *const next = tracks->GetNext(pTrack);
 
       if (isMono) {
-         const bool canMakeStereo =
-         (next && !next->GetLinked()
-          && pTrack->GetKind() == Track::Wave
-          && next->GetKind() == Track::Wave);
-
          int itemId;
          switch (pTrack->GetChannel()) {
             case Track::LeftChannel:

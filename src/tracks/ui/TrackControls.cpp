@@ -101,9 +101,6 @@ TrackMenuTable &TrackMenuTable::Instance()
 void TrackMenuTable::InitMenu(Menu *pMenu, void *pUserData)
 {
    mpData = static_cast<TrackControls::InitMenuData*>(pUserData);
-   Track *const pTrack = mpData->pTrack;
-
-   TrackList *const tracks = GetActiveProject()->GetTracks();
 }
 
 BEGIN_POPUP_MENU(TrackMenuTable)

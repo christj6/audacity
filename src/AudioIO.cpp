@@ -1489,25 +1489,6 @@ int AudioIO::StartStream(const WaveTrackConstArray &playbackTracks,
       }
    } while(!bDone);
 
-   if (mNumPlaybackChannels > 0)
-   {
-      // The following adds a NEW effect processor for each logical track and the
-      // group determination should mimic what is done in audacityAudioCallback()
-      // when calling RealtimeProcess().
-      int group = 0;
-      for (size_t i = 0, cnt = mPlaybackTracks.size(); i < cnt; i++)
-      {
-         const WaveTrack *vt = gAudioIO->mPlaybackTracks[i].get();
-
-         unsigned chanCnt = 1;
-         if (vt->GetLinked())
-         {
-            i++;
-            chanCnt++;
-         }
-      }
-   }
-
    if (options.pStartTime)
    {
       // Calculate the NEW time position

@@ -1216,9 +1216,6 @@ void TrackArtist::DrawWaveform(TrackPanelDrawingContext &context,
 {
    auto &dc = context.dc;
 
-   bool highlight = false;
-   bool gripHit = false;
-
    const bool dB = !track->GetWaveformSettings().isLinear();
 
    DrawBackgroundWithSelection(&dc, rect, track, blankSelectedBrush, blankBrush,
