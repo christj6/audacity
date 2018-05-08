@@ -123,7 +123,7 @@ class SelectionBar final : public ToolBar {
    wxChoice * mChoice;
    wxStaticText * mProxy;
    wxComboBox     *mRateBox;
-   wxChoice       *mSnapTo;
+   // wxChoice       *mSnapTo;
    wxWindow       *mRateText;
 
    AButton * mButtons[numSelectionBarButtons];

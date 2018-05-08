@@ -261,6 +261,7 @@ void SelectionBar::Populate()
    AddTitle( wxT(""), mainSizer );
 #endif
    AddVLine( mainSizer ); // remove this
+   
    AddTitle( _("Audio Position"), mainSizer );
    AddVLine( mainSizer );
 
@@ -293,7 +294,6 @@ void SelectionBar::Populate()
                              wxT(""),
                              wxDefaultPosition, wxSize(80, -1));
    mRateBox->SetName(_("Project Rate (Hz)"));
-   //mRateBox->SetForegroundColour( clrText2 );
    wxTextValidator vld(wxFILTER_INCLUDE_CHAR_LIST);
    vld.SetIncludes(wxArrayString(10, numbers));
    mRateBox->SetValidator(vld);
@@ -336,7 +336,7 @@ void SelectionBar::Populate()
 
    mainSizer->Add(mRateBox, 0, wxALIGN_TOP | wxRIGHT, 5);
    AddVLine( mainSizer );
-
+   /*
    mSnapTo = safenew wxChoice(this, SnapToID,
                           wxDefaultPosition, wxDefaultSize,
                           SnapManager::GetSnapLabels());
@@ -350,6 +350,7 @@ void SelectionBar::Populate()
 #endif
 	
    mainSizer->Add(mSnapTo, 0, wxALIGN_TOP | wxRIGHT, 5); // remove this
+   */
    AddVLine( mainSizer ); // remove this
    
    mAudioTime = AddTime(_("Audio Position"), AudioTimeID, mainSizer );
@@ -404,10 +405,12 @@ void SelectionBar::UpdatePrefs()
 
 void SelectionBar::RegenerateTooltips()
 {
+	/*
 #if wxUSE_TOOLTIPS
    wxString formatName = mListener ? mListener->AS_GetSelectionFormat() : wxString(wxEmptyString);
    mSnapTo->SetToolTip(wxString::Format(_("Snap Clicks/Selections to %s"), formatName));
 #endif
+   */
 }
 
 void SelectionBar::OnSize(wxSizeEvent &evt)
@@ -741,7 +744,7 @@ void SelectionBar::SetField(const wxChar *msg, int fieldNum)
 
 void SelectionBar::SetSnapTo(int snap)
 {
-   mSnapTo->SetSelection(snap);
+   // mSnapTo->SetSelection(snap);
 }
 
 void SelectionBar::SetSelectionFormat(const wxString & format)

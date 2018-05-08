@@ -830,7 +830,7 @@ AudacityProject::AudacityProject(wxWindow * parent, wxWindowID id,
      mRate((double) gPrefs->Read(wxT("/SamplingRate/DefaultProjectSampleRate"), AudioIO::GetOptimalSupportedSampleRate())),
      mDefaultFormat((sampleFormat) gPrefs->
            Read(wxT("/SamplingRate/DefaultProjectSampleFormat"), floatSample)),
-     mSnapTo(gPrefs->Read(wxT("/SnapTo"), SNAP_OFF)),
+     // mSnapTo(gPrefs->Read(wxT("/SnapTo"), SNAP_OFF)),
      mSelectionFormat(gPrefs->Read(wxT("/SelectionFormat"), wxT(""))),
      mFrequencySelectionFormatName(gPrefs->Read(wxT("/FrequencySelectionFormatName"), wxT(""))),
      mBandwidthSelectionFormatName(gPrefs->Read(wxT("/BandwidthSelectionFormatName"), wxT(""))),
@@ -1327,6 +1327,7 @@ bool AudacityProject::GetIsEmpty()
 
 bool AudacityProject::SnapSelection()
 {
+	/*
    if (mSnapTo != SNAP_OFF) {
       SelectedRegion &selectedRegion = mViewInfo.selectedRegion;
       NumericConverter nc(NumericConverter::TIME, GetSelectionFormat(), 0, GetRate());
@@ -1349,7 +1350,7 @@ bool AudacityProject::SnapSelection()
          return true;
       }
    }
-
+*/
    return false;
 }
 
@@ -3578,7 +3579,7 @@ void AudacityProject::SetSnapTo(int snap)
 
 int AudacityProject::GetSnapTo() const
 {
-   return mSnapTo;
+   return false;
 }
 
 void AudacityProject::SetTrackGain(WaveTrack * wt, LWSlider * slider)
