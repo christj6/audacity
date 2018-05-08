@@ -586,16 +586,11 @@ void WaveTrackMenuTable::InitMenu(Menu *pMenu, void *pUserData)
    pMenu->Enable(OnSpectrogramSettingsID,
       (display == WaveTrack::Spectrum) && !bAudioBusy);
 
-   AudacityProject *const project = ::GetActiveProject();
-
    const bool isMono = !pTrack->GetLink();
    if ( isMono )
    {
       mpData = static_cast<TrackControls::InitMenuData*>(pUserData);
       WaveTrack *const pTrack = static_cast<WaveTrack*>(mpData->pTrack);
-
-      TrackList *const tracks = project->GetTracks();
-      Track *const next = tracks->GetNext(pTrack);
 
       if (isMono) {
          int itemId;

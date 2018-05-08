@@ -380,7 +380,6 @@ void SelectionBar::Populate()
    // Do this before layout so that we are sized right.
    SetSelectionMode(mSelectionMode);
    mainSizer->Layout();
-   RegenerateTooltips();
    Layout();
 
    SetMinSize( GetSizer()->GetMinSize() );
@@ -397,20 +396,14 @@ void SelectionBar::UpdatePrefs()
    // Set label to pull in language change
    SetLabel(_("Selection"));
 
-   RegenerateTooltips();
-
    // Give base class a chance
    ToolBar::UpdatePrefs();
 }
 
 void SelectionBar::RegenerateTooltips()
 {
-	/*
-#if wxUSE_TOOLTIPS
-   wxString formatName = mListener ? mListener->AS_GetSelectionFormat() : wxString(wxEmptyString);
-   mSnapTo->SetToolTip(wxString::Format(_("Snap Clicks/Selections to %s"), formatName));
-#endif
-   */
+	// Without this function, SelectionBar would be an abstract class
+	// So, even though this function does nothing, it's still here
 }
 
 void SelectionBar::OnSize(wxSizeEvent &evt)
@@ -554,8 +547,6 @@ void SelectionBar::OnUpdate(wxCommandEvent &evt)
    // Save format name before recreating the controls so they resize properly
    format = mStartTime->GetBuiltinName(index);
    mListener->AS_SetSelectionFormat(format);
-
-   RegenerateTooltips();
 
    // ToolBar::ReCreateButtons() will get rid of our sizers and controls
    // so reset pointers first.
