@@ -733,11 +733,6 @@ void SelectionBar::SetField(const wxChar *msg, int fieldNum)
    }
 }
 
-void SelectionBar::SetSnapTo(int snap)
-{
-   // mSnapTo->SetSelection(snap);
-}
-
 void SelectionBar::SetSelectionFormat(const wxString & format)
 {
    mStartTime->SetFormatString(mStartTime->GetBuiltinFormat(format));

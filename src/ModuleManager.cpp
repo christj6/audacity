@@ -450,8 +450,6 @@ bool ModuleManager::RegisterEffectPlugin(const PluginID & providerID, const wxSt
       return false;
    }
 
-   // auto nFound = mDynModules[providerID]->DiscoverPluginsAtPath(path, errMsg, PluginManagerInterface::DefaultRegistrationCallback);
-
    return false;
 }
 

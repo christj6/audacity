@@ -59,7 +59,6 @@ class SelectionBar final : public ToolBar {
 
    void SetTimes(double start, double end, double audio);
    void SetField(const wxChar *msg, int fieldNum);
-   void SetSnapTo(int);
    void SetSelectionFormat(const wxString & format);
    void SetRate(double rate);
    void RegenerateTooltips() override;
@@ -123,7 +122,6 @@ class SelectionBar final : public ToolBar {
    wxChoice * mChoice;
    wxStaticText * mProxy;
    wxComboBox     *mRateBox;
-   // wxChoice       *mSnapTo;
    wxWindow       *mRateText;
 
    AButton * mButtons[numSelectionBarButtons];

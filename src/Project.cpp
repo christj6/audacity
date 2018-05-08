@@ -830,7 +830,6 @@ AudacityProject::AudacityProject(wxWindow * parent, wxWindowID id,
      mRate((double) gPrefs->Read(wxT("/SamplingRate/DefaultProjectSampleRate"), AudioIO::GetOptimalSupportedSampleRate())),
      mDefaultFormat((sampleFormat) gPrefs->
            Read(wxT("/SamplingRate/DefaultProjectSampleFormat"), floatSample)),
-     // mSnapTo(gPrefs->Read(wxT("/SnapTo"), SNAP_OFF)),
      mSelectionFormat(gPrefs->Read(wxT("/SelectionFormat"), wxT(""))),
      mFrequencySelectionFormatName(gPrefs->Read(wxT("/FrequencySelectionFormatName"), wxT(""))),
      mBandwidthSelectionFormatName(gPrefs->Read(wxT("/BandwidthSelectionFormatName"), wxT(""))),
@@ -1327,30 +1326,6 @@ bool AudacityProject::GetIsEmpty()
 
 bool AudacityProject::SnapSelection()
 {
-	/*
-   if (mSnapTo != SNAP_OFF) {
-      SelectedRegion &selectedRegion = mViewInfo.selectedRegion;
-      NumericConverter nc(NumericConverter::TIME, GetSelectionFormat(), 0, GetRate());
-      const bool nearest = (mSnapTo == SNAP_NEAREST);
-
-      const double oldt0 = selectedRegion.t0();
-      const double oldt1 = selectedRegion.t1();
-
-      nc.ValueToControls(oldt0, nearest);
-      nc.ControlsToValue();
-      const double t0 = nc.GetValue();
-
-      nc.ValueToControls(oldt1, nearest);
-      nc.ControlsToValue();
-      const double t1 = nc.GetValue();
-
-      if (t0 != oldt0 || t1 != oldt1) {
-         selectedRegion.setTimes(t0, t1);
-         TP_DisplaySelection();
-         return true;
-      }
-   }
-*/
    return false;
 }
 
@@ -3568,13 +3543,6 @@ void AudacityProject::OnAudioIOStopRecording()
 
    // Now we auto-save again to get the project to a "normal" state again.
    AutoSave();
-}
-
-void AudacityProject::SetSnapTo(int snap)
-{
-   if (GetSelectionBar()) {
-      GetSelectionBar()->SetSnapTo(snap);
-   }
 }
 
 int AudacityProject::GetSnapTo() const

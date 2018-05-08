@@ -393,7 +393,6 @@ public:
 
    // Snap To
 
-   void SetSnapTo(int snap);
    int GetSnapTo() const;
 
    // Selection Format
