@@ -60,7 +60,6 @@ class SelectionBar final : public ToolBar {
    void SetSelectionFormat(const wxString & format);
    void SetRate(double rate);
    void RegenerateTooltips() override;
-   void OnButton(wxCommandEvent & event);
 
  private:
    wxRadioButton * AddRadioButton( const wxString & Name, int id, 
@@ -91,7 +90,6 @@ class SelectionBar final : public ToolBar {
    void OnFocus(wxFocusEvent &event);
    void OnCaptureKey(wxCommandEvent &event);
    void OnSize(wxSizeEvent &evt);
-   void OnFieldChoice(wxCommandEvent &event);
 
    void ModifySelection(int newDriver, bool done = false);
    void UpdateRates();

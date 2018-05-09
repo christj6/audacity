@@ -72,25 +72,6 @@ enum {
 
    ChoiceID,
 
-   StartTitleID,
-   LengthTitleID,
-   CenterTitleID,
-   EndTitleID,
-   AudioTitleID,
-
-   LeftID,
-   CentralNameID,
-   RightID,
-
-   StartEndRadioID,
-   StartLengthRadioID,
-   LengthEndRadioID,
-   LengthCenterRadioID,
-
-   SelTBFirstButton,
-   SelTBMenuID = SelTBFirstButton,
-
-   id2,
    StartTimeID,
    LengthTimeID,
    CenterTimeID,
@@ -107,15 +88,6 @@ BEGIN_EVENT_TABLE(SelectionBar, ToolBar)
    EVT_CHOICE(ChoiceID, SelectionBar::OnChoice )
    EVT_COMBOBOX(RateID, SelectionBar::OnRate)
    EVT_TEXT(RateID, SelectionBar::OnRate)
-   EVT_RADIOBUTTON(StartEndRadioID, SelectionBar::OnFieldChoice )
-   EVT_RADIOBUTTON(StartLengthRadioID, SelectionBar::OnFieldChoice )
-   EVT_RADIOBUTTON(LengthEndRadioID, SelectionBar::OnFieldChoice )
-   EVT_RADIOBUTTON(LengthCenterRadioID, SelectionBar::OnFieldChoice )
-
-   EVT_COMMAND_RANGE( SelTBMenuID,
-                      SelTBMenuID,
-                      wxEVT_COMMAND_BUTTON_CLICKED,
-                      SelectionBar::OnButton )
    EVT_COMMAND(wxID_ANY, EVT_TIMETEXTCTRL_UPDATED, SelectionBar::OnUpdate)
    EVT_COMMAND(wxID_ANY, EVT_CAPTURE_KEY, SelectionBar::OnCaptureKey)
 END_EVENT_TABLE()
@@ -494,10 +466,7 @@ void SelectionBar::OnModeIncClicked(wxMouseEvent & WXUNUSED(event)){
 }
 
 void SelectionBar::OnChooserTitleClicked(wxMouseEvent & WXUNUSED(event)){
-   wxCommandEvent evt;
-   OnButton( evt );
 }
-
 
 // Called when one of the format drop downs is changed.
 void SelectionBar::OnUpdate(wxCommandEvent &evt)
@@ -569,44 +538,6 @@ void SelectionBar::SetDrivers( int driver1, int driver2 )
    }
 }
 
-
-// There currently is only one clickable AButton
-// so we just do what it needs.
-void SelectionBar::OnButton(wxCommandEvent & WXUNUSED(event))
-{
-   AudacityProject *p = GetActiveProject();
-   if (!p) return;
-
-   AButton * pBtn = mButtons[ SelTBMenuID-SelTBFirstButton];// use event.GetId();
-
-   auto cleanup = finally( [&] { pBtn->InteractionOver();}
-   );
-   SetFocus();
-
-   wxMenu Menu;
-   Menu.AppendRadioItem( 0, _("Start - End") );
-   Menu.AppendRadioItem( 1, _("Start - Length") );
-   Menu.AppendRadioItem( 2, _("Length - End") );
-   Menu.AppendRadioItem( 3, _("Length - Center") );
-   Menu.Check( mSelectionMode, true );
-   // Pop it up where the mouse is.
-   pBtn->PopupMenu(&Menu);//, wxPoint(0, 0));
-
-   // only one radio button should be checked.
-   for( int i=0;i<4;i++)
-      if( Menu.IsChecked(i))
-         SetSelectionMode( i );
-
-   SelectionModeUpdated();
-}
-
-void SelectionBar::OnFieldChoice(wxCommandEvent &event)
-{
-   int id = event.GetId();
-   SetSelectionMode( id - StartEndRadioID );
-   SelectionModeUpdated();
-}
-
 void SelectionBar::OnChoice(wxCommandEvent & WXUNUSED(event))
 {
    int mode = mChoice->GetSelection();
@@ -627,7 +558,6 @@ void SelectionBar::SelectionModeUpdated()
    Layout();
    Updated();
 }
-
 
 void SelectionBar::SetSelectionMode(int mode)
 {
