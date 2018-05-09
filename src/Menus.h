@@ -194,7 +194,6 @@ void OnSplit(const CommandContext &context );
 void OnSplitNew(const CommandContext &context );
 void OnJoin(const CommandContext &context );
 void OnDisjoin(const CommandContext &context );
-void OnDuplicate(const CommandContext &context );
 
 void OnSelectTimeAndTracks(bool bAllTime, bool bAllTracks);
 void OnSelectAllTime(const CommandContext &context );

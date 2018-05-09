@@ -279,8 +279,6 @@ void AudacityProject::CreateMenusAndCommands()
       c->AddItem(wxT("Paste"), XXO("&Paste"), FN(OnPaste), wxT("Ctrl+V"),
          AudioIONotBusyFlag,
          AudioIONotBusyFlag);
-      /* i18n-hint: (verb)*/
-      c->AddItem(wxT("Duplicate"), XXO("Duplic&ate"), FN(OnDuplicate), wxT("Ctrl+D"));
 
       c->AddSeparator();
 
@@ -3637,35 +3635,6 @@ void AudacityProject::OnJoin(const CommandContext &WXUNUSED(context) )
                               mViewInfo.selectedRegion.duration(),
                               mViewInfo.selectedRegion.t0()),
              _("Join"));
-
-   RedrawProject();
-}
-
-void AudacityProject::OnDuplicate(const CommandContext &WXUNUSED(context) )
-{
-   TrackListIterator iter(GetTracks());
-
-   Track *l = iter.Last();
-   Track *n = iter.First();
-
-   while (n) {
-      if (n->GetSelected()) {
-         // Make copies not for clipboard but for direct addition to the project
-         auto dest = n->Copy(mViewInfo.selectedRegion.t0(),
-                 mViewInfo.selectedRegion.t1(), false);
-         dest->Init(*n);
-         dest->SetOffset(wxMax(mViewInfo.selectedRegion.t0(), n->GetOffset()));
-         mTracks->Add(std::move(dest));
-      }
-
-      if (n == l) {
-         break;
-      }
-
-      n = iter.Next();
-   }
-
-   PushState(_("Duplicated"), _("Duplicate"));
 
    RedrawProject();
 }
