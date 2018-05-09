@@ -68,7 +68,6 @@ const static wxChar *numbers[] =
 enum {
    SelectionBarFirstID = 2700,
    RateID,
-   SnapToID,
    OnMenuID,
 
    ChoiceID,
@@ -117,7 +116,6 @@ BEGIN_EVENT_TABLE(SelectionBar, ToolBar)
                       SelTBMenuID,
                       wxEVT_COMMAND_BUTTON_CLICKED,
                       SelectionBar::OnButton )
-// EVT_COMMAND( OnMenuId, wxEVT_COMMAND_BUTTON_CLICKED, SelectionBar::OnButton )
    EVT_COMMAND(wxID_ANY, EVT_TIMETEXTCTRL_UPDATED, SelectionBar::OnUpdate)
    EVT_COMMAND(wxID_ANY, EVT_CAPTURE_KEY, SelectionBar::OnCaptureKey)
 END_EVENT_TABLE()
@@ -255,7 +253,7 @@ void SelectionBar::Populate()
    wxColour clrText2 = *wxBLUE;
    AddTitle( _("Project Rate (Hz)"), mainSizer );
    AddVLine( mainSizer );
-   AddTitle( _("Snap-To"), mainSizer ); // remove this
+   AddTitle( _(""), mainSizer ); // ?????????????????
 #ifdef OPTIONS_BUTTON
    // Not enough room to say 'Selection Options".  There is a tooltip instead.
    AddTitle( wxT(""), mainSizer );
@@ -336,21 +334,8 @@ void SelectionBar::Populate()
 
    mainSizer->Add(mRateBox, 0, wxALIGN_TOP | wxRIGHT, 5);
    AddVLine( mainSizer );
-   /*
-   mSnapTo = safenew wxChoice(this, SnapToID,
-                          wxDefaultPosition, wxDefaultSize,
-                          SnapManager::GetSnapLabels());
 
-#ifdef __WXGTK__
-   // Combo boxes are taller on Linux, and if we don't do the following, the selection toolbar will
-   // be three units high.
-   sz = mSnapTo->GetBestSize();
-   sz.SetHeight( sz.y-4);
-   mSnapTo->SetMinSize( sz );
-#endif
-	
-   mainSizer->Add(mSnapTo, 0, wxALIGN_TOP | wxRIGHT, 5); // remove this
-   */
+   AddTitle(_(""), mainSizer); // ??????????????????
    AddVLine( mainSizer ); // remove this
    
    mAudioTime = AddTime(_("Audio Position"), AudioTimeID, mainSizer );
