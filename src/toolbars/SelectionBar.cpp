@@ -243,7 +243,8 @@ void SelectionBar::Populate()
    // Inner sizers have space on right only.
    // This choice makes for a nice border and internal spacing and places clear responsibility
    // on each sizer as to what spacings it creates.
-   Add((mainSizer = safenew wxFlexGridSizer(SIZER_COLS, 1, 1)), 0, wxALIGN_TOP | wxLEFT | wxTOP, 5);
+   mainSizer = safenew wxFlexGridSizer(SIZER_COLS, 1, 1);
+   Add(mainSizer, 0, wxALIGN_TOP | wxLEFT | wxTOP, 5);
 
    //
    // Top row (mostly labels)
@@ -253,17 +254,10 @@ void SelectionBar::Populate()
    wxColour clrText2 = *wxBLUE;
    AddTitle( _("Project Rate (Hz)"), mainSizer );
    AddVLine( mainSizer );
-   AddTitle( _(""), mainSizer ); // ?????????????????
-#ifdef OPTIONS_BUTTON
-   // Not enough room to say 'Selection Options".  There is a tooltip instead.
-   AddTitle( wxT(""), mainSizer );
-#endif
-   AddVLine( mainSizer ); // remove this
    
    AddTitle( _("Audio Position"), mainSizer );
    AddVLine( mainSizer );
 
-   {
    const wxString choices[4] = {
       _("Start and End of Selection"),
       _("Start and Length of Selection"),
@@ -282,7 +276,6 @@ void SelectionBar::Populate()
    mChoice->SetMinSize( sz );
 #endif
    mainSizer->Add(mChoice, 0, wxALIGN_TOP | wxEXPAND | wxRIGHT, 6);
-   }
 
    //
    // Botton row, (mostly time controls)
@@ -334,9 +327,6 @@ void SelectionBar::Populate()
 
    mainSizer->Add(mRateBox, 0, wxALIGN_TOP | wxRIGHT, 5);
    AddVLine( mainSizer );
-
-   AddTitle(_(""), mainSizer); // ??????????????????
-   AddVLine( mainSizer ); // remove this
    
    mAudioTime = AddTime(_("Audio Position"), AudioTimeID, mainSizer );
    // This vertical line is NOT just for decoration!
@@ -349,16 +339,12 @@ void SelectionBar::Populate()
    // https://forums.wxwidgets.org/viewtopic.php?t=41120
    AddVLine( mainSizer );
 
-   {
-      auto hSizer = std::make_unique<wxBoxSizer>(wxHORIZONTAL);
-
-      mStartTime  = AddTime(_("Start"), StartTimeID, hSizer.get() );
-      mLengthTime = AddTime(_("Length"), LengthTimeID, hSizer.get() );
-      mCenterTime = AddTime(_("Center"), CenterTimeID, hSizer.get() );
-      mEndTime    = AddTime(_("End"), EndTimeID, hSizer.get() );
-      mainSizer->Add(hSizer.release(), 0, wxALIGN_TOP | wxRIGHT, 0);
-
-   }
+   auto hSizer = std::make_unique<wxBoxSizer>(wxHORIZONTAL);
+   mStartTime  = AddTime(_("Start"), StartTimeID, hSizer.get() );
+   mLengthTime = AddTime(_("Length"), LengthTimeID, hSizer.get() );
+   mCenterTime = AddTime(_("Center"), CenterTimeID, hSizer.get() );
+   mEndTime    = AddTime(_("End"), EndTimeID, hSizer.get() );
+   mainSizer->Add(hSizer.release(), 0, wxALIGN_TOP | wxRIGHT, 0);
 
    mChoice->MoveBeforeInTabOrder( mStartTime );
    // This shows/hides controls.

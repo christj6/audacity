@@ -15,16 +15,14 @@
 
 #include "ToolBar.h"
 
-// Column for 
+// Columns for 
 //   Project rate
-//   Snap To
-//   Option Button
-//   Vertical Line
-//   Selection fields
-//   Vertical Line
-//   Cursor position
+//   Audio Position
+//   Selection field 1 (e.g. Start of Selection)
+//   Selection field 2 (e.g. End of Selection)
+//   Not sure what #5 is
 
-#define SIZER_COLS 7
+#define SIZER_COLS 5
 
 class wxBitmap;
 class wxCheckBox;
