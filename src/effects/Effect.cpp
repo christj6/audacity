@@ -2440,11 +2440,6 @@ private:
 #include "../../images/Effect.h"
 
 BEGIN_EVENT_TABLE(EffectUIHost, wxDialogWrapper)
-   EVT_INIT_DIALOG(EffectUIHost::OnInitDialog)
-   EVT_ERASE_BACKGROUND(EffectUIHost::OnErase)
-   EVT_PAINT(EffectUIHost::OnPaint)
-   EVT_CLOSE(EffectUIHost::OnClose)
-   EVT_BUTTON(wxID_APPLY, EffectUIHost::OnApply)
    EVT_BUTTON(wxID_CANCEL, EffectUIHost::OnCancel)
    EVT_BUTTON(wxID_HELP, EffectUIHost::OnHelp)
    EVT_BUTTON(eDebugID, EffectUIHost::OnDebug)
@@ -2458,8 +2453,6 @@ BEGIN_EVENT_TABLE(EffectUIHost, wxDialogWrapper)
    EVT_MENU(kExportID, EffectUIHost::OnExport)
    EVT_MENU(kOptionsID, EffectUIHost::OnOptions)
    EVT_MENU(kDefaultsID, EffectUIHost::OnDefaults)
-   EVT_MENU_RANGE(kUserPresetsID, kUserPresetsID + 999, EffectUIHost::OnUserPreset)
-   EVT_MENU_RANGE(kFactoryPresetsID, kFactoryPresetsID + 999, EffectUIHost::OnFactoryPreset)
 END_EVENT_TABLE()
 
 EffectUIHost::EffectUIHost(wxWindow *parent,
@@ -2809,121 +2802,6 @@ bool EffectUIHost::Initialize()
    return true;
 }
 
-void EffectUIHost::OnInitDialog(wxInitDialogEvent & evt)
-{
-   // Do default handling
-   wxDialogWrapper::OnInitDialog(evt);
-
-#if wxCHECK_VERSION(3, 0, 0)
-//#warning "check to see if this still needed in wx3"
-#endif
-
-   // Pure hackage coming down the pike...
-   //
-   // I have no idea why, but if a wxTextCtrl is the first control in the
-   // panel, then its contents will not be automatically selected when the
-   // dialog is displayed.
-   //
-   // So, we do the selection manually.
-   wxTextCtrl *focused = wxDynamicCast(FindFocus(), wxTextCtrl);
-   if (focused)
-   {
-      focused->SelectAll();
-   }
-}
-
-void EffectUIHost::OnErase(wxEraseEvent & WXUNUSED(evt))
-{
-   // Ignore it
-}
-
-void EffectUIHost::OnPaint(wxPaintEvent & WXUNUSED(evt))
-{
-   wxPaintDC dc(this);
-
-   dc.Clear();
-}
-
-void EffectUIHost::OnClose(wxCloseEvent & WXUNUSED(evt))
-{
-   DoCancel();
-
-   CleanupRealtime();
-
-   Hide();
-
-   if (mNeedsResume)
-      Resume();
-   mClient->CloseUI();
-   mClient = NULL;
-
-   Destroy();
-}
-
-void EffectUIHost::OnApply(wxCommandEvent & evt)
-{
-   // On wxGTK (wx2.8.12), the default action is still executed even if
-   // the button is disabled.  This appears to affect all wxDialogs, not
-   // just our Effects dialogs.  So, this is a only temporary workaround
-   // for legacy effects that disable the OK button.  Hopefully this has
-   // been corrected in wx3.
-   if (!FindWindow(wxID_APPLY)->IsEnabled())
-   {
-      return;
-   }
-
-   // Honor the "select all if none" preference...a little hackish, but whatcha gonna do...
-   if (!mIsBatch && mEffect && mEffect->GetType() != EffectTypeGenerate && mProject->mViewInfo.selectedRegion.isPoint())
-   {
-      auto flags = AlwaysEnabledFlag;
-      bool allowed = mProject->ReportIfActionNotAllowed(
-         mEffect->GetTranslatedName(),
-         flags,
-         WaveTracksSelectedFlag | TimeSelectedFlag,
-         WaveTracksSelectedFlag | TimeSelectedFlag);
-      if (!allowed)
-         return;
-   }
-
-   if (!mClient->ValidateUI())
-   {
-      return;
-   }
-
-   // This will take care of calling TransferDataFromWindow() for an effect.
-   if (mEffect &&  !mEffect->SaveUserPreset(mEffect->GetCurrentSettingsGroup()))
-   {
-      return;
-   }
-   // This will take care of calling TransferDataFromWindow() for a command.
-   if (mCommand ){
-      wxString params;
-      mCommand->GetAutomationParameters( params );
-   }
-
-   if( mEffect )
-      mEffect->mUIResultID = evt.GetId();
-
-   if (IsModal())
-   {
-      mDismissed = true;
-
-      EndModal(true);
-
-      Close();
-
-      return;
-   }
-
-   // Progress dialog no longer yields, so this "shouldn't" be necessary (yet to be proven
-   // for sure), but it is a nice visual cue that something is going on.
-   mApplyBtn->Disable();
-   auto cleanup = finally( [&] { mApplyBtn->Enable(); } );
-
-   if( mCommand )
-      mCommand->Apply();
-}
-
 void EffectUIHost::DoCancel()
 {
    if (!mDismissed) {
@@ -2952,7 +2830,6 @@ void EffectUIHost::OnHelp(wxCommandEvent & WXUNUSED(event))
 
 void EffectUIHost::OnDebug(wxCommandEvent & evt)
 {
-   OnApply(evt);
    if( mEffect )
       mEffect->mUIResultID = evt.GetId();
 }
@@ -3212,18 +3089,6 @@ void EffectUIHost::OnCapture(wxCommandEvent & evt)
    }
 
    UpdateControls();
-}
-
-void EffectUIHost::OnUserPreset(wxCommandEvent & evt)
-{
-   return;
-}
-
-void EffectUIHost::OnFactoryPreset(wxCommandEvent & evt)
-{
-   mEffect->LoadFactoryPreset(evt.GetId() - kFactoryPresetsID);
-
-   return;
 }
 
 void EffectUIHost::OnSaveAs(wxCommandEvent & WXUNUSED(evt))

@@ -492,11 +492,6 @@ public:
    bool Initialize();
 
 private:
-   void OnInitDialog(wxInitDialogEvent & evt);
-   void OnErase(wxEraseEvent & evt);
-   void OnPaint(wxPaintEvent & evt);
-   void OnClose(wxCloseEvent & evt);
-   void OnApply(wxCommandEvent & evt);
    void DoCancel();
    void OnCancel(wxCommandEvent & evt);
    void OnHelp(wxCommandEvent & evt);
@@ -508,8 +503,6 @@ private:
    void OnFFwd(wxCommandEvent & evt);
    void OnPlayback(wxCommandEvent & evt);
    void OnCapture(wxCommandEvent & evt);
-   void OnUserPreset(wxCommandEvent & evt);
-   void OnFactoryPreset(wxCommandEvent & evt);
    void OnSaveAs(wxCommandEvent & evt);
    void OnImport(wxCommandEvent & evt);
    void OnExport(wxCommandEvent & evt);
