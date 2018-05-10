@@ -2440,16 +2440,6 @@ private:
 #include "../../images/Effect.h"
 
 BEGIN_EVENT_TABLE(EffectUIHost, wxDialogWrapper)
-   EVT_BUTTON(wxID_HELP, EffectUIHost::OnHelp)
-   EVT_BUTTON(eDebugID, EffectUIHost::OnDebug)
-   EVT_CHECKBOX(kEnableID, EffectUIHost::OnEnable)
-   EVT_BUTTON(kPlayID, EffectUIHost::OnPlay)
-   EVT_BUTTON(kRewindID, EffectUIHost::OnRewind)
-   EVT_BUTTON(kFFwdID, EffectUIHost::OnFFwd)
-   EVT_MENU(kSaveAsID, EffectUIHost::OnSaveAs)
-   EVT_MENU(kImportID, EffectUIHost::OnImport)
-   EVT_MENU(kExportID, EffectUIHost::OnExport)
-   EVT_MENU(kOptionsID, EffectUIHost::OnOptions)
    EVT_MENU(kDefaultsID, EffectUIHost::OnDefaults)
 END_EVENT_TABLE()
 
@@ -2800,17 +2790,6 @@ bool EffectUIHost::Initialize()
    return true;
 }
 
-void EffectUIHost::OnHelp(wxCommandEvent & WXUNUSED(event))
-{
-	HelpSystem::ShowHelp(FindWindow(wxID_HELP), mEffect->ManualPage(), true);
-}
-
-void EffectUIHost::OnDebug(wxCommandEvent & evt)
-{
-   if( mEffect )
-      mEffect->mUIResultID = evt.GetId();
-}
-
 void EffectUIHost::Resume()
 {
    if (!mClient->ValidateUI()) {
@@ -2824,112 +2803,6 @@ void EffectUIHost::Resume()
       return;
    }
    mEffect->RealtimeResume();
-}
-
-void EffectUIHost::OnEnable(wxCommandEvent & WXUNUSED(evt))
-{
-   mEnabled = mEnableCb->GetValue();
-
-   if (mEnabled) {
-      Resume();
-      mNeedsResume = false;
-   }
-   else
-   {
-      mEffect->RealtimeSuspend();
-      mNeedsResume = true;
-   }
-
-   UpdateControls();
-}
-
-void EffectUIHost::OnPlay(wxCommandEvent & WXUNUSED(evt))
-{
-   if (!mSupportsRealtime)
-   {
-      if (!mClient->ValidateUI() || !mEffect->TransferDataFromWindow())
-      {
-         return;
-      }
-
-      mEffect->Preview(false);
-
-      return;
-   }
-
-   if (mPlaying)
-   {
-      mPlayPos = gAudioIO->GetStreamTime();
-      mProject->GetControlToolBar()->StopPlaying();
-   }
-   else
-   {
-      if (mProject->IsPlayRegionLocked())
-      {
-         double t0, t1;
-         mProject->GetPlayRegion(&t0, &t1);
-         mRegion.setTimes(t0, t1);
-         mPlayPos = mRegion.t0();
-      }
-      else if (mProject->mViewInfo.selectedRegion.t0() != mRegion.t0() ||
-               mProject->mViewInfo.selectedRegion.t1() != mRegion.t1())
-      {
-         mRegion = mProject->mViewInfo.selectedRegion;
-         mPlayPos = mRegion.t0();
-      }
-
-      if (mPlayPos > mRegion.t1())
-      {
-         mPlayPos = mRegion.t1();
-      }
-
-      mProject->GetControlToolBar()->PlayPlayRegion
-         (SelectedRegion(mPlayPos, mRegion.t1()),
-          mProject->GetDefaultPlayOptions(), PlayMode::normalPlay);
-   }
-}
-
-void EffectUIHost::OnRewind(wxCommandEvent & WXUNUSED(evt))
-{
-   if (mPlaying)
-   {
-      double seek;
-      gPrefs->Read(wxT("/AudioIO/SeekShortPeriod"), &seek, 1.0);
-
-      double pos = gAudioIO->GetStreamTime();
-      if (pos - seek < mRegion.t0())
-      {
-         seek = pos - mRegion.t0();
-      }
-
-      gAudioIO->SeekStream(-seek);
-   }
-   else
-   {
-      mPlayPos = mRegion.t0();
-   }
-}
-
-void EffectUIHost::OnFFwd(wxCommandEvent & WXUNUSED(evt))
-{
-   if (mPlaying)
-   {
-      double seek;
-      gPrefs->Read(wxT("/AudioIO/SeekShortPeriod"), &seek, 1.0);
-
-      double pos = gAudioIO->GetStreamTime();
-      if (mRegion.t0() < mRegion.t1() && pos + seek > mRegion.t1())
-      {
-         seek = mRegion.t1() - pos;
-      }
-
-      gAudioIO->SeekStream(seek);
-   }
-   else
-   {
-      // It allows to play past end of selection...probably useless
-      mPlayPos = mRegion.t1();
-   }
 }
 
 void EffectUIHost::OnPlayback(wxCommandEvent & evt)
@@ -2984,95 +2857,6 @@ void EffectUIHost::OnCapture(wxCommandEvent & evt)
    }
 
    UpdateControls();
-}
-
-void EffectUIHost::OnSaveAs(wxCommandEvent & WXUNUSED(evt))
-{
-   wxTextCtrl *text;
-   wxString name;
-   wxDialogWrapper dlg(this, wxID_ANY, wxString(_("Save Preset")));
-
-   ShuttleGui S(&dlg, eIsCreating);
-
-   S.StartPanel();
-   {
-      S.StartVerticalLay(1);
-      {
-         S.StartHorizontalLay(wxALIGN_LEFT, 0);
-         {
-            text = S.AddTextBox(_("Preset name:"), name, 30);
-         }
-         S.EndHorizontalLay();
-         S.SetBorder(10);
-         S.AddStandardButtons();
-      }
-      S.EndVerticalLay();
-   }
-   S.EndPanel();
-
-   dlg.SetSize(dlg.GetSizer()->GetMinSize());
-   dlg.Center();
-
-   while (true)
-   {
-      int rc = dlg.ShowModal();
-
-      if (rc != wxID_OK)
-      {
-         break;
-      }
-
-      name = text->GetValue();
-      if (name.IsEmpty())
-      {
-         AudacityMessageDialog md(this,
-                            _("You must specify a name"),
-                            _("Save Preset"));
-         md.Center();
-         md.ShowModal();
-         continue;
-      }
-
-      if (mUserPresets.Index(name) != wxNOT_FOUND)
-      {
-         AudacityMessageDialog md(this,
-                            _("Preset already exists.\n\nReplace?"),
-                            _("Save Preset"),
-                            wxYES_NO | wxCANCEL | wxICON_EXCLAMATION);
-         md.Center();
-         int choice = md.ShowModal();
-         if (choice == wxID_CANCEL)
-         {
-            break;
-         }
-
-         if (choice == wxID_NO)
-         {
-            continue;
-         }
-      }
-
-      break;
-   }
-
-   return;
-}
-
-void EffectUIHost::OnImport(wxCommandEvent & WXUNUSED(evt))
-{
-   return;
-}
-
-void EffectUIHost::OnExport(wxCommandEvent & WXUNUSED(evt))
-{
-   return;
-}
-
-void EffectUIHost::OnOptions(wxCommandEvent & WXUNUSED(evt))
-{
-   mClient->ShowOptions();
-
-   return;
 }
 
 void EffectUIHost::OnDefaults(wxCommandEvent & WXUNUSED(evt))

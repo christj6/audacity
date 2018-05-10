@@ -492,18 +492,8 @@ public:
    bool Initialize();
 
 private:
-   void OnHelp(wxCommandEvent & evt);
-   void OnDebug(wxCommandEvent & evt);
-   void OnEnable(wxCommandEvent & evt);
-   void OnPlay(wxCommandEvent & evt);
-   void OnRewind(wxCommandEvent & evt);
-   void OnFFwd(wxCommandEvent & evt);
    void OnPlayback(wxCommandEvent & evt);
    void OnCapture(wxCommandEvent & evt);
-   void OnSaveAs(wxCommandEvent & evt);
-   void OnImport(wxCommandEvent & evt);
-   void OnExport(wxCommandEvent & evt);
-   void OnOptions(wxCommandEvent & evt);
    void OnDefaults(wxCommandEvent & evt);
 
    void UpdateControls();
