@@ -162,7 +162,6 @@ class AUDACITY_DLL_API Effect /* not final */ : public wxEvtHandler,
 
    wxDialog *CreateUI(wxWindow *parent, EffectUIClientInterface *client) override;
 
-   wxString GetUserPresetsGroup(const wxString & name) override;
    wxString GetCurrentSettingsGroup() override;
    wxString GetFactoryDefaultsGroup() override;
    virtual wxString GetSavedStateGroup() /* not override? */;

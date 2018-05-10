@@ -726,17 +726,6 @@ wxDialog *Effect::CreateUI(wxWindow *parent, EffectUIClientInterface *client)
    return NULL;
 }
 
-wxString Effect::GetUserPresetsGroup(const wxString & name)
-{
-   wxString group = wxT("UserPresets");
-   if (!name.IsEmpty())
-   {
-      group += wxCONFIG_PATH_SEPARATOR + name;
-   }
-
-   return group;
-}
-
 wxString Effect::GetCurrentSettingsGroup()
 {
    return wxT("CurrentSettings");
@@ -812,7 +801,7 @@ bool Effect::SetAutomationParameters(const wxString & parms)
    if (preset.StartsWith(kUserPresetIdent))
    {
       preset.Replace(kUserPresetIdent, wxEmptyString, false);
-      success = LoadUserPreset(GetUserPresetsGroup(preset));
+      success = false;
    }
    else if (preset.StartsWith(kFactoryPresetIdent))
    {
@@ -3227,10 +3216,6 @@ void EffectUIHost::OnCapture(wxCommandEvent & evt)
 
 void EffectUIHost::OnUserPreset(wxCommandEvent & evt)
 {
-   int preset = evt.GetId() - kUserPresetsID;
-
-   mEffect->LoadUserPreset(mEffect->GetUserPresetsGroup(mUserPresets[preset]));
-
    return;
 }
 
@@ -3306,8 +3291,6 @@ void EffectUIHost::OnSaveAs(wxCommandEvent & WXUNUSED(evt))
             continue;
          }
       }
-
-      mEffect->SaveUserPreset(mEffect->GetUserPresetsGroup(name));
 
       break;
    }

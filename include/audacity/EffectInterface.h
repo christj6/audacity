@@ -149,7 +149,6 @@ public:
    virtual wxDialog *CreateUI(wxWindow *parent, EffectUIClientInterface *client) = 0;
 
    // Preset handling
-   virtual wxString GetUserPresetsGroup(const wxString & name) = 0;
    virtual wxString GetCurrentSettingsGroup() = 0;
    virtual wxString GetFactoryDefaultsGroup() = 0;
 };
