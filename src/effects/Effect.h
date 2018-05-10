@@ -494,7 +494,6 @@ public:
 private:
    void OnHelp(wxCommandEvent & evt);
    void OnDebug(wxCommandEvent & evt);
-   void OnMenu(wxCommandEvent & evt);
    void OnEnable(wxCommandEvent & evt);
    void OnPlay(wxCommandEvent & evt);
    void OnRewind(wxCommandEvent & evt);

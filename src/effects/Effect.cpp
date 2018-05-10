@@ -2442,7 +2442,6 @@ private:
 BEGIN_EVENT_TABLE(EffectUIHost, wxDialogWrapper)
    EVT_BUTTON(wxID_HELP, EffectUIHost::OnHelp)
    EVT_BUTTON(eDebugID, EffectUIHost::OnDebug)
-   EVT_BUTTON(kMenuID, EffectUIHost::OnMenu)
    EVT_CHECKBOX(kEnableID, EffectUIHost::OnEnable)
    EVT_BUTTON(kPlayID, EffectUIHost::OnPlay)
    EVT_BUTTON(kRewindID, EffectUIHost::OnRewind)
@@ -2810,88 +2809,6 @@ void EffectUIHost::OnDebug(wxCommandEvent & evt)
 {
    if( mEffect )
       mEffect->mUIResultID = evt.GetId();
-}
-
-void EffectUIHost::OnMenu(wxCommandEvent & WXUNUSED(evt))
-{
-   wxMenu menu;
-   if( !mEffect )
-      return;
-
-   if (mUserPresets.GetCount() == 0)
-   {
-      menu.Append(kUserPresetsDummyID, _("User Presets"))->Enable(false);
-   }
-   else
-   {
-      auto sub = std::make_unique<wxMenu>();
-      for (size_t i = 0, cnt = mUserPresets.GetCount(); i < cnt; i++)
-      {
-         sub->Append(kUserPresetsID + i, mUserPresets[i]);
-      }
-      menu.Append(0, _("User Presets"), sub.release());
-   }
-
-   menu.Append(kSaveAsID, _("Save Preset..."));
-
-   if (mUserPresets.GetCount() == 0)
-   {
-      menu.Append(kDeletePresetDummyID, _("Delete Preset"))->Enable(false);
-   }
-   else
-   {
-      auto sub = std::make_unique<wxMenu>();
-      for (size_t i = 0, cnt = mUserPresets.GetCount(); i < cnt; i++)
-      {
-         sub->Append(kDeletePresetID + i, mUserPresets[i]);
-      }
-      menu.Append(0, _("Delete Preset"), sub.release());
-   }
-
-   menu.AppendSeparator();
-
-   wxArrayString factory = mEffect->GetFactoryPresets();
-
-   {
-      auto sub = std::make_unique<wxMenu>();
-      sub->Append(kDefaultsID, _("Defaults"));
-      if (factory.GetCount() > 0)
-      {
-         sub->AppendSeparator();
-         for (size_t i = 0, cnt = factory.GetCount(); i < cnt; i++)
-         {
-            wxString label = factory[i];
-            if (label.IsEmpty())
-            {
-               label = _("None");
-            }
-
-            sub->Append(kFactoryPresetsID + i, label);
-         }
-      }
-      menu.Append(0, _("Factory Presets"), sub.release());
-   }
-
-   menu.AppendSeparator();
-   menu.Append(kOptionsID, _("Options..."))->Enable(mClient->HasOptions());
-   menu.AppendSeparator();
-
-   {
-      auto sub = std::make_unique<wxMenu>();
-
-      sub->Append(kDummyID, wxString::Format(_("Type: %s"),
-                  ::wxGetTranslation( mEffect->GetFamilyName() )));
-      sub->Append(kDummyID, wxString::Format(_("Name: %s"), mEffect->GetTranslatedName()));
-      sub->Append(kDummyID, wxString::Format(_("Version: %s"), mEffect->GetVersion()));
-      sub->Append(kDummyID, wxString::Format(_("Vendor: %s"), GetCustomTranslation(mEffect->GetVendor())));
-      sub->Append(kDummyID, wxString::Format(_("Description: %s"), mEffect->GetDescription()));
-
-      menu.Append(0, _("About"), sub.release());
-   }
-
-   wxWindow *btn = FindWindow(kMenuID);
-   wxRect r = btn->GetRect();
-   btn->PopupMenu(&menu, r.GetLeft(), r.GetBottom());
 }
 
 void EffectUIHost::Resume()
