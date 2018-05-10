@@ -245,9 +245,7 @@ class AUDACITY_DLL_API AudacityProject final : public wxFrame,
    // Return the given project if that is not NULL, else create a project.
    // Then open the given project path.
    // But if an exception escapes this function, create no NEW project.
-   static AudacityProject *OpenProject(
-      AudacityProject *pProject,
-      const wxString &fileNameArg);
+   static AudacityProject *OpenProject(AudacityProject *pProject);
 
    void OpenFile(const wxString &fileName, bool addtohistory = true);
 

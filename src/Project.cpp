@@ -2510,8 +2510,7 @@ bool AudacityProject::IsAlreadyOpen(const wxString & projPathName)
    return false;
 }
 
-AudacityProject *AudacityProject::OpenProject(
-   AudacityProject *pProject, const wxString &fileNameArg)
+AudacityProject *AudacityProject::OpenProject(AudacityProject *pProject)
 {
    return pProject;
 }

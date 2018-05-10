@@ -442,7 +442,7 @@ void ModuleManager::RegisterModule(ModuleInterface *inModule)
    PluginManager::Get().RegisterPlugin(inModule);
 }
 
-bool ModuleManager::RegisterEffectPlugin(const PluginID & providerID, const wxString & path, wxString &errMsg)
+bool ModuleManager::RegisterEffectPlugin(const PluginID & providerID, wxString &errMsg)
 {
    errMsg.clear();
    if (mDynModules.find(providerID) == mDynModules.end())

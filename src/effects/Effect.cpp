@@ -2440,7 +2440,6 @@ private:
 #include "../../images/Effect.h"
 
 BEGIN_EVENT_TABLE(EffectUIHost, wxDialogWrapper)
-   EVT_MENU(kDefaultsID, EffectUIHost::OnDefaults)
 END_EVENT_TABLE()
 
 EffectUIHost::EffectUIHost(wxWindow *parent,
@@ -2857,13 +2856,6 @@ void EffectUIHost::OnCapture(wxCommandEvent & evt)
    }
 
    UpdateControls();
-}
-
-void EffectUIHost::OnDefaults(wxCommandEvent & WXUNUSED(evt))
-{
-   mEffect->LoadFactoryDefaults();
-
-   return;
 }
 
 wxBitmap EffectUIHost::CreateBitmap(const char *xpm[], bool up, bool pusher)

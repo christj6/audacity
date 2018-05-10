@@ -380,7 +380,7 @@ void LOFImportFileHandle::lofOpenFiles(wxString* ln)
       }
 
       // Do recursive call to import
-         mProject = AudacityProject::OpenProject( mProject, targetfile );
+         mProject = AudacityProject::OpenProject( mProject );
 
       // Set tok to right after filename
       temptok2.SetString(targettoken);

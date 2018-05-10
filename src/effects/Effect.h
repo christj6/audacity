@@ -494,7 +494,6 @@ public:
 private:
    void OnPlayback(wxCommandEvent & evt);
    void OnCapture(wxCommandEvent & evt);
-   void OnDefaults(wxCommandEvent & evt);
 
    void UpdateControls();
    wxBitmap CreateBitmap(const char *xpm[], bool up, bool pusher);

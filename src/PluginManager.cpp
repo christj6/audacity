@@ -987,8 +987,7 @@ void PluginRegistrationDialog::OnOK(wxCommandEvent & WXUNUSED(evt))
             for (size_t j = 0, cnt = item.plugs.size(); j < cnt; j++)
             {
                wxString errMsg;
-               if (mm.RegisterEffectPlugin(item.plugs[j]->GetProviderID(), path,
-                                     errMsg))
+               if (mm.RegisterEffectPlugin(item.plugs[j]->GetProviderID(), errMsg))
                {
                   for (size_t j = 0, cnt = item.plugs.size(); j < cnt; j++)
                   {

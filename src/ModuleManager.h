@@ -92,8 +92,7 @@ public:
    void Initialize(CommandHandler & cmdHandler);
    int Dispatch(ModuleDispatchTypes type);
 
-   bool RegisterEffectPlugin(const PluginID & provider, const wxString & path,
-                       wxString &errMsg);
+   bool RegisterEffectPlugin(const PluginID & provider, wxString &errMsg);
 
    IdentInterface *CreateProviderInstance(const PluginID & provider, const wxString & path);
    IdentInterface *CreateInstance(const PluginID & provider, const wxString & path);

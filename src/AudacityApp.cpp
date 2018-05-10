@@ -722,7 +722,7 @@ bool AudacityApp::MRUOpen(const wxString &fullPathStr) {
          // This project is clean; it's never been touched.  Therefore
          // all relevant member variables are in their initial state,
          // and it's okay to open a NEW project inside this window.
-         AudacityProject::OpenProject( proj, fullPathStr );
+         AudacityProject::OpenProject( proj );
       }
       else {
          // File doesn't exist - remove file from history
