@@ -465,9 +465,6 @@ void SelectionBar::OnModeIncClicked(wxMouseEvent & WXUNUSED(event)){
    SelectionModeUpdated();
 }
 
-void SelectionBar::OnChooserTitleClicked(wxMouseEvent & WXUNUSED(event)){
-}
-
 // Called when one of the format drop downs is changed.
 void SelectionBar::OnUpdate(wxCommandEvent &evt)
 {

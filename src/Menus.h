@@ -322,7 +322,6 @@ public:
    static const int kDontRepeatLast = 0x04;
 };
 
-bool DoEffect(const PluginID & ID, const CommandContext & context, int flags);
 void OnEffect(const CommandContext &context );
 bool DoAudacityCommand(const PluginID & ID, const CommandContext &, int flags);
 void OnApplyMacroDirectly(const CommandContext &context );

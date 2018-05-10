@@ -704,12 +704,7 @@ void Effect::SetDuration(double seconds)
 
 bool Effect::Apply()
 {
-   CommandContext context( *GetActiveProject() );
-   // This is absolute hackage...but easy and I can't think of another way just now.
-   //
-   // It should callback to the EffectManager to kick off the processing
-   return GetActiveProject()->DoEffect(GetID(), context,
-      AudacityProject::OnEffectFlags::kConfigured);
+   return false;
 }
 
 void Effect::Preview()
@@ -2936,8 +2931,6 @@ void EffectUIHost::OnApply(wxCommandEvent & evt)
    mApplyBtn->Disable();
    auto cleanup = finally( [&] { mApplyBtn->Enable(); } );
 
-   if( mEffect )
-      mEffect->Apply();
    if( mCommand )
       mCommand->Apply();
 }
