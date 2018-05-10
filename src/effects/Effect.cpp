@@ -2440,7 +2440,6 @@ private:
 #include "../../images/Effect.h"
 
 BEGIN_EVENT_TABLE(EffectUIHost, wxDialogWrapper)
-   EVT_BUTTON(wxID_CANCEL, EffectUIHost::OnCancel)
    EVT_BUTTON(wxID_HELP, EffectUIHost::OnHelp)
    EVT_BUTTON(eDebugID, EffectUIHost::OnDebug)
    EVT_BUTTON(kMenuID, EffectUIHost::OnMenu)
@@ -2800,27 +2799,6 @@ bool EffectUIHost::Initialize()
 
    SetMinSize(GetSize());
    return true;
-}
-
-void EffectUIHost::DoCancel()
-{
-   if (!mDismissed) {
-      if( mEffect )
-         mEffect->mUIResultID = wxID_CANCEL;
-
-      if (IsModal())
-         EndModal(false);
-      else
-         Hide();
-
-      mDismissed = true;
-   }
-}
-
-void EffectUIHost::OnCancel(wxCommandEvent & WXUNUSED(evt))
-{
-   DoCancel();
-   Close();
 }
 
 void EffectUIHost::OnHelp(wxCommandEvent & WXUNUSED(event))
