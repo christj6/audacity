@@ -146,10 +146,6 @@ It handles initialization and termination by subclassing wxApp.
 #     pragma comment(lib, "soundtouch")
 #  endif
 
-#  if defined(USE_VAMP)
-#     pragma comment(lib, "libvamp")
-#  endif
-
 #  if defined(_DEBUG)
 #     define D "d"
 #  else

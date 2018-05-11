@@ -957,10 +957,6 @@
       <Project>{af9ad75c-4785-4432-bac3-adab1e7f1192}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\libvamp\libvamp.vcxproj">
-      <Project>{a61e2bf1-21aa-4118-b0d8-fd3d53db892e}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
     <ProjectReference Include="..\libvorbis\libvorbis.vcxproj">
       <Project>{727d6675-67ee-4d0b-9dc1-177a0af741f0}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

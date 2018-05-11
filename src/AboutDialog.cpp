@@ -518,13 +518,8 @@ void AboutDialog::PopulateInformationPage( ShuttleGui & S )
          disabled);
    # endif
 
-   # if USE_VAMP
-   AddBuildinfoRow(&informationStr, wxT("Vamp"), _("Plug-in support"),
-         enabled);
-   # else
    AddBuildinfoRow(&informationStr, wxT("Vamp"), _("Plug-in support"),
          disabled);
-   # endif
 
    # if USE_AUDIO_UNITS
    AddBuildinfoRow(&informationStr, wxT("Audio Units"), _("Plug-in support"),
@@ -534,13 +529,8 @@ void AboutDialog::PopulateInformationPage( ShuttleGui & S )
          disabled);
    # endif
 
-   # if USE_VST
-   AddBuildinfoRow(&informationStr, wxT("VST"), _("Plug-in support"),
-         enabled);
-   # else
    AddBuildinfoRow(&informationStr, wxT("VST"), _("Plug-in support"),
          disabled);
-   # endif
 
    # if USE_LV2
    AddBuildinfoRow(&informationStr, wxT("LV2"), _("Plug-in support"),

@@ -31,8 +31,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "locale", "Projects\locale\l
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "filedialog", "Projects\filedialog\filedialog.vcxproj", "{5284D863-3813-479F-BBF0-AC234E216BC6}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvamp", "Projects\libvamp\libvamp.vcxproj", "{A61E2BF1-21AA-4118-B0D8-FD3D53DB892E}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "twolame", "Projects\twolame\twolame.vcxproj", "{8C69F7B6-684F-48D9-9057-8912CA3DAA8B}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sbsms", "Projects\sbsms\sbsms.vcxproj", "{A64FFB5D-0CF0-43EE-9DE3-C72260864BFF}"
@@ -104,10 +102,6 @@ Global
 		{5284D863-3813-479F-BBF0-AC234E216BC6}.Debug|Win32.Build.0 = Debug|Win32
 		{5284D863-3813-479F-BBF0-AC234E216BC6}.Release|Win32.ActiveCfg = Release|Win32
 		{5284D863-3813-479F-BBF0-AC234E216BC6}.Release|Win32.Build.0 = Release|Win32
-		{A61E2BF1-21AA-4118-B0D8-FD3D53DB892E}.Debug|Win32.ActiveCfg = Debug|Win32
-		{A61E2BF1-21AA-4118-B0D8-FD3D53DB892E}.Debug|Win32.Build.0 = Debug|Win32
-		{A61E2BF1-21AA-4118-B0D8-FD3D53DB892E}.Release|Win32.ActiveCfg = Release|Win32
-		{A61E2BF1-21AA-4118-B0D8-FD3D53DB892E}.Release|Win32.Build.0 = Release|Win32
 		{8C69F7B6-684F-48D9-9057-8912CA3DAA8B}.Debug|Win32.ActiveCfg = Debug|Win32
 		{8C69F7B6-684F-48D9-9057-8912CA3DAA8B}.Debug|Win32.Build.0 = Debug|Win32
 		{8C69F7B6-684F-48D9-9057-8912CA3DAA8B}.Release|Win32.ActiveCfg = Release|Win32

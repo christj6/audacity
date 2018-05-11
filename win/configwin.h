@@ -25,8 +25,6 @@
 #define USE_LIBVORBIS 1
 #define USE_SBSMS 1
 #define USE_SOUNDTOUCH 1
-#define USE_VAMP 1
-#define USE_VST 1
 
 #define INSTALL_PREFIX "."
 

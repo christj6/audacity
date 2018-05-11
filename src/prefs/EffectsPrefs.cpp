@@ -78,18 +78,6 @@ void EffectsPrefs::PopulateOrExchange(ShuttleGui & S)
                     wxT("/LV2/Enable"),
                     true);
 #endif
-
-#if USE_VAMP
-      S.TieCheckBox(wxT("&Vamp"),
-                    wxT("/VAMP/Enable"),
-                    true);
-#endif
-
-#if USE_VST
-      S.TieCheckBox(wxT("V&ST"),
-                    wxT("/VST/Enable"),
-                    true);
-#endif
    }
    S.EndStatic();
 
