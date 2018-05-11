@@ -973,10 +973,6 @@
       <Project>{7aba0f80-94ae-4e82-ab89-2e1258212d59}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\portmixer\portmixer.vcxproj">
-      <Project>{3a76129b-55ab-4d54-baa7-08f63ed52569}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
     <ProjectReference Include="..\sbsms\sbsms.vcxproj">
       <Project>{a64ffb5d-0cf0-43ee-9de3-c72260864bff}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

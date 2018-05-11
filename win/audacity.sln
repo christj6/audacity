@@ -23,8 +23,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libsndfile", "Projects\libs
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libogg", "Projects\libogg\libogg.vcxproj", "{A939AAF8-44F1-4CE7-9DD0-7A6E99814857}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "portmixer", "Projects\portmixer\portmixer.vcxproj", "{3A76129B-55AB-4D54-BAA7-08F63ED52569}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libvorbis", "Projects\libvorbis\libvorbis.vcxproj", "{727D6675-67EE-4D0B-9DC1-177A0AF741F0}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "portaudio-v19", "Projects\portaudio-v19\portaudio-v19.vcxproj", "{7ABA0F80-94AE-4E82-AB89-2E1258212D59}"
@@ -91,10 +89,6 @@ Global
 		{A939AAF8-44F1-4CE7-9DD0-7A6E99814857}.Debug|Win32.Build.0 = Debug|Win32
 		{A939AAF8-44F1-4CE7-9DD0-7A6E99814857}.Release|Win32.ActiveCfg = Release|Win32
 		{A939AAF8-44F1-4CE7-9DD0-7A6E99814857}.Release|Win32.Build.0 = Release|Win32
-		{3A76129B-55AB-4D54-BAA7-08F63ED52569}.Debug|Win32.ActiveCfg = Debug|Win32
-		{3A76129B-55AB-4D54-BAA7-08F63ED52569}.Debug|Win32.Build.0 = Debug|Win32
-		{3A76129B-55AB-4D54-BAA7-08F63ED52569}.Release|Win32.ActiveCfg = Release|Win32
-		{3A76129B-55AB-4D54-BAA7-08F63ED52569}.Release|Win32.Build.0 = Release|Win32
 		{727D6675-67EE-4D0B-9DC1-177A0AF741F0}.Debug|Win32.ActiveCfg = Debug|Win32
 		{727D6675-67EE-4D0B-9DC1-177A0AF741F0}.Debug|Win32.Build.0 = Debug|Win32
 		{727D6675-67EE-4D0B-9DC1-177A0AF741F0}.Release|Win32.ActiveCfg = Release|Win32
