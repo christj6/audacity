@@ -2385,12 +2385,6 @@ void AudacityProject::OnCloseWindow(wxCloseEvent & event)
 
 void AudacityProject::OnOpenAudioFile(wxCommandEvent & event)
 {
-   const wxString &cmd = event.GetString();
-
-   if (!cmd.IsEmpty()) {
-      OpenFile(cmd);
-   }
-
    RequestUserAttention();
 }
 
@@ -2513,12 +2507,6 @@ bool AudacityProject::IsAlreadyOpen(const wxString & projPathName)
 AudacityProject *AudacityProject::OpenProject(AudacityProject *pProject)
 {
    return pProject;
-}
-
-// FIXME:? TRAP_ERR This should return a result that is checked.
-//    See comment in AudacityApp::MRUOpen().
-void AudacityProject::OpenFile(const wxString &fileNameArg, bool addtohistory)
-{
 }
 
 void AudacityProject::EnqueueODTasks()

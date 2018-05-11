@@ -48,10 +48,6 @@ bool OpenProjectCommand::Apply(const CommandContext & context){
       auto project = context.GetProject();
       project->OnOpen(*project);
    }
-   else
-   {
-      context.GetProject()->OpenFile(mFileName, mbAddToHistory);
-   }
    const wxString &newFileName = context.GetProject()->GetFileName();
 
    // Because Open does not return a success or failure, we have to guess
