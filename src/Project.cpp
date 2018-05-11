@@ -814,7 +814,6 @@ BEGIN_EVENT_TABLE(AudacityProject, wxFrame)
    // Fires for menu with ID #1...first menu defined
    EVT_UPDATE_UI(1, AudacityProject::OnUpdateUI)
    EVT_ICONIZE(AudacityProject::OnIconize)
-   EVT_COMMAND(wxID_ANY, EVT_OPEN_AUDIO_FILE, AudacityProject::OnOpenAudioFile)
    EVT_COMMAND(wxID_ANY, EVT_TOOLBAR_UPDATED, AudacityProject::OnToolBarUpdate)
    //mchinen:multithreaded calls - may not be threadsafe with CommandEvent: may have to change.
    EVT_COMMAND(wxID_ANY, EVT_ODTASK_UPDATE, AudacityProject::OnODTaskUpdate)
@@ -2381,11 +2380,6 @@ void AudacityProject::OnCloseWindow(wxCloseEvent & event)
 
    mIsBeingDeleted = true;
 
-}
-
-void AudacityProject::OnOpenAudioFile(wxCommandEvent & event)
-{
-   RequestUserAttention();
 }
 
 // static method, can be called outside of a project
