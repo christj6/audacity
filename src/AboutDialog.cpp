@@ -550,13 +550,8 @@ void AboutDialog::PopulateInformationPage( ShuttleGui & S )
          disabled);
    # endif
 
-   # if USE_PORTMIXER
-   AddBuildinfoRow(&informationStr, wxT("PortMixer"), _("Sound card mixer support"),
-         enabled);
-   # else
    AddBuildinfoRow(&informationStr, wxT("PortMixer"), _("Sound card mixer support"),
          disabled);
-   # endif
 
    # if USE_SOUNDTOUCH
    AddBuildinfoRow(&informationStr, wxT("SoundTouch"), _("Pitch and Tempo Change support"),

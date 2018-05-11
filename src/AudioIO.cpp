@@ -415,10 +415,6 @@ AudioIOListener and whether the playback is looped.
 #include <alloca.h>
 #endif
 
-#if USE_PORTMIXER
-#include "portmixer.h"
-#endif
-
 #include <wx/log.h>
 #include <wx/textctrl.h>
 #include <wx/timer.h>
@@ -681,33 +677,15 @@ AudioIO::AudioIO()
    mThread = std::make_unique<AudioThread>();
    mThread->Create();
 
-#if defined(USE_PORTMIXER)
-   mPortMixer = NULL;
-   mPreviousHWPlaythrough = -1.0;
-   HandleDeviceChange();
-#else
    mEmulateMixerOutputVol = true;
    mMixerOutputVol = 1.0;
    mInputMixerWorks = false;
-#endif
 
    mLastPlaybackTimeMillis = 0;
 }
 
 AudioIO::~AudioIO()
 {
-#if defined(USE_PORTMIXER)
-   if (mPortMixer) {
-      #if __WXMAC__
-      if (Px_SupportsPlaythrough(mPortMixer) && mPreviousHWPlaythrough >= 0.0)
-         Px_SetPlaythrough(mPortMixer, mPreviousHWPlaythrough);
-         mPreviousHWPlaythrough = -1.0;
-      #endif
-      Px_CloseMixer(mPortMixer);
-      mPortMixer = NULL;
-   }
-#endif
-
    // FIXME: ? TRAP_ERR.  Pa_Terminate probably OK if err without reporting.
    Pa_Terminate();
 
@@ -725,62 +703,16 @@ AudioIO::~AudioIO()
 
 void AudioIO::SetMixer(int inputSource)
 {
-#if defined(USE_PORTMIXER)
-   int oldRecordSource = Px_GetCurrentInputSource(mPortMixer);
-   if ( inputSource != oldRecordSource )
-         Px_SetCurrentInputSource(mPortMixer, inputSource);
-#endif
 }
 void AudioIO::SetMixer(int inputSource, float recordVolume,
                        float playbackVolume)
 {
    mMixerOutputVol = playbackVolume;
-
-#if defined(USE_PORTMIXER)
-   PxMixer *mixer = mPortMixer;
-
-   if( mixer )
-   {
-      float oldRecordVolume = Px_GetInputVolume(mixer);
-      float oldPlaybackVolume = Px_GetPCMOutputVolume(mixer);
-
-      SetMixer(inputSource);
-      if( oldRecordVolume != recordVolume )
-         Px_SetInputVolume(mixer, recordVolume);
-      if( oldPlaybackVolume != playbackVolume )
-         Px_SetPCMOutputVolume(mixer, playbackVolume);
-
-      return;
-   }
-#endif
 }
 
 void AudioIO::GetMixer(int *recordDevice, float *recordVolume,
                        float *playbackVolume)
 {
-#if defined(USE_PORTMIXER)
-
-   PxMixer *mixer = mPortMixer;
-
-   if( mixer )
-   {
-      *recordDevice = Px_GetCurrentInputSource(mixer);
-
-      if (mInputMixerWorks)
-         *recordVolume = Px_GetInputVolume(mixer);
-      else
-         *recordVolume = 1.0f;
-
-      if (mEmulateMixerOutputVol)
-         *playbackVolume = mMixerOutputVol;
-      else
-         *playbackVolume = Px_GetPCMOutputVolume(mixer);
-
-      return;
-   }
-
-#endif
-
    *recordDevice = 0;
    *recordVolume = 1.0f;
    *playbackVolume = mMixerOutputVol;
@@ -798,30 +730,9 @@ bool AudioIO::OutputMixerEmulated()
 
 wxArrayString AudioIO::GetInputSourceNames()
 {
-#if defined(USE_PORTMIXER)
-
-   wxArrayString deviceNames;
-
-   if( mPortMixer )
-   {
-      int numSources = Px_GetNumInputSources(mPortMixer);
-      for( int source = 0; source < numSources; source++ )
-         deviceNames.Add(wxString(wxSafeConvertMB2WX(Px_GetInputSourceName(mPortMixer, source))));
-   }
-   else
-   {
-      wxLogDebug(wxT("AudioIO::GetInputSourceNames(): PortMixer not initialised!"));
-   }
-
-   return deviceNames;
-
-#else
-
    wxArrayString blank;
 
    return blank;
-
-#endif
 }
 
 void AudioIO::HandleDeviceChange()
@@ -849,173 +760,6 @@ void AudioIO::HandleDeviceChange()
    mCachedPlaybackIndex = playDeviceNum;
    mCachedCaptureIndex = recDeviceNum;
    mCachedBestRateIn = 0.0;
-
-#if defined(USE_PORTMIXER)
-
-   // if we have a PortMixer object, close it down
-   if (mPortMixer) {
-      #if __WXMAC__
-      // on the Mac we must make sure that we restore the hardware playthrough
-      // state of the sound device to what it was before, because there isn't
-      // a UI for this (!)
-      if (Px_SupportsPlaythrough(mPortMixer) && mPreviousHWPlaythrough >= 0.0)
-         Px_SetPlaythrough(mPortMixer, mPreviousHWPlaythrough);
-         mPreviousHWPlaythrough = -1.0;
-      #endif
-      Px_CloseMixer(mPortMixer);
-      mPortMixer = NULL;
-   }
-
-   // that might have given us no rates whatsoever, so we have to guess an
-   // answer to do the next bit
-   int numrates = mCachedSampleRates.size();
-   int highestSampleRate;
-   if (numrates > 0)
-   {
-      highestSampleRate = mCachedSampleRates[numrates - 1];
-   }
-   else
-   {  // we don't actually have any rates that work for Rec and Play. Guess one
-      // to use for messing with the mixer, which doesn't actually do either
-      highestSampleRate = 44100;
-      // mCachedSampleRates is still empty, but it's not used again, so
-      // can ignore
-   }
-   mInputMixerWorks = false;
-   mEmulateMixerOutputVol = true;
-   mMixerOutputVol = 1.0;
-
-   int error;
-   // This tries to open the device with the samplerate worked out above, which
-   // will be the highest available for play and record on the device, or
-   // 44.1kHz if the info cannot be fetched.
-
-   PaStream *stream;
-
-   PaStreamParameters playbackParameters;
-
-   playbackParameters.device = playDeviceNum;
-   playbackParameters.sampleFormat = paFloat32;
-   playbackParameters.hostApiSpecificStreamInfo = NULL;
-   playbackParameters.channelCount = 1;
-   if (Pa_GetDeviceInfo(playDeviceNum))
-      playbackParameters.suggestedLatency =
-         Pa_GetDeviceInfo(playDeviceNum)->defaultLowOutputLatency;
-   else
-      playbackParameters.suggestedLatency = DEFAULT_LATENCY_CORRECTION/1000.0;
-
-   PaStreamParameters captureParameters;
-
-   captureParameters.device = recDeviceNum;
-   captureParameters.sampleFormat = paFloat32;;
-   captureParameters.hostApiSpecificStreamInfo = NULL;
-   captureParameters.channelCount = 1;
-   if (Pa_GetDeviceInfo(recDeviceNum))
-      captureParameters.suggestedLatency =
-         Pa_GetDeviceInfo(recDeviceNum)->defaultLowInputLatency;
-   else
-      captureParameters.suggestedLatency = DEFAULT_LATENCY_CORRECTION/1000.0;
-
-   // try opening for record and playback
-   error = Pa_OpenStream(&stream,
-                         &captureParameters, &playbackParameters,
-                         highestSampleRate, paFramesPerBufferUnspecified,
-                         paClipOff | paDitherOff,
-                         audacityAudioCallback, NULL);
-
-   if (!error) {
-      // Try portmixer for this stream
-      mPortMixer = Px_OpenMixer(stream, 0);
-      if (!mPortMixer) {
-         Pa_CloseStream(stream);
-         error = true;
-      }
-   }
-
-   // if that failed, try just for record
-   if( error ) {
-      error = Pa_OpenStream(&stream,
-                            &captureParameters, NULL,
-                            highestSampleRate, paFramesPerBufferUnspecified,
-                            paClipOff | paDitherOff,
-                            audacityAudioCallback, NULL);
-
-      if (!error) {
-         mPortMixer = Px_OpenMixer(stream, 0);
-         if (!mPortMixer) {
-            Pa_CloseStream(stream);
-            error = true;
-         }
-      }
-   }
-
-   // finally, try just for playback
-   if ( error ) {
-      error = Pa_OpenStream(&stream,
-                            NULL, &playbackParameters,
-                            highestSampleRate, paFramesPerBufferUnspecified,
-                            paClipOff | paDitherOff,
-                            audacityAudioCallback, NULL);
-
-      if (!error) {
-         mPortMixer = Px_OpenMixer(stream, 0);
-         if (!mPortMixer) {
-            Pa_CloseStream(stream);
-            error = true;
-         }
-      }
-   }
-
-   // FIXME: TRAP_ERR errors in HandleDeviceChange not reported.
-   // if it's still not working, give up
-   if( error )
-      return;
-
-   // Set input source
-#if USE_PORTMIXER
-   int sourceIndex;
-   if (gPrefs->Read(wxT("/AudioIO/RecordingSourceIndex"), &sourceIndex)) {
-      if (sourceIndex >= 0) {
-         //the current index of our source may be different because the stream
-         //is a combination of two devices, so update it.
-         sourceIndex = getRecordSourceIndex(mPortMixer);
-         if (sourceIndex >= 0)
-            SetMixer(sourceIndex);
-      }
-   }
-#endif
-
-   // Determine mixer capabilities - if it doesn't support control of output
-   // signal level, we emulate it (by multiplying this value by all outgoing
-   // samples)
-
-   mMixerOutputVol = Px_GetPCMOutputVolume(mPortMixer);
-   mEmulateMixerOutputVol = false;
-   Px_SetPCMOutputVolume(mPortMixer, 0.0);
-   if (Px_GetPCMOutputVolume(mPortMixer) > 0.1)
-      mEmulateMixerOutputVol = true;
-   Px_SetPCMOutputVolume(mPortMixer, 0.2f);
-   if (Px_GetPCMOutputVolume(mPortMixer) < 0.1 ||
-       Px_GetPCMOutputVolume(mPortMixer) > 0.3)
-      mEmulateMixerOutputVol = true;
-   Px_SetPCMOutputVolume(mPortMixer, mMixerOutputVol);
-
-   float inputVol = Px_GetInputVolume(mPortMixer);
-   mInputMixerWorks = true;   // assume it works unless proved wrong
-   Px_SetInputVolume(mPortMixer, 0.0);
-   if (Px_GetInputVolume(mPortMixer) > 0.1)
-      mInputMixerWorks = false;  // can't set to zero
-   Px_SetInputVolume(mPortMixer, 0.2f);
-   if (Px_GetInputVolume(mPortMixer) < 0.1 ||
-       Px_GetInputVolume(mPortMixer) > 0.3)
-      mInputMixerWorks = false;  // can't set level accurately
-   Px_SetInputVolume(mPortMixer, inputVol);
-
-   Pa_CloseStream(stream);
-
-   mMixerOutputVol = 1.0;
-
-#endif   // USE_PORTMIXER
 }
 
 static PaSampleFormat AudacityToPortAudioSampleFormat(sampleFormat format)
@@ -1137,15 +881,6 @@ bool AudioIO::StartPortAudioStream(double sampleRate,
 
    SetMeters();
 
-#ifdef USE_PORTMIXER
-#ifdef __WXMSW__
-   //mchinen nov 30 2010.  For some reason Pa_OpenStream resets the input volume on windows.
-   //so cache and restore after it.
-   //The actual problem is likely in portaudio's pa_win_wmme.c OpenStream().
-   float oldRecordVolume = Px_GetInputVolume(mPortMixer);
-#endif
-#endif
-
    // July 2016 (Carsten and Uwe)
    // BUG 193: Possibly tell portAudio to use 24 bit with DirectSound. 
    int  userData = 24;
@@ -1157,32 +892,6 @@ bool AudioIO::StartPortAudioStream(double sampleRate,
                                  mRate, paFramesPerBufferUnspecified,
                                  paNoFlag,
                                  audacityAudioCallback, lpUserData );
-
-
-#if USE_PORTMIXER
-#ifdef __WXMSW__
-   Px_SetInputVolume(mPortMixer, oldRecordVolume);
-#endif
-   if (mPortStreamV19 != NULL && mLastPaError == paNoError) {
-
-      #ifdef __WXMAC__
-      if (mPortMixer) {
-         if (Px_SupportsPlaythrough(mPortMixer)) {
-            bool playthrough = false;
-
-            mPreviousHWPlaythrough = Px_GetPlaythrough(mPortMixer);
-
-            // Bug 388.  Feature not supported.
-            //gPrefs->Read(wxT("/AudioIO/Playthrough"), &playthrough, false);
-            if (playthrough)
-               Px_SetPlaythrough(mPortMixer, 1.0);
-            else
-               Px_SetPlaythrough(mPortMixer, 0.0);
-         }
-      }
-      #endif
-   }
-#endif
 
    return (mLastPaError == paNoError);
 }
@@ -1699,18 +1408,6 @@ void AudioIO::StopStream()
       ::wxSafeYield();
       wxMilliSleep( 50 );
    }
-
-   // Turn off HW playthrough if PortMixer is being used
-
-  #if defined(USE_PORTMIXER)
-   if( mPortMixer ) {
-      #if __WXMAC__
-      if (Px_SupportsPlaythrough(mPortMixer) && mPreviousHWPlaythrough >= 0.0)
-         Px_SetPlaythrough(mPortMixer, mPreviousHWPlaythrough);
-         mPreviousHWPlaythrough = -1.0;
-      #endif
-   }
-  #endif
 
    if (mPortStreamV19) {
       Pa_AbortStream( mPortStreamV19 );
@@ -2295,20 +1992,6 @@ size_t AudioIO::GetCommonlyAvailCapture()
    return commonlyAvail;
 }
 
-#if USE_PORTMIXER
-int AudioIO::getRecordSourceIndex(PxMixer *portMixer)
-{
-   int i;
-   wxString sourceName = gPrefs->Read(wxT("/AudioIO/RecordingSource"), wxT(""));
-   int numSources = Px_GetNumInputSources(portMixer);
-   for (i = 0; i < numSources; i++) {
-      if (sourceName == wxString(wxSafeConvertMB2WX(Px_GetInputSourceName(portMixer, i))))
-         return i;
-   }
-   return -1;
-}
-#endif
-
 int AudioIO::getPlayDevIndex(const wxString &devNameArg)
 {
    wxString devName(devNameArg);
@@ -2531,135 +2214,6 @@ wxString AudioIO::GetDeviceInfo()
       return o.GetString();
    }
 
-#if defined(USE_PORTMIXER)
-   if (supportedSampleRates.size() > 0)
-      {
-      int highestSampleRate = supportedSampleRates.back();
-      bool EmulateMixerInputVol = true;
-      bool EmulateMixerOutputVol = true;
-      float MixerInputVol = 1.0;
-      float MixerOutputVol = 1.0;
-
-      int error;
-
-      PaStream *stream;
-
-      PaStreamParameters playbackParameters;
-
-      playbackParameters.device = playDeviceNum;
-      playbackParameters.sampleFormat = paFloat32;
-      playbackParameters.hostApiSpecificStreamInfo = NULL;
-      playbackParameters.channelCount = 1;
-      if (Pa_GetDeviceInfo(playDeviceNum)){
-         playbackParameters.suggestedLatency =
-            Pa_GetDeviceInfo(playDeviceNum)->defaultLowOutputLatency;
-      }
-      else{
-         playbackParameters.suggestedLatency = DEFAULT_LATENCY_CORRECTION/1000.0;
-      }
-
-      PaStreamParameters captureParameters;
-
-      captureParameters.device = recDeviceNum;
-      captureParameters.sampleFormat = paFloat32;;
-      captureParameters.hostApiSpecificStreamInfo = NULL;
-      captureParameters.channelCount = 1;
-      if (Pa_GetDeviceInfo(recDeviceNum)){
-         captureParameters.suggestedLatency =
-            Pa_GetDeviceInfo(recDeviceNum)->defaultLowInputLatency;
-      }else{
-         captureParameters.suggestedLatency = DEFAULT_LATENCY_CORRECTION/1000.0;
-      }
-
-      error = Pa_OpenStream(&stream,
-                         &captureParameters, &playbackParameters,
-                         highestSampleRate, paFramesPerBufferUnspecified,
-                         paClipOff | paDitherOff,
-                         audacityAudioCallback, NULL);
-
-      if (error) {
-         error = Pa_OpenStream(&stream,
-                            &captureParameters, NULL,
-                            highestSampleRate, paFramesPerBufferUnspecified,
-                            paClipOff | paDitherOff,
-                            audacityAudioCallback, NULL);
-      }
-
-      if (error) {
-         s << wxT("Received ") << error << wxT(" while opening devices") << e;
-         return o.GetString();
-      }
-
-      PxMixer *PortMixer = Px_OpenMixer(stream, 0);
-
-      if (!PortMixer) {
-         s << wxT("Unable to open Portmixer") << e;
-         Pa_CloseStream(stream);
-         return o.GetString();
-      }
-
-      s << wxT("==============================") << e;
-      s << wxT("Available mixers:") << e;
-
-      // FIXME: ? PortMixer errors on query not reported in GetDeviceInfo
-      cnt = Px_GetNumMixers(stream);
-      for (int i = 0; i < cnt; i++) {
-         wxString name = wxSafeConvertMB2WX(Px_GetMixerName(stream, i));
-         s << i << wxT(" - ") << name << e;
-      }
-
-      s << wxT("==============================") << e;
-      s << wxT("Available recording sources:") << e;
-      cnt = Px_GetNumInputSources(PortMixer);
-      for (int i = 0; i < cnt; i++) {
-         wxString name = wxSafeConvertMB2WX(Px_GetInputSourceName(PortMixer, i));
-         s << i << wxT(" - ") << name << e;
-      }
-
-      s << wxT("==============================") << e;
-      s << wxT("Available playback volumes:") << e;
-      cnt = Px_GetNumOutputVolumes(PortMixer);
-      for (int i = 0; i < cnt; i++) {
-         wxString name = wxSafeConvertMB2WX(Px_GetOutputVolumeName(PortMixer, i));
-         s << i << wxT(" - ") << name << e;
-      }
-
-      // Determine mixer capabilities - it it doesn't support either
-      // input or output, we emulate them (by multiplying this value
-      // by all incoming/outgoing samples)
-
-      MixerOutputVol = Px_GetPCMOutputVolume(PortMixer);
-      EmulateMixerOutputVol = false;
-      Px_SetPCMOutputVolume(PortMixer, 0.0);
-      if (Px_GetPCMOutputVolume(PortMixer) > 0.1)
-         EmulateMixerOutputVol = true;
-      Px_SetPCMOutputVolume(PortMixer, 0.2f);
-      if (Px_GetPCMOutputVolume(PortMixer) < 0.1 ||
-          Px_GetPCMOutputVolume(PortMixer) > 0.3)
-         EmulateMixerOutputVol = true;
-      Px_SetPCMOutputVolume(PortMixer, MixerOutputVol);
-
-      MixerInputVol = Px_GetInputVolume(PortMixer);
-      EmulateMixerInputVol = false;
-      Px_SetInputVolume(PortMixer, 0.0);
-      if (Px_GetInputVolume(PortMixer) > 0.1)
-         EmulateMixerInputVol = true;
-      Px_SetInputVolume(PortMixer, 0.2f);
-      if (Px_GetInputVolume(PortMixer) < 0.1 ||
-          Px_GetInputVolume(PortMixer) > 0.3)
-         EmulateMixerInputVol = true;
-      Px_SetInputVolume(PortMixer, MixerInputVol);
-
-      Pa_CloseStream(stream);
-
-      s << wxT("==============================") << e;
-      s << wxT("Recording volume is ") << (EmulateMixerInputVol? wxT("emulated"): wxT("native")) << e;
-      s << wxT("Playback volume is ") << (EmulateMixerOutputVol? wxT("emulated"): wxT("native")) << e;
-
-      Px_CloseMixer(PortMixer);
-
-      }  //end of massive if statement if a valid sample rate has been found
-#endif
    return o.GetString();
 }
 

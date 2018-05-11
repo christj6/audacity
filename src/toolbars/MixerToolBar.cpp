@@ -154,31 +154,6 @@ void MixerToolBar::OnCaptureKey(wxCommandEvent &event)
 
 void MixerToolBar::UpdatePrefs()
 {
-#if USE_PORTMIXER
-   float inputVolume;
-   float playbackVolume;
-   int inputSource;
-
-   // Reset the selected source
-   gAudioIO->GetMixer(&inputSource, &inputVolume, &playbackVolume);
-
-   // Show or hide the input slider based on whether it works
-   mInputSlider->Enable(gAudioIO->InputMixerWorks());
-
-   // Layout the toolbar
-   Layout();
-
-   // Resize the toolbar to fit the contents
-   Fit();
-
-   // And make that size the minimum
-   SetMinSize( wxWindow::GetSizer()->GetMinSize() );
-   SetSize( GetMinSize() );
-
-   // Notify someone that we've changed our size
-   Updated();
-#endif
-
    // Set label to pull in language change
    SetLabel(_("Mixer"));
 
@@ -190,44 +165,10 @@ void MixerToolBar::UpdatePrefs()
 
 void MixerToolBar::UpdateControls()
 {
-#if USE_PORTMIXER
-   float inputVolume;
-   float playbackVolume;
-   int inputSource;
-
-   // Show or hide the input slider based on whether it works
-   mInputSlider->Enable(gAudioIO->InputMixerWorks());
-
-   gAudioIO->GetMixer(&inputSource, &inputVolume, &playbackVolume);
-
-   if (mOutputSlider->Get() != playbackVolume) {
-      mOutputSlider->Set(playbackVolume);
-      mOutputSliderVolume = playbackVolume;
-      SetToolTips();
-   }
-
-   if (mInputSlider->Get() != inputVolume) {
-      mInputSlider->Set(inputVolume);
-      mInputSliderVolume = inputVolume;
-      SetToolTips();
-   }
-#endif // USE_PORTMIXER
 }
 
 void MixerToolBar::SetMixer(wxCommandEvent & WXUNUSED(event))
 {
-#if USE_PORTMIXER
-   float inputVolume = mInputSlider->Get();
-   float outputVolume = mOutputSlider->Get();
-   float oldIn, oldOut;
-   int inputSource;
-
-   gAudioIO->GetMixer(&inputSource, &oldIn, &oldOut);
-   gAudioIO->SetMixer(inputSource, inputVolume, outputVolume);
-   mOutputSliderVolume = outputVolume;
-   mInputSliderVolume = inputVolume;
-   SetToolTips();
-#endif // USE_PORTMIXER
 }
 
 void MixerToolBar::ShowOutputGainDialog()

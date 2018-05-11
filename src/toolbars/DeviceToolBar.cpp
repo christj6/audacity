@@ -773,38 +773,4 @@ void DeviceToolBar::ShowComboDialog(wxChoice *combo, const wxString &title)
       AudacityMessageBox(_("Device information is not available."));
       return;
    }
-
-#if USE_PORTMIXER
-   wxArrayString inputSources = combo->GetStrings();
-
-   wxDialogWrapper dlg(nullptr, wxID_ANY, title);
-   dlg.SetName(dlg.GetTitle());
-   ShuttleGui S(&dlg, eIsCreating);
-   wxChoice *c;
-
-   S.StartVerticalLay(true);
-   {
-     S.StartHorizontalLay(wxCENTER, false);
-      {
-         c = S.AddChoice(combo->GetName(),
-                         combo->GetStringSelection(),
-                         &inputSources);
-      }
-      S.EndHorizontalLay();
-   }
-   S.EndVerticalLay();
-   S.AddStandardButtons();
-
-   dlg.GetSizer()->SetSizeHints(&dlg);
-   dlg.Center();
-
-   if (dlg.ShowModal() == wxID_OK)
-   {
-      wxCommandEvent dummyEvent;
-      dummyEvent.SetEventObject(combo);
-      // SetSelection() doesn't send an event, so we call OnChoice explicitly
-      combo->SetSelection(c->GetSelection());
-      OnChoice(dummyEvent);
-   }
-#endif
 }

@@ -23,10 +23,6 @@
 #include <wx/atomic.h>
 #include <wx/weakref.h>
 
-#if USE_PORTMIXER
-#include "../lib-src/portmixer/include/portmixer.h"
-#endif
-
 #include <wx/event.h>
 #include <wx/string.h>
 #include <wx/thread.h>
@@ -366,9 +362,6 @@ private:
     *
     * If the device isn't found, returns -1
     */
-#if USE_PORTMIXER
-   static int getRecordSourceIndex(PxMixer *portMixer);
-#endif
 
    /** \brief get the index of the supplied (named) playback device, or the
     * device selected in the preferences if none given.
@@ -473,11 +466,6 @@ private:
    MeterPanel         *mOutputMeter;
    bool                mUpdateMeters;
    volatile bool       mUpdatingMeters;
-
-   #if USE_PORTMIXER
-   PxMixer            *mPortMixer;
-   float               mPreviousHWPlaythrough;
-   #endif /* USE_PORTMIXER */
 
    bool                mEmulateMixerOutputVol;
    /** @brief Can we control the hardware input level?

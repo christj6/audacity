@@ -138,10 +138,6 @@ It handles initialization and termination by subclassing wxApp.
 
 #     pragma comment(lib, "libnyquist")
 
-#  if defined(USE_PORTMIXER)
-#     pragma comment(lib, "portmixer")
-#  endif
-
 #  if defined(USE_SBSMS)
 #     pragma comment(lib, "sbsms")
 #  endif
