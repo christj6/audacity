@@ -969,14 +969,6 @@
       <Project>{7aba0f80-94ae-4e82-ab89-2e1258212d59}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\sbsms\sbsms.vcxproj">
-      <Project>{a64ffb5d-0cf0-43ee-9de3-c72260864bff}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\soundtouch\soundtouch.vcxproj">
-      <Project>{ec3f5835-c486-4970-8a6b-a0700f4b3637}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
     <ProjectReference Include="..\twolame\twolame.vcxproj">
       <Project>{8c69f7b6-684f-48d9-9057-8912ca3daa8b}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

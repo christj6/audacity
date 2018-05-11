@@ -7,8 +7,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Audacity", "Projects\Audaci
 		{A939AAF8-44F1-4CE7-9DD0-7A6E99814856} = {A939AAF8-44F1-4CE7-9DD0-7A6E99814856}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "soundtouch", "Projects\soundtouch\soundtouch.vcxproj", "{EC3F5835-C486-4970-8A6B-A0700F4B3637}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libflac", "Projects\libflac\libflac.vcxproj", "{6C7DC635-26FB-419A-B69A-7ECBBB068245}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libflac++", "Projects\libflac++\libflac++.vcxproj", "{B28C9F3F-FF0E-4FEC-844C-685390B8AC06}"
@@ -33,8 +31,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "filedialog", "Projects\file
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "twolame", "Projects\twolame\twolame.vcxproj", "{8C69F7B6-684F-48D9-9057-8912CA3DAA8B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sbsms", "Projects\sbsms\sbsms.vcxproj", "{A64FFB5D-0CF0-43EE-9DE3-C72260864BFF}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "help", "Projects\help\help.vcxproj", "{02F94A40-586A-4403-8464-13B50801FFEC}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libsoxr", "Projects\libsoxr\libsoxr.vcxproj", "{AF9AD75C-4785-4432-BAC3-ADAB1E7F1192}"
@@ -55,10 +51,6 @@ Global
 		{1D64095C-F936-4FCF-B609-56E9DDF941FA}.Debug|Win32.Build.0 = Debug|Win32
 		{1D64095C-F936-4FCF-B609-56E9DDF941FA}.Release|Win32.ActiveCfg = Release|Win32
 		{1D64095C-F936-4FCF-B609-56E9DDF941FA}.Release|Win32.Build.0 = Release|Win32
-		{EC3F5835-C486-4970-8A6B-A0700F4B3637}.Debug|Win32.ActiveCfg = Debug|Win32
-		{EC3F5835-C486-4970-8A6B-A0700F4B3637}.Debug|Win32.Build.0 = Debug|Win32
-		{EC3F5835-C486-4970-8A6B-A0700F4B3637}.Release|Win32.ActiveCfg = Release|Win32
-		{EC3F5835-C486-4970-8A6B-A0700F4B3637}.Release|Win32.Build.0 = Release|Win32
 		{6C7DC635-26FB-419A-B69A-7ECBBB068245}.Debug|Win32.ActiveCfg = Debug|Win32
 		{6C7DC635-26FB-419A-B69A-7ECBBB068245}.Debug|Win32.Build.0 = Debug|Win32
 		{6C7DC635-26FB-419A-B69A-7ECBBB068245}.Release|Win32.ActiveCfg = Release|Win32
@@ -106,10 +98,6 @@ Global
 		{8C69F7B6-684F-48D9-9057-8912CA3DAA8B}.Debug|Win32.Build.0 = Debug|Win32
 		{8C69F7B6-684F-48D9-9057-8912CA3DAA8B}.Release|Win32.ActiveCfg = Release|Win32
 		{8C69F7B6-684F-48D9-9057-8912CA3DAA8B}.Release|Win32.Build.0 = Release|Win32
-		{A64FFB5D-0CF0-43EE-9DE3-C72260864BFF}.Debug|Win32.ActiveCfg = Debug|Win32
-		{A64FFB5D-0CF0-43EE-9DE3-C72260864BFF}.Debug|Win32.Build.0 = Debug|Win32
-		{A64FFB5D-0CF0-43EE-9DE3-C72260864BFF}.Release|Win32.ActiveCfg = Release|Win32
-		{A64FFB5D-0CF0-43EE-9DE3-C72260864BFF}.Release|Win32.Build.0 = Release|Win32
 		{02F94A40-586A-4403-8464-13B50801FFEC}.Debug|Win32.ActiveCfg = Debug|Win32
 		{02F94A40-586A-4403-8464-13B50801FFEC}.Release|Win32.ActiveCfg = Release|Win32
 		{AF9AD75C-4785-4432-BAC3-ADAB1E7F1192}.Debug|Win32.ActiveCfg = Debug|Win32

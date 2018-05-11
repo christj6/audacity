@@ -543,21 +543,11 @@ void AboutDialog::PopulateInformationPage( ShuttleGui & S )
    AddBuildinfoRow(&informationStr, wxT("PortMixer"), _("Sound card mixer support"),
          disabled);
 
-   # if USE_SOUNDTOUCH
-   AddBuildinfoRow(&informationStr, wxT("SoundTouch"), _("Pitch and Tempo Change support"),
-         enabled);
-   # else
    AddBuildinfoRow(&informationStr, wxT("SoundTouch"), _("Pitch and Tempo Change support"),
          disabled);
-   # endif
 
-   # if USE_SBSMS
-   AddBuildinfoRow(&informationStr, wxT("SBSMS"), _("Extreme Pitch and Tempo Change support"),
-         enabled);
-   # else
    AddBuildinfoRow(&informationStr, wxT("SBSMS"), _("Extreme Pitch and Tempo Change support"),
          disabled);
-   # endif
 
    informationStr += wxT("</table>\n");   // end of table of features
 

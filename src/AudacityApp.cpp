@@ -138,14 +138,6 @@ It handles initialization and termination by subclassing wxApp.
 
 #     pragma comment(lib, "libnyquist")
 
-#  if defined(USE_SBSMS)
-#     pragma comment(lib, "sbsms")
-#  endif
-
-#  if defined(USE_SOUNDTOUCH)
-#     pragma comment(lib, "soundtouch")
-#  endif
-
 #  if defined(_DEBUG)
 #     define D "d"
 #  else
