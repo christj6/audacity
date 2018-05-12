@@ -73,10 +73,6 @@
 // preferrably disabled until other work is done.  Martyn 22/12/2008.
 // 
 
-#ifdef EXPERIMENTAL_NYQUIST_INSPECTOR
-   #include "NyquistAdapter.h"
-#endif
-
 // Module prefs provides a panel in prefs where users can choose which modules
 // to enable.
 #define EXPERIMENTAL_MODULE_PREFS
@@ -86,9 +82,6 @@
 
 // Define for NEW noise reduction effect from Paul Licameli.
 #define EXPERIMENTAL_NOISE_REDUCTION
-
-// Define to enable Nyquist audio clip boundary control (Steve Daulton Dec 2014)
-#define EXPERIMENTAL_NYQUIST_SPLIT_CONTROL
 
 // Paul Licameli (PRL) 24 May 2015
 // Allow scrolling up to one half of a screenful beyond either end of the project,
