@@ -460,13 +460,8 @@ void AboutDialog::PopulateInformationPage( ShuttleGui & S )
          disabled);
    # endif
 
-   # if USE_LIBTWOLAME
-   AddBuildinfoRow(&informationStr, wxT("libtwolame"), _("MP2 export"),
-         enabled);
-   # else
    AddBuildinfoRow(&informationStr, wxT("libtwolame"), _("MP2 export"),
          disabled);
-   # endif
 
    # if USE_QUICKTIME
    AddBuildinfoRow(&informationStr, wxT("QuickTime"), _("Import via QuickTime"),

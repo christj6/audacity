@@ -256,7 +256,6 @@
     <ClCompile Include="..\..\..\src\export\ExportFFmpeg.cpp" />
     <ClCompile Include="..\..\..\src\export\ExportFFmpegDialogs.cpp" />
     <ClCompile Include="..\..\..\src\export\ExportFLAC.cpp" />
-    <ClCompile Include="..\..\..\src\export\ExportMP2.cpp" />
     <ClCompile Include="..\..\..\src\export\ExportMP3.cpp" />
     <ClCompile Include="..\..\..\src\export\ExportMultiple.cpp" />
     <ClCompile Include="..\..\..\src\export\ExportOGG.cpp" />
@@ -513,7 +512,6 @@
     <ClInclude Include="..\..\..\src\export\ExportFFmpeg.h" />
     <ClInclude Include="..\..\..\src\export\ExportFFmpegDialogs.h" />
     <ClInclude Include="..\..\..\src\export\ExportFLAC.h" />
-    <ClInclude Include="..\..\..\src\export\ExportMP2.h" />
     <ClInclude Include="..\..\..\src\export\ExportMP3.h" />
     <ClInclude Include="..\..\..\src\export\ExportMultiple.h" />
     <ClInclude Include="..\..\..\src\export\ExportOGG.h" />
@@ -961,10 +959,6 @@
     </ProjectReference>
     <ProjectReference Include="..\portaudio-v19\portaudio-v19.vcxproj">
       <Project>{7aba0f80-94ae-4e82-ab89-2e1258212d59}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\twolame\twolame.vcxproj">
-      <Project>{8c69f7b6-684f-48d9-9057-8912ca3daa8b}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>

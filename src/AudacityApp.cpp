@@ -123,10 +123,6 @@ It handles initialization and termination by subclassing wxApp.
 #     pragma comment(lib, "libmad")
 #  endif
 
-#  if defined(USE_LIBTWOLAME)
-#     pragma comment(lib, "twolame")
-#  endif
-
 #  if defined(USE_LIBVORBIS)
 #     pragma comment(lib, "libogg")
 #     pragma comment(lib, "libvorbis")
