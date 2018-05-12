@@ -80,15 +80,6 @@ void OnOutputDevice(const CommandContext &context );
 void OnAudioHost(const CommandContext &context );
 void OnInputChannels(const CommandContext &context );
 
-        // Mixer control
-
-void OnOutputGain(const CommandContext &context );
-void OnInputGain(const CommandContext &context );
-void OnOutputGainInc(const CommandContext &context );
-void OnOutputGainDec(const CommandContext &context );
-void OnInputGainInc(const CommandContext &context );
-void OnInputGainDec(const CommandContext &context );
-
         // Moving track focus commands
 
 void OnPrevTrack( bool shift );
@@ -258,7 +249,6 @@ void OnShowEditToolBar(const CommandContext &context );
 void OnShowMeterToolBar(const CommandContext &context );
 void OnShowRecordMeterToolBar(const CommandContext &context );
 void OnShowPlayMeterToolBar(const CommandContext &context );
-void OnShowMixerToolBar(const CommandContext &context );
 void OnShowSelectionToolBar(const CommandContext &context );
 void OnResetToolBars(const CommandContext &context );
 

@@ -68,7 +68,6 @@ enum
    MeterBarID,
    RecordMeterBarID,
    PlayMeterBarID,
-   MixerBarID,
    EditBarID,
    DeviceBarID,
    SelectionBarID,

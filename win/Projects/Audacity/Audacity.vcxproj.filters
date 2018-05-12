@@ -515,9 +515,6 @@
     <ClCompile Include="..\..\..\src\toolbars\MeterToolBar.cpp">
       <Filter>src\toolbars</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\toolbars\MixerToolBar.cpp">
-      <Filter>src\toolbars</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\toolbars\SelectionBar.cpp">
       <Filter>src\toolbars</Filter>
     </ClCompile>
@@ -1229,9 +1226,6 @@
       <Filter>src\toolbars</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\toolbars\MeterToolBar.h">
-      <Filter>src\toolbars</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\toolbars\MixerToolBar.h">
       <Filter>src\toolbars</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\toolbars\SelectionBar.h">

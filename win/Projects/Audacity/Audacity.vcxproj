@@ -343,7 +343,6 @@
     <ClCompile Include="..\..\..\src\toolbars\DeviceToolBar.cpp" />
     <ClCompile Include="..\..\..\src\toolbars\EditToolBar.cpp" />
     <ClCompile Include="..\..\..\src\toolbars\MeterToolBar.cpp" />
-    <ClCompile Include="..\..\..\src\toolbars\MixerToolBar.cpp" />
     <ClCompile Include="..\..\..\src\toolbars\SelectionBar.cpp" />
     <ClCompile Include="..\..\..\src\toolbars\ToolBar.cpp" />
     <ClCompile Include="..\..\..\src\toolbars\ToolDock.cpp" />
@@ -604,7 +603,6 @@
     <ClInclude Include="..\..\..\src\toolbars\DeviceToolBar.h" />
     <ClInclude Include="..\..\..\src\toolbars\EditToolBar.h" />
     <ClInclude Include="..\..\..\src\toolbars\MeterToolBar.h" />
-    <ClInclude Include="..\..\..\src\toolbars\MixerToolBar.h" />
     <ClInclude Include="..\..\..\src\toolbars\SelectionBar.h" />
     <ClInclude Include="..\..\..\src\toolbars\ToolBar.h" />
     <ClInclude Include="..\..\..\src\toolbars\ToolDock.h" />

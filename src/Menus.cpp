@@ -88,7 +88,6 @@ simplifies construction of menu items.
 #include "toolbars/ControlToolBar.h"
 #include "toolbars/EditToolBar.h"
 #include "toolbars/DeviceToolBar.h"
-#include "toolbars/MixerToolBar.h"
 
 #include "tracks/ui/SelectHandle.h"
 
@@ -474,8 +473,6 @@ void AudacityProject::CreateMenusAndCommands()
       c->AddCheck(wxT("ShowPlayMeterTB"), XXO("&Playback Meter Toolbar"), FN(OnShowPlayMeterToolBar), 0, AlwaysEnabledFlag, AlwaysEnabledFlag);
       /* --i18n-hint: Clicking this menu item shows the toolbar which has sound level meters*/
       //c->AddCheck(wxT("ShowMeterTB"), XXO("Co&mbined Meter Toolbar"), FN(OnShowMeterToolBar), 0, AlwaysEnabledFlag, AlwaysEnabledFlag);
-      /* i18n-hint: Clicking this menu item shows the toolbar with the mixer*/
-      c->AddCheck(wxT("ShowMixerTB"), XXO("Mi&xer Toolbar"), FN(OnShowMixerToolBar), 0, AlwaysEnabledFlag, AlwaysEnabledFlag);
       /* i18n-hint: Clicking this menu item shows the toolbar for editing*/
       c->AddCheck(wxT("ShowEditTB"), XXO("&Edit Toolbar"), FN(OnShowEditToolBar), 0, AlwaysEnabledFlag, AlwaysEnabledFlag);
       /* i18n-hint: Clicking this menu item shows the toolbar that manages devices*/
@@ -785,19 +782,6 @@ void AudacityProject::CreateMenusAndCommands()
       c->AddItem(wxT("PlayCutPreview"), XXO("Play C&ut Preview"), FN(OnPlayCutPreview), wxT("C"),
          CaptureNotBusyFlag,
          CaptureNotBusyFlag);
-      c->EndSubMenu();
-
-      //////////////////////////////////////////////////////////////////////////
-
-      c->SetDefaultFlags(AlwaysEnabledFlag, AlwaysEnabledFlag);
-      c->BeginSubMenu(_("Mi&xer"));
-
-      c->AddItem(wxT("OutputGain"), XXO("Ad&just Playback Volume..."), FN(OnOutputGain));
-      c->AddItem(wxT("OutputGainInc"), XXO("&Increase Playback Volume"), FN(OnOutputGainInc));
-      c->AddItem(wxT("OutputGainDec"), XXO("&Decrease Playback Volume"), FN(OnOutputGainDec));
-      c->AddItem(wxT("InputGain"), XXO("Adj&ust Recording Volume..."), FN(OnInputGain));
-      c->AddItem(wxT("InputGainInc"), XXO("I&ncrease Recording Volume"), FN(OnInputGainInc));
-      c->AddItem(wxT("InputGainDec"), XXO("D&ecrease Recording Volume"), FN(OnInputGainDec));
       c->EndSubMenu();
 
       //////////////////////////////////////////////////////////////////////////
@@ -2633,54 +2617,6 @@ void AudacityProject::OnInputChannels(const CommandContext &WXUNUSED(context) )
    }
 }
 
-void AudacityProject::OnOutputGain(const CommandContext &WXUNUSED(context) )
-{
-   MixerToolBar *tb = GetMixerToolBar();
-   if (tb) {
-      tb->ShowOutputGainDialog();
-   }
-}
-
-void AudacityProject::OnInputGain(const CommandContext &WXUNUSED(context) )
-{
-   MixerToolBar *tb = GetMixerToolBar();
-   if (tb) {
-      tb->ShowInputGainDialog();
-   }
-}
-
-void AudacityProject::OnOutputGainInc(const CommandContext &WXUNUSED(context) )
-{
-   MixerToolBar *tb = GetMixerToolBar();
-   if (tb) {
-      tb->AdjustOutputGain(1);
-   }
-}
-
-void AudacityProject::OnOutputGainDec(const CommandContext &WXUNUSED(context) )
-{
-   MixerToolBar *tb = GetMixerToolBar();
-   if (tb) {
-      tb->AdjustOutputGain(-1);
-   }
-}
-
-void AudacityProject::OnInputGainInc(const CommandContext &WXUNUSED(context) )
-{
-   MixerToolBar *tb = GetMixerToolBar();
-   if (tb) {
-      tb->AdjustInputGain(1);
-   }
-}
-
-void AudacityProject::OnInputGainDec(const CommandContext &WXUNUSED(context) )
-{
-   MixerToolBar *tb = GetMixerToolBar();
-   if (tb) {
-      tb->AdjustInputGain(-1);
-   }
-}
-
 double AudacityProject::NearestZeroCrossing(double t0)
 {
    // Window is 1/100th of a second.
@@ -4307,11 +4243,6 @@ void AudacityProject::OnShowPlayMeterToolBar(const CommandContext &WXUNUSED(cont
       mToolManager->Expose( MeterBarID, false );
    }
    mToolManager->ShowHide( PlayMeterBarID );
-}
-
-void AudacityProject::OnShowMixerToolBar(const CommandContext &WXUNUSED(context) )
-{
-   mToolManager->ShowHide( MixerBarID );
 }
 
 void AudacityProject::OnShowSelectionToolBar(const CommandContext &WXUNUSED(context) )

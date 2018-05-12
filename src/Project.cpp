@@ -136,7 +136,6 @@ scroll information.  It also has some status flags.
 #include "toolbars/DeviceToolBar.h"
 #include "toolbars/EditToolBar.h"
 #include "toolbars/MeterToolBar.h"
-#include "toolbars/MixerToolBar.h"
 #include "toolbars/SelectionBar.h"
 
 #include "tracks/ui/BackgroundCell.h"
@@ -3272,14 +3271,6 @@ EditToolBar *AudacityProject::GetEditToolBar()
            NULL);
 }
 
-MixerToolBar *AudacityProject::GetMixerToolBar()
-{
-   return (MixerToolBar *)
-          (mToolManager ?
-           mToolManager->GetToolBar(MixerBarID) :
-           NULL);
-}
-
 SelectionBar *AudacityProject::GetSelectionBar()
 {
    return (SelectionBar *)
@@ -3319,10 +3310,6 @@ void AudacityProject::SetCaptureMeter(MeterPanel *capture)
 
 void AudacityProject::OnTimer(wxTimerEvent& WXUNUSED(event))
 {
-   MixerToolBar *mixerToolBar = GetMixerToolBar();
-   if( mixerToolBar )
-      mixerToolBar->UpdateControls();
-
    if (::wxGetUTCTime() - mLastStatusUpdateTime < 3)
       return;
 

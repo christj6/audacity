@@ -69,7 +69,6 @@ class ControlToolBar;
 class DeviceToolBar;
 class EditToolBar;
 class MeterToolBar;
-class MixerToolBar;
 class SelectionBar;
 class SpectralSelectionBar;
 class ToolManager;
@@ -439,7 +438,6 @@ public:
 
    DeviceToolBar *GetDeviceToolBar();
    EditToolBar *GetEditToolBar();
-   MixerToolBar *GetMixerToolBar();
    SelectionBar *GetSelectionBar();
 
    MeterPanel *GetPlaybackMeter();
