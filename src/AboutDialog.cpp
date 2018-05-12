@@ -482,11 +482,7 @@ void AboutDialog::PopulateInformationPage( ShuttleGui & S )
    AddBuildinfoRow(&informationStr, wxT("ffmpeg"), _("FFmpeg Import/Export"), disabled);
    #endif
 
-   #ifdef USE_GSTREAMER
-   AddBuildinfoRow(&informationStr, wxT("gstreamer"), _("Import via GStreamer"), enabled);
-   #else
    AddBuildinfoRow(&informationStr, wxT("gstreamer"), _("Import via GStreamer"), disabled);
-   #endif
 
    informationStr += wxT("</table>\n");  //end table of file format libraries
    informationStr += wxT("<h3>");

@@ -58,7 +58,6 @@ and ImportLOF.cpp.
 #include "ImportLOF.h"
 #include "ImportFLAC.h"
 #include "ImportFFmpeg.h"
-#include "ImportGStreamer.h"
 #include "../Prefs.h"
 
 // ============================================================================
@@ -101,9 +100,6 @@ bool Importer::Initialize()
    #endif
    #ifdef USE_QUICKTIME
    GetQTImportPlugin(mImportPluginList, mUnusableImportPluginList);
-   #endif
-   #if defined(USE_GSTREAMER)
-   GetGStreamerImportPlugin(mImportPluginList, mUnusableImportPluginList);
    #endif
 
    ReadImportItems();

@@ -557,9 +557,6 @@
     <ClCompile Include="..\..\..\src\SseMathFuncs.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\import\ImportGStreamer.cpp">
-      <Filter>src\import</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\widgets\HelpSystem.cpp">
       <Filter>src\widgets</Filter>
     </ClCompile>
@@ -1278,9 +1275,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\SseMathFuncs.h">
       <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\import\ImportGStreamer.h">
-      <Filter>src\import</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\widgets\HelpSystem.h">
       <Filter>src\widgets</Filter>
