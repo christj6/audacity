@@ -18,7 +18,7 @@
 #define USE_LIBFLAC 1
 #define USE_LIBID3TAG 1
 #define USE_LIBMAD 1
-#define USE_LIBTWOLAME 1
+// #define USE_LIBTWOLAME 1
 #define USE_LIBVORBIS 1
 
 #define INSTALL_PREFIX "."
