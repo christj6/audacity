@@ -463,7 +463,6 @@ static struct DefaultConfigEntry {
    { RecordMeterBarID,		 TransportBarID,		 NoBarID				},
    { PlayMeterBarID,		 RecordMeterBarID,		 NoBarID				},
    { EditBarID,				 TransportBarID,		 RecordMeterBarID		},
-   // { MixerBarID,			 EditBarID,				 PlayMeterBarID			},
 
    // Hidden by default in top dock
    { MeterBarID,             NoBarID,                NoBarID                },

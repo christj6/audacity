@@ -484,7 +484,6 @@ void ScreenshotCommand::CaptureEffects(
    (void)&mFileName;//compiler food.
    (void)&context;
 #define TRICKY_CAPTURE
-#define CAPTURE_NYQUIST_TOO
    // Commented out the effects that don't have dialogs.
    // Also any problematic ones, 
    const wxString EffectNames[] = {
@@ -523,45 +522,14 @@ void ScreenshotCommand::CaptureEffects(
       "Sliding Time Scale/Pitch Shift...",
       "Truncate Silence...",
       "Wahwah...",
-      // Sole LADSPA effect...
-#ifdef CAPTURE_NYQUIST_TOO
-      "Adjustable Fade...",
-      "Clip Fix...",
-      //"Crossfade Clips",
-      "Crossfade Tracks...",
-      "Delay...",
-      "High Pass Filter...",
-      "Limiter...",
-      "Low Pass Filter...",
-      "Notch Filter...",
-      "Nyquist Prompt...",
-      //"Studio Fade Out",
-      "Tremolo...",
-      "Vocal Reduction and Isolation...",
-      "Vocal Remover...",
-      "Vocoder...",
-#endif
       // Generators.....
       "Chirp...",
       "DTMF Tones...",
       "Noise...",
       "Silence...",
       "Tone...",
-#ifdef CAPTURE_NYQUIST_TOO
-      "Pluck...",
-      "Rhythm Track...",
-      "Risset Drum...",
-      "Sample Data Import...",
-#endif
       // Analyzers...
       "Find Clipping...",
-#ifdef CAPTURE_NYQUIST_TOO
-      "Beat Finder...",
-      "Regular Interval Labels...",
-      "Sample Data Export...",
-      "Silence Finder...",
-      "Sound Finder...",
-#endif
    };
    wxArrayString Commands( sizeof(EffectNames)/sizeof(EffectNames[0]), EffectNames );
    CaptureCommands( context, Commands );
