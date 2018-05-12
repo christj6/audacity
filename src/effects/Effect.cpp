@@ -60,7 +60,6 @@ greater use in future.
 #endif
 
 #include "../Experimental.h"
-#include "../commands/ScreenshotCommand.h"
 
 #ifndef __AUDACITY_OLD_STD__
 #include <unordered_map>
@@ -521,9 +520,6 @@ bool Effect::ShowInterface(wxWindow *parent, bool forceModal)
    mUIDialog->Layout();
    mUIDialog->Fit();
    mUIDialog->SetMinSize(mUIDialog->GetSize());
-
-   if( ScreenshotCommand::MayCapture( mUIDialog ) )
-      return false;
 
    if( SupportsRealtime() && !forceModal )
    {

@@ -189,7 +189,6 @@
     <ClCompile Include="..\..\..\src\Resample.cpp" />
     <ClCompile Include="..\..\..\src\RingBuffer.cpp" />
     <ClCompile Include="..\..\..\src\SampleFormat.cpp" />
-    <ClCompile Include="..\..\..\src\Screenshot.cpp" />
     <ClCompile Include="..\..\..\src\SelectedRegion.cpp" />
     <ClCompile Include="..\..\..\src\SelectionState.cpp" />
     <ClCompile Include="..\..\..\src\Sequence.cpp" />
@@ -328,7 +327,6 @@
     <ClCompile Include="..\..\..\src\commands\MessageCommand.cpp" />
     <ClCompile Include="..\..\..\src\commands\PreferenceCommands.cpp" />
     <ClCompile Include="..\..\..\src\commands\ResponseQueue.cpp" />
-    <ClCompile Include="..\..\..\src\commands\ScreenshotCommand.cpp" />
     <ClCompile Include="..\..\..\src\commands\ScriptCommandRelay.cpp" />
     <ClCompile Include="..\..\..\src\commands\SelectCommand.cpp" />
     <ClCompile Include="..\..\..\src\commands\SetTrackInfoCommand.cpp" />
@@ -482,7 +480,6 @@
     <ClInclude Include="..\..\..\src\Resample.h" />
     <ClInclude Include="..\..\..\src\RingBuffer.h" />
     <ClInclude Include="..\..\..\src\SampleFormat.h" />
-    <ClInclude Include="..\..\..\src\Screenshot.h" />
     <ClInclude Include="..\..\..\src\Sequence.h" />
     <ClInclude Include="..\..\..\src\Shuttle.h" />
     <ClInclude Include="..\..\..\src\ShuttleGui.h" />
@@ -587,7 +584,6 @@
     <ClInclude Include="..\..\..\src\commands\MessageCommand.h" />
     <ClInclude Include="..\..\..\src\commands\PreferenceCommands.h" />
     <ClInclude Include="..\..\..\src\commands\ResponseQueue.h" />
-    <ClInclude Include="..\..\..\src\commands\ScreenshotCommand.h" />
     <ClInclude Include="..\..\..\src\commands\ScriptCommandRelay.h" />
     <ClInclude Include="..\..\..\src\commands\SelectCommand.h" />
     <ClInclude Include="..\..\..\src\commands\SetTrackInfoCommand.h" />

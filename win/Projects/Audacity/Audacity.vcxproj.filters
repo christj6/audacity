@@ -200,9 +200,6 @@
     <ClCompile Include="..\..\..\src\SampleFormat.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\Screenshot.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\Sequence.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -725,9 +722,6 @@
     <ClCompile Include="..\..\..\src\commands\PreferenceCommands.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\commands\ScreenshotCommand.cpp">
-      <Filter>src\commands</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\commands\SelectCommand.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
@@ -890,9 +884,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\SampleFormat.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\Screenshot.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\Sequence.h">
@@ -1505,9 +1496,6 @@
       <Filter>src\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\Registrar.h">
-      <Filter>src\commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\commands\ScreenshotCommand.h">
       <Filter>src\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\commands\SelectCommand.h">

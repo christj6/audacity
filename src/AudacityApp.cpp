@@ -70,7 +70,6 @@ It handles initialization and termination by subclassing wxApp.
 #include "Languages.h"
 #include "Prefs.h"
 #include "Project.h"
-#include "Screenshot.h"
 #include "Sequence.h"
 #include "WaveTrack.h"
 #include "prefs/PrefsDialog.h"

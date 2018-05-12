@@ -428,9 +428,6 @@ protected:
 
    static wxString gSoloPref;
 
-   // The screenshot class needs to access internals
-   friend class ScreenshotCommand;
-
    SelectedRegion mLastDrawnSelectedRegion {};
 
  public:

@@ -54,7 +54,6 @@ ShuttleGui.
 #include "../commands/CommandTargets.h"
 
 #include "../Experimental.h"
-#include "../commands/ScreenshotCommand.h"
 
 #ifndef __AUDACITY_OLD_STD__
 #include <unordered_map>
@@ -117,10 +116,6 @@ bool AudacityCommand::ShowInterface(wxWindow *parent, bool WXUNUSED(forceModal))
    mUIDialog->Layout();
    mUIDialog->Fit();
    mUIDialog->SetMinSize(mUIDialog->GetSize());
-
-   // The Screenshot command might be popping this dialog up, just to capture it.
-   if( ScreenshotCommand::MayCapture( mUIDialog ) )
-      return false;
 
    bool res = mUIDialog->ShowModal() != 0;
    return res;

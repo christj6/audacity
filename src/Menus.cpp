@@ -77,7 +77,6 @@ simplifies construction of menu items.
 #include "Mix.h"
 #include "AboutDialog.h"
 #include "Benchmark.h"
-#include "Screenshot.h"
 #include "ondemand/ODManager.h"
 
 #include "BatchProcessDialog.h"
@@ -125,7 +124,6 @@ enum {
 };
 
 #include "commands/CommandContext.h"
-#include "commands/ScreenshotCommand.h"
 
 #include "BatchCommands.h"
 
@@ -990,13 +988,8 @@ void AudacityProject::CreateMenusAndCommands()
          AudioIONotBusyFlag,  AudioIONotBusyFlag);
       c->AddItem(wxT("CompareAudio"), XXO("Compare Audio..."), FN(OnAudacityCommand),
          AudioIONotBusyFlag,  AudioIONotBusyFlag);
-      // i18n-hint: Screenshot in the help menu has a much bigger dialog.
-      c->AddItem(wxT("Screenshot"), XXO("Screenshot (short format)..."), FN(OnAudacityCommand),
-         AudioIONotBusyFlag,  AudioIONotBusyFlag);
-
 
       c->EndSubMenu();
-
 
       // Accel key is not bindable.
       c->AddItem(wxT("FullScreenOnOff"), XXO("&Full Screen (on/off)"), FN(OnFullScreen),
@@ -2841,9 +2834,6 @@ void AudacityProject::OnExportMultiple(const CommandContext &WXUNUSED(context) )
 void AudacityProject::OnPreferences(const CommandContext &WXUNUSED(context) )
 {
    GlobalPrefsDialog dialog(this /* parent */ );
-
-   if( ScreenshotCommand::MayCapture( &dialog ) )
-      return;
 
    if (!dialog.ShowModal()) {
       // Canceled
