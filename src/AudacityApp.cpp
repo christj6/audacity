@@ -132,10 +132,6 @@ It handles initialization and termination by subclassing wxApp.
 #     pragma comment(lib, "libvorbis")
 #  endif
 
-#  if defined(USE_LV2)
-#     pragma comment(lib, "lv2")
-#  endif
-
 #     pragma comment(lib, "libnyquist")
 
 #  if defined(_DEBUG)

@@ -65,19 +65,6 @@ void EffectsPrefs::PopulateOrExchange(ShuttleGui & S)
                     wxT("/AudioUnit/Enable"),
                     true);
 #endif
-
-      // JKC: LADSPA, LV2, Nyquist, VST, VAMP should not be translated.
-#if USE_LADSPA
-      S.TieCheckBox(wxT("&LADSPA"),
-                    wxT("/Ladspa/Enable"),
-                    true);
-#endif
-
-#if USE_LV2
-      S.TieCheckBox(wxT("LV&2"),
-                    wxT("/LV2/Enable"),
-                    true);
-#endif
    }
    S.EndStatic();
 

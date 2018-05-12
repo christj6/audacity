@@ -15,10 +15,8 @@
 
 
 #define USE_FFMPEG 1	//define this to build with ffmpeg import/export
-#define USE_LADSPA 1
 #define USE_LIBFLAC 1
 #define USE_LIBID3TAG 1
-#define USE_LV2 1
 #define USE_LIBMAD 1
 //#define USE_GSTREAMER 1
 #define USE_LIBTWOLAME 1

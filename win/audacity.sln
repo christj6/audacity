@@ -35,8 +35,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "help", "Projects\help\help.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libsoxr", "Projects\libsoxr\libsoxr.vcxproj", "{AF9AD75C-4785-4432-BAC3-ADAB1E7F1192}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lv2", "Projects\lv2\lv2.vcxproj", "{0FEC8848-E24E-4FA5-9ACD-E4582DC4CBBE}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "expat", "Projects\expat\expat.vcxproj", "{A939AAF8-44F1-4CE7-9DD0-7A6E99814856}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mod-script-pipe", "..\lib-src\mod-script-pipe\mod-script-pipe.vcxproj", "{85774A29-EA2F-4A40-994F-6BE593D847A5}"
@@ -104,10 +102,6 @@ Global
 		{AF9AD75C-4785-4432-BAC3-ADAB1E7F1192}.Debug|Win32.Build.0 = Debug|Win32
 		{AF9AD75C-4785-4432-BAC3-ADAB1E7F1192}.Release|Win32.ActiveCfg = Release|Win32
 		{AF9AD75C-4785-4432-BAC3-ADAB1E7F1192}.Release|Win32.Build.0 = Release|Win32
-		{0FEC8848-E24E-4FA5-9ACD-E4582DC4CBBE}.Debug|Win32.ActiveCfg = Debug|Win32
-		{0FEC8848-E24E-4FA5-9ACD-E4582DC4CBBE}.Debug|Win32.Build.0 = Debug|Win32
-		{0FEC8848-E24E-4FA5-9ACD-E4582DC4CBBE}.Release|Win32.ActiveCfg = Release|Win32
-		{0FEC8848-E24E-4FA5-9ACD-E4582DC4CBBE}.Release|Win32.Build.0 = Release|Win32
 		{A939AAF8-44F1-4CE7-9DD0-7A6E99814856}.Debug|Win32.ActiveCfg = Debug|Win32
 		{A939AAF8-44F1-4CE7-9DD0-7A6E99814856}.Debug|Win32.Build.0 = Debug|Win32
 		{A939AAF8-44F1-4CE7-9DD0-7A6E99814856}.Debug|Win32.Deploy.0 = Debug|Win32

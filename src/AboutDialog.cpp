@@ -510,13 +510,8 @@ void AboutDialog::PopulateInformationPage( ShuttleGui & S )
 
    AddBuildinfoRow(&informationStr, wxT("Theme"), _("Dark Theme Extras"), disabled);
 
-   # if USE_LADSPA
-   AddBuildinfoRow(&informationStr, wxT("LADSPA"), _("Plug-in support"),
-         enabled);
-   # else
    AddBuildinfoRow(&informationStr, wxT("LADSPA"), _("Plug-in support"),
          disabled);
-   # endif
 
    AddBuildinfoRow(&informationStr, wxT("Vamp"), _("Plug-in support"),
          disabled);
@@ -532,13 +527,8 @@ void AboutDialog::PopulateInformationPage( ShuttleGui & S )
    AddBuildinfoRow(&informationStr, wxT("VST"), _("Plug-in support"),
          disabled);
 
-   # if USE_LV2
-   AddBuildinfoRow(&informationStr, wxT("LV2"), _("Plug-in support"),
-         enabled);
-   # else
    AddBuildinfoRow(&informationStr, wxT("LV2"), _("Plug-in support"),
          disabled);
-   # endif
 
    AddBuildinfoRow(&informationStr, wxT("PortMixer"), _("Sound card mixer support"),
          disabled);

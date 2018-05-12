@@ -961,10 +961,6 @@
       <Project>{727d6675-67ee-4d0b-9dc1-177a0af741f0}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\lv2\lv2.vcxproj">
-      <Project>{0fec8848-e24e-4fa5-9acd-e4582dc4cbbe}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
     <ProjectReference Include="..\portaudio-v19\portaudio-v19.vcxproj">
       <Project>{7aba0f80-94ae-4e82-ab89-2e1258212d59}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
