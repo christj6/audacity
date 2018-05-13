@@ -65,7 +65,7 @@ class DeviceToolBar final : public ToolBar {
    void RepositionCombos();
    void SetNames();
    void RegenerateTooltips() override;
-   void ShowComboDialog(wxChoice *combo, const wxString &title);
+   void ShowComboDialog(wxChoice *combo);
 
    wxChoice *mInput;
    wxChoice *mOutput;

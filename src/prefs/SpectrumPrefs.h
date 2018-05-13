@@ -54,7 +54,6 @@ class SpectrumPrefs final : public PrefsPanel
 
  private:
    void Populate(size_t windowSize);
-   void PopulatePaddingChoices(size_t windowSize);
 
    void OnControl(wxCommandEvent &event);
    void OnWindowSize(wxCommandEvent &event);

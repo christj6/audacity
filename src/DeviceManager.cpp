@@ -121,7 +121,7 @@ static void FillHostDeviceInfo(DeviceSourceMap *map, const PaDeviceInfo *info, i
    map->numChannels  = isInput ? info->maxInputChannels : info->maxOutputChannels;
 }
 
-static void AddSourcesFromStream(int deviceIndex, const PaDeviceInfo *info, std::vector<DeviceSourceMap> *maps, PaStream *stream)
+static void AddSourcesFromStream(int deviceIndex, const PaDeviceInfo *info, std::vector<DeviceSourceMap> *maps)
 {
    DeviceSourceMap map;
 
@@ -195,7 +195,7 @@ static void AddSources(int deviceIndex, int rate, std::vector<DeviceSourceMap> *
    }
 
    if (stream && !error) {
-      AddSourcesFromStream(deviceIndex, info, maps, stream);
+      AddSourcesFromStream(deviceIndex, info, maps);
       Pa_CloseStream(stream);
    } else {
       map.sourceIndex  = -1;

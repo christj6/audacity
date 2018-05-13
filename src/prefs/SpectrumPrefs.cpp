@@ -98,8 +98,6 @@ void SpectrumPrefs::Populate(size_t windowSize)
    mSizeChoices.Add(_("32768 - most narrowband"));
    wxASSERT(mSizeChoices.size() == SpectrogramSettings::NumWindowSizes);
 
-   PopulatePaddingChoices(windowSize);
-
    for (int i = 0; i < NumWindowFuncs(); i++) {
       mTypeChoices.Add(WindowFuncName(i));
    }
@@ -113,10 +111,6 @@ void SpectrumPrefs::Populate(size_t windowSize)
    ShuttleGui S(this, eIsCreatingFromPrefs);
    PopulateOrExchange(S);
    // ----------------------- End of main section --------------
-}
-
-void SpectrumPrefs::PopulatePaddingChoices(size_t windowSize)
-{
 }
 
 void SpectrumPrefs::PopulateOrExchange(ShuttleGui & S)
@@ -421,7 +415,6 @@ void SpectrumPrefs::OnWindowSize(wxCommandEvent &evt)
       static_cast<wxChoice*>(wxWindow::FindWindowById(ID_WINDOW_SIZE, this));
    size_t windowSize = 1 <<
       (pWindowSizeControl->GetSelection() + SpectrogramSettings::LogMinWindowSize);
-   PopulatePaddingChoices(windowSize);
 
    // Do the common part
    OnControl(evt);

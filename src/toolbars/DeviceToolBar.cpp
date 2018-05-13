@@ -752,22 +752,22 @@ void DeviceToolBar::OnChoice(wxCommandEvent &event)
 
 void DeviceToolBar::ShowInputDialog()
 {
-   ShowComboDialog(mInput, wxString(_("Select Recording Device")));
+   ShowComboDialog(mInput);
 }
 void DeviceToolBar::ShowOutputDialog()
 {
-   ShowComboDialog(mOutput, wxString(_("Select Playback Device")));
+   ShowComboDialog(mOutput);
 }
 void DeviceToolBar::ShowHostDialog()
 {
-   ShowComboDialog(mHost, wxString(_("Select Audio Host")));
+   ShowComboDialog(mHost);
 }
 void DeviceToolBar::ShowChannelsDialog()
 {
-   ShowComboDialog(mInputChannels, wxString(_("Select Recording Channels")));
+   ShowComboDialog(mInputChannels);
 }
 
-void DeviceToolBar::ShowComboDialog(wxChoice *combo, const wxString &title)
+void DeviceToolBar::ShowComboDialog(wxChoice *combo)
 {
    if (!combo || combo->GetCount() == 0) {
       AudacityMessageBox(_("Device information is not available."));
