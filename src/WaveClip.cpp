@@ -813,9 +813,6 @@ bool SpecCache::Matches
       dirty == dirty_ &&
       windowType == settings.windowType &&
       windowSize == settings.WindowSize() &&
-#ifdef EXPERIMENTAL_ZERO_PADDED_SPECTROGRAMS
-      zeroPaddingFactor == settings.ZeroPaddingFactor() &&
-#endif
       frequencyGain == settings.frequencyGain &&
       algorithm == settings.algorithm;
 }
@@ -853,13 +850,9 @@ bool SpecCache::CalculateOneSpectrum
 
    const bool autocorrelation =
       settings.algorithm == SpectrogramSettings::algPitchEAC;
-#ifdef EXPERIMENTAL_ZERO_PADDED_SPECTROGRAMS
-   const size_t zeroPaddingFactor = settings.ZeroPaddingFactor();
-#else
-   const size_t zeroPaddingFactor = 1;
-#endif
-   const size_t padding = (windowSize * (zeroPaddingFactor - 1)) / 2;
-   const size_t fftLen = windowSize * zeroPaddingFactor;
+
+   const size_t padding = 0;
+   const size_t fftLen = windowSize;
    auto nBins = settings.NBins();
 
    if (from < 0 || from >= numSamples) {
@@ -870,8 +863,6 @@ bool SpecCache::CalculateOneSpectrum
       }
    }
    else {
-
-
       // We can avoid copying memory when ComputeSpectrum is used below
       bool copy = !autocorrelation || (padding > 0) || reassignment;
       float *useBuffer = 0;
@@ -1067,9 +1058,6 @@ void SpecCache::Grow(size_t len_, const SpectrogramSettings& settings,
    start = start_;
    windowType = settings.windowType;
    windowSize = settings.WindowSize();
-#ifdef EXPERIMENTAL_ZERO_PADDED_SPECTROGRAMS
-   zeroPaddingFactor = settings.ZeroPaddingFactor();
-#endif
    frequencyGain = settings.frequencyGain;
 }
 
@@ -1085,15 +1073,8 @@ void SpecCache::Populate
       settings.algorithm == SpectrogramSettings::algPitchEAC;
    const bool reassignment =
       settings.algorithm == SpectrogramSettings::algReassignment;
-#ifdef EXPERIMENTAL_ZERO_PADDED_SPECTROGRAMS
-   const size_t zeroPaddingFactor = settings.ZeroPaddingFactor();
-#else
-   const size_t zeroPaddingFactor = 1;
-#endif
 
-   // FFT length may be longer than the window of samples that affect results
-   // because of zero padding done for increased frequency resolution
-   const size_t fftLen = windowSize * zeroPaddingFactor;
+   const size_t fftLen = windowSize;
    const auto nBins = settings.NBins();
 
    const size_t bufferSize = fftLen;
@@ -1236,12 +1217,7 @@ bool WaveClip::GetSpectrogram(WaveTrackCache &waveTrackCache,
    // If we zoomed out, or resized, we can give up memory. But not too much -
    // up to 2x extra is needed at the end of the clip to prevent stutter.
    if (mSpecCache->freq.capacity() > 2.1 * mSpecCache->freq.size() ||
-       mSpecCache->windowSize*mSpecCache->zeroPaddingFactor <
-#ifdef EXPERIMENTAL_ZERO_PADDED_SPECTROGRAMS
-       settings.WindowSize()*settings.ZeroPaddingFactor())
-#else
-	   settings.WindowSize())
-#endif
+       mSpecCache->windowSize*mSpecCache->zeroPaddingFactor < settings.WindowSize())
    {
       match = false;
       mSpecCache = std::make_unique<SpecCache>();

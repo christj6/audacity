@@ -117,42 +117,6 @@ void SpectrumPrefs::Populate(size_t windowSize)
 
 void SpectrumPrefs::PopulatePaddingChoices(size_t windowSize)
 {
-#ifdef EXPERIMENTAL_ZERO_PADDED_SPECTROGRAMS
-   mZeroPaddingChoice = 1;
-
-   // The choice of window size restricts the choice of padding.
-   // So the padding menu might grow or shrink.
-
-   // If pPaddingSizeControl is NULL, we have not yet tied the choice control.
-   // If it is not NULL, we rebuild the control by hand.
-   // I don't yet know an easier way to do this with ShuttleGUI functions.
-   // PRL
-   wxChoice *const pPaddingSizeControl =
-      static_cast<wxChoice*>(wxWindow::FindWindowById(ID_PADDING_SIZE, this));
-
-   if (pPaddingSizeControl) {
-      mZeroPaddingChoice = pPaddingSizeControl->GetSelection();
-      pPaddingSizeControl->Clear();
-   }
-
-   unsigned padding = 1;
-   int numChoices = 0;
-   const size_t maxWindowSize = 1 << (SpectrogramSettings::LogMaxWindowSize);
-   while (windowSize <= maxWindowSize) {
-      const wxString numeral = wxString::Format(wxT("%d"), padding);
-      mZeroPaddingChoices.Add(numeral);
-      if (pPaddingSizeControl)
-         pPaddingSizeControl->Append(numeral);
-      windowSize <<= 1;
-      padding <<= 1;
-      ++numChoices;
-   }
-
-   mZeroPaddingChoice = std::min(mZeroPaddingChoice, numChoices - 1);
-
-   if (pPaddingSizeControl)
-      pPaddingSizeControl->SetSelection(mZeroPaddingChoice);
-#endif
 }
 
 void SpectrumPrefs::PopulateOrExchange(ShuttleGui & S)
@@ -160,10 +124,6 @@ void SpectrumPrefs::PopulateOrExchange(ShuttleGui & S)
    mPopulating = true;
    S.SetBorder(2);
    S.StartScroller(); {
-
-   // S.StartStatic(_("Track Settings"));
-   // {
-
 
    mDefaultsCheckbox = 0;
    if (mWt) {
@@ -236,13 +196,6 @@ void SpectrumPrefs::PopulateOrExchange(ShuttleGui & S)
          S.Id(ID_WINDOW_TYPE).TieChoice(_("Window &type:"),
             mTempSettings.windowType,
             &mTypeChoices);
-
-#ifdef EXPERIMENTAL_ZERO_PADDED_SPECTROGRAMS
-         mZeroPaddingChoiceCtrl =
-            S.Id(ID_PADDING_SIZE).TieChoice(_("&Zero padding factor") + wxString(wxT(":")),
-            mTempSettings.zeroPaddingFactor,
-            &mZeroPaddingChoices);
-#endif
       }
       S.EndMultiColumn();
    }
@@ -499,9 +452,6 @@ void SpectrumPrefs::EnableDisableSTFTOnlyControls()
    mGain->Enable(STFT);
    mRange->Enable(STFT);
    mFrequencyGain->Enable(STFT);
-#ifdef EXPERIMENTAL_ZERO_PADDED_SPECTROGRAMS
-   mZeroPaddingChoiceCtrl->Enable(STFT);
-#endif
 }
 
 wxString SpectrumPrefs::HelpPageName()

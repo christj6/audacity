@@ -75,12 +75,6 @@ class SpectrumPrefs final : public PrefsPanel
 
    wxArrayString mSizeChoices;
 
-#ifdef EXPERIMENTAL_ZERO_PADDED_SPECTROGRAMS
-   int mZeroPaddingChoice;
-   wxChoice *mZeroPaddingChoiceCtrl;
-   wxArrayString mZeroPaddingChoices;
-#endif
-
    wxArrayString mTypeChoices;
    wxArrayString mScaleChoices;
 

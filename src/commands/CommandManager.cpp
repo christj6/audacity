@@ -1498,20 +1498,6 @@ bool CommandManager::HandleCommandEntry(const CommandListEntry * entry,
 bool CommandManager::HandleMenuID(int id, CommandFlag flags, CommandMask mask)
 {
    CommandListEntry *entry = mCommandIDHash[id];
-
-#ifdef EXPERIMENTAL_EASY_CHANGE_KEY_BINDINGS
-   if (::wxGetMouseState().ShiftDown()) {
-      // Only want one page of the preferences
-      KeyConfigPrefsFactory keyConfigPrefsFactory{ entry->name };
-      PrefsDialog::Factories factories;
-      factories.push_back(&keyConfigPrefsFactory);
-      GlobalPrefsDialog dialog(GetActiveProject(), factories);
-      dialog.ShowModal();
-      AudacityProject::RebuildAllMenuBars();
-      return true;
-   }
-#endif
-
    return HandleCommandEntry( entry, flags, mask );
 }
 

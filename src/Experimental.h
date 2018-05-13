@@ -32,15 +32,6 @@
 #define CFG_A( x ) x
 #define CFG_DA( x ) 
 
-// Paul Licameli (PRL) 31 May 2015
-// Zero-padding factor for spectrograms can smooth the display of spectrograms by
-// interpolating in frequency domain.
-// #define EXPERIMENTAL_ZERO_PADDED_SPECTROGRAMS
-
-// PRL 5 Jan 2018
-// Easy change of keystroke bindings for menu items
-// #define EXPERIMENTAL_EASY_CHANGE_KEY_BINDINGS
-
 // PRL 17 Mar 2018
 // Hoping to commit to use of this branch before 2.3.0 is out.
 // Don't use our own RingBuffer class, but reuse PortAudio's which includes
