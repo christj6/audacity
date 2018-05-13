@@ -701,23 +701,6 @@ AudioIO::~AudioIO()
    gAudioIO = nullptr;
 }
 
-void AudioIO::SetMixer(int inputSource)
-{
-}
-void AudioIO::SetMixer(int inputSource, float recordVolume,
-                       float playbackVolume)
-{
-   mMixerOutputVol = playbackVolume;
-}
-
-void AudioIO::GetMixer(int *recordDevice, float *recordVolume,
-                       float *playbackVolume)
-{
-   *recordDevice = 0;
-   *recordVolume = 1.0f;
-   *playbackVolume = mMixerOutputVol;
-}
-
 bool AudioIO::InputMixerWorks()
 {
    return mInputMixerWorks;

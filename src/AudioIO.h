@@ -167,17 +167,6 @@ class AUDACITY_DLL_API AudioIO final {
    /** \brief Find out if playback / recording is currently paused */
    bool IsPaused();
 
-   /* Mixer services are always available.  If no stream is running, these
-    * methods use whatever device is specified by the preferences.  If a
-    * stream *is* running, naturally they manipulate the mixer associated
-    * with that stream.  If no mixer is available, output is emulated and
-    * input is stuck at 1.0f (a gain is applied to output samples).
-    */
-   void SetMixer(int inputSource);
-   void SetMixer(int inputSource, float inputVolume,
-                 float playbackVolume);
-   void GetMixer(int *inputSource, float *inputVolume,
-                 float *playbackVolume);
    /** @brief Find out if the input hardware level control is available
     *
     * Checks the mInputMixerWorks variable, which is set up in
