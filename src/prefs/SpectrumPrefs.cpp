@@ -65,7 +65,7 @@ SpectrumPrefs::~SpectrumPrefs()
 
 enum {
    ID_WINDOW_SIZE = 10001,
-#ifdef EXPERIMENTAL_ZERO_PADDED_SPECTROGRAMS
+
    ID_WINDOW_TYPE,
    ID_PADDING_SIZE,
    ID_SCALE,
@@ -77,7 +77,7 @@ enum {
    ID_FREQUENCY_GAIN,
    ID_GRAYSCALE,
    ID_SPECTRAL_SELECTION,
-#endif
+
    ID_DEFAULTS,
 };
 

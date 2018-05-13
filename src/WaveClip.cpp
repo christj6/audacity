@@ -813,7 +813,9 @@ bool SpecCache::Matches
       dirty == dirty_ &&
       windowType == settings.windowType &&
       windowSize == settings.WindowSize() &&
+#ifdef EXPERIMENTAL_ZERO_PADDED_SPECTROGRAMS
       zeroPaddingFactor == settings.ZeroPaddingFactor() &&
+#endif
       frequencyGain == settings.frequencyGain &&
       algorithm == settings.algorithm;
 }
@@ -851,7 +853,11 @@ bool SpecCache::CalculateOneSpectrum
 
    const bool autocorrelation =
       settings.algorithm == SpectrogramSettings::algPitchEAC;
+#ifdef EXPERIMENTAL_ZERO_PADDED_SPECTROGRAMS
    const size_t zeroPaddingFactor = settings.ZeroPaddingFactor();
+#else
+   const size_t zeroPaddingFactor = 1;
+#endif
    const size_t padding = (windowSize * (zeroPaddingFactor - 1)) / 2;
    const size_t fftLen = windowSize * zeroPaddingFactor;
    auto nBins = settings.NBins();
@@ -1061,7 +1067,9 @@ void SpecCache::Grow(size_t len_, const SpectrogramSettings& settings,
    start = start_;
    windowType = settings.windowType;
    windowSize = settings.WindowSize();
+#ifdef EXPERIMENTAL_ZERO_PADDED_SPECTROGRAMS
    zeroPaddingFactor = settings.ZeroPaddingFactor();
+#endif
    frequencyGain = settings.frequencyGain;
 }
 
@@ -1229,7 +1237,11 @@ bool WaveClip::GetSpectrogram(WaveTrackCache &waveTrackCache,
    // up to 2x extra is needed at the end of the clip to prevent stutter.
    if (mSpecCache->freq.capacity() > 2.1 * mSpecCache->freq.size() ||
        mSpecCache->windowSize*mSpecCache->zeroPaddingFactor <
+#ifdef EXPERIMENTAL_ZERO_PADDED_SPECTROGRAMS
        settings.WindowSize()*settings.ZeroPaddingFactor())
+#else
+	   settings.WindowSize())
+#endif
    {
       match = false;
       mSpecCache = std::make_unique<SpecCache>();

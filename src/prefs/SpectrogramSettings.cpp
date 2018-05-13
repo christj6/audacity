@@ -375,7 +375,12 @@ void SpectrogramSettings::CacheWindows() const
    if (hFFT == NULL || window == NULL) {
 
       double scale;
-      const auto fftLen = WindowSize() * ZeroPaddingFactor();
+#ifdef EXPERIMENTAL_ZERO_PADDED_SPECTROGRAMS
+	  const size_t zeroPaddingFactor = settings.ZeroPaddingFactor();
+#else
+	  const size_t zeroPaddingFactor = 1;
+#endif
+	  const auto fftLen = WindowSize() * zeroPaddingFactor;
       const auto padding = (WindowSize() * (zeroPaddingFactor - 1)) / 2;
 
       hFFT = GetFFT(fftLen);
