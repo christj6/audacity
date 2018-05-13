@@ -160,14 +160,6 @@ SpectrumVRulerMenuTable &SpectrumVRulerMenuTable::Instance()
 
 void SpectrumVRulerMenuTable::InitMenu(Menu *pMenu, void *pUserData)
 {
-	/*
-   WaveTrackVRulerMenuTable::InitMenu(pMenu, pUserData);
-
-   WaveTrack *const wt = mpData->pTrack;
-   const int id =
-      OnFirstSpectrumScaleID + (int)(wt->GetSpectrogramSettings().scaleType);
-   pMenu->Check(id, true);
-   */
 }
 
 BEGIN_POPUP_MENU(SpectrumVRulerMenuTable)

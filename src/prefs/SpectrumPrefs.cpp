@@ -52,9 +52,8 @@ SpectrumPrefs::SpectrumPrefs(wxWindow * parent, wxWindowID winid, WaveTrack *wt)
       mOrigDefaulted = mDefaulted = false;
    }
 
-   const auto windowSize = mTempSettings.WindowSize();
    mTempSettings.ConvertToEnumeratedWindowSizes();
-   Populate(windowSize);
+   Populate();
 }
 
 SpectrumPrefs::~SpectrumPrefs()
@@ -81,7 +80,7 @@ enum {
    ID_DEFAULTS,
 };
 
-void SpectrumPrefs::Populate(size_t windowSize)
+void SpectrumPrefs::Populate()
 {
    mSizeChoices.Add(_("8 - most wideband"));
    mSizeChoices.Add(wxT("16"));
@@ -413,8 +412,6 @@ void SpectrumPrefs::OnWindowSize(wxCommandEvent &evt)
    // size and padding may not exceed the largest window size.
    wxChoice *const pWindowSizeControl =
       static_cast<wxChoice*>(wxWindow::FindWindowById(ID_WINDOW_SIZE, this));
-   size_t windowSize = 1 <<
-      (pWindowSizeControl->GetSelection() + SpectrogramSettings::LogMinWindowSize);
 
    // Do the common part
    OnControl(evt);

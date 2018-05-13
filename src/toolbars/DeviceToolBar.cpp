@@ -754,14 +754,17 @@ void DeviceToolBar::ShowInputDialog()
 {
    ShowComboDialog(mInput);
 }
+
 void DeviceToolBar::ShowOutputDialog()
 {
    ShowComboDialog(mOutput);
 }
+
 void DeviceToolBar::ShowHostDialog()
 {
    ShowComboDialog(mHost);
 }
+
 void DeviceToolBar::ShowChannelsDialog()
 {
    ShowComboDialog(mInputChannels);

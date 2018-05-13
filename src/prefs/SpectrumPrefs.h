@@ -53,7 +53,7 @@ class SpectrumPrefs final : public PrefsPanel
    wxString HelpPageName() override;
 
  private:
-   void Populate(size_t windowSize);
+   void Populate();
 
    void OnControl(wxCommandEvent &event);
    void OnWindowSize(wxCommandEvent &event);
