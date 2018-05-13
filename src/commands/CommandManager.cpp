@@ -1599,9 +1599,6 @@ void CommandManager::GetAllCommandData(
    std::vector<NormalizedKeyString> &default_keys,
    wxArrayString &labels,
    wxArrayString &categories,
-#if defined(EXPERIMENTAL_KEY_VIEW)
-   wxArrayString &prefixes,
-#endif
    bool includeMultis)
 {
    for(const auto &entry : mCommandList) {
@@ -1616,9 +1613,6 @@ void CommandManager::GetAllCommandData(
          default_keys.push_back(entry->defaultKey);
          labels.Add(entry->label);
          categories.Add(entry->labelTop);
-#if defined(EXPERIMENTAL_KEY_VIEW)
-         prefixes.Add(entry->labelPrefix);
-#endif
       }
       else if( includeMultis )
       {
@@ -1627,9 +1621,6 @@ void CommandManager::GetAllCommandData(
          default_keys.push_back(entry->defaultKey);
          labels.Add(entry->label);
          categories.Add(entry->labelTop);
-#if defined(EXPERIMENTAL_KEY_VIEW)
-         prefixes.Add(entry->labelPrefix);
-#endif
       }
    }
 }
@@ -1657,15 +1648,7 @@ wxString CommandManager::GetPrefixedLabelFromName(const wxString &name)
    if (!entry)
       return wxT("");
 
-#if defined(EXPERIMENTAL_KEY_VIEW)
-   wxString prefix;
-   if (!entry->labelPrefix.IsEmpty()) {
-      prefix = entry->labelPrefix + wxT(" - ");
-   }
-   return wxMenuItem::GetLabelText(prefix + entry->label);
-#else
    return wxString(entry->labelPrefix + wxT(" ") + entry->label).Trim(false).Trim(true);
-#endif
 }
 
 wxString CommandManager::GetCategoryFromName(const wxString &name)

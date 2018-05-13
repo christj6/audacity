@@ -82,11 +82,6 @@ void TracksBehaviorsPrefs::PopulateOrExchange(ShuttleGui & S)
       S.TieCheckBox(_("&Type to create a label"),
                     wxT("/GUI/TypeToCreateLabel"),
                     true);
-#ifdef EXPERIMENTAL_SCROLLING_LIMITS
-      S.TieCheckBox(_("Enable scrolling left of &zero"),
-                    ScrollingPreferenceKey(),
-                    ScrollingPreferenceDefault());
-#endif
       S.TieCheckBox(_("Advanced &vertical zooming"),
                     wxT("/GUI/VerticalZooming"),
                     false);

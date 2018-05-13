@@ -622,11 +622,7 @@ void LWSlider::Draw(wxDC & paintDC)
    // DO-THEME Mask colour!!  JC-Aug-2007
    // Needed with experimental theming!
    //  ... because windows blends against this colour.
-#ifdef EXPERIMENTAL_THEMING
    transparentColour = theTheme.Colour(clrTrackInfo);
-#else
-   transparentColour = wxColour(255, 254, 255);
-#endif
 
 #if !defined(__WXMAC__)
    dc.SetBackground(transparentColour);
@@ -663,7 +659,6 @@ void LWSlider::Draw(wxDC & paintDC)
       dc.SetFont(labelFont);
 
       // Colors
-#ifdef EXPERIMENTAL_THEMING
       dc.SetTextForeground( theTheme.Colour( clrTrackPanelText ));
 
       // TransparentColour should be same as clrTrackInfo.
@@ -674,10 +669,6 @@ void LWSlider::Draw(wxDC & paintDC)
       // Used to use wxSOLID here, but wxTRANSPARENT is better for mac, and 
       // works fine on windows.
       dc.SetBackgroundMode( wxTRANSPARENT );
-#else
-      dc.SetTextForeground(mEnabled ? wxColour(0, 0, 0) : wxColour(128, 128, 128));
-      dc.SetTextBackground(wxColour(255,255,255));
-#endif
 
       /* i18n-hint: One-letter abbreviation for Left, in the Pan slider */
       dc.DrawText(_("L"), mLeftX, 0);
@@ -688,11 +679,7 @@ void LWSlider::Draw(wxDC & paintDC)
    else
    {
       // draw the '-' and the '+'
-#ifdef EXPERIMENTAL_THEMING
       AColor::UseThemeColour(&dc, clrTrackPanelText );
-#else
-      dc.SetPen(mEnabled ? *wxBLACK : wxColour(128, 128, 128));
-#endif
 
       if (mOrientation == wxHORIZONTAL)
       {

@@ -48,9 +48,7 @@
 #include "KeyConfigPrefs.h"
 #include "LibraryPrefs.h"
 #include "MousePrefs.h"
-#ifdef EXPERIMENTAL_MODULE_PREFS
-#include "ModulePrefs.h"
-#endif
+
 #include "PlaybackPrefs.h"
 #include "ProjectsPrefs.h"
 #include "QualityPrefs.h"
@@ -169,9 +167,6 @@ PrefsDialog::Factories
    // static BatchPrefsFactory batchPrefsFactory;
    static KeyConfigPrefsFactory keyConfigPrefsFactory;
    static MousePrefsFactory mousePrefsFactory;
-#ifdef EXPERIMENTAL_MODULE_PREFS
-   static ModulePrefsFactory modulePrefsFactory;
-#endif
 
    static PrefsNode nodes[] = {
       &devicePrefsFactory,
@@ -197,12 +192,8 @@ PrefsDialog::Factories
       &directoriesPrefsFactory,
       &warningsPrefsFactory,
       &effectsPrefsFactory,
-      // &batchPrefsFactory,
       &keyConfigPrefsFactory,
       &mousePrefsFactory,
-#ifdef EXPERIMENTAL_MODULE_PREFS
-      &modulePrefsFactory,
-#endif
    };
 
    static Factories factories(nodes, nodes + sizeof(nodes) / sizeof(nodes[0]));

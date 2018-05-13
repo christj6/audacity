@@ -35,11 +35,6 @@ i.e. an alternative to the usual interface, for Audacity.
 
 #include "audacity/PluginInterface.h"
 
-#ifdef EXPERIMENTAL_MODULE_PREFS
-#include "Prefs.h"
-#include "./prefs/ModulePrefs.h"
-#endif
-
 #include "ModuleManager.h"
 #include "widgets/MultiDialog.h"
 
@@ -243,22 +238,6 @@ void ModuleManager::Initialize(CommandHandler &cmdHandler)
       wxString prefix = ::wxPathOnly(files[i]);
       ::wxSetWorkingDirectory(prefix);
 
-#ifdef EXPERIMENTAL_MODULE_PREFS
-      int iModuleStatus = ModulePrefs::GetModuleStatus( files[i] );
-      if( iModuleStatus == kModuleDisabled )
-         continue;
-      if( iModuleStatus == kModuleFailed )
-         continue;
-      // New module?  You have to go and explicitly enable it.
-      if( iModuleStatus == kModuleNew ){
-         // To ensure it is noted in config file and so
-         // appears on modules page.
-         ModulePrefs::SetModuleStatus( files[i], kModuleNew);
-         continue;
-      }
-
-      if( iModuleStatus == kModuleAsk )
-#endif
       // JKC: I don't like prompting for the plug-ins individually
       // I think it would be better to show the module prefs page,
       // and let the user decide for each one.
@@ -270,22 +249,10 @@ void ModuleManager::Initialize(CommandHandler &cmdHandler)
          const wxChar *buttons[] = {_("Yes"), _("No"), NULL};  // could add a button here for 'yes and remember that', and put it into the cfg file.  Needs more thought.
          int action;
          action = ShowMultiDialog(msg, _("Audacity Module Loader"), buttons, _("Try and load this module?"), false);
-#ifdef EXPERIMENTAL_MODULE_PREFS
-         // If we're not prompting always, accept the answer permanantly
-         if( iModuleStatus == kModuleNew ){
-            iModuleStatus = (action==1)?kModuleDisabled : kModuleEnabled;
-            ModulePrefs::SetModuleStatus( files[i], iModuleStatus );
-         }
-#endif
          if(action == 1){   // "No"
             continue;
          }
       }
-#ifdef EXPERIMENTAL_MODULE_PREFS
-      // Before attempting to load, we set the state to bad.
-      // That way, if we crash, we won't try again.
-      ModulePrefs::SetModuleStatus( files[i], kModuleFailed );
-#endif
 
       auto umodule = make_movable<Module>(files[i]);
       if (umodule->Load())   // it will get rejected if there  are version problems
@@ -303,10 +270,6 @@ void ModuleManager::Initialize(CommandHandler &cmdHandler)
          {
             pPanelHijack = (tPanelFn)(module->GetSymbol(wxT(mainPanelFnName)));
          }
-#ifdef EXPERIMENTAL_MODULE_PREFS
-         // Loaded successfully, restore the status.
-         ModulePrefs::SetModuleStatus( files[i], iModuleStatus);
-#endif
       }
    }
    ::wxSetWorkingDirectory(saveOldCWD);

@@ -137,10 +137,6 @@ ViewInfo::ViewInfo(double start, double screenDuration, double pixelsPerSecond)
 void ViewInfo::UpdatePrefs()
 {
    ZoomInfo::UpdatePrefs();
-#ifdef EXPERIMENTAL_SCROLLING_LIMITS
-   gPrefs->Read(TracksBehaviorsPrefs::ScrollingPreferenceKey(), &bScrollBeyondZero,
-                TracksBehaviorsPrefs::ScrollingPreferenceDefault());
-#endif
    gPrefs->Read(wxT("/GUI/AdjustSelectionEdges"), &bAdjustSelectionEdges,
       true);
 }

@@ -405,20 +405,10 @@ void MeterPanel::OnPaint(wxPaintEvent & WXUNUSED(event))
       // Go calculate all of the layout metrics
       HandleLayout(dc);
    
-      // Start with a clean background
-      // LLL:  Should research USE_AQUA_THEME usefulness...
-//#ifndef USE_AQUA_THEME
-#ifdef EXPERIMENTAL_THEMING
-      //if( !mMeterDisabled )
-      //{
-      //   mBkgndBrush.SetColour( GetParent()->GetBackgroundColour() );
-      //}
-#endif
-   
+      // Start with a clean background 
       dc.SetPen(*wxTRANSPARENT_PEN);
       dc.SetBrush(mBkgndBrush);
       dc.DrawRectangle(0, 0, mWidth, mHeight);
-//#endif
 
       // MixerTrackCluster style has no icon or L/R labels
       if (mStyle != MixerTrackCluster)

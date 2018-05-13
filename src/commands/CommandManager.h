@@ -302,9 +302,6 @@ class AUDACITY_DLL_API CommandManager final : public XMLTagHandler
       std::vector<NormalizedKeyString> &keys,
       std::vector<NormalizedKeyString> &default_keys,
       wxArrayString &labels, wxArrayString &categories,
-#if defined(EXPERIMENTAL_KEY_VIEW)
-      wxArrayString &prefixes,
-#endif
       bool includeMultis);
 
    wxString GetNameFromID( int id );

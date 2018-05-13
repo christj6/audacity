@@ -823,13 +823,7 @@ void Ruler::Label::Draw(wxDC&dc, bool twoTone, wxColour c) const
 {
    if (text != wxT("")) {
       bool altColor = twoTone && value < 0.0;
-
-#ifdef EXPERIMENTAL_THEMING
       dc.SetTextForeground(altColor ? theTheme.Colour( clrTextNegativeNumbers) : c);
-#else
-      dc.SetTextForeground(altColor ? *wxBLUE : *wxBLACK);
-#endif
-
       dc.DrawText(text, lx, ly);
    }
 }
@@ -1033,16 +1027,6 @@ AdornedRulerPanel::~AdornedRulerPanel()
 
 void AdornedRulerPanel::UpdatePrefs()
 {
-#ifdef EXPERIMENTAL_SCROLLING_LIMITS
-#ifdef EXPERIMENTAL_TWO_TONE_TIME_RULER
-   {
-      bool scrollBeyondZero = false;
-      gPrefs->Read(TracksBehaviorsPrefs::ScrollingPreferenceKey(), &scrollBeyondZero,
-                   TracksBehaviorsPrefs::ScrollingPreferenceDefault());
-   }
-#endif
-#endif
-
    // Affected by the last
    UpdateRects();
    SetPanelSize();

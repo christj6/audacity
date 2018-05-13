@@ -242,7 +242,7 @@ void DeviceManager::Rescan()
    // FIXME: TRAP_ERR PaErrorCode not handled in ReScan()
    int nDevices = Pa_GetDeviceCount();
 
-   //The heirarchy for devices is Host/device/source.
+   //The hierarchy for devices is Host/device/source.
    //Some newer systems aggregate this.
    //So we need to call port mixer for every device to get the sources
    for (int i = 0; i < nDevices; i++) {
@@ -253,10 +253,8 @@ void DeviceManager::Rescan()
 
       if (info->maxInputChannels > 0) {
 #ifdef __WXMSW__
-#if !defined(EXPERIMENTAL_FULL_WASAPI)
          if (Pa_GetHostApiInfo(info->hostApi)->type != paWASAPI ||
              PaWasapi_IsLoopback(i) > 0)
-#endif
 #endif
          AddSources(i, info->defaultSampleRate, &mInputDeviceSourceMaps, 1);
       }
