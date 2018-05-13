@@ -289,10 +289,6 @@ void AudacityProject::CreateMenusAndCommands()
       c->AddItem(wxT("SplitNew"), XXO("Split Ne&w"), FN(OnSplitNew), wxT("Ctrl+Alt+I"),
          AudioIONotBusyFlag | TimeSelectedFlag | WaveTracksSelectedFlag,
          AudioIONotBusyFlag | TimeSelectedFlag | WaveTracksSelectedFlag);
-      c->AddSeparator();
-      /* i18n-hint: (verb)*/
-      c->AddItem(wxT("Join"), XXO("&Join"), FN(OnJoin), wxT("Ctrl+J"));
-      c->AddItem(wxT("Disjoin"), XXO("Detac&h at Silences"), FN(OnDisjoin), wxT("Ctrl+Alt+J"));
       c->EndSubMenu();
 
       /////////////////////////////////////////////////////////////////////////////
@@ -3367,56 +3363,6 @@ void AudacityProject::OnPasteOver(const CommandContext &context) // not currentl
 void AudacityProject::OnDelete(const CommandContext &WXUNUSED(context) )
 {
    Clear();
-}
-
-void AudacityProject::OnDisjoin(const CommandContext &WXUNUSED(context) )
-{
-   TrackListIterator iter(GetTracks());
-
-   Track *n = iter.First();
-
-   while (n) {
-      if (n->GetSelected()) {
-         if (n->GetKind() == Track::Wave)
-         {
-            ((WaveTrack*)n)->Disjoin(mViewInfo.selectedRegion.t0(),
-                                     mViewInfo.selectedRegion.t1());
-         }
-      }
-      n = iter.Next();
-   }
-
-   PushState(wxString::Format(_("Detached %.2f seconds at t=%.2f"),
-                              mViewInfo.selectedRegion.duration(),
-                              mViewInfo.selectedRegion.t0()),
-             _("Detach"));
-
-   RedrawProject();
-}
-
-void AudacityProject::OnJoin(const CommandContext &WXUNUSED(context) )
-{
-   TrackListIterator iter(GetTracks());
-
-   Track *n = iter.First();
-
-   while (n) {
-      if (n->GetSelected()) {
-         if (n->GetKind() == Track::Wave)
-         {
-            ((WaveTrack*)n)->Join(mViewInfo.selectedRegion.t0(),
-                                  mViewInfo.selectedRegion.t1());
-         }
-      }
-      n = iter.Next();
-   }
-
-   PushState(wxString::Format(_("Joined %.2f seconds at t=%.2f"),
-                              mViewInfo.selectedRegion.duration(),
-                              mViewInfo.selectedRegion.t0()),
-             _("Join"));
-
-   RedrawProject();
 }
 
 void AudacityProject::OnSplit(const CommandContext &WXUNUSED(context) )
