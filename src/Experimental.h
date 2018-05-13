@@ -32,14 +32,14 @@
 
 // LLL, 09 Nov 2013:
 // Allow all WASAPI devices, not just loopback
-#define EXPERIMENTAL_FULL_WASAPI
+// #define EXPERIMENTAL_FULL_WASAPI
 
 // JKC (effect by Norm C, 02 Oct 2013)
-#define EXPERIMENTAL_SCIENCE_FILTERS
+// #define EXPERIMENTAL_SCIENCE_FILTERS
 
 // LLL, 01 Oct 2013:
 // NEW key assignment view for preferences
-#define EXPERIMENTAL_KEY_VIEW
+// #define EXPERIMENTAL_KEY_VIEW
 
 // These CFG macros allow easy distinction between Audacity and DA defaults.
 #define CFG_A( x ) x
@@ -48,21 +48,21 @@
 // Define this so that sync-lock tiles shine through spectrogram.
 // The spectrogram pastes a bitmap over the tiles.
 // This makes it use alpha blending, most transparent where least intense.
-#define EXPERIMENTAL_SPECTROGRAM_OVERLAY
+// #define EXPERIMENTAL_SPECTROGRAM_OVERLAY
 
 // Define this so that sync-lock tiles shine through note/MIDI track.
 // The note track then relies on the same code for drawing background as
 // Wavetrack, and draws its notes and lines over the top.
-#define EXPERIMENTAL_NOTETRACK_OVERLAY
+// #define EXPERIMENTAL_NOTETRACK_OVERLAY
 
 // EXPERIMENTAL_THEMING is mostly mainstream now.
 // the define is still present to mark out old code before theming, that we might
 // conceivably need.
 // TODO: Agree on and then tidy this code.
-#define EXPERIMENTAL_THEMING
+// #define EXPERIMENTAL_THEMING
 
 // This shows the zoom toggle button on the edit toolbar.
-#define EXPERIMENTAL_ZOOM_TOGGLE_BUTTON
+// #define EXPERIMENTAL_ZOOM_TOGGLE_BUTTON
 
 // Effect categorisation. Adds support for arranging effects in categories
 // and displaying those categories as submenus in the Effect menu.
@@ -75,24 +75,24 @@
 
 // Module prefs provides a panel in prefs where users can choose which modules
 // to enable.
-#define EXPERIMENTAL_MODULE_PREFS
+// #define EXPERIMENTAL_MODULE_PREFS
 
 // Define to allow realtime processing in Audacity effects that have been converted.
-#define EXPERIMENTAL_REALTIME_AUDACITY_EFFECTS
+// #define EXPERIMENTAL_REALTIME_AUDACITY_EFFECTS
 
 // Define for NEW noise reduction effect from Paul Licameli.
-#define EXPERIMENTAL_NOISE_REDUCTION
+// #define EXPERIMENTAL_NOISE_REDUCTION
 
 // Paul Licameli (PRL) 24 May 2015
 // Allow scrolling up to one half of a screenful beyond either end of the project,
 // if you turn on the appropriate Tracks preference.
 // This allows smooth-scrolling scrub to work more reasonably at the ends.
-#define EXPERIMENTAL_SCROLLING_LIMITS
+// #define EXPERIMENTAL_SCROLLING_LIMITS
 
 // Paul Licameli (PRL) 28 May 2015
 // Draw negative numbers on the time ruler in a different color, when
 // scrolling past zero is enabled. Perhaps that lessens confusion.
-#define EXPERIMENTAL_TWO_TONE_TIME_RULER
+// #define EXPERIMENTAL_TWO_TONE_TIME_RULER
 
 // Paul Licameli (PRL) 31 May 2015
 // Zero-padding factor for spectrograms can smooth the display of spectrograms by

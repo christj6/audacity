@@ -280,7 +280,7 @@ void KeyConfigPrefs::RefreshBindings(bool bSort)
       mDefaultKeys,
       Labels,
       Categories,
-      Prefixes,
+      // Prefixes,
       true); // True to include effects (list items), false otherwise.
 
    mStandardDefaultKeys = mDefaultKeys;
