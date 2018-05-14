@@ -2819,7 +2819,7 @@ void AudacityProject::OnPreferences(const CommandContext &WXUNUSED(context) )
 {
    GlobalPrefsDialog dialog(this /* parent */ );
 
-   if (!dialog.ShowModal()) {
+   if (!dialog.ShowModal()) { // crash occurs here, wxArray out of bounds
       // Canceled
       return;
    }
