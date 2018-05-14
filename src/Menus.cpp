@@ -281,18 +281,6 @@ void AudacityProject::CreateMenusAndCommands()
 
       /////////////////////////////////////////////////////////////////////////////
 
-      c->BeginSubMenu(_("Clip B&oundaries"));
-      /* i18n-hint: (verb) It's an item on a menu. */
-      c->AddItem(wxT("Split"), XXO("Sp&lit"), FN(OnSplit), wxT("Ctrl+I"),
-         AudioIONotBusyFlag | WaveTracksSelectedFlag,
-         AudioIONotBusyFlag | WaveTracksSelectedFlag);
-      c->AddItem(wxT("SplitNew"), XXO("Split Ne&w"), FN(OnSplitNew), wxT("Ctrl+Alt+I"),
-         AudioIONotBusyFlag | TimeSelectedFlag | WaveTracksSelectedFlag,
-         AudioIONotBusyFlag | TimeSelectedFlag | WaveTracksSelectedFlag);
-      c->EndSubMenu();
-
-      /////////////////////////////////////////////////////////////////////////////
-
 #ifndef __WXMAC__
       c->AddSeparator();
 #endif
@@ -3363,62 +3351,6 @@ void AudacityProject::OnPasteOver(const CommandContext &context) // not currentl
 void AudacityProject::OnDelete(const CommandContext &WXUNUSED(context) )
 {
    Clear();
-}
-
-void AudacityProject::OnSplit(const CommandContext &WXUNUSED(context) )
-{
-   TrackListIterator iter(GetTracks());
-
-   double sel0 = mViewInfo.selectedRegion.t0();
-   double sel1 = mViewInfo.selectedRegion.t1();
-
-   for (Track* n=iter.First(); n; n = iter.Next())
-   {
-      if (n->GetKind() == Track::Wave)
-      {
-         WaveTrack* wt = (WaveTrack*)n;
-         if (wt->GetSelected())
-            wt->Split( sel0, sel1 );
-      }
-   }
-
-   PushState(_("Split"), _("Split"));
-   mTrackPanel->Refresh(false);
-}
-
-void AudacityProject::OnSplitNew(const CommandContext &WXUNUSED(context) )
-{
-   TrackListIterator iter(GetTracks());
-   Track *l = iter.Last();
-
-   for (Track *n = iter.First(); n; n = iter.Next()) {
-      if (n->GetSelected()) {
-         Track::Holder dest;
-         double newt0 = 0, newt1 = 0;
-         double offset = n->GetOffset();
-         if (n->GetKind() == Track::Wave) {
-            const auto wt = static_cast<WaveTrack*>(n);
-            // Clips must be aligned to sample positions or the NEW clip will not fit in the gap where it came from
-            offset = wt->LongSamplesToTime(wt->TimeToLongSamples(offset));
-            newt0 = wt->LongSamplesToTime(wt->TimeToLongSamples(mViewInfo.selectedRegion.t0()));
-            newt1 = wt->LongSamplesToTime(wt->TimeToLongSamples(mViewInfo.selectedRegion.t1()));
-            dest = wt->SplitCut(newt0, newt1);
-         }
-
-         if (dest) {
-            dest->SetOffset(wxMax(newt0, offset));
-            FinishCopy(n, std::move(dest), *mTracks);
-         }
-      }
-
-      if (n == l) {
-         break;
-      }
-   }
-
-   PushState(_("Split to new track"), _("Split New"));
-
-   RedrawProject();
 }
 
 int AudacityProject::CountSelectedWaveTracks()

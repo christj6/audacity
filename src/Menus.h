@@ -181,9 +181,6 @@ void OnPasteOver(const CommandContext &context );
 
 void OnDelete(const CommandContext &context );
 
-void OnSplit(const CommandContext &context );
-void OnSplitNew(const CommandContext &context );
-
 void OnSelectTimeAndTracks(bool bAllTime, bool bAllTracks);
 void OnSelectAllTime(const CommandContext &context );
 void OnSelectAllTracks(const CommandContext &context );
