@@ -26,12 +26,10 @@ std::vector<UIHandlePtr> Track::HitTest
 {
    UIHandlePtr result;
    std::vector<UIHandlePtr> results;
-   const bool isMultiTool = false;
-   const auto currentTool = false;
 
    // In other tools, let subclasses determine detailed hits.
    results =
-      DetailedHitTest( st, pProject, currentTool, isMultiTool );
+      DetailedHitTest( st, pProject );
 
    result = SelectHandle::HitTest(mSelectHandle, st, pProject, Pointer(this));
    if (result)

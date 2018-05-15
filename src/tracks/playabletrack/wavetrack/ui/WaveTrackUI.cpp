@@ -21,7 +21,7 @@ Paul Licameli split from TrackPanel.cpp
 
 std::vector<UIHandlePtr> WaveTrack::DetailedHitTest
 (const TrackPanelMouseState &st,
- const AudacityProject *pProject, int currentTool, bool bMultiTool)
+ const AudacityProject *pProject)
 {
    // This is the only override of Track::DetailedHitTest that still
    // depends on the state of the Tools toolbar.
