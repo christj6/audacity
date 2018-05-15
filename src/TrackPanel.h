@@ -93,30 +93,6 @@ public:
       ( TrackPanelDrawingContext &context,
         const wxRect &rect, const Track *pTrack );
 
-   template<typename TrackClass>
-   static void SliderDrawFunction
-      ( LWSlider *(*Selector)
-           (const wxRect &sliderRect, const TrackClass *t, bool captured,
-            wxWindow*),
-        wxDC *dc, const wxRect &rect, const Track *pTrack,
-        bool captured, bool highlight );
-
-   static void PanSliderDrawFunction
-      ( TrackPanelDrawingContext &context,
-        const wxRect &rect, const Track *pTrack );
-
-   static void GainSliderDrawFunction
-      ( TrackPanelDrawingContext &context,
-        const wxRect &rect, const Track *pTrack );
-
-   static void WideMuteDrawFunction
-      ( TrackPanelDrawingContext &context,
-        const wxRect &rect, const Track *pTrack );
-
-   static void WideSoloDrawFunction
-      ( TrackPanelDrawingContext &context,
-        const wxRect &rect, const Track *pTrack );
-
    static void StatusDrawFunction
       ( const wxString &string, wxDC *dc, const wxRect &rect );
 
@@ -132,7 +108,6 @@ public:
    int GetTrackInfoWidth() const;
    static void SetTrackInfoFont(wxDC *dc);
 
-
    void DrawBackground(wxDC * dc, const wxRect & rect, bool bSelected, bool bHasMuteSolo, const int labelw, const int vrul) const;
    void DrawBordersWithin(wxDC * dc, const wxRect & rect, const Track &track ) const;
 
@@ -143,10 +118,6 @@ public:
    static void GetTitleBarRect(const wxRect & rect, wxRect &dest);
 
    static void GetNarrowMuteHorizontalBounds
-      ( const wxRect & rect, wxRect &dest );
-   static void GetNarrowSoloHorizontalBounds
-      ( const wxRect & rect, wxRect &dest );
-   static void GetWideMuteSoloHorizontalBounds
       ( const wxRect & rect, wxRect &dest );
 
    static void GetSliderHorizontalBounds( const wxPoint &topleft, wxRect &dest );

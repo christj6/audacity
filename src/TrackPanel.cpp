@@ -2001,63 +2001,6 @@ void TrackInfo::CloseTitleDrawFunction
    }
 }
 
-template<typename TrackClass>
-void TrackInfo::SliderDrawFunction
-( LWSlider *(*Selector)
-    (const wxRect &sliderRect, const TrackClass *t, bool captured, wxWindow*),
-  wxDC *dc, const wxRect &rect, const Track *pTrack,
-  bool captured, bool highlight )
-{
-   wxRect sliderRect = rect;
-   TrackInfo::GetSliderHorizontalBounds( rect.GetTopLeft(), sliderRect );
-   auto wt = static_cast<const TrackClass*>( pTrack );
-   Selector( sliderRect, wt, captured, nullptr )->OnPaint(*dc, highlight);
-}
-
-#include "tracks/playabletrack/wavetrack/ui/WaveTrackSliderHandles.h"
-void TrackInfo::PanSliderDrawFunction
-( TrackPanelDrawingContext &context,
-  const wxRect &rect, const Track *pTrack )
-{
-   auto target = dynamic_cast<PanSliderHandle*>( context.target.get() );
-   auto dc = &context.dc;
-   bool hit = target && target->GetTrack().get() == pTrack;
-   bool captured = hit && target->IsClicked();
-   SliderDrawFunction<WaveTrack>
-      ( &TrackInfo::PanSlider, dc, rect, pTrack, captured, hit);
-}
-
-void TrackInfo::GainSliderDrawFunction
-( TrackPanelDrawingContext &context,
-  const wxRect &rect, const Track *pTrack )
-{
-   auto target = dynamic_cast<GainSliderHandle*>( context.target.get() );
-   auto dc = &context.dc;
-   bool hit = target && target->GetTrack().get() == pTrack;
-   if( hit )
-      hit=hit;
-   bool captured = hit && target->IsClicked();
-   SliderDrawFunction<WaveTrack>
-      ( &TrackInfo::GainSlider, dc, rect, pTrack, captured, hit);
-}
-
-#include "tracks/playabletrack/ui/PlayableTrackButtonHandles.h"
-void TrackInfo::WideMuteDrawFunction
-( TrackPanelDrawingContext &context,
-  const wxRect &rect, const Track *pTrack )
-{
-   wxRect bev = rect;
-   GetWideMuteSoloHorizontalBounds( rect, bev );
-}
-
-void TrackInfo::WideSoloDrawFunction
-( TrackPanelDrawingContext &context,
-  const wxRect &rect, const Track *pTrack )
-{
-   wxRect bev = rect;
-   GetWideMuteSoloHorizontalBounds( rect, bev );
-}
-
 void TrackInfo::StatusDrawFunction
    ( const wxString &string, wxDC *dc, const wxRect &rect )
 {
@@ -2706,22 +2649,6 @@ void TrackInfo::GetNarrowMuteHorizontalBounds( const wxRect & rect, wxRect &dest
 {
    dest.x = rect.x;
    dest.width = rect.width / 2 + 1;
-}
-
-void TrackInfo::GetNarrowSoloHorizontalBounds( const wxRect & rect, wxRect &dest )
-{
-   wxRect muteRect;
-   GetNarrowMuteHorizontalBounds( rect, muteRect );
-   dest.x = rect.x + muteRect.width;
-   dest.width = rect.width - muteRect.width + TitleSoloBorderOverlap;
-}
-
-void TrackInfo::GetWideMuteSoloHorizontalBounds( const wxRect & rect, wxRect &dest )
-{
-   // Larger button, symmetrically placed intended.
-   // On windows this gives 15 pixels each side.
-   dest.width = rect.width - 2 * kTrackInfoBtnSize + 6;
-   dest.x = rect.x + kTrackInfoBtnSize -3;
 }
 
 void TrackInfo::GetSliderHorizontalBounds( const wxPoint &topleft, wxRect &dest )
