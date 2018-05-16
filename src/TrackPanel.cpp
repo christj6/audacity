@@ -2420,11 +2420,6 @@ void TrackPanel::DrawShadow(Track * /* t */ , wxDC * dc, const wxRect & rect)
 ///  @param mouseY - mouse Y position.
 TrackPanel::FoundCell TrackPanel::FindCell(int mouseX, int mouseY)
 {
-	// note: this function is crashing frequently.
-	// something to do with moving the mouse around too much...
-	//
-	// Without making a selection, move the mouse to the line between where the Track Mixer used to be,
-	// and where the track itself starts. When the mouse is right on that line, move it just a bit to the left. Crash.
    auto range = Cells();
    auto &iter = range.first, &end = range.second;
    auto prev = iter;
@@ -2443,6 +2438,8 @@ TrackPanel::FoundCell TrackPanel::FindCell(int mouseX, int mouseY)
 
    auto found = *iter;
 
+   // Attempting to remove GetVRulerControls() and GetVRulerControl() results in a crash here
+   // if the user hovers the mouse over the thin vertical line between the TrackPanel and the Track itself
    return 
    {
       static_cast<CommonTrackPanelCell*>( found.first.get() )->FindTrack(),

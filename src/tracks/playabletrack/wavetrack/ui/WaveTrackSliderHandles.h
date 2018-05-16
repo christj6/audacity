@@ -16,39 +16,6 @@ Paul Licameli split from TrackPanel.cpp
 class wxMouseState;
 class WaveTrack;
 
-class GainSliderHandle final : public SliderHandle
-{
-   GainSliderHandle(const GainSliderHandle&) = delete;
-
-   std::shared_ptr<WaveTrack> GetWaveTrack();
-
-public:
-   explicit GainSliderHandle
-      ( SliderFn sliderFn, const wxRect &rect,
-        const std::shared_ptr<Track> &pTrack );
-
-   GainSliderHandle &operator=(const GainSliderHandle&) = default;
-
-   virtual ~GainSliderHandle();
-
-protected:
-   float GetValue() override;
-   Result SetValue
-      (AudacityProject *pProject, float newValue) override;
-   Result CommitChanges
-      (const wxMouseEvent &event, AudacityProject *pProject) override;
-
-   bool StopsOnKeystroke () override { return true; }
-
-public:
-   static UIHandlePtr HitTest
-      (std::weak_ptr<GainSliderHandle> &holder,
-       const wxMouseState &state, const wxRect &rect,
-       const std::shared_ptr<Track> &pTrack);
-};
-
-////////////////////////////////////////////////////////////////////////////////
-
 class PanSliderHandle final : public SliderHandle
 {
    PanSliderHandle(const PanSliderHandle&) = delete;

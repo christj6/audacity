@@ -15,7 +15,6 @@ Paul Licameli split from TrackPanel.cpp
 
 class MuteButtonHandle;
 class SoloButtonHandle;
-class GainSliderHandle;
 class PanSliderHandle;
 
 class WaveTrackControls final : public TrackControls
@@ -38,7 +37,6 @@ public:
 private:
    std::weak_ptr<MuteButtonHandle> mMuteHandle;
    std::weak_ptr<SoloButtonHandle> mSoloHandle;
-   std::weak_ptr<GainSliderHandle> mGainHandle;
    std::weak_ptr<PanSliderHandle> mPanHandle;
 };
 
