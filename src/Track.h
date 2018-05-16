@@ -157,12 +157,6 @@ class AUDACITY_DLL_API Track /* not final */
 
  public:
 
-   // Rather override this for subclasses:
-   virtual std::vector<UIHandlePtr> DetailedHitTest
-      (const TrackPanelMouseState &,
-       const AudacityProject *pProject)
-      = 0;
-
    mutable wxSize vrulerSize;
 
    // Return another, associated TrackPanelCell object that implements the

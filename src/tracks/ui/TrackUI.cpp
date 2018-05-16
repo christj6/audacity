@@ -27,10 +27,6 @@ std::vector<UIHandlePtr> Track::HitTest
    UIHandlePtr result;
    std::vector<UIHandlePtr> results;
 
-   // In other tools, let subclasses determine detailed hits.
-   results =
-      DetailedHitTest( st, pProject );
-
    result = SelectHandle::HitTest(mSelectHandle, st, pProject, Pointer(this));
    if (result)
       results.push_back(result);

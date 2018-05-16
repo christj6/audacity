@@ -88,11 +88,6 @@ private:
 
    virtual ~WaveTrack();
 
-   std::vector<UIHandlePtr> DetailedHitTest
-      (const TrackPanelMouseState &state,
-       const AudacityProject *pProject)
-      override;
-
    double GetOffset() const override;
    void SetOffset(double o) override;
    virtual int GetChannel() const override;
