@@ -145,11 +145,6 @@ class SpectrumVRulerMenuTable : public WaveTrackVRulerMenuTable
 
 public:
    static SpectrumVRulerMenuTable &Instance();
-
-private:
-   void InitMenu(Menu *pMenu, void *pUserData);
-
-   void OnSpectrumScaleType(wxCommandEvent &evt);
 };
 
 SpectrumVRulerMenuTable &SpectrumVRulerMenuTable::Instance()
@@ -158,18 +153,9 @@ SpectrumVRulerMenuTable &SpectrumVRulerMenuTable::Instance()
    return instance;
 }
 
-void SpectrumVRulerMenuTable::InitMenu(Menu *pMenu, void *pUserData)
-{
-}
-
 BEGIN_POPUP_MENU(SpectrumVRulerMenuTable)
 
    {
-      const wxArrayString & names = SpectrogramSettings::GetScaleNames();
-      for (int ii = 0, nn = names.size(); ii < nn; ++ii) {
-         POPUP_MENU_RADIO_ITEM(OnFirstSpectrumScaleID + ii, names[ii],
-            OnSpectrumScaleType);
-      }
    }
 
 POPUP_MENU_SEPARATOR()
@@ -177,31 +163,6 @@ POPUP_MENU_SEPARATOR()
    POPUP_MENU_ITEM(OnZoomInVerticalID,    _("Zoom In\tLeft-Click/Left-Drag"),  OnZoomInVertical)
    POPUP_MENU_ITEM(OnZoomOutVerticalID,   _("Zoom Out\tShift-Left-Click"),     OnZoomOutVertical)
 END_POPUP_MENU()
-
-void SpectrumVRulerMenuTable::OnSpectrumScaleType(wxCommandEvent &evt)
-{
-	/*
-   WaveTrack *const wt = mpData->pTrack;
-   // Assume linked track is wave or null
-   const auto partner = static_cast<WaveTrack*>(wt->GetLink());
-   const SpectrogramSettings::ScaleType newScaleType =
-      SpectrogramSettings::ScaleType(
-         std::max(0,
-            std::min((int)(SpectrogramSettings::stNumScaleTypes) - 1,
-               evt.GetId() - OnFirstSpectrumScaleID
-      )));
-   if (wt->GetSpectrogramSettings().scaleType != newScaleType) {
-      wt->GetIndependentSpectrogramSettings().scaleType = newScaleType;
-      if (partner)
-         partner->GetIndependentSpectrogramSettings().scaleType = newScaleType;
-
-      ::GetActiveProject()->ModifyState();
-
-      using namespace RefreshCode;
-      mpData->result = UpdateVRuler | RefreshAll;
-   }
-   */
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 
