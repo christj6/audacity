@@ -48,33 +48,13 @@ SetTrackBase::SetTrackBase(){
    mbPromptForTracks = true;
 }
 
-//Define for the old scheme, where SetTrack defines its own track selection.
-//rather than using the current selection.
-//#define USE_OWN_TRACK_SELECTION
-
 bool SetTrackBase::DefineParams( ShuttleParams & S )
 {
-#ifdef USE_OWN_TRACK_SELECTION
-   S.OptionalY( bHasTrackIndex     ).Define(     mTrackIndex,     wxT("Track"),      0, 0, 100 );
-   S.OptionalN( bHasChannelIndex   ).Define(     mChannelIndex,   wxT("Channel"),    0, 0, 100 );
-#endif
    return true;
 }
 
 void SetTrackBase::PopulateOrExchange(ShuttleGui & S)
 {
-#ifdef USE_OWN_TRACK_SELECTION
-   if( !mbPromptForTracks )
-      return;
-   S.AddSpace(0, 5);
-   S.StartMultiColumn(3, wxEXPAND);
-   {
-      S.SetStretchyCol( 2 );
-      S.Optional( bHasTrackIndex  ).TieNumericTextBox(  _("Track Index:"),   mTrackIndex );
-      S.Optional( bHasChannelIndex).TieNumericTextBox(  _("Channel Index:"), mChannelIndex );
-   }
-   S.EndMultiColumn();
-#endif
 }
 
 bool SetTrackBase::Apply(const CommandContext & context  )
@@ -87,13 +67,7 @@ bool SetTrackBase::Apply(const CommandContext & context  )
    while (t )
    {
       bool bThisTrack =
-#ifdef USE_OWN_TRACK_SELECTION
-         (bHasTrackIndex && (i==mTrackIndex)) ||
-         (bHasChannelIndex && (j==mChannelIndex ) ) ||
-         (!bHasTrackIndex && !bHasChannelIndex) ;
-#else
          t->GetSelected();
-#endif
 
       if( bThisTrack ){
          ApplyInner( t );
