@@ -408,11 +408,6 @@ void SpectrumPrefs::OnControl(wxCommandEvent&)
 
 void SpectrumPrefs::OnWindowSize(wxCommandEvent &evt)
 {
-   // Restrict choice of zero padding, so that product of window
-   // size and padding may not exceed the largest window size.
-   wxChoice *const pWindowSizeControl =
-      static_cast<wxChoice*>(wxWindow::FindWindowById(ID_WINDOW_SIZE, this));
-
    // Do the common part
    OnControl(evt);
 }

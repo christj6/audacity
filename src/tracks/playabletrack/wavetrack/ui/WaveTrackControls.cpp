@@ -12,7 +12,6 @@ Paul Licameli split from TrackPanel.cpp
 #include "../../../../Experimental.h"
 #include "WaveTrackControls.h"
 #include "../../ui/PlayableTrackButtonHandles.h"
-#include "WaveTrackSliderHandles.h"
 
 #include "../../../../AudioIO.h"
 #include "../../../../HitTestResult.h"
