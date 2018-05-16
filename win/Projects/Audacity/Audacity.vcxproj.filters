@@ -60,9 +60,6 @@
     <Filter Include="src\tracks\playabletrack\wavetrack\ui">
       <UniqueIdentifier>{695fd2f1-de41-4703-aee8-cf5901fe089e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\tracks\playabletrack\ui">
-      <UniqueIdentifier>{1af54030-3637-42e2-8339-b48bf05b8564}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\AboutDialog.cpp">
@@ -658,9 +655,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\tracks\ui\SliderHandle.cpp">
       <Filter>src\tracks\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\tracks\playabletrack\ui\PlayableTrackButtonHandles.cpp">
-      <Filter>src\tracks\playabletrack\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\tracks\ui\TrackButtonHandles.cpp">
       <Filter>src\tracks\ui</Filter>
@@ -1428,9 +1422,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\tracks\ui\SliderHandle.h">
       <Filter>src\tracks\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\tracks\playabletrack\ui\PlayableTrackButtonHandles.h">
-      <Filter>src\tracks\playabletrack\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\tracks\ui\TrackButtonHandles.h">
       <Filter>src\tracks\ui</Filter>

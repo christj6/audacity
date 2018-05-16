@@ -214,7 +214,6 @@
     <ClCompile Include="..\..\..\src\TrackPanelAx.cpp" />
     <ClCompile Include="..\..\..\src\TrackPanelResizeHandle.cpp" />
     <ClCompile Include="..\..\..\src\TrackPanelResizerCell.cpp" />
-    <ClCompile Include="..\..\..\src\tracks\playabletrack\ui\PlayableTrackButtonHandles.cpp" />
     <ClCompile Include="..\..\..\src\tracks\playabletrack\wavetrack\ui\CutlineHandle.cpp" />
     <ClCompile Include="..\..\..\src\tracks\playabletrack\wavetrack\ui\WaveTrackControls.cpp" />
     <ClCompile Include="..\..\..\src\tracks\playabletrack\wavetrack\ui\WaveTrackUI.cpp" />
@@ -414,7 +413,6 @@
     <ClInclude Include="..\..\..\src\TrackPanelDrawingContext.h" />
     <ClInclude Include="..\..\..\src\TrackPanelListener.h" />
     <ClInclude Include="..\..\..\src\TrackPanelMouseEvent.h" />
-    <ClInclude Include="..\..\..\src\tracks\playabletrack\ui\PlayableTrackButtonHandles.h" />
     <ClInclude Include="..\..\..\src\tracks\playabletrack\wavetrack\ui\CutlineHandle.h" />
     <ClInclude Include="..\..\..\src\tracks\playabletrack\wavetrack\ui\WaveTrackControls.h" />
     <ClInclude Include="..\..\..\src\tracks\playabletrack\wavetrack\ui\WaveTrackVRulerControls.h" />
