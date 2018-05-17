@@ -134,38 +134,6 @@ BEGIN_POPUP_MENU(WaveformVRulerMenuTable)
 // So don't repeat them here.
 END_POPUP_MENU()
 
-///////////////////////////////////////////////////////////////////////////////
-// Table class
-
-class SpectrumVRulerMenuTable : public WaveTrackVRulerMenuTable
-{
-   SpectrumVRulerMenuTable() : WaveTrackVRulerMenuTable() {}
-   virtual ~SpectrumVRulerMenuTable() {}
-   DECLARE_POPUP_MENU(SpectrumVRulerMenuTable);
-
-public:
-   static SpectrumVRulerMenuTable &Instance();
-};
-
-SpectrumVRulerMenuTable &SpectrumVRulerMenuTable::Instance()
-{
-   static SpectrumVRulerMenuTable instance;
-   return instance;
-}
-
-BEGIN_POPUP_MENU(SpectrumVRulerMenuTable)
-
-   {
-   }
-
-POPUP_MENU_SEPARATOR()
-   POPUP_MENU_ITEM(OnZoomResetID,         _("Zoom Reset"),                     OnZoomReset)
-   POPUP_MENU_ITEM(OnZoomInVerticalID,    _("Zoom In\tLeft-Click/Left-Drag"),  OnZoomInVertical)
-   POPUP_MENU_ITEM(OnZoomOutVerticalID,   _("Zoom Out\tShift-Left-Click"),     OnZoomOutVertical)
-END_POPUP_MENU()
-
-///////////////////////////////////////////////////////////////////////////////
-
 HitTestPreview WaveTrackVZoomHandle::HitPreview(const wxMouseState &state)
 {
    static auto zoomInCursor =
@@ -245,9 +213,7 @@ UIHandle::Result WaveTrackVZoomHandle::Release
       };
 
       PopupMenuTable *const pTable =
-         (pTrack->GetDisplay() == WaveTrack::Spectrum)
-         ? (PopupMenuTable *) &SpectrumVRulerMenuTable::Instance()
-         : (PopupMenuTable *) &WaveformVRulerMenuTable::Instance();
+         (PopupMenuTable *) &WaveformVRulerMenuTable::Instance();
       std::unique_ptr<PopupMenuTable::Menu>
          pMenu(PopupMenuTable::BuildMenu(pParent, pTable, &data));
 
