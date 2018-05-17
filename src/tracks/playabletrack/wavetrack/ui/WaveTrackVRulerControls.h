@@ -13,7 +13,7 @@ Paul Licameli split from TrackPanel.cpp
 
 #include "../../../ui/TrackVRulerControls.h"
 
-class WaveTrackVZoomHandle;
+// class WaveTrackVZoomHandle;
 
 class WaveTrackVRulerControls final : public TrackVRulerControls
 {
@@ -26,7 +26,7 @@ public:
       : TrackVRulerControls( pTrack ) {}
    ~WaveTrackVRulerControls();
 private:
-   std::weak_ptr<WaveTrackVZoomHandle> mVZoomHandle;
+   // std::weak_ptr<WaveTrackVZoomHandle> mVZoomHandle;
 };
 
 #endif
