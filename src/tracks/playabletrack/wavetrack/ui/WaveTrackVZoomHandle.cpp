@@ -212,10 +212,8 @@ UIHandle::Result WaveTrackVZoomHandle::Release
          pTrack.get(), mRect, RefreshCode::RefreshNone, event.m_y
       };
 
-      PopupMenuTable *const pTable =
-         (PopupMenuTable *) &WaveformVRulerMenuTable::Instance();
       std::unique_ptr<PopupMenuTable::Menu>
-         pMenu(PopupMenuTable::BuildMenu(pParent, pTable, &data));
+         pMenu(PopupMenuTable::BuildMenu(pParent, &data));
 
       // Accelerators only if zooming enabled.
       if( !bVZoom )
