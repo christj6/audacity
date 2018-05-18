@@ -10,7 +10,6 @@ Paul Licameli split from TrackPanel.cpp
 
 #include "../../../../Audacity.h"
 #include "WaveTrackVRulerControls.h"
-#include "WaveTrackVZoomHandle.h"
 
 #include "../../../../HitTestResult.h"
 #include "../../../../NumberScale.h"

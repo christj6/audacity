@@ -13,8 +13,6 @@ Paul Licameli split from TrackPanel.cpp
 
 #include "../../../ui/TrackVRulerControls.h"
 
-// class WaveTrackVZoomHandle;
-
 class WaveTrackVRulerControls final : public TrackVRulerControls
 {
    WaveTrackVRulerControls(const WaveTrackVRulerControls&) = delete;
@@ -25,8 +23,6 @@ public:
    WaveTrackVRulerControls( std::shared_ptr<Track> pTrack )
       : TrackVRulerControls( pTrack ) {}
    ~WaveTrackVRulerControls();
-private:
-   // std::weak_ptr<WaveTrackVZoomHandle> mVZoomHandle;
 };
 
 #endif
