@@ -231,7 +231,6 @@
     <ClCompile Include="..\..\..\src\UndoManager.cpp" />
     <ClCompile Include="..\..\..\src\UserException.cpp" />
     <ClCompile Include="..\..\..\src\ViewInfo.cpp" />
-    <ClCompile Include="..\..\..\src\VoiceKey.cpp" />
     <ClCompile Include="..\..\..\src\WaveClip.cpp" />
     <ClCompile Include="..\..\..\src\WaveTrack.cpp" />
     <ClCompile Include="..\..\..\src\widgets\BackedPanel.cpp" />
@@ -485,7 +484,6 @@
     <ClInclude Include="..\..\..\src\TrackPanelAx.h" />
     <ClInclude Include="..\..\..\src\UndoManager.h" />
     <ClInclude Include="..\..\..\src\ViewInfo.h" />
-    <ClInclude Include="..\..\..\src\VoiceKey.h" />
     <ClInclude Include="..\..\..\src\WaveClip.h" />
     <ClInclude Include="..\..\..\src\WaveTrack.h" />
     <ClInclude Include="..\..\..\src\WrappedType.h" />

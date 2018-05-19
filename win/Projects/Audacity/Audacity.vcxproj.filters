@@ -227,9 +227,6 @@
     <ClCompile Include="..\..\..\src\UndoManager.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\VoiceKey.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\WaveClip.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -899,9 +896,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\ViewInfo.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\VoiceKey.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\WaveClip.h">
