@@ -134,9 +134,6 @@
     <ClCompile Include="..\..\..\src\Internat.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\InterpolateAudio.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\LangChoice.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -794,9 +791,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\Internat.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\InterpolateAudio.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\LangChoice.h">
