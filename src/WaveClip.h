@@ -281,8 +281,7 @@ public:
 
    /// You must call Flush after the last Append
    void Append(samplePtr buffer, sampleFormat format,
-               size_t len, unsigned int stride=1,
-               XMLWriter* blockFileLog = NULL);
+               size_t len, unsigned int stride=1);
    /// Flush must be called after last Append
    void Flush();
 

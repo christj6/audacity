@@ -1408,8 +1408,7 @@ size_t Sequence::GetIdealAppendLen() const
       return max - lastBlockLen;
 }
 
-void Sequence::Append(samplePtr buffer, sampleFormat format,
-                      size_t len, XMLWriter* blockFileLog /*=NULL*/)
+void Sequence::Append(samplePtr buffer, sampleFormat format, size_t len)
 // STRONG-GUARANTEE
 {
    if (len == 0)
@@ -1448,16 +1447,10 @@ void Sequence::Append(samplePtr buffer, sampleFormat format,
 
       SeqBlock newLastBlock(
          mDirManager->NewSimpleBlockFile(
-            buffer2.ptr(), newLastBlockLen, mSampleFormat,
-            blockFileLog != NULL
+            buffer2.ptr(), newLastBlockLen, mSampleFormat
          ),
          lastBlock.start
       );
-
-      if (blockFileLog)
-         // shouldn't throw, because XMLWriter is not XMLFileWriter
-         static_cast< SimpleBlockFile * >( &*newLastBlock.f )
-            ->SaveXML( *blockFileLog );
 
       newBlock.push_back( newLastBlock );
 
@@ -1474,17 +1467,13 @@ void Sequence::Append(samplePtr buffer, sampleFormat format,
       BlockFilePtr pFile;
       if (format == mSampleFormat) {
          pFile = mDirManager->NewSimpleBlockFile(
-            buffer, addedLen, mSampleFormat, blockFileLog != NULL);
+            buffer, addedLen, mSampleFormat);
       }
       else {
          CopySamples(buffer, format, buffer2.ptr(), mSampleFormat, addedLen);
          pFile = mDirManager->NewSimpleBlockFile(
-            buffer2.ptr(), addedLen, mSampleFormat, blockFileLog != NULL);
+            buffer2.ptr(), addedLen, mSampleFormat);
       }
-
-      if (blockFileLog)
-         // shouldn't throw, because XMLWriter is not XMLFileWriter
-         static_cast< SimpleBlockFile * >( &*pFile )->SaveXML( *blockFileLog );
 
       newBlock.push_back(SeqBlock(pFile, newNumSamples));
 

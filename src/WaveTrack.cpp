@@ -1456,14 +1456,12 @@ void WaveTrack::Join(double t0, double t1)
 }
 
 void WaveTrack::Append(samplePtr buffer, sampleFormat format,
-                       size_t len, unsigned int stride /* = 1 */,
-                       XMLWriter *blockFileLog /* = NULL */)
+                       size_t len, unsigned int stride /* = 1 */)
 // PARTIAL-GUARANTEE in case of exceptions:
 // Some prefix (maybe none) of the buffer is appended, and no content already
 // flushed to disk is lost.
 {
-   RightmostOrNewClip()->Append(buffer, format, len, stride,
-                                        blockFileLog);
+   RightmostOrNewClip()->Append(buffer, format, len, stride);
 }
 
 void WaveTrack::AppendAlias(const wxString &fName, sampleCount start,

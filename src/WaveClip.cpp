@@ -1379,8 +1379,7 @@ void WaveClip::GetDisplayRect(wxRect* r)
 }
 
 void WaveClip::Append(samplePtr buffer, sampleFormat format,
-                      size_t len, unsigned int stride /* = 1 */,
-                      XMLWriter* blockFileLog /*=NULL*/)
+                      size_t len, unsigned int stride /* = 1 */)
 // PARTIAL-GUARANTEE in case of exceptions:
 // Some prefix (maybe none) of the buffer is appended, and no content already
 // flushed to disk is lost.
@@ -1404,8 +1403,7 @@ void WaveClip::Append(samplePtr buffer, sampleFormat format,
       if (mAppendBufferLen >= blockSize) {
          // flush some previously appended contents
          // use STRONG-GUARANTEE
-         mSequence->Append(mAppendBuffer.ptr(), seqFormat, blockSize,
-                           blockFileLog);
+         mSequence->Append(mAppendBuffer.ptr(), seqFormat, blockSize);
 
          // use NOFAIL-GUARANTEE for rest of this "if"
          memmove(mAppendBuffer.ptr(),

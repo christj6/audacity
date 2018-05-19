@@ -2381,8 +2381,6 @@ void AudioIO::FillBuffers()
                auto avail = commonlyAvail;
                sampleFormat trackFormat = mCaptureTracks[i]->GetSampleFormat();
 
-               AutoSaveFile appendLog; // to remove this AutoSaveFile, you'll need to remove the AutoSaveFile param from WaveTrack's Append
-
                if( mFactor == 1.0 )
                {
                   SampleBuffer temp(avail, trackFormat);
@@ -2392,7 +2390,7 @@ void AudioIO::FillBuffers()
                   // but we can't assert in this thread
                   wxUnusedVar(got);
                   // see comment in second handler about guarantee
-                  mCaptureTracks[i]-> Append(temp.ptr(), trackFormat, avail, 1, &appendLog);
+                  mCaptureTracks[i]-> Append(temp.ptr(), trackFormat, avail, 1);
                }
                else
                {
@@ -2413,7 +2411,7 @@ void AudioIO::FillBuffers()
                                         !IsStreamActive(), (float *)temp2.ptr(), size);
                   size = results.second;
                   // see comment in second handler about guarantee
-                  mCaptureTracks[i]-> Append(temp2.ptr(), floatSample, size, 1, &appendLog);
+                  mCaptureTracks[i]-> Append(temp2.ptr(), floatSample, size, 1);
                }
             }
          }

@@ -107,8 +107,7 @@ class PROFILE_DLL_API Sequence final : public XMLTagHandler{
    void Paste(sampleCount s0, const Sequence *src);
 
    size_t GetIdealAppendLen() const;
-   void Append(samplePtr buffer, sampleFormat format, size_t len,
-               XMLWriter* blockFileLog=NULL);
+   void Append(samplePtr buffer, sampleFormat format, size_t len);
    void Delete(sampleCount start, sampleCount len);
    void AppendAlias(const wxString &fullPath,
                     sampleCount start,
