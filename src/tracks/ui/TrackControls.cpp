@@ -147,7 +147,6 @@ unsigned TrackControls::DoContextMenu
 
    InitMenuData data{ track.get(), pParent, RefreshCode::RefreshNone };
 
-   const auto pTable = &TrackMenuTable::Instance();
    auto pMenu = PopupMenuTable::BuildMenu(pParent, &data);
 
    PopupMenuTable *const pExtension = GetMenuExtension(track.get());

@@ -173,7 +173,6 @@
     <ClCompile Include="..\..\..\src\Mix.cpp" />
     <ClCompile Include="..\..\..\lib-src\lib-widget-extra\NonGuiThread.cpp" />
     <ClCompile Include="..\..\..\src\ModuleManager.cpp" />
-    <ClCompile Include="..\..\..\src\PitchName.cpp" />
     <ClCompile Include="..\..\..\src\PlatformCompatibility.cpp" />
     <ClCompile Include="..\..\..\src\PluginManager.cpp" />
     <ClCompile Include="..\..\..\src\Prefs.cpp" />
@@ -460,7 +459,6 @@
     <ClInclude Include="..\..\..\src\Menus.h" />
     <ClInclude Include="..\..\..\src\Mix.h" />
     <ClInclude Include="..\..\..\lib-src\lib-widget-extra\NonGuiThread.h" />
-    <ClInclude Include="..\..\..\src\PitchName.h" />
     <ClInclude Include="..\..\..\src\PlatformCompatibility.h" />
     <ClInclude Include="..\..\..\src\PluginManager.h" />
     <ClInclude Include="..\..\..\src\Prefs.h" />
