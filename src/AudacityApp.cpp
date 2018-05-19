@@ -76,7 +76,6 @@ It handles initialization and termination by subclassing wxApp.
 #include "Theme.h"
 #include "PlatformCompatibility.h"
 #include "FileNames.h"
-#include "AutoRecovery.h"
 #include "SplashDialog.h"
 #include "FFT.h"
 #include "BlockFile.h"

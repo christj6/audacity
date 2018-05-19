@@ -54,10 +54,8 @@ class wxPanel;
 class wxTimerEvent;
 
 class AudacityProject;
-class AutoSaveFile;
 class Importer;
 class ODLock;
-class RecordingRecoveryHandler;
 class TrackList;
 class Tags;
 
@@ -627,9 +625,6 @@ private:
 
    std::unique_ptr<ImportXMLTagHandler> mImportXMLTagHandler;
 
-   // Last auto-save file name and path (empty if none)
-   wxString mAutoSaveFileName;
-
    // Are we currently auto-saving or not?
    bool mAutoSaving{ false };
 
@@ -638,9 +633,6 @@ private:
 
    // The auto-save data dir the project has been recovered from
    wxString mRecoveryAutoSaveDataDir;
-
-   // The handler that handles recovery of <recordingrecovery> tags
-   std::unique_ptr<RecordingRecoveryHandler> mRecordingRecoveryHandler;
 
    // Dependencies have been imported and a warning should be shown on save
    bool mImportedDependencies{ false };

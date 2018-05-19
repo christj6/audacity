@@ -80,9 +80,6 @@
     <ClCompile Include="..\..\..\src\AudioIO.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\AutoRecovery.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\BatchCommandDialog.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -746,9 +743,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\AudioIO.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\AutoRecovery.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\BatchCommandDialog.h">

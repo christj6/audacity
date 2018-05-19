@@ -89,7 +89,6 @@ scroll information.  It also has some status flags.
 #endif
 
 #include "AudacityException.h"
-#include "AutoRecovery.h"
 #include "AudacityApp.h"
 #include "AColor.h"
 #include "AudioIO.h"
