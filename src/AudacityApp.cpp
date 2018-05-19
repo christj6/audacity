@@ -1283,21 +1283,6 @@ bool AudacityApp::OnInit()
       Sequence::SetMaxDiskBlockSize(lval);
    }
 
-   wxString fileName;
-   if (parser->Found(wxT("d"), &fileName))
-   {
-      AutoSaveFile asf;
-      if (asf.Decode(fileName))
-      {
-         wxPrintf(_("File decoded successfully\n"));
-      }
-      else
-      {
-         wxPrintf(_("Decoding failed\n"));
-      }
-      exit(1);
-   }
-
    // BG: Create a temporary window to set as the top window
    wxImage logoimage((const char **)AudacityLogoWithName_xpm);
    logoimage.Rescale(logoimage.GetWidth() / 2, logoimage.GetHeight() / 2);

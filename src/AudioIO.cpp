@@ -2374,7 +2374,6 @@ void AudioIO::FillBuffers()
          {
             // Append captured samples to the end of the WaveTracks.
             // The WaveTracks have their own buffering for efficiency.
-            AutoSaveFile blockFileLog;
             auto numChannels = mCaptureTracks.size();
 
             for( i = 0; i < numChannels; i++ )
@@ -2382,7 +2381,7 @@ void AudioIO::FillBuffers()
                auto avail = commonlyAvail;
                sampleFormat trackFormat = mCaptureTracks[i]->GetSampleFormat();
 
-               AutoSaveFile appendLog;
+               AutoSaveFile appendLog; // to remove this AutoSaveFile, you'll need to remove the AutoSaveFile param from WaveTrack's Append
 
                if( mFactor == 1.0 )
                {
@@ -2393,8 +2392,7 @@ void AudioIO::FillBuffers()
                   // but we can't assert in this thread
                   wxUnusedVar(got);
                   // see comment in second handler about guarantee
-                  mCaptureTracks[i]-> Append(temp.ptr(), trackFormat, avail, 1,
-                                             &appendLog);
+                  mCaptureTracks[i]-> Append(temp.ptr(), trackFormat, avail, 1, &appendLog);
                }
                else
                {
@@ -2415,18 +2413,7 @@ void AudioIO::FillBuffers()
                                         !IsStreamActive(), (float *)temp2.ptr(), size);
                   size = results.second;
                   // see comment in second handler about guarantee
-                  mCaptureTracks[i]-> Append(temp2.ptr(), floatSample, size, 1,
-                                             &appendLog);
-               }
-
-               if (!appendLog.IsEmpty())
-               {
-                  blockFileLog.StartTag(wxT("recordingrecovery"));
-                  blockFileLog.WriteAttr(wxT("id"), mCaptureTracks[i]->GetAutoSaveIdent());
-                  blockFileLog.WriteAttr(wxT("channel"), (int)i);
-                  blockFileLog.WriteAttr(wxT("numchannels"), numChannels);
-                  blockFileLog.WriteSubTree(appendLog);
-                  blockFileLog.EndTag(wxT("recordingrecovery"));
+                  mCaptureTracks[i]-> Append(temp2.ptr(), floatSample, size, 1, &appendLog);
                }
             }
          }
