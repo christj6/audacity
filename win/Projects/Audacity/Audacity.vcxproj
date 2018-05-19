@@ -167,7 +167,6 @@
     <ClCompile Include="..\..\..\src\Internat.cpp" />
     <ClCompile Include="..\..\..\src\LangChoice.cpp" />
     <ClCompile Include="..\..\..\src\Languages.cpp" />
-    <ClCompile Include="..\..\..\src\Matrix.cpp" />
     <ClCompile Include="..\..\..\src\Menus.cpp" />
     <ClCompile Include="..\..\..\src\Mix.cpp" />
     <ClCompile Include="..\..\..\lib-src\lib-widget-extra\NonGuiThread.cpp" />
@@ -452,7 +451,6 @@
     <ClInclude Include="..\..\..\src\LangChoice.h" />
     <ClInclude Include="..\..\..\src\Languages.h" />
     <ClInclude Include="..\..\..\src\MacroMagic.h" />
-    <ClInclude Include="..\..\..\src\Matrix.h" />
     <ClInclude Include="..\..\..\src\Menus.h" />
     <ClInclude Include="..\..\..\src\Mix.h" />
     <ClInclude Include="..\..\..\lib-src\lib-widget-extra\NonGuiThread.h" />

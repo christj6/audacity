@@ -140,9 +140,6 @@
     <ClCompile Include="..\..\..\src\Languages.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\Matrix.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\Menus.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -800,9 +797,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\MacroMagic.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\Matrix.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\Menus.h">
