@@ -88,48 +88,6 @@ public:
       return wxFileConfig::HasEntry(NormalizeName(strName));
    }
 
-   virtual bool DoReadString(const wxString & key, wxString *pStr) const override
-   {
-      return wxFileConfig::DoReadString(NormalizeName(key), pStr);
-   }
-
-   virtual bool DoReadLong(const wxString & key, long *pl) const override
-   {
-      return wxFileConfig::DoReadLong(NormalizeName(key), pl);
-   }
-
-   virtual bool DoReadDouble(const wxString & key, double *pd) const override
-   {
-      wxString str;
-      if (Read(key, &str))
-      {
-         struct lconv *info = localeconv();
-         wxString dec = info ? wxString::FromUTF8(info->decimal_point) : wxT(".");
-
-         str.Replace(wxT(","), dec);
-         str.Replace(wxT("."), dec);
-
-         return str.ToDouble(pd);
-      }
-
-      return false;
-   }
-
-   virtual bool DoWriteString(const wxString & key, const wxString & szValue) override
-   {
-      return wxFileConfig::DoWriteString(NormalizeName(key), szValue);
-   }
-
-   virtual bool DoWriteLong(const wxString & key, long lValue) override
-   {
-      return wxFileConfig::DoWriteLong(NormalizeName(key), lValue);
-   }
-
-   virtual bool DoWriteDouble(const wxString & key, double value) override
-   {
-      return DoWriteString(key, wxString::Format(wxT("%g"), value));
-   }
-
    bool ReadFloat(const wxString & key, float *pf) const
    {
       double d = *pf;
