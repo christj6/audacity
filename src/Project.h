@@ -631,9 +631,6 @@ private:
    // Has this project been recovered from an auto-saved version
    bool mIsRecovered{ false };
 
-   // The auto-save data dir the project has been recovered from
-   wxString mRecoveryAutoSaveDataDir;
-
    // Dependencies have been imported and a warning should be shown on save
    bool mImportedDependencies{ false };
 

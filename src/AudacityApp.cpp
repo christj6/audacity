@@ -58,7 +58,6 @@ It handles initialization and termination by subclassing wxApp.
 #include "AboutDialog.h"
 #include "AColor.h"
 #include "AudioIO.h"
-#include "Benchmark.h"
 #include "DirManager.h"
 #include "commands/CommandHandler.h"
 #include "commands/AppCommandEvent.h"

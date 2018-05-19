@@ -76,7 +76,6 @@ simplifies construction of menu items.
 #include "Tags.h"
 #include "Mix.h"
 #include "AboutDialog.h"
-#include "Benchmark.h"
 #include "ondemand/ODManager.h"
 
 #include "BatchProcessDialog.h"
@@ -633,14 +632,6 @@ void AudacityProject::CreateMenusAndCommands()
       PopulateMacrosMenu( c, AudioIONotBusyFlag );
       c->EndSubMenu();
       c->AddSeparator();
-
-// PRL: team consensus for 2.2.0 was, we let end users have this diagnostic,
-// as they used to in 1.3.x
-//#ifdef IS_ALPHA
-      // TODO: What should we do here?  Make benchmark a plug-in?
-      // Easy enough to do.  We'd call it mod-self-test.
-      c->AddItem(wxT("Benchmark"), XXO("&Run Benchmark..."), FN(OnBenchmark));
-//#endif
 
 #ifdef IS_ALPHA
       c->AddCheck(wxT("DetectUpstreamDropouts"),
@@ -4696,11 +4687,6 @@ void AudacityProject::OnShowLog(const CommandContext &WXUNUSED(context) )
    if (logger) {
       logger->Show();
    }
-}
-
-void AudacityProject::OnBenchmark(const CommandContext &WXUNUSED(context) )
-{
-   ::RunBenchmark(this);
 }
 
 void AudacityProject::OnDetectUpstreamDropouts(const CommandContext &WXUNUSED(context) )

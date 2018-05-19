@@ -831,7 +831,6 @@ class AUDACITY_DLL_API TrackFactory
    const std::shared_ptr<DirManager> mDirManager;
    const ZoomInfo *const mZoomInfo;
    friend class AudacityProject;
-   friend class BenchmarkDialog;
 
  public:
    // These methods are defined in WaveTrack.cpp
