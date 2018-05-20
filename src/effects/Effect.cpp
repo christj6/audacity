@@ -108,10 +108,6 @@ Effect::Effect()
    mNumGroups = 0;
    mProgress = NULL;
 
-   mRealtimeSuspendLock.Enter();
-   mRealtimeSuspendCount = 1;    // Effects are initially suspended
-   mRealtimeSuspendLock.Leave();
-
    mUIParent = NULL;
    mUIDialog = NULL;
 
@@ -383,29 +379,6 @@ size_t Effect::ProcessBlock(float **inBlock, float **outBlock, size_t blockLen)
    return 0;
 }
 
-bool Effect::RealtimeInitialize()
-{
-   if (mClient)
-   {
-      mBlockSize = mClient->SetBlockSize(512);
-      return mClient->RealtimeInitialize();
-   }
-
-   mBlockSize = 512;
-
-   return false;
-}
-
-bool Effect::RealtimeAddProcessor(unsigned numChannels, float sampleRate)
-{
-   if (mClient)
-   {
-      return mClient->RealtimeAddProcessor(numChannels, sampleRate);
-   }
-
-   return true;
-}
-
 bool Effect::RealtimeFinalize()
 {
    if (mClient)
@@ -414,50 +387,6 @@ bool Effect::RealtimeFinalize()
    }
 
    return false;
-}
-
-bool Effect::RealtimeSuspend()
-{
-   if (mClient)
-   {
-      if (mClient->RealtimeSuspend())
-      {
-         mRealtimeSuspendLock.Enter();
-         mRealtimeSuspendCount++;
-         mRealtimeSuspendLock.Leave();
-         return true;
-      }
-
-      return false;
-   }
-
-   mRealtimeSuspendLock.Enter();
-   mRealtimeSuspendCount++;
-   mRealtimeSuspendLock.Leave();
-
-   return true;
-}
-
-bool Effect::RealtimeResume()
-{
-   if (mClient)
-   {
-      if (mClient->RealtimeResume())
-      {
-         mRealtimeSuspendLock.Enter();
-         mRealtimeSuspendCount--;
-         mRealtimeSuspendLock.Leave();
-         return true;
-      }
-
-      return false;
-   }
-
-   mRealtimeSuspendLock.Enter();
-   mRealtimeSuspendCount--;
-   mRealtimeSuspendLock.Leave();
-
-   return true;
 }
 
 size_t Effect::RealtimeProcess(int group,
@@ -1901,71 +1830,6 @@ double Effect::CalcPreviewInputLength(double previewLength)
 }
 
 // RealtimeAddProcessor and RealtimeProcess use the same method of
-// determining the current processor index, so updates to one should
-// be reflected in the other.
-bool Effect::RealtimeAddProcessor(int group, unsigned chans, float rate)
-{
-   auto ichans = chans;
-   auto ochans = chans;
-   auto gchans = chans;
-
-   // Reset processor index
-   if (group == 0)
-   {
-      mCurrentProcessor = 0;
-      mGroupProcessor.clear();
-   }
-
-   // Remember the processor starting index
-   mGroupProcessor.push_back(mCurrentProcessor);
-
-   // Call the client until we run out of input or output channels
-   while (ichans > 0 && ochans > 0)
-   {
-      // If we don't have enough input channels to accomodate the client's
-      // requirements, then we replicate the input channels until the
-      // client's needs are met.
-      if (ichans < mNumAudioIn)
-      {
-         // All input channels have been consumed
-         ichans = 0;
-      }
-      // Otherwise fullfil the client's needs with as many input channels as possible.
-      // After calling the client with this set, we will loop back up to process more
-      // of the input/output channels.
-      else if (ichans >= mNumAudioIn)
-      {
-         gchans = mNumAudioIn;
-         ichans -= gchans;
-      }
-
-      // If we don't have enough output channels to accomodate the client's
-      // requirements, then we provide all of the output channels and fulfill
-      // the client's needs with dummy buffers.  These will just get tossed.
-      if (ochans < mNumAudioOut)
-      {
-         // All output channels have been consumed
-         ochans = 0;
-      }
-      // Otherwise fullfil the client's needs with as many output channels as possible.
-      // After calling the client with this set, we will loop back up to process more
-      // of the input/output channels.
-      else if (ochans >= mNumAudioOut)
-      {
-         ochans -= mNumAudioOut;
-      }
-
-      // Add a NEW processor
-      RealtimeAddProcessor(gchans, rate);
-
-      // Bump to next processor
-      mCurrentProcessor++;
-   }
-
-   return true;
-}
-
-// RealtimeAddProcessor and RealtimeProcess use the same method of
 // determining the current processor group, so updates to one should
 // be reflected in the other.
 size_t Effect::RealtimeProcess(int group,
@@ -2081,11 +1945,6 @@ size_t Effect::RealtimeProcess(int group,
    }
 
    return len;
-}
-
-bool Effect::IsRealtimeActive()
-{
-   return mRealtimeSuspendCount == 0;
 }
 
 bool Effect::IsHidden()
@@ -2787,7 +2646,6 @@ void EffectUIHost::Resume()
       mEnableCb->SetValue(mEnabled);
       return;
    }
-   mEffect->RealtimeResume();
 }
 
 void EffectUIHost::OnPlayback(wxCommandEvent & evt)

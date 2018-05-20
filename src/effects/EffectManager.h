@@ -125,13 +125,7 @@ public:
    bool GetSkipStateFlag();
 
    // Realtime effect processing
-   bool RealtimeIsSuspended();
-   void RealtimeSetEffects(const EffectArray & mActive);
-   void RealtimeInitialize(double rate);
-   void RealtimeAddProcessor(int group, unsigned chans, float rate);
    void RealtimeFinalize();
-   void RealtimeSuspend();
-   void RealtimeResume();
    size_t RealtimeProcess(int group, unsigned chans, float **buffers, size_t numSamples);
    void RealtimeProcessEnd();
    int GetRealtimeLatency();
@@ -153,7 +147,6 @@ private:
    wxCriticalSection mRealtimeLock;
    EffectArray mRealtimeEffects;
    int mRealtimeLatency;
-   bool mRealtimeSuspended;
    bool mRealtimeActive;
    std::vector<unsigned> mRealtimeChans;
    std::vector<double> mRealtimeRates;

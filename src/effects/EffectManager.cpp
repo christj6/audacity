@@ -47,7 +47,6 @@ EffectManager::EffectManager()
 {
    mRealtimeLock.Enter();
    mRealtimeActive = false;
-   mRealtimeSuspended = true;
    mRealtimeLatency = 0;
    mRealtimeLock.Leave();
    mSkipStateFlag = false;
@@ -407,48 +406,8 @@ void EffectManager::SetBatchProcessing(const PluginID & ID, bool start)
 
 }
 
-bool EffectManager::RealtimeIsSuspended()
-{
-   return mRealtimeSuspended;
-}
-
-void EffectManager::RealtimeInitialize(double rate)
-{
-   // The audio thread should not be running yet, but protect anyway
-   RealtimeSuspend();
-
-   // (Re)Set processor parameters
-   mRealtimeChans.clear();
-   mRealtimeRates.clear();
-
-   // RealtimeAdd/RemoveEffect() needs to know when we're active so it can
-   // initialize newly added effects
-   mRealtimeActive = true;
-
-   // Tell each effect to get ready for action
-   for (auto e : mRealtimeEffects) {
-      e->SetSampleRate(rate);
-      e->RealtimeInitialize();
-   }
-
-   // Get things moving
-   RealtimeResume();
-}
-
-void EffectManager::RealtimeAddProcessor(int group, unsigned chans, float rate)
-{
-   for (auto e : mRealtimeEffects)
-      e->RealtimeAddProcessor(group, chans, rate);
-
-   mRealtimeChans.push_back(chans);
-   mRealtimeRates.push_back(rate);
-}
-
 void EffectManager::RealtimeFinalize()
 {
-   // Make sure nothing is going on
-   RealtimeSuspend();
-
    // It is now safe to clean up
    mRealtimeLatency = 0;
 
@@ -464,48 +423,6 @@ void EffectManager::RealtimeFinalize()
    mRealtimeActive = false;
 }
 
-void EffectManager::RealtimeSuspend()
-{
-   mRealtimeLock.Enter();
-
-   // Already suspended...bail
-   if (mRealtimeSuspended)
-   {
-      mRealtimeLock.Leave();
-      return;
-   }
-
-   // Show that we aren't going to be doing anything
-   mRealtimeSuspended = true;
-
-   // And make sure the effects don't either
-   for (auto e : mRealtimeEffects)
-      e->RealtimeSuspend();
-
-   mRealtimeLock.Leave();
-}
-
-void EffectManager::RealtimeResume()
-{
-   mRealtimeLock.Enter();
-
-   // Already running...bail
-   if (!mRealtimeSuspended)
-   {
-      mRealtimeLock.Leave();
-      return;
-   }
-
-   // Tell the effects to get ready for more action
-   for (auto e : mRealtimeEffects)
-      e->RealtimeResume();
-
-   // And we should too
-   mRealtimeSuspended = false;
-
-   mRealtimeLock.Leave();
-}
-
 //
 // This will be called in a different thread than the main GUI thread.
 //
@@ -516,7 +433,7 @@ size_t EffectManager::RealtimeProcess(int group, unsigned chans, float **buffers
 
    // Can be suspended because of the audio stream being paused or because effects
    // have been suspended, so allow the samples to pass as-is.
-   if (mRealtimeSuspended || mRealtimeEffects.empty())
+   if (mRealtimeEffects.empty())
    {
       mRealtimeLock.Leave();
       return numSamples;
@@ -543,12 +460,6 @@ size_t EffectManager::RealtimeProcess(int group, unsigned chans, float **buffers
    size_t called = 0;
    for (auto e : mRealtimeEffects)
    {
-      if (e->IsRealtimeActive())
-      {
-         e->RealtimeProcess(group, chans, ibuf, obuf, numSamples);
-         called++;
-      }
-
       for (unsigned int j = 0; j < chans; j++)
       {
          float *temp;
@@ -588,17 +499,6 @@ void EffectManager::RealtimeProcessEnd()
 {
    // Protect ourselves from the main thread
    mRealtimeLock.Enter();
-
-   // Can be suspended because of the audio stream being paused or because effects
-   // have been suspended.
-   if (!mRealtimeSuspended)
-   {
-      for (auto e : mRealtimeEffects)
-      {
-         if (e->IsRealtimeActive())
-            e->RealtimeProcessEnd();
-      }
-   }
 
    mRealtimeLock.Leave();
 }
