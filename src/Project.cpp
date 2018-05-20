@@ -105,7 +105,6 @@ scroll information.  It also has some status flags.
 #include "TrackPanel.h"
 #include "WaveTrack.h"
 #include "DirManager.h"
-#include "effects/Effect.h"
 #include "prefs/PrefsDialog.h"
 #include "widgets/LinkingHtmlWindow.h"
 #include "widgets/ASlider.h"

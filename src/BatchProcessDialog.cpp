@@ -39,7 +39,6 @@
 #include "Internat.h"
 #include "commands/CommandManager.h"
 #include "commands/CommandContext.h"
-#include "effects/Effect.h"
 #include "../images/Arrow.xpm"
 #include "../images/Empty9x16.xpm"
 #include "BatchCommands.h"

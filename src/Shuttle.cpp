@@ -65,12 +65,8 @@ preferences.
 #include <wx/button.h>
 
 #include "../include/audacity/EffectAutomationParameters.h" // for command automation
-
-//#include "Project.h"
 #include "Shuttle.h"
 #include "WrappedType.h"
-//#include "commands/CommandManager.h"
-//#include "effects/Effect.h"
 
 const int Enums::NumDbChoices = 13;
 
