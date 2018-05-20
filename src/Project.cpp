@@ -3492,13 +3492,6 @@ void AudacityProject::OnAudioIOStopRecording()
       // Add to history
       PushState(_("Recorded Audio"), _("Record"));
 
-      // Reset timer record 
-      if (IsTimerRecordCancelled())
-      {
-         OnUndo(*this);
-         ResetTimerRecordFlag();
-      }
-
       // Refresh the project window
       FixScrollbars();
       RedrawProject();

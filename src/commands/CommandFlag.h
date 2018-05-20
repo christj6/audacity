@@ -26,7 +26,6 @@ enum CommandFlag : unsigned long long
    ClipboardFlag          = 0x00000040,
    TextClipFlag           = 0x00000040, // Same as Clipboard flag for now.
    UnsavedChangesFlag     = 0x00000080,
-   HasLastEffectFlag      = 0x00000100,
    UndoAvailableFlag      = 0x00000200,
    RedoAvailableFlag      = 0x00000400,
    ZoomInAvailableFlag    = 0x00000800,

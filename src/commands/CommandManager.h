@@ -83,7 +83,6 @@ struct CommandListEntry
    bool wantKeyup;
    bool isGlobal;
    bool isOccult;
-   bool isEffect;
    bool hasDialog;
    CommandFlag flags;
    CommandMask mask;

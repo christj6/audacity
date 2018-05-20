@@ -1206,9 +1206,6 @@ CommandFlag AudacityProject::GetUpdateFlags(bool checkActive)
    if (GetUndoManager()->UnsavedChanges() || !IsProjectSaved())
       flags |= UnsavedChangesFlag;
 
-   if (!mLastEffect.IsEmpty())
-      flags |= HasLastEffectFlag;
-
    if (UndoAvailable())
       flags |= UndoAvailableFlag;
 

@@ -598,9 +598,6 @@ private:
 
    void SetNormalizedWindowState(wxRect pSizeAndLocation) {  mNormalizedWindowState = pSizeAndLocation;   }
    wxRect GetNormalizedWindowState() const { return mNormalizedWindowState;   }
-
-   bool IsTimerRecordCancelled(){return mTimerRecordCanceled;}
-   void ResetTimerRecordFlag(){mTimerRecordCanceled=false;}
  private:
    //sort method used by OnSortName and OnSortTime
    //currently only supported flags are kAudacitySortByName and kAudacitySortByName
@@ -635,14 +632,8 @@ private:
    bool mImportedDependencies{ false };
 
    wxArrayString mStrOtherNamesArray; // used to make sure compressed file names are unique
-
-   // Last effect applied to this project
-   PluginID mLastEffect{};
    
    wxRect mNormalizedWindowState;
-
-   //flag for cancellation of timer record.
-   bool mTimerRecordCanceled{ false  };
 
    // Are we currently closing as the result of a menu command?
    bool mMenuClose{ false };
