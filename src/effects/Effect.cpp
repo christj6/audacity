@@ -460,16 +460,6 @@ bool Effect::RealtimeResume()
    return true;
 }
 
-bool Effect::RealtimeProcessStart()
-{
-   if (mClient)
-   {
-      return mClient->RealtimeProcessStart();
-   }
-
-   return true;
-}
-
 size_t Effect::RealtimeProcess(int group,
                                     float **inbuf,
                                     float **outbuf,

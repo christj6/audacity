@@ -189,7 +189,6 @@ public:
    virtual bool RealtimeFinalize() = 0;
    virtual bool RealtimeSuspend() = 0;
    virtual bool RealtimeResume() = 0;
-   virtual bool RealtimeProcessStart() = 0;
    virtual size_t RealtimeProcess(int group, float **inBuf, float **outBuf, size_t numSamples) = 0;
    virtual bool RealtimeProcessEnd() = 0;
 

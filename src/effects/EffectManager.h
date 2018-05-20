@@ -125,17 +125,13 @@ public:
    bool GetSkipStateFlag();
 
    // Realtime effect processing
-   bool RealtimeIsActive();
    bool RealtimeIsSuspended();
-   void RealtimeAddEffect(Effect *effect);
-   void RealtimeRemoveEffect(Effect *effect);
    void RealtimeSetEffects(const EffectArray & mActive);
    void RealtimeInitialize(double rate);
    void RealtimeAddProcessor(int group, unsigned chans, float rate);
    void RealtimeFinalize();
    void RealtimeSuspend();
    void RealtimeResume();
-   void RealtimeProcessStart();
    size_t RealtimeProcess(int group, unsigned chans, float **buffers, size_t numSamples);
    void RealtimeProcessEnd();
    int GetRealtimeLatency();

@@ -407,60 +407,9 @@ void EffectManager::SetBatchProcessing(const PluginID & ID, bool start)
 
 }
 
-bool EffectManager::RealtimeIsActive()
-{
-   return mRealtimeEffects.size() != 0;
-}
-
 bool EffectManager::RealtimeIsSuspended()
 {
    return mRealtimeSuspended;
-}
-
-void EffectManager::RealtimeAddEffect(Effect *effect)
-{
-   // Block RealtimeProcess()
-   RealtimeSuspend();
-
-   // Initialize effect if realtime is already active
-   if (mRealtimeActive)
-   {
-      // Initialize realtime processing
-      effect->RealtimeInitialize();
-
-      // Add the required processors
-      for (size_t i = 0, cnt = mRealtimeChans.size(); i < cnt; i++)
-      {
-         effect->RealtimeAddProcessor(i, mRealtimeChans[i], mRealtimeRates[i]);
-      }
-   }
-   
-   // Add to list of active effects
-   mRealtimeEffects.push_back(effect);
-
-   // Allow RealtimeProcess() to, well, process 
-   RealtimeResume();
-}
-
-void EffectManager::RealtimeRemoveEffect(Effect *effect)
-{
-   // Block RealtimeProcess()
-   RealtimeSuspend();
-
-   if (mRealtimeActive)
-   {
-      // Cleanup realtime processing
-      effect->RealtimeFinalize();
-   }
-      
-   // Remove from list of active effects
-   auto end = mRealtimeEffects.end();
-   auto found = std::find(mRealtimeEffects.begin(), end, effect);
-   if (found != end)
-      mRealtimeEffects.erase(found);
-
-   // Allow RealtimeProcess() to, well, process 
-   RealtimeResume();
 }
 
 void EffectManager::RealtimeInitialize(double rate)
@@ -553,28 +502,6 @@ void EffectManager::RealtimeResume()
 
    // And we should too
    mRealtimeSuspended = false;
-
-   mRealtimeLock.Leave();
-}
-
-//
-// This will be called in a different thread than the main GUI thread.
-//
-void EffectManager::RealtimeProcessStart()
-{
-   // Protect ourselves from the main thread
-   mRealtimeLock.Enter();
-
-   // Can be suspended because of the audio stream being paused or because effects
-   // have been suspended.
-   if (!mRealtimeSuspended)
-   {
-      for (auto e : mRealtimeEffects)
-      {
-         if (e->IsRealtimeActive())
-            e->RealtimeProcessStart();
-      }
-   }
 
    mRealtimeLock.Leave();
 }
