@@ -169,8 +169,7 @@ class AUDACITY_DLL_API CommandManager final : public XMLTagHandler
                     const TranslatedInternalString items[],
                     size_t nItems,
                     CommandHandlerFinder finder,
-                    CommandFunctorPointer callback,
-                    bool bIsEffect = false);
+                    CommandFunctorPointer callback);
 
    void AddCheck(const wxChar *name,
                  const wxChar *label,
@@ -195,7 +194,6 @@ class AUDACITY_DLL_API CommandManager final : public XMLTagHandler
                 CommandFunctorPointer callback,
                 CommandFlag flags = NoFlagsSpecifed,
                 CommandMask mask   = NoFlagsSpecifed,
-                bool bIsEffect = false, 
                 const CommandParameter &parameter = CommandParameter{});
 
    void AddItem(const wxChar *name,
@@ -207,7 +205,6 @@ class AUDACITY_DLL_API CommandManager final : public XMLTagHandler
                 CommandFlag flags = NoFlagsSpecifed,
                 CommandMask mask   = NoFlagsSpecifed,
                 int checkmark = -1,
-                bool bIsEffect = false, 
                 const CommandParameter &parameter = CommandParameter{});
 
    void AddSeparator();
@@ -352,8 +349,7 @@ protected:
                                    CommandFunctorPointer callback,
                                    const wxString &nameSuffix,
                                    int index,
-                                   int count,
-                                   bool bIsEffect);
+                                   int count);
    CommandListEntry *NewIdentifier(const wxString & name,
                                    const wxString & label,
                                    const wxString & longLabel,
@@ -365,7 +361,6 @@ protected:
                                    const wxString &nameSuffix,
                                    int index,
                                    int count,
-                                   bool bIsEffect,
                                    const CommandParameter &parameter);
 
    //

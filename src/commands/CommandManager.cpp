@@ -732,10 +732,9 @@ void CommandManager::AddItem(const wxChar *name,
                              CommandFunctorPointer callback,
                              CommandFlag flags,
                              CommandMask mask,
-                             bool bIsEffect, 
                              const CommandParameter &parameter)
 {
-   AddItem(name, label, hasDialog, finder, callback, wxT(""), flags, mask, -1, bIsEffect, parameter);
+   AddItem(name, label, hasDialog, finder, callback, wxT(""), flags, mask, -1, parameter);
 }
 
 void CommandManager::AddItem(const wxChar *name,
@@ -747,7 +746,6 @@ void CommandManager::AddItem(const wxChar *name,
                              CommandFlag flags,
                              CommandMask mask,
                              int checkmark,
-                             bool bIsEffect, 
                              const CommandParameter &parameter)
 {
    wxString cookedParameter;
@@ -761,7 +759,7 @@ void CommandManager::AddItem(const wxChar *name,
          mLongNameForItem, 
          hasDialog, 
          accel, CurrentMenu(), finder, callback,
-         {}, 0, 0, bIsEffect, cookedParameter);
+         {}, 0, 0, cookedParameter);
    mLongNameForItem = "";
    int ID = entry->id;
    wxString label = GetLabelWithDisabledAccel(entry);
@@ -792,8 +790,7 @@ void CommandManager::AddItemList(const wxString & name,
                                  const TranslatedInternalString items[],
                                  size_t nItems,
                                  CommandHandlerFinder finder,
-                                 CommandFunctorPointer callback,
-                                 bool bIsEffect)
+                                 CommandFunctorPointer callback)
 {
    for (size_t i = 0, cnt = nItems; i < cnt; i++) {
       CommandListEntry *entry = NewIdentifier(name,
@@ -806,8 +803,7 @@ void CommandManager::AddItemList(const wxString & name,
                                               callback,
                                               items[i].Internal(),
                                               i,
-                                              cnt,
-                                              bIsEffect);
+                                              cnt);
       CurrentMenu()->Append(entry->id, GetLabel(entry));
       mbSeparatorAllowed = true;
    }
@@ -834,7 +830,7 @@ void CommandManager::AddCommand(const wxChar *name,
                                 CommandFlag flags,
                                 CommandMask mask)
 {
-   NewIdentifier(name, label_in, label_in, false, accel, NULL, finder, callback, {}, 0, 0, false, {});
+   NewIdentifier(name, label_in, label_in, false, accel, NULL, finder, callback, {}, 0, 0, {});
 
    if (flags != NoFlagsSpecifed || mask != NoFlagsSpecifed) {
       SetCommandFlags(name, flags, mask);
@@ -850,7 +846,7 @@ void CommandManager::AddGlobalCommand(const wxChar *name,
 {
    CommandListEntry *entry =
       NewIdentifier(name, label_in, label_in, hasDialog, accel, NULL, finder, callback,
-                    {}, 0, 0, false, {});
+                    {}, 0, 0, {});
 
    entry->enabled = false;
    entry->isGlobal = true;
@@ -890,8 +886,7 @@ CommandListEntry *CommandManager::NewIdentifier(const wxString & name,
                                                 CommandFunctorPointer callback,
                                                 const wxString &nameSuffix,
                                                 int index,
-                                                int count,
-                                                bool bIsEffect)
+                                                int count)
 {
    return NewIdentifier(name,
                         label.BeforeFirst(wxT('\t')),
@@ -904,7 +899,6 @@ CommandListEntry *CommandManager::NewIdentifier(const wxString & name,
                         nameSuffix,
                         index,
                         count,
-                        bIsEffect,
                         {});
 }
 
@@ -919,7 +913,6 @@ CommandListEntry *CommandManager::NewIdentifier(const wxString & nameIn,
    const wxString &nameSuffix,
    int index,
    int count,
-   bool bIsEffect,
    const CommandParameter &parameter)
 {
    const bool multi = !nameSuffix.empty();
@@ -987,7 +980,6 @@ CommandListEntry *CommandManager::NewIdentifier(const wxString & nameIn,
       entry->menu = menu;
       entry->finder = finder;
       entry->callback = callback;
-      entry->isEffect = bIsEffect;
       entry->multi = multi;
       entry->index = index;
       entry->count = count;
