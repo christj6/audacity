@@ -22,7 +22,6 @@ public:
    explicit
    WaveTrackVRulerControls( std::shared_ptr<Track> pTrack )
       : TrackVRulerControls( pTrack ) {}
-   ~WaveTrackVRulerControls();
 };
 
 #endif

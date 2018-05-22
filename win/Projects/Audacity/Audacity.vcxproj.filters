@@ -620,9 +620,6 @@
     <ClCompile Include="..\..\..\src\tracks\playabletrack\wavetrack\ui\WaveTrackUI.cpp">
       <Filter>src\tracks\playabletrack\wavetrack\ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\tracks\playabletrack\wavetrack\ui\WaveTrackVRulerControls.cpp">
-      <Filter>src\tracks\playabletrack\wavetrack\ui</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\widgets\PopupMenuTable.cpp">
       <Filter>src\widgets</Filter>
     </ClCompile>

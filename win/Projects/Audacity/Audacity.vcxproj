@@ -212,7 +212,6 @@
     <ClCompile Include="..\..\..\src\tracks\playabletrack\wavetrack\ui\CutlineHandle.cpp" />
     <ClCompile Include="..\..\..\src\tracks\playabletrack\wavetrack\ui\WaveTrackControls.cpp" />
     <ClCompile Include="..\..\..\src\tracks\playabletrack\wavetrack\ui\WaveTrackUI.cpp" />
-    <ClCompile Include="..\..\..\src\tracks\playabletrack\wavetrack\ui\WaveTrackVRulerControls.cpp" />
     <ClCompile Include="..\..\..\src\tracks\ui\BackgroundCell.cpp" />
     <ClCompile Include="..\..\..\src\tracks\ui\ButtonHandle.cpp" />
     <ClCompile Include="..\..\..\src\tracks\ui\CommonTrackPanelCell.cpp" />
