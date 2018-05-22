@@ -2885,6 +2885,7 @@ TrackPanelCellIterator &TrackPanelCellIterator::operator++ ()
             mpCell = mpTrack->GetTrackControl();
             break;
          case CellType::VRuler:
+			// commenting out this mpTrack->GetVRulerControl() line causes a crash when highlighting the VRuler
             mpCell = mpTrack->GetVRulerControl();
             break;
          case CellType::Resizer: {
