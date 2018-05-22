@@ -639,7 +639,6 @@ private:
 
 protected:
    std::shared_ptr<TrackControls> GetControls() override;
-   std::shared_ptr<TrackVRulerControls> GetVRulerControls() override;
 };
 
 // This is meant to be a short-lived object, during whose lifetime,

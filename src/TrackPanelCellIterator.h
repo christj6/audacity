@@ -30,7 +30,7 @@ class TrackPanelCellIterator
 {
 public:
    enum class CellType {
-      Track, Label, VRuler, Resizer, Background
+      Track, Label, Resizer, Background
    };
 
    TrackPanelCellIterator(TrackPanel *trackPanel, bool begin);

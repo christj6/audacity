@@ -2438,8 +2438,6 @@ TrackPanel::FoundCell TrackPanel::FindCell(int mouseX, int mouseY)
 
    auto found = *iter;
 
-   // Attempting to remove GetVRulerControls() and GetVRulerControl() results in a crash here
-   // if the user hovers the mouse over the thin vertical line between the TrackPanel and the Track itself
    return 
    {
       static_cast<CommonTrackPanelCell*>( found.first.get() )->FindTrack(),
@@ -2884,10 +2882,6 @@ TrackPanelCellIterator &TrackPanelCellIterator::operator++ ()
          case CellType::Label:
             mpCell = mpTrack->GetTrackControl();
             break;
-         case CellType::VRuler:
-			// commenting out this mpTrack->GetVRulerControl() line causes a crash when highlighting the VRuler
-            mpCell = mpTrack->GetVRulerControl();
-            break;
          case CellType::Resizer: {
             mpCell = mpTrack->GetResizer();
             break;
@@ -2947,15 +2941,6 @@ void TrackPanelCellIterator::UpdateRect()
                mRect.height += partner->GetHeight();
             break;
          }
-         case CellType::VRuler:
-            {
-               mRect.x = kTrackInfoWidth;
-               // Right edge of the VRuler is inactive.
-               mRect.width = mPanel->GetLeftOffset() - mRect.x;
-               mRect.y += kTopMargin;
-               mRect.height -= (kBottomMargin + kTopMargin);
-            }
-            break;
          case CellType::Resizer: {
             // The resizer region encompasses the bottom margin proper to this
             // track, plus the top margin of the next track (or, an equally

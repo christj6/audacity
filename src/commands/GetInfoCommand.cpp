@@ -424,7 +424,6 @@ void GetInfoCommand::ExploreTrackPanel( const CommandContext &context,
          context.AddItem( R.GetTop() );
          context.AddItem( R.GetRight() );
          context.AddItem( R.GetBottom() );
-         context.AddItem( "VRuler" ); 
          context.EndArray();
       }
    }

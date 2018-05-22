@@ -23,8 +23,3 @@ std::shared_ptr<TrackControls> WaveTrack::GetControls()
 {
    return std::make_shared<WaveTrackControls>( Pointer( this ) );
 }
-
-std::shared_ptr<TrackVRulerControls> WaveTrack::GetVRulerControls()
-{
-   return std::make_shared<WaveTrackVRulerControls>( Pointer( this ) );
-}
