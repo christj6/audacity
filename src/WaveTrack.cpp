@@ -60,10 +60,6 @@ Track classes.
 #include "Experimental.h"
 
 #include "TrackPanel.h" // for TrackInfo
-// Assumptions in objects separation were wrong.  We need to activate
-// VZooming (that lives in WaveTrackVRulerHandle) from an action on the
-// TCP collapse/expand.  So we need visibility here.
-#include "tracks/playabletrack/wavetrack/ui/WaveTrackVRulerControls.h"
 
 using std::max;
 
@@ -72,7 +68,6 @@ WaveTrack::Holder TrackFactory::DuplicateWaveTrack(const WaveTrack &orig)
    return std::unique_ptr<WaveTrack>
    { static_cast<WaveTrack*>(orig.Duplicate().release()) };
 }
-
 
 WaveTrack::Holder TrackFactory::NewWaveTrack(sampleFormat format, double rate)
 {
