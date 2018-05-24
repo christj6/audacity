@@ -79,7 +79,7 @@ void SaveProjectCommand::PopulateOrExchange(ShuttleGui & S)
 bool SaveProjectCommand::Apply(const CommandContext &context)
 {
    if(mFileName.IsEmpty())
-      return context.GetProject()->SaveAs(mbCompress);
+      return context.GetProject()->SaveAs();
    else
-      return context.GetProject()->SaveAs(mFileName,mbCompress,mbAddToHistory);
+      return context.GetProject()->SaveAs(mFileName,mbAddToHistory);
 }

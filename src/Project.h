@@ -259,8 +259,8 @@ public:
                      TrackHolders &&newTracks);
 
    bool Save();
-   bool SaveAs(bool bWantSaveCompressed = false);
-   bool SaveAs(const wxString & newFileName, bool bWantSaveCompressed = false, bool addToHistory = true);
+   bool SaveAs();
+   bool SaveAs(const wxString & newFileName, bool addToHistory = true);
    #ifdef USE_LIBVORBIS
       bool SaveCompressedWaveTracks(const wxString & strProjectPathName); // full path for aup except extension
    #endif
