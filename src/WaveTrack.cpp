@@ -1551,15 +1551,6 @@ void WaveTrack::Flush()
    RightmostOrNewClip()->Flush();
 }
 
-bool WaveTrack::GetErrorOpening()
-{
-   for (const auto &clip : mClips)
-      if (clip->GetSequence()->GetErrorOpening())
-         return true;
-
-   return false;
-}
-
 bool WaveTrack::Lock() const
 {
    for (const auto &clip : mClips)

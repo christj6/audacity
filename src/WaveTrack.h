@@ -279,9 +279,6 @@ private:
    size_t GetMaxBlockSize() const;
    size_t GetIdealBlockSize();
 
-   // Returns true if an error occurred while reading from XML
-   bool GetErrorOpening() override;
-
    //
    // Lock and unlock the track: you must lock the track before
    // doing a copy and paste between projects.

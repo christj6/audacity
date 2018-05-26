@@ -132,8 +132,6 @@ class PROFILE_DLL_API Sequence final : public XMLTagHandler{
 
    const std::shared_ptr<DirManager> &GetDirManager() { return mDirManager; }
 
-   bool GetErrorOpening() { return mErrorOpening; }
-
    //
    // Lock/Unlock all of this sequence's BlockFiles, keeping them
    // from being moved.  Call this if you want to copy a
@@ -224,8 +222,6 @@ class PROFILE_DLL_API Sequence final : public XMLTagHandler{
 
    size_t   mMinSamples; // min samples per block
    size_t   mMaxSamples; // max samples per block
-
-   bool          mErrorOpening{ false };
 
    ///To block the Delete() method against the ODCalcSummaryTask::Update() method
    ODLock   mDeleteUpdateMutex;

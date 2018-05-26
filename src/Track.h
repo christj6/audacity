@@ -302,10 +302,6 @@ public:
 
    virtual int GetKind() const { return None; }
 
-   // Returns true if an error was encountered while trying to
-   // open the track from XML
-   virtual bool GetErrorOpening() { return false; }
-
    virtual double GetStartTime() const = 0;
    virtual double GetEndTime() const = 0;
 
