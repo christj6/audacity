@@ -499,7 +499,6 @@ FFmpegPresets::~FFmpegPresets()
       XMLFileWriter writer{
          xmlFileName.GetFullPath(), _("Error Saving FFmpeg Presets") };
       WriteXMLHeader(writer);
-      WriteXML(writer);
       writer.Commit();
    } );
 }
@@ -523,7 +522,6 @@ void FFmpegPresets::ExportPresets(wxString &filename)
    GuardedCall( [&] {
       XMLFileWriter writer{ filename, _("Error Saving FFmpeg Presets") };
       WriteXMLHeader(writer);
-      WriteXML(writer);
       writer.Commit();
    } );
 }
@@ -753,29 +751,6 @@ void FFmpegPresets::WriteXMLHeader(XMLWriter &xmlFile) const
    xmlFile.Write(wxT("\"-//audacityffmpegpreset-1.0.0//DTD//EN\" "));
    xmlFile.Write(wxT("\"http://audacity.sourceforge.net/xml/audacityffmpegpreset-1.0.0.dtd\" "));
    xmlFile.Write(wxT(">\n"));
-}
-
-void FFmpegPresets::WriteXML(XMLWriter &xmlFile) const
-// may throw
-{
-   xmlFile.StartTag(wxT("ffmpeg_presets"));
-   xmlFile.WriteAttr(wxT("version"),wxT("1.0"));
-   FFmpegPresetMap::const_iterator iter;
-   for (iter = mPresets.begin(); iter != mPresets.end(); ++iter)
-   {
-      auto preset = &iter->second;
-      xmlFile.StartTag(wxT("preset"));
-      xmlFile.WriteAttr(wxT("name"),preset->mPresetName);
-      for (long i = FEFirstID + 1; i < FELastID; i++)
-      {
-         xmlFile.StartTag(wxT("setctrlstate"));
-         xmlFile.WriteAttr(wxT("id"),wxString(FFmpegExportCtrlIDNames[i - FEFirstID]));
-         xmlFile.WriteAttr(wxT("state"),preset->mControlState.Item(i - FEFirstID));
-         xmlFile.EndTag(wxT("setctrlstate"));
-      }
-      xmlFile.EndTag(wxT("preset"));
-   }
-   xmlFile.EndTag(wxT("ffmpeg_presets"));
 }
 
 //----------------------------------------------------------------------------

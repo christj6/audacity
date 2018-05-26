@@ -316,8 +316,6 @@ class AUDACITY_DLL_API CommandManager final : public XMLTagHandler
    //
    // Loading/Saving
    //
-
-   void WriteXML(XMLWriter &xmlFile) const /* not override */;
    void TellUserWhyDisallowed(const wxString & Name, CommandFlag flagsGot, CommandFlag flagsRequired);
 
    ///

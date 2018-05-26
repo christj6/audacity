@@ -370,25 +370,6 @@ void Envelope::DrawPoints
    }
 }
 
-void Envelope::WriteXML(XMLWriter &xmlFile) const
-// may throw
-{
-   unsigned int ctrlPt;
-
-   xmlFile.StartTag(wxT("envelope"));
-   xmlFile.WriteAttr(wxT("numpoints"), mEnv.size());
-
-   for (ctrlPt = 0; ctrlPt < mEnv.size(); ctrlPt++) {
-      const EnvPoint &point = mEnv[ctrlPt];
-      xmlFile.StartTag(wxT("controlpoint"));
-      xmlFile.WriteAttr(wxT("t"), point.GetT(), 12);
-      xmlFile.WriteAttr(wxT("val"), point.GetVal(), 12);
-      xmlFile.EndTag(wxT("controlpoint"));
-   }
-
-   xmlFile.EndTag(wxT("envelope"));
-}
-
 namespace
 {
 inline int SQR(int x) { return x * x; }

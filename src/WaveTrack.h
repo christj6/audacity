@@ -279,11 +279,6 @@ private:
    size_t GetMaxBlockSize() const;
    size_t GetIdealBlockSize();
 
-   //
-   // XMLTagHandler callback methods for loading and saving
-   //
-   void WriteXML(XMLWriter &xmlFile) const override;
-
    // Returns true if an error occurred while reading from XML
    bool GetErrorOpening() override;
 

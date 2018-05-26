@@ -351,7 +351,6 @@ public:
    void ExportPresets(wxString &filename);
 
    void WriteXMLHeader(XMLWriter &xmlFile) const;
-   void WriteXML(XMLWriter &xmlFile) const;
 
 private:
 

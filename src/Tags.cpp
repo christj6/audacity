@@ -496,23 +496,6 @@ void Tags::SetTag(const wxString & name, const int & value)
    SetTag(name, wxString::Format(wxT("%d"), value));
 }
 
-void Tags::WriteXML(XMLWriter &xmlFile) const
-// may throw
-{
-   xmlFile.StartTag(wxT("tags"));
-
-   for (const auto &pair : GetRange()) {
-      const auto &n = pair.first;
-      const auto &v = pair.second;
-      xmlFile.StartTag(wxT("tag"));
-      xmlFile.WriteAttr(wxT("name"), n);
-      xmlFile.WriteAttr(wxT("value"), v);
-      xmlFile.EndTag(wxT("tag"));
-   }
-
-   xmlFile.EndTag(wxT("tags"));
-}
-
 bool Tags::ShowEditDialog(wxWindow *parent, const wxString &title, bool force)
 {
    if (force) {
@@ -1214,9 +1197,6 @@ void TagsEditor::OnSave(wxCommandEvent & WXUNUSED(event))
             mLocal.SetTag(TAG_TRACK, track);
          }
       } );
-
-      // Write the metadata
-      mLocal.WriteXML(writer);
 
       writer.Commit();
    } );

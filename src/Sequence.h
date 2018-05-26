@@ -132,11 +132,6 @@ class PROFILE_DLL_API Sequence final : public XMLTagHandler{
 
    const std::shared_ptr<DirManager> &GetDirManager() { return mDirManager; }
 
-   //
-   // XMLTagHandler callback methods for loading and saving
-   //
-   void WriteXML(XMLWriter &xmlFile) const /* not override */;
-
    bool GetErrorOpening() { return mErrorOpening; }
 
    //

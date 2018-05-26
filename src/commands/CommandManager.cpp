@@ -1652,26 +1652,6 @@ NormalizedKeyString CommandManager::GetDefaultKeyFromName(const wxString &name)
    return entry->defaultKey;
 }
 
-void CommandManager::WriteXML(XMLWriter &xmlFile) const
-// may throw
-{
-   xmlFile.StartTag(wxT("audacitykeyboard"));
-   xmlFile.WriteAttr(wxT("audacityversion"), AUDACITY_VERSION_STRING);
-
-   for(const auto &entry : mCommandList) {
-      wxString label = entry->label;
-      label = wxMenuItem::GetLabelText(label.BeforeFirst(wxT('\t')));
-
-      xmlFile.StartTag(wxT("command"));
-      xmlFile.WriteAttr(wxT("name"), entry->name);
-      xmlFile.WriteAttr(wxT("label"), label);
-      xmlFile.WriteAttr(wxT("key"), entry->key.Raw());
-      xmlFile.EndTag(wxT("command"));
-   }
-
-   xmlFile.EndTag(wxT("audacitykeyboard"));
-}
-
 void CommandManager::SetDefaultFlags(CommandFlag flags, CommandMask mask)
 {
    mDefaultFlags = flags;

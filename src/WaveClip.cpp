@@ -1486,22 +1486,6 @@ void WaveClip::Flush()
    //wxLogDebug(wxT("now sample count %lli"), (long long) mSequence->GetNumSamples());
 }
 
-void WaveClip::WriteXML(XMLWriter &xmlFile) const
-// may throw
-{
-   xmlFile.StartTag(wxT("waveclip"));
-   xmlFile.WriteAttr(wxT("offset"), mOffset, 8);
-   xmlFile.WriteAttr(wxT("colorindex"), mColourIndex );
-
-   mSequence->WriteXML(xmlFile);
-   mEnvelope->WriteXML(xmlFile);
-
-   for (const auto &clip: mCutLines)
-      clip->WriteXML(xmlFile);
-
-   xmlFile.EndTag(wxT("waveclip"));
-}
-
 void WaveClip::Paste(double t0, const WaveClip* other)
 // STRONG-GUARANTEE
 {

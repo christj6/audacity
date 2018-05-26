@@ -347,11 +347,6 @@ public:
    ///Adds an invalid region to the wavecache so it redraws that portion only.
    void AddInvalidRegion(sampleCount startSample, sampleCount endSample);
 
-   //
-   // XMLTagHandler callback methods for loading and saving
-   //
-   void WriteXML(XMLWriter &xmlFile) const /* not override */;
-
    // AWD, Oct 2009: for pasting whitespace at the end of selection
    bool GetIsPlaceholder() const { return mIsPlaceholder; }
    void SetIsPlaceholder(bool val) { mIsPlaceholder = val; }

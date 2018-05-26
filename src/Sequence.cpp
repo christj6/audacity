@@ -818,52 +818,6 @@ size_t Sequence::GetBestBlockSize(sampleCount start) const
    return result;
 }
 
-// Throws exceptions rather than reporting errors.
-void Sequence::WriteXML(XMLWriter &xmlFile) const
-// may throw
-{
-   unsigned int b;
-
-   xmlFile.StartTag(wxT("sequence"));
-
-   xmlFile.WriteAttr(wxT("maxsamples"), mMaxSamples);
-   xmlFile.WriteAttr(wxT("sampleformat"), mSampleFormat);
-   xmlFile.WriteAttr(wxT("numsamples"), mNumSamples.as_long_long() );
-
-   for (b = 0; b < mBlock.size(); b++) {
-      const SeqBlock &bb = mBlock[b];
-
-      // See http://bugzilla.audacityteam.org/show_bug.cgi?id=451.
-      // Also, don't check against mMaxSamples for AliasBlockFiles, because if you convert sample format,
-      // mMaxSample gets changed to match the format, but the number of samples in the aliased file
-      // has not changed (because sample format conversion was not actually done in the aliased file).
-      if (!bb.f->IsAlias() && (bb.f->GetLength() > mMaxSamples))
-      {
-         // PRL:  Bill observed this error.  Not sure how it was caused.
-         // I have added code in ConsistencyCheck that should abort the
-         // editing operation that caused this, not fixing
-         // the problem but moving the point of detection earlier if we
-         // find a reproducible case.
-         wxString sMsg =
-            wxString::Format(
-               _("Sequence has block file exceeding maximum %s samples per block.\nTruncating to this maximum length."),
-               Internat::ToString(((wxLongLong)mMaxSamples).ToDouble(), 0));
-         AudacityMessageBox(sMsg, _("Warning - Truncating Overlong Block File"), wxICON_EXCLAMATION | wxOK);
-         wxLogWarning(sMsg);
-         bb.f->SetLength(mMaxSamples);
-      }
-
-      xmlFile.StartTag(wxT("waveblock"));
-      xmlFile.WriteAttr(wxT("start"), bb.start.as_long_long() );
-
-      bb.f->SaveXML(xmlFile);
-
-      xmlFile.EndTag(wxT("waveblock"));
-   }
-
-   xmlFile.EndTag(wxT("sequence"));
-}
-
 int Sequence::FindBlock(sampleCount pos) const
 {
    wxASSERT(pos >= 0 && pos < mNumSamples);

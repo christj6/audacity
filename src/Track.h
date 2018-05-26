@@ -302,9 +302,6 @@ public:
 
    virtual int GetKind() const { return None; }
 
-   // XMLTagHandler callback methods -- NEW virtual for writing
-   virtual void WriteXML(XMLWriter &xmlFile) const = 0;
-
    // Returns true if an error was encountered while trying to
    // open the track from XML
    virtual bool GetErrorOpening() { return false; }

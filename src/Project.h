@@ -129,10 +129,6 @@ class ImportXMLTagHandler final : public XMLTagHandler
  public:
    ImportXMLTagHandler(AudacityProject* pProject) { mProject = pProject; }
 
-   // Don't want a WriteXML method because ImportXMLTagHandler is not a WaveTrack.
-   // <import> tags are instead written by AudacityProject::WriteXML.
-   //    void WriteXML(XMLWriter &xmlFile) /* not override */ { wxASSERT(false); }
-
  private:
    AudacityProject* mProject;
 };
@@ -451,10 +447,6 @@ private:
 public:
 
    // XMLTagHandler callback methods
-
-   void WriteXML(
-      XMLWriter &xmlFile, bool bWantSaveCompressed) /* not override */;
-
    void WriteXMLHeader(XMLWriter &xmlFile) const;
 
    PlayMode mLastPlayMode{ PlayMode::normalPlay };

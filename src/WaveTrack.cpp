@@ -1551,34 +1551,6 @@ void WaveTrack::Flush()
    RightmostOrNewClip()->Flush();
 }
 
-void WaveTrack::WriteXML(XMLWriter &xmlFile) const
-// may throw
-{
-   xmlFile.StartTag(wxT("wavetrack"));
-   if (mAutoSaveIdent)
-   {
-      xmlFile.WriteAttr(wxT("autosaveid"), mAutoSaveIdent);
-   }
-   xmlFile.WriteAttr(wxT("name"), mName);
-   xmlFile.WriteAttr(wxT("channel"), mChannel);
-   xmlFile.WriteAttr(wxT("linked"), mLinked);
-   this->PlayableTrack::WriteXMLAttributes(xmlFile);
-   xmlFile.WriteAttr(wxT("height"), this->GetActualHeight());
-   xmlFile.WriteAttr(wxT("minimized"), this->GetMinimized());
-   xmlFile.WriteAttr(wxT("isSelected"), this->GetSelected());
-   xmlFile.WriteAttr(wxT("rate"), mRate);
-   xmlFile.WriteAttr(wxT("gain"), (double)mGain);
-   xmlFile.WriteAttr(wxT("pan"), (double)mPan);
-   xmlFile.WriteAttr(wxT("colorindex"), mWaveColorIndex );
-
-   for (const auto &clip : mClips)
-   {
-      clip->WriteXML(xmlFile);
-   }
-
-   xmlFile.EndTag(wxT("wavetrack"));
-}
-
 bool WaveTrack::GetErrorOpening()
 {
    for (const auto &clip : mClips)

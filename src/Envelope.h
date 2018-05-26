@@ -84,9 +84,6 @@ public:
 
    double ClampValue(double value) { return std::max(mMinValue, std::min(mMaxValue, value)); }
 
-   // Newfangled XML file I/O
-   void WriteXML(XMLWriter &xmlFile) const /* not override */;
-
    void DrawPoints(
       TrackPanelDrawingContext &context,
       const wxRect & r, const ZoomInfo &zoomInfo,
