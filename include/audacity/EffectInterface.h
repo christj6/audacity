@@ -184,9 +184,6 @@ public:
    virtual bool ProcessFinalize() /* noexcept */ = 0;
    virtual size_t ProcessBlock(float **inBlock, float **outBlock, size_t blockLen) = 0;
 
-   virtual bool RealtimeFinalize() = 0;
-   virtual bool RealtimeProcessEnd() = 0;
-
    virtual bool ShowInterface(wxWindow *parent, bool forceModal = false) = 0;
    // Some effects will use define params to define what parameters they take.
    // If they do, they won't need to implement Get or SetAutomation parameters.

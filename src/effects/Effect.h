@@ -114,9 +114,6 @@ class AUDACITY_DLL_API Effect /* not final */ : public wxEvtHandler,
    bool ProcessFinalize() override;
    size_t ProcessBlock(float **inBlock, float **outBlock, size_t blockLen) override;
 
-   bool RealtimeFinalize() override;
-   bool RealtimeProcessEnd() override;
-
    bool ShowInterface(wxWindow *parent, bool forceModal = false) override;
 
    bool GetAutomationParameters(CommandParameters & parms) override;

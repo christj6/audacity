@@ -379,26 +379,6 @@ size_t Effect::ProcessBlock(float **inBlock, float **outBlock, size_t blockLen)
    return 0;
 }
 
-bool Effect::RealtimeFinalize()
-{
-   if (mClient)
-   {
-      return mClient->RealtimeFinalize();
-   }
-
-   return false;
-}
-
-bool Effect::RealtimeProcessEnd()
-{
-   if (mClient)
-   {
-      return mClient->RealtimeProcessEnd();
-   }
-
-   return true;
-}
-
 bool Effect::ShowInterface(wxWindow *parent, bool forceModal)
 {
    if (mUIDialog)

@@ -172,10 +172,6 @@ bool XMLValueChecker::IsValidSampleFormat(const int nValue)
    return (nValue == int16Sample) || (nValue == int24Sample) || (nValue == floatSample);
 }
 
-void XMLTagHandler::ReadXMLEndTag(const char *tag)
-{
-}
-
 void XMLTagHandler::ReadXMLContent(const char *s, int len)
 {
    HandleXMLContent(wxString(s, wxConvUTF8, len));

@@ -124,11 +124,6 @@ public:
    void SetSkipStateFlag(bool flag);
    bool GetSkipStateFlag();
 
-   // Realtime effect processing
-   void RealtimeFinalize();
-   void RealtimeProcessEnd();
-   int GetRealtimeLatency();
-
    const PluginID & GetEffectByIdentifier(const wxString & strTarget);
 
 private:
@@ -145,7 +140,6 @@ private:
 
    wxCriticalSection mRealtimeLock;
    EffectArray mRealtimeEffects;
-   int mRealtimeLatency;
    bool mRealtimeActive;
    std::vector<unsigned> mRealtimeChans;
    std::vector<double> mRealtimeRates;

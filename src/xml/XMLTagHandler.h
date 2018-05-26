@@ -79,7 +79,6 @@ class AUDACITY_DLL_API XMLTagHandler /* not final */ {
 
    // These functions recieve data from expat.  They do charset
    // conversion and then pass the data to the handlers above.
-   void ReadXMLEndTag(const char *tag);
    void ReadXMLContent(const char *s, int len);
 };
 

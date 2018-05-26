@@ -47,7 +47,6 @@ EffectManager::EffectManager()
 {
    mRealtimeLock.Enter();
    mRealtimeActive = false;
-   mRealtimeLatency = 0;
    mRealtimeLock.Leave();
    mSkipStateFlag = false;
 }
@@ -404,39 +403,6 @@ void EffectManager::SetBatchProcessing(const PluginID & ID, bool start)
       return;
    }
 
-}
-
-void EffectManager::RealtimeFinalize()
-{
-   // It is now safe to clean up
-   mRealtimeLatency = 0;
-
-   // Tell each effect to clean up as well
-   for (auto e : mRealtimeEffects)
-      e->RealtimeFinalize();
-
-   // Reset processor parameters
-   mRealtimeChans.clear();
-   mRealtimeRates.clear();
-
-   // No longer active
-   mRealtimeActive = false;
-}
-
-//
-// This will be called in a different thread than the main GUI thread.
-//
-void EffectManager::RealtimeProcessEnd()
-{
-   // Protect ourselves from the main thread
-   mRealtimeLock.Enter();
-
-   mRealtimeLock.Leave();
-}
-
-int EffectManager::GetRealtimeLatency()
-{
-   return mRealtimeLatency;
 }
 
 Effect *EffectManager::GetEffect(const PluginID & ID)
