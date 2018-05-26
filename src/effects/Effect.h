@@ -115,10 +115,6 @@ class AUDACITY_DLL_API Effect /* not final */ : public wxEvtHandler,
    size_t ProcessBlock(float **inBlock, float **outBlock, size_t blockLen) override;
 
    bool RealtimeFinalize() override;
-   size_t RealtimeProcess(int group,
-                                       float **inbuf,
-                                       float **outbuf,
-                                       size_t numSamples) override;
    bool RealtimeProcessEnd() override;
 
    bool ShowInterface(wxWindow *parent, bool forceModal = false) override;
@@ -196,13 +192,6 @@ class AUDACITY_DLL_API Effect /* not final */ : public wxEvtHandler,
                  bool shouldPrompt = true);
 
    bool Delegate( Effect &delegate, wxWindow *parent, bool shouldPrompt);
-
-   // Realtime Effect Processing
-   /* not virtual */ size_t RealtimeProcess(int group,
-                               unsigned chans,
-                               float **inbuf,
-                               float **outbuf,
-                               size_t numSamples);
 
    virtual bool IsHidden();
 

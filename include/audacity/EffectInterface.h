@@ -185,7 +185,6 @@ public:
    virtual size_t ProcessBlock(float **inBlock, float **outBlock, size_t blockLen) = 0;
 
    virtual bool RealtimeFinalize() = 0;
-   virtual size_t RealtimeProcess(int group, float **inBuf, float **outBuf, size_t numSamples) = 0;
    virtual bool RealtimeProcessEnd() = 0;
 
    virtual bool ShowInterface(wxWindow *parent, bool forceModal = false) = 0;

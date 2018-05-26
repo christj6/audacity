@@ -126,7 +126,6 @@ public:
 
    // Realtime effect processing
    void RealtimeFinalize();
-   size_t RealtimeProcess(int group, unsigned chans, float **buffers, size_t numSamples);
    void RealtimeProcessEnd();
    int GetRealtimeLatency();
 
