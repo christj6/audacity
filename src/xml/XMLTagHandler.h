@@ -71,15 +71,6 @@ class AUDACITY_DLL_API XMLTagHandler /* not final */ {
    //
    // Methods to override
    //
-
-   // This method will be called when element content has been
-   // encountered.
-   // It is optional to override this method.
-   virtual void HandleXMLContent(const wxString & WXUNUSED(content)) {}
-
-   // These functions recieve data from expat.  They do charset
-   // conversion and then pass the data to the handlers above.
-   void ReadXMLContent(const char *s, int len);
 };
 
 #endif // define __AUDACITY_XML_TAG_HANDLER__

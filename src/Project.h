@@ -446,9 +446,6 @@ private:
 
 public:
 
-   // XMLTagHandler callback methods
-   void WriteXMLHeader(XMLWriter &xmlFile) const;
-
    PlayMode mLastPlayMode{ PlayMode::normalPlay };
    ViewInfo mViewInfo;
 

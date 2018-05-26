@@ -350,8 +350,6 @@ public:
    void ImportPresets(wxString &filename);
    void ExportPresets(wxString &filename);
 
-   void WriteXMLHeader(XMLWriter &xmlFile) const;
-
 private:
 
    FFmpegPresetMap mPresets;

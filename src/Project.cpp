@@ -2555,21 +2555,6 @@ void AudacityProject::EnqueueODTasks()
    }
 }
 
-void AudacityProject::WriteXMLHeader(XMLWriter &xmlFile) const
-{
-   xmlFile.Write(wxT("<?xml "));
-   xmlFile.Write(wxT("version=\"1.0\" "));
-   xmlFile.Write(wxT("standalone=\"no\" "));
-   xmlFile.Write(wxT("?>\n"));
-
-   xmlFile.Write(wxT("<!DOCTYPE "));
-   xmlFile.Write(wxT("project "));
-   xmlFile.Write(wxT("PUBLIC "));
-   xmlFile.Write(wxT("\"-//audacityproject-1.3.0//DTD//EN\" "));
-   xmlFile.Write(wxT("\"http://audacity.sourceforge.net/xml/audacityproject-1.3.0.dtd\" "));
-   xmlFile.Write(wxT(">\n"));
-}
-
 bool AudacityProject::Save()
 {
    if ( !IsProjectSaved() )

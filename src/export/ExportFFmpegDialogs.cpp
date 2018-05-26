@@ -498,7 +498,6 @@ FFmpegPresets::~FFmpegPresets()
       wxFileName xmlFileName{ FileNames::DataDir(), wxT("ffmpeg_presets.xml") };
       XMLFileWriter writer{
          xmlFileName.GetFullPath(), _("Error Saving FFmpeg Presets") };
-      WriteXMLHeader(writer);
       writer.Commit();
    } );
 }
@@ -521,7 +520,6 @@ void FFmpegPresets::ExportPresets(wxString &filename)
 {
    GuardedCall( [&] {
       XMLFileWriter writer{ filename, _("Error Saving FFmpeg Presets") };
-      WriteXMLHeader(writer);
       writer.Commit();
    } );
 }
@@ -731,26 +729,6 @@ void FFmpegPresets::LoadPreset(ExportFFmpegOptions *parent, wxString &name)
          }
       }
    }
-}
-
-void FFmpegPresets::WriteXMLHeader(XMLWriter &xmlFile) const
-// may throw
-{
-   xmlFile.Write(wxT("<?xml "));
-   xmlFile.Write(wxT("version=\"1.0\" "));
-   xmlFile.Write(wxT("standalone=\"no\" "));
-   xmlFile.Write(wxT("?>\n"));
-
-   wxString dtdName = wxT("-//audacityffmpegpreset-1.0.0//DTD//EN");
-   wxString dtdURI =
-      wxT("http://audacity.sourceforge.net/xml/audacityffmpegpreset-1.0.0.dtd");
-
-   xmlFile.Write(wxT("<!DOCTYPE "));
-   xmlFile.Write(wxT("project "));
-   xmlFile.Write(wxT("PUBLIC "));
-   xmlFile.Write(wxT("\"-//audacityffmpegpreset-1.0.0//DTD//EN\" "));
-   xmlFile.Write(wxT("\"http://audacity.sourceforge.net/xml/audacityffmpegpreset-1.0.0.dtd\" "));
-   xmlFile.Write(wxT(">\n"));
 }
 
 //----------------------------------------------------------------------------
