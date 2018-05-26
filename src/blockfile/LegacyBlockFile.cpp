@@ -203,20 +203,6 @@ size_t LegacyBlockFile::ReadData(samplePtr data, sampleFormat format,
    );
 }
 
-void LegacyBlockFile::SaveXML(XMLWriter &xmlFile)
-// may throw
-{
-   xmlFile.StartTag(wxT("legacyblockfile"));
-
-   xmlFile.WriteAttr(wxT("name"), mFileName.GetFullName());
-   xmlFile.WriteAttr(wxT("len"), mLen);
-   if (mSummaryInfo.fields < 3)
-      xmlFile.WriteAttr(wxT("norms"), 1);
-   xmlFile.WriteAttr(wxT("summarylen"), mSummaryInfo.totalSummaryBytes);
-
-   xmlFile.EndTag(wxT("legacyblockfile"));
-}
-
 /// Create a copy of this BlockFile, but using a different disk file.
 ///
 /// @param newFileName The name of the NEW file to use.

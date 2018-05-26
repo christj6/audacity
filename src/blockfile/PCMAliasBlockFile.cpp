@@ -100,24 +100,6 @@ BlockFilePtr PCMAliasBlockFile::Copy(wxFileNameWrapper &&newFileName)
    return newBlockFile;
 }
 
-void PCMAliasBlockFile::SaveXML(XMLWriter &xmlFile)
-// may throw
-{
-   xmlFile.StartTag(wxT("pcmaliasblockfile"));
-
-   xmlFile.WriteAttr(wxT("summaryfile"), mFileName.GetFullName());
-   xmlFile.WriteAttr(wxT("aliasfile"), mAliasedFileName.GetFullPath());
-   xmlFile.WriteAttr(wxT("aliasstart"),
-                     mAliasStart.as_long_long());
-   xmlFile.WriteAttr(wxT("aliaslen"), mLen);
-   xmlFile.WriteAttr(wxT("aliaschannel"), mAliasChannel);
-   xmlFile.WriteAttr(wxT("min"), mMin);
-   xmlFile.WriteAttr(wxT("max"), mMax);
-   xmlFile.WriteAttr(wxT("rms"), mRMS);
-
-   xmlFile.EndTag(wxT("pcmaliasblockfile"));
-}
-
 void PCMAliasBlockFile::Recover(void)
 {
    WriteSummary();

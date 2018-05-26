@@ -85,9 +85,6 @@ class PROFILE_DLL_API BlockFile /* not final, abstract */ {
 
    virtual void FillCache() /* noexcept */ { /* no cache by default */ }
 
-   /// Stores a representation of this file in XML
-   virtual void SaveXML(XMLWriter &xmlFile) = 0;
-
    /// Gets the filename of the disk file associated with this BlockFile
    /// (can be empty -- some BlockFiles, like SilentBlockFile, correspond to
    ///  no file on disk)

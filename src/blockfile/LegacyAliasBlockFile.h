@@ -31,7 +31,6 @@ class LegacyAliasBlockFile final : public PCMAliasBlockFile
                         bool noRMS);
    virtual ~LegacyAliasBlockFile();
 
-   void SaveXML(XMLWriter &xmlFile) override;
    BlockFilePtr Copy(wxFileNameWrapper &&fileName) override;
    void Recover() override;
 };

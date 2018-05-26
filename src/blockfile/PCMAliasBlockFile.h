@@ -40,7 +40,6 @@ class PCMAliasBlockFile /* not final */ : public AliasBlockFile
    size_t ReadData(samplePtr data, sampleFormat format,
                         size_t start, size_t len, bool mayThrow) const override;
 
-   void SaveXML(XMLWriter &xmlFile) override;
    BlockFilePtr Copy(wxFileNameWrapper &&fileName) override;
    void Recover() override;
 };

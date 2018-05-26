@@ -77,9 +77,6 @@ class ODPCMAliasBlockFile final : public PCMAliasBlockFile
    ///Makes NEW ODPCMAliasBlockFile or PCMAliasBlockFile depending on summary availability
    BlockFilePtr Copy(wxFileNameWrapper &&fileName) override;
 
-   ///Saves as xml ODPCMAliasBlockFile or PCMAliasBlockFile depending on summary availability
-   void SaveXML(XMLWriter &xmlFile) override;
-
    ///Writes the summary file if summary data is available
    void Recover(void) override;
 

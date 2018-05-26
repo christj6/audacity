@@ -419,20 +419,6 @@ size_t SimpleBlockFile::ReadData(samplePtr data, sampleFormat format,
          mFileName, mSilentLog, nullptr, 0, 0, data, format, start, len);
 }
 
-void SimpleBlockFile::SaveXML(XMLWriter &xmlFile)
-// may throw
-{
-   xmlFile.StartTag(wxT("simpleblockfile"));
-
-   xmlFile.WriteAttr(wxT("filename"), mFileName.GetFullName());
-   xmlFile.WriteAttr(wxT("len"), mLen);
-   xmlFile.WriteAttr(wxT("min"), mMin);
-   xmlFile.WriteAttr(wxT("max"), mMax);
-   xmlFile.WriteAttr(wxT("rms"), mRMS);
-
-   xmlFile.EndTag(wxT("simpleblockfile"));
-}
-
 /// Create a copy of this BlockFile, but using a different disk file.
 ///
 /// @param newFileName The name of the NEW file to use.

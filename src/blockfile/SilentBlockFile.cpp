@@ -39,16 +39,6 @@ size_t SilentBlockFile::ReadData(samplePtr data, sampleFormat format,
    return len;
 }
 
-void SilentBlockFile::SaveXML(XMLWriter &xmlFile)
-// may throw
-{
-   xmlFile.StartTag(wxT("silentblockfile"));
-
-   xmlFile.WriteAttr(wxT("len"), mLen);
-
-   xmlFile.EndTag(wxT("silentblockfile"));
-}
-
 /// Create a copy of this BlockFile
 BlockFilePtr SilentBlockFile::Copy(wxFileNameWrapper &&)
 {

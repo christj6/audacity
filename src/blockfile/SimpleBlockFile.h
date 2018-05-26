@@ -70,8 +70,6 @@ class PROFILE_DLL_API SimpleBlockFile /* not final */ : public BlockFile {
 
    /// Create a NEW block file identical to this one
    BlockFilePtr Copy(wxFileNameWrapper &&newFileName) override;
-   /// Write an XML representation of this file
-   void SaveXML(XMLWriter &xmlFile) override;
 
    DiskByteCount GetSpaceUsage() const override;
    void Recover() override;

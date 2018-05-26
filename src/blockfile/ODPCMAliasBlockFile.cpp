@@ -233,42 +233,6 @@ BlockFilePtr ODPCMAliasBlockFile::Copy(wxFileNameWrapper &&newFileName)
    return newBlockFile;
 }
 
-
-/// Writes the xml as a PCMAliasBlockFile if we can (if we have a summary file)
-/// Otherwise writes XML as a subset of attributes with 'odpcmaliasblockfile as the start tag.
-/// Most notably, the summaryfile attribute refers to a file that does not yet exist, so when the project file is read back in
-/// and this object reconstructed, it needs to avoid trying to open it as well as schedule itself for OD loading
-void ODPCMAliasBlockFile::SaveXML(XMLWriter &xmlFile)
-// may throw
-{
-   //we lock this so that mAliasedFileName doesn't change.
-   auto locker = LockForRead();
-   if(IsSummaryAvailable())
-   {
-      PCMAliasBlockFile::SaveXML(xmlFile);
-      mHasBeenSaved = true;
-   }
-   else
-   {
-      xmlFile.StartTag(wxT("odpcmaliasblockfile"));
-
-      //unlock to prevent deadlock and resume lock after.
-      {
-         auto suspension = locker.Suspend();
-         ODLocker locker2 { &mFileNameMutex };
-         xmlFile.WriteAttr(wxT("summaryfile"), mFileName.GetFullName());
-      }
-
-      xmlFile.WriteAttr(wxT("aliasfile"), mAliasedFileName.GetFullPath());
-      xmlFile.WriteAttr(wxT("aliasstart"),
-                        mAliasStart.as_long_long());
-      xmlFile.WriteAttr(wxT("aliaslen"), mLen);
-      xmlFile.WriteAttr(wxT("aliaschannel"), mAliasChannel);
-
-      xmlFile.EndTag(wxT("odpcmaliasblockfile"));
-   }
-}
-
 void ODPCMAliasBlockFile::Recover(void)
 {
    if(IsSummaryAvailable())

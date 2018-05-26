@@ -201,39 +201,6 @@ BlockFilePtr ODDecodeBlockFile::Copy(wxFileNameWrapper &&newFileName)
    return newBlockFile;
 }
 
-
-/// Writes the xml as a SimpleBlockFile if we can (if we have a summary file)
-/// Otherwise writes XML as a subset of attributes with 'odpcmaliasblockfile as the start tag.
-/// Most notably, the summaryfile attribute refers to a file that does not yet, so when the project file is read back in
-/// and this object reconstructed, it needs to avoid trying to open it as well as schedule itself for OD loading
-void ODDecodeBlockFile::SaveXML(XMLWriter &xmlFile)
-// may throw
-{
-   auto locker = LockForRead();
-   if(IsSummaryAvailable())
-   {
-      SimpleBlockFile::SaveXML(xmlFile);
-   }
-   else
-   {
-      xmlFile.StartTag(wxT("oddecodeblockfile"));
-      {
-         //unlock to prevent deadlock and resume lock after.
-         auto suspension = locker.Suspend();
-         ODLocker locker2{ &mFileNameMutex };
-         xmlFile.WriteAttr(wxT("summaryfile"), mFileName.GetFullName());
-      }
-      xmlFile.WriteAttr(wxT("audiofile"), mAudioFileName.GetFullPath());
-      xmlFile.WriteAttr(wxT("aliasstart"),
-                        mAliasStart.as_long_long());
-      xmlFile.WriteAttr(wxT("aliaslen"), mLen);
-      xmlFile.WriteAttr(wxT("aliaschannel"), mAliasChannel);
-      xmlFile.WriteAttr(wxT("decodetype"), (size_t)mType);
-
-      xmlFile.EndTag(wxT("oddecodeblockfile"));
-   }
-}
-
 void ODDecodeBlockFile::Recover(void)
 {
    if(IsSummaryAvailable())
