@@ -385,12 +385,6 @@ protected:
    wxString GetLabel(const CommandListEntry *entry) const;
    wxString GetLabelWithDisabledAccel(const CommandListEntry *entry) const;
 
-   //
-   // Loading/Saving
-   //
-
-   void HandleXMLEndTag(const wxChar *tag) override;
-
 private:
    // mMaxList only holds shortcuts that should not be added (by default)
    // and is sorted.

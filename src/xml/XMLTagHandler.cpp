@@ -174,7 +174,6 @@ bool XMLValueChecker::IsValidSampleFormat(const int nValue)
 
 void XMLTagHandler::ReadXMLEndTag(const char *tag)
 {
-   HandleXMLEndTag(UTF8CTOWX(tag));
 }
 
 void XMLTagHandler::ReadXMLContent(const char *s, int len)

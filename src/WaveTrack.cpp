@@ -1551,13 +1551,6 @@ void WaveTrack::Flush()
    RightmostOrNewClip()->Flush();
 }
 
-void WaveTrack::HandleXMLEndTag(const wxChar * WXUNUSED(tag))
-{
-   // In case we opened a pre-multiclip project, we need to
-   // simulate closing the waveclip tag.
-   NewestOrNewClip()->HandleXMLEndTag(wxT("waveclip"));
-}
-
 void WaveTrack::WriteXML(XMLWriter &xmlFile) const
 // may throw
 {

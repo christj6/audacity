@@ -282,8 +282,6 @@ private:
    //
    // XMLTagHandler callback methods for loading and saving
    //
-
-   void HandleXMLEndTag(const wxChar *tag) override;
    void WriteXML(XMLWriter &xmlFile) const override;
 
    // Returns true if an error occurred while reading from XML

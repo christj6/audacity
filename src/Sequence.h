@@ -135,8 +135,6 @@ class PROFILE_DLL_API Sequence final : public XMLTagHandler{
    //
    // XMLTagHandler callback methods for loading and saving
    //
-
-   void HandleXMLEndTag(const wxChar *tag) override;
    void WriteXML(XMLWriter &xmlFile) const /* not override */;
 
    bool GetErrorOpening() { return mErrorOpening; }

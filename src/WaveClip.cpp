@@ -1486,12 +1486,6 @@ void WaveClip::Flush()
    //wxLogDebug(wxT("now sample count %lli"), (long long) mSequence->GetNumSamples());
 }
 
-void WaveClip::HandleXMLEndTag(const wxChar *tag)
-{
-   if (!wxStrcmp(tag, wxT("waveclip")))
-      UpdateEnvelopeTrackLen();
-}
-
 void WaveClip::WriteXML(XMLWriter &xmlFile) const
 // may throw
 {

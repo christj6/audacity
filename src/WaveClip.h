@@ -350,8 +350,6 @@ public:
    //
    // XMLTagHandler callback methods for loading and saving
    //
-
-   void HandleXMLEndTag(const wxChar *tag) override;
    void WriteXML(XMLWriter &xmlFile) const /* not override */;
 
    // AWD, Oct 2009: for pasting whitespace at the end of selection

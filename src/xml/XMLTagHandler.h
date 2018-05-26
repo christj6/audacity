@@ -72,10 +72,6 @@ class AUDACITY_DLL_API XMLTagHandler /* not final */ {
    // Methods to override
    //
 
-   // This method will be called when a closing tag is encountered.
-   // It is optional to override this method.
-   virtual void HandleXMLEndTag(const wxChar * WXUNUSED(tag)) {}
-
    // This method will be called when element content has been
    // encountered.
    // It is optional to override this method.

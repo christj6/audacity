@@ -1652,16 +1652,6 @@ NormalizedKeyString CommandManager::GetDefaultKeyFromName(const wxString &name)
    return entry->defaultKey;
 }
 
-void CommandManager::HandleXMLEndTag(const wxChar *tag)
-{
-   if (!wxStrcmp(tag, wxT("audacitykeyboard"))) {
-      AudacityMessageBox(wxString::Format(_("Loaded %d keyboard shortcuts\n"),
-                                    mXMLKeysRead),
-                   _("Loading Keyboard Shortcuts"),
-                   wxOK | wxCENTRE);
-   }
-}
-
 void CommandManager::WriteXML(XMLWriter &xmlFile) const
 // may throw
 {
