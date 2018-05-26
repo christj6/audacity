@@ -44,8 +44,6 @@ class SilentBlockFile final : public BlockFile {
    void SaveXML(XMLWriter &xmlFile) override;
    DiskByteCount GetSpaceUsage() const override;
    void Recover() override { };
-
-   static BlockFilePtr BuildFromXML(DirManager &dm, const wxChar **attrs);
 };
 
 #endif

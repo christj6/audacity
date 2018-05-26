@@ -217,49 +217,6 @@ void LegacyBlockFile::SaveXML(XMLWriter &xmlFile)
    xmlFile.EndTag(wxT("legacyblockfile"));
 }
 
-// BuildFromXML methods should always return a BlockFile, not NULL,
-// even if the result is flawed (e.g., refers to nonexistent file),
-// as testing will be done in DirManager::ProjectFSCK().
-/// static
-BlockFilePtr LegacyBlockFile::BuildFromXML(const wxString &projDir, const wxChar **attrs,
-                                         size_t len, sampleFormat format)
-{
-   wxFileNameWrapper fileName;
-   size_t summaryLen = 0;
-   bool noRMS = false;
-   long nValue;
-
-   while(*attrs)
-   {
-      const wxChar *attr =  *attrs++;
-      const wxChar *value = *attrs++;
-      if (!value)
-         break;
-
-      const wxString strValue = value;
-      if (!wxStricmp(attr, wxT("name")) && XMLValueChecker::IsGoodFileName(strValue, projDir))
-         //v Should this be
-         //    dm.AssignFile(fileName, strValue, false);
-         // as in PCMAliasBlockFile::BuildFromXML? Test with an old project.
-         fileName.Assign(projDir, strValue);
-      else if (XMLValueChecker::IsGoodInt(strValue) && strValue.ToLong(&nValue))
-      {  // integer parameters
-         if (!wxStrcmp(attr, wxT("len")) && (nValue >= 0))
-            len = nValue;
-         else if (!wxStrcmp(attr, wxT("norms")))
-            noRMS = (nValue != 0);
-         else if (!wxStrcmp(attr, wxT("format")) && XMLValueChecker::IsValidSampleFormat(nValue))
-            format = (sampleFormat)nValue;
-         else if (!wxStrcmp(attr, wxT("summarylen")) && (nValue > 0))
-            // Note attribute "summarylen" was written as int, no need for 64 bits
-            summaryLen = nValue;
-      }
-   }
-
-   return make_blockfile<LegacyBlockFile>
-      (std::move(fileName), format, summaryLen, len, noRMS);
-}
-
 /// Create a copy of this BlockFile, but using a different disk file.
 ///
 /// @param newFileName The name of the NEW file to use.

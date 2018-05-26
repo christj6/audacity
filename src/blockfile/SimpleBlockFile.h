@@ -76,8 +76,6 @@ class PROFILE_DLL_API SimpleBlockFile /* not final */ : public BlockFile {
    DiskByteCount GetSpaceUsage() const override;
    void Recover() override;
 
-   static BlockFilePtr BuildFromXML(DirManager &dm, const wxChar **attrs);
-
    bool GetNeedWriteCacheToDisk() override;
    void WriteCacheToDisk() override;
 

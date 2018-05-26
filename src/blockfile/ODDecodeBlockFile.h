@@ -83,9 +83,6 @@ class ODDecodeBlockFile final : public SimpleBlockFile
    ///Saves as xml ODDecodeBlockFile or SimpleBlockFile depending on summary availability
    void SaveXML(XMLWriter &xmlFile) override;
 
-   ///Reconstructs from XML a ODDecodeBlockFile and reschedules it for OD loading
-   static BlockFilePtr BuildFromXML(DirManager &dm, const wxChar **attrs);
-
    ///Writes the summary file if summary data is available
    void Recover(void) override;
 

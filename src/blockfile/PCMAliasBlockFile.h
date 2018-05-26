@@ -43,8 +43,6 @@ class PCMAliasBlockFile /* not final */ : public AliasBlockFile
    void SaveXML(XMLWriter &xmlFile) override;
    BlockFilePtr Copy(wxFileNameWrapper &&fileName) override;
    void Recover() override;
-
-   static BlockFilePtr BuildFromXML(DirManager &dm, const wxChar **attrs);
 };
 
 #endif

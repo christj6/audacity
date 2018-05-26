@@ -80,69 +80,6 @@ void LegacyAliasBlockFile::SaveXML(XMLWriter &xmlFile)
    xmlFile.EndTag(wxT("legacyblockfile"));
 }
 
-// BuildFromXML methods should always return a BlockFile, not NULL,
-// even if the result is flawed (e.g., refers to nonexistent file),
-// as testing will be done in DirManager::ProjectFSCK().
-BlockFilePtr LegacyAliasBlockFile::BuildFromXML(const wxString &projDir, const wxChar **attrs)
-{
-   wxFileNameWrapper summaryFileName;
-   wxFileNameWrapper aliasFileName;
-   int aliasStart=0, aliasLen=0, aliasChannel=0;
-   int summaryLen=0;
-   bool noRMS = false;
-   long nValue;
-   long long nnValue;
-
-   while(*attrs)
-   {
-      const wxChar *attr =  *attrs++;
-      const wxChar *value = *attrs++;
-      if (!value)
-         break;
-
-      const wxString strValue = value;
-      if (!wxStricmp(attr, wxT("name")) && XMLValueChecker::IsGoodFileName(strValue, projDir))
-         //v Should this be
-         //    dm.AssignFile(summaryFileName, strValue, false);
-         // as in PCMAliasBlockFile::BuildFromXML? Test with an old project.
-         summaryFileName.Assign(projDir, strValue, wxT(""));
-      else if ( !wxStricmp(attr, wxT("aliaspath")) )
-      {
-         if (XMLValueChecker::IsGoodPathName(strValue))
-            aliasFileName.Assign(strValue);
-         else if (XMLValueChecker::IsGoodFileName(strValue, projDir))
-            // Allow fallback of looking for the file name, located in the data directory.
-            aliasFileName.Assign(projDir, strValue);
-         else if (XMLValueChecker::IsGoodPathString(strValue))
-            // If the aliased file is missing, we failed XMLValueChecker::IsGoodPathName()
-            // and XMLValueChecker::IsGoodFileName, because both do existence tests,
-            // but we want to keep the reference to the missing file because it's a good path string.
-            aliasFileName.Assign(strValue);
-      }
-      else if ( !wxStricmp(attr, wxT("aliasstart")) )
-      {
-         if (XMLValueChecker::IsGoodInt64(strValue) &&
-             strValue.ToLongLong(&nnValue) && (nnValue >= 0))
-            aliasStart = nnValue;
-      }
-      else if (XMLValueChecker::IsGoodInt(strValue) && strValue.ToLong(&nValue))
-      {  // integer parameters
-         if (!wxStricmp(attr, wxT("aliaslen")) && (nValue >= 0))
-            aliasLen = nValue;
-         else if (!wxStricmp(attr, wxT("aliaschannel")) && XMLValueChecker::IsValidChannel(aliasChannel))
-            aliasChannel = nValue;
-         else if (!wxStricmp(attr, wxT("summarylen")) && (nValue > 0))
-            summaryLen = nValue;
-         else if (!wxStricmp(attr, wxT("norms")))
-            noRMS = (nValue != 0);
-      }
-   }
-
-   return make_blockfile<LegacyAliasBlockFile>
-      (std::move(summaryFileName), std::move(aliasFileName),
-       aliasStart, aliasLen, aliasChannel, summaryLen, noRMS);
-}
-
 // regenerates the summary info, doesn't deal with missing alias files
 void LegacyAliasBlockFile::Recover(){
    WriteSummary();

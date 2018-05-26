@@ -433,54 +433,6 @@ void SimpleBlockFile::SaveXML(XMLWriter &xmlFile)
    xmlFile.EndTag(wxT("simpleblockfile"));
 }
 
-// BuildFromXML methods should always return a BlockFile, not NULL,
-// even if the result is flawed (e.g., refers to nonexistent file),
-// as testing will be done in DirManager::ProjectFSCK().
-/// static
-BlockFilePtr SimpleBlockFile::BuildFromXML(DirManager &dm, const wxChar **attrs)
-{
-   wxFileNameWrapper fileName;
-   float min = 0.0f, max = 0.0f, rms = 0.0f;
-   size_t len = 0;
-   double dblValue;
-   long nValue;
-
-   while(*attrs)
-   {
-      const wxChar *attr =  *attrs++;
-      const wxChar *value = *attrs++;
-      if (!value)
-         break;
-
-      const wxString strValue = value;
-      if (!wxStricmp(attr, wxT("filename")) &&
-            // Can't use XMLValueChecker::IsGoodFileName here, but do part of its test.
-            XMLValueChecker::IsGoodFileString(strValue) &&
-            (strValue.Length() + 1 + dm.GetProjectDataDir().Length() <= PLATFORM_MAX_PATH))
-      {
-         if (!dm.AssignFile(fileName, strValue, false))
-            // Make sure fileName is back to uninitialized state so we can detect problem later.
-            fileName.Clear();
-      }
-      else if (!wxStrcmp(attr, wxT("len")) &&
-               XMLValueChecker::IsGoodInt(strValue) && strValue.ToLong(&nValue) &&
-               nValue > 0)
-         len = nValue;
-      else if (XMLValueChecker::IsGoodString(strValue) && Internat::CompatibleToDouble(strValue, &dblValue))
-      {  // double parameters
-         if (!wxStricmp(attr, wxT("min")))
-            min = dblValue;
-         else if (!wxStricmp(attr, wxT("max")))
-            max = dblValue;
-         else if (!wxStricmp(attr, wxT("rms")) && (dblValue >= 0.0))
-            rms = dblValue;
-      }
-   }
-
-   return make_blockfile<SimpleBlockFile>
-      (std::move(fileName), len, min, max, rms);
-}
-
 /// Create a copy of this BlockFile, but using a different disk file.
 ///
 /// @param newFileName The name of the NEW file to use.

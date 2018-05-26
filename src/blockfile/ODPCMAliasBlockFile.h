@@ -80,9 +80,6 @@ class ODPCMAliasBlockFile final : public PCMAliasBlockFile
    ///Saves as xml ODPCMAliasBlockFile or PCMAliasBlockFile depending on summary availability
    void SaveXML(XMLWriter &xmlFile) override;
 
-   ///Reconstructs from XML a ODPCMAliasBlockFile and reschedules it for OD loading
-   static BlockFilePtr BuildFromXML(DirManager &dm, const wxChar **attrs);
-
    ///Writes the summary file if summary data is available
    void Recover(void) override;
 
