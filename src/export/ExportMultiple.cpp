@@ -566,14 +566,14 @@ void ExportMultiple::OnExport(wxCommandEvent& WXUNUSED(event))
       // TODO: give some warning dialog first, when only some files exported
       // successfully.
 
-      GuardedCall( [&] {
+      //GuardedCall( [&] {
          // This results dialog is a child of this dialog.
          HelpSystem::ShowInfoDialog( this,
                                     _("Export Multiple"),
                                     msg,
                                     FileList,
                                     450,400);
-      } );
+      //} );
    } );
 
       ok = ExportMultipleByTrack(mByName->GetValue() || mByNumberAndName->GetValue(),

@@ -32,8 +32,6 @@
 #include <wx/wxchar.h>
 #include <math.h>
 
-class XMLWriter;
-
 class AUDACITY_DLL_API SelectedRegion {
 
    // Maintains the invariant:  t1() >= t0()
@@ -141,13 +139,6 @@ public:
 
    static const wxChar *sDefaultT0Name;
    static const wxChar *sDefaultT1Name;
-
-   // Serialize, not with tags of its own, but as attributes within a tag.
-   // Don't add more legacy arguments as the structure grows.
-   void WriteXMLAttributes
-      (XMLWriter &xmlFile,
-       const wxChar *legacyT0Name = sDefaultT0Name,
-       const wxChar *legacyT1Name = sDefaultT1Name) const;
 
    // Return true iff the attribute is recognized.
    // Don't add more legacy arguments as the structure grows.

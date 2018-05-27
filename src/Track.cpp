@@ -307,14 +307,6 @@ void PlayableTrack::Merge( const Track &orig )
    AudioTrack::Merge( *pOrig );
 }
 
-// Serialize, not with tags of its own, but as attributes within a tag.
-void PlayableTrack::WriteXMLAttributes(XMLWriter &xmlFile) const
-{
-   xmlFile.WriteAttr(wxT("mute"), mMute);
-   xmlFile.WriteAttr(wxT("solo"), mSolo);
-   AudioTrack::WriteXMLAttributes(xmlFile);
-}
-
 // Return true iff the attribute is recognized.
 bool PlayableTrack::HandleXMLAttribute(const wxChar *attr, const wxChar *value)
 {

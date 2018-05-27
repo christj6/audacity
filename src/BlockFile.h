@@ -18,7 +18,6 @@
 #include <wx/filename.h>
 
 #include "xml/XMLTagHandler.h"
-#include "xml/XMLWriter.h"
 
 #include "SampleFormat.h"
 

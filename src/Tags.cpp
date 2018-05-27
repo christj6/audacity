@@ -1156,39 +1156,6 @@ void TagsEditor::OnSave(wxCommandEvent & WXUNUSED(event))
    if (fn.IsEmpty()) {
       return;
    }
-
-   GuardedCall( [&] {
-      // Create/Open the file
-      XMLFileWriter writer{ fn, _("Error Saving Tags File") };
-
-      // Remember title and track in case they're read only
-      wxString title = mLocal.GetTag(TAG_TITLE);
-      wxString track = mLocal.GetTag(TAG_TRACK);
-
-      // Clear title
-      if (!mEditTitle) {
-         mLocal.SetTag(TAG_TITLE, wxEmptyString);
-      }
-
-      // Clear track
-      if (!mEditTrack) {
-         mLocal.SetTag(TAG_TRACK, wxEmptyString);
-      }
-
-      auto cleanup = finally( [&] {
-         // Restore title
-         if (!mEditTitle) {
-            mLocal.SetTag(TAG_TITLE, title);
-         }
-
-         // Restore track
-         if (!mEditTrack) {
-            mLocal.SetTag(TAG_TRACK, track);
-         }
-      } );
-
-      writer.Commit();
-   } );
 }
 
 void TagsEditor::OnSaveDefaults(wxCommandEvent & WXUNUSED(event))

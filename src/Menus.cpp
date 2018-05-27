@@ -60,6 +60,7 @@ simplifies construction of menu items.
 #include "AudioIO.h"
 #include "Dependencies.h"
 #include "float_cast.h"
+#include "AudacityException.h" // to circumvent SimpleMessageBoxException error after removing XMLWriter
 
 #include "import/ImportRaw.h"
 #include "export/Export.h"

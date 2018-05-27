@@ -16,7 +16,6 @@
 
 #include "../BlockFile.h"
 #include "../DirManager.h"
-#include "../xml/XMLWriter.h"
 
 struct SimpleBlockFileCache {
    bool active;

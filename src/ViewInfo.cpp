@@ -18,7 +18,6 @@ Paul Licameli
 #include "Project.h"
 #include "prefs/GUISettings.h"
 #include "Prefs.h"
-#include "xml/XMLWriter.h"
 #include "prefs/TracksBehaviorsPrefs.h"
 
 namespace {
@@ -147,15 +146,6 @@ void ViewInfo::SetBeforeScreenWidth(wxInt64 beforeWidth, wxInt64 screenWidth, do
       std::max(lowerBoundTime,
          std::min(total - screenWidth / zoom,
          beforeWidth / zoom));
-}
-
-void ViewInfo::WriteXMLAttributes(XMLWriter &xmlFile) const
-// may throw
-{
-   selectedRegion.WriteXMLAttributes(xmlFile, wxT("sel0"), wxT("sel1"));
-   xmlFile.WriteAttr(wxT("vpos"), vpos);
-   xmlFile.WriteAttr(wxT("h"), h, 10);
-   xmlFile.WriteAttr(wxT("zoom"), zoom, 10);
 }
 
 bool ViewInfo::ReadXMLAttribute(const wxChar *attr, const wxChar *value)

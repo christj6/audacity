@@ -44,6 +44,7 @@ out.
 
 #include <float.h>
 #include <cmath>
+#include "../src/FileException.h"
 
 #include <wx/utils.h>
 #include <wx/filefn.h>

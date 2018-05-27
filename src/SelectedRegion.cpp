@@ -10,7 +10,6 @@ Paul Licameli
 
 #include "Internat.h"
 #include "SelectedRegion.h"
-#include "xml/XMLWriter.h"
 
 #include "Experimental.h"
 const wxChar *SelectedRegion::sDefaultT0Name = wxT("selStart");
@@ -19,15 +18,6 @@ const wxChar *SelectedRegion::sDefaultT1Name = wxT("selEnd");
 namespace {
 const wxChar *sDefaultF0Name = wxT("selLow");
 const wxChar *sDefaultF1Name = wxT("selHigh");
-}
-
-void SelectedRegion::WriteXMLAttributes
-(XMLWriter &xmlFile,
- const wxChar *legacyT0Name, const wxChar *legacyT1Name) const
-// may throw
-{
-   xmlFile.WriteAttr(legacyT0Name, t0(), 10);
-   xmlFile.WriteAttr(legacyT1Name, t1(), 10);
 }
 
 bool SelectedRegion::HandleXMLAttribute

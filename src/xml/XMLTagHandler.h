@@ -22,7 +22,6 @@
 #include <wx/string.h>
 #include <stdio.h>
 
-#include "XMLWriter.h"
 class XMLValueChecker
 {
 public:
