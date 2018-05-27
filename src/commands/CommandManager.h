@@ -24,8 +24,6 @@
 #include <wx/menu.h>
 #include <wx/hashmap.h>
 
-#include "../xml/XMLTagHandler.h"
-
 #include "audacity/Types.h"
 
 #ifndef __AUDACITY_OLD_STD__
@@ -124,7 +122,7 @@ using CommandIDHash = std::unordered_map<int, CommandListEntry*>;
 class AudacityProject;
 class CommandContext;
 
-class AUDACITY_DLL_API CommandManager final : public XMLTagHandler
+class AUDACITY_DLL_API CommandManager final
 {
  public:
 

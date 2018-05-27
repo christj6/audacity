@@ -313,13 +313,14 @@ void KeyConfigPrefs::OnImport(wxCommandEvent & WXUNUSED(event))
    if (!file) {
       return;
    }
-
+   /*
    XMLFileReader reader;
    if (!reader.Parse(mManager, file)) {
       AudacityMessageBox(reader.GetErrorStr(),
                    _("Error Importing Keyboard Shortcuts"),
                    wxOK | wxCENTRE, this);
    }
+   */
 
    RefreshBindings(true);
 }
