@@ -18,7 +18,6 @@
 #include <wx/brush.h>
 #include <wx/pen.h>
 
-#include "xml/XMLTagHandler.h"
 #include "Internat.h"
 
 class wxRect;
@@ -32,7 +31,7 @@ class EnvPoint;
 
 class ZoomInfo;
 
-class EnvPoint final : public XMLTagHandler {
+class EnvPoint final {
 
 public:
    EnvPoint() {}
@@ -52,7 +51,7 @@ private:
 typedef std::vector<EnvPoint> EnvArray;
 struct TrackPanelDrawingContext;
 
-class Envelope final : public XMLTagHandler {
+class Envelope final {
 public:
    // Envelope can define a piecewise linear function, or piecewise exponential.
    Envelope(bool exponential, double minValue, double maxValue, double defaultValue);

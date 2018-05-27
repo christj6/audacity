@@ -29,7 +29,6 @@
 #include "TrackPanelListener.h"
 #include "AudioIOListener.h"
 #include "commands/CommandManager.h"
-#include "xml/XMLTagHandler.h"
 
 #include "MemoryX.h"
 #include <wx/defs.h>
@@ -123,16 +122,6 @@ enum StatusBarField {
 ////////////////////////////////////////////////////////////
 DECLARE_EXPORTED_EVENT_TYPE(AUDACITY_DLL_API, EVT_CAPTURE_KEY, -1);
 
-// XML handler for <import> tag
-class ImportXMLTagHandler final : public XMLTagHandler
-{
- public:
-   ImportXMLTagHandler(AudacityProject* pProject) { mProject = pProject; }
-
- private:
-   AudacityProject* mProject;
-};
-
 class EffectPlugs;
 typedef wxArrayString PluginIDList;
 class CommandContext;
@@ -151,7 +140,6 @@ class WaveTrack;
 
 class AUDACITY_DLL_API AudacityProject final : public wxFrame,
                                      public TrackPanelListener,
-                                     public XMLTagHandler,
                                      public AudioIOListener
 {
  public:
@@ -608,8 +596,6 @@ private:
    bool mStopIfWasPaused;
 
    bool mLockPlayRegion;
-
-   std::unique_ptr<ImportXMLTagHandler> mImportXMLTagHandler;
 
    // Are we currently auto-saving or not?
    bool mAutoSaving{ false };

@@ -17,7 +17,6 @@
 #include "SampleFormat.h"
 #include "widgets/ProgressDialog.h"
 #include "ondemand/ODTaskThread.h"
-#include "xml/XMLTagHandler.h"
 
 #include "Experimental.h"
 #include "RealFFTf.h"
@@ -173,7 +172,7 @@ public:
    }
 };
 
-class AUDACITY_DLL_API WaveClip final : public XMLTagHandler
+class AUDACITY_DLL_API WaveClip final
 {
 private:
    // It is an error to copy a WaveClip without specifying the DirManager.

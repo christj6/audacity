@@ -31,7 +31,6 @@
 
 #include "Audacity.h"
 #include "widgets/Grid.h"
-#include "xml/XMLTagHandler.h"
 
 #include "MemoryX.h"
 #include <utility>
@@ -69,7 +68,7 @@ using TagMap = std::unordered_map< wxString, wxString >;
 #define TAG_SOFTWARE wxT("Software")
 #define TAG_COPYRIGHT wxT("Copyright")
 
-class AUDACITY_DLL_API Tags final : public XMLTagHandler {
+class AUDACITY_DLL_API Tags final {
 
  public:
    Tags();  // constructor

@@ -16,7 +16,6 @@
 #include <wx/string.h>
 
 #include "SampleFormat.h"
-#include "xml/XMLTagHandler.h"
 #include "ondemand/ODTaskThread.h"
 
 #include "audacity/Types.h"
@@ -50,7 +49,7 @@ class SeqBlock {
 class BlockArray : public std::vector<SeqBlock> {};
 using BlockPtrArray = std::vector<SeqBlock*>; // non-owning pointers
 
-class PROFILE_DLL_API Sequence final : public XMLTagHandler{
+class PROFILE_DLL_API Sequence final {
  public:
 
    //

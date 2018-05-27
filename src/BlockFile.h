@@ -17,8 +17,6 @@
 #include <wx/ffile.h>
 #include <wx/filename.h>
 
-#include "xml/XMLTagHandler.h"
-
 #include "SampleFormat.h"
 
 #include "wxFileNameWrapper.h"

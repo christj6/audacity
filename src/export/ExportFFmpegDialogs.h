@@ -334,7 +334,7 @@ public:
 
 using FFmpegPresetMap = std::unordered_map<wxString, FFmpegPreset>;
 
-class FFmpegPresets : XMLTagHandler
+class FFmpegPresets
 {
 public:
    FFmpegPresets();

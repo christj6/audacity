@@ -297,7 +297,6 @@
     <ClCompile Include="..\..\..\src\widgets\Ruler.cpp" />
     <ClCompile Include="..\..\..\src\widgets\valnum.cpp" />
     <ClCompile Include="..\..\..\src\widgets\Warning.cpp" />
-    <ClCompile Include="..\..\..\src\xml\XMLTagHandler.cpp" />
     <ClCompile Include="..\..\..\src\commands\AppCommandEvent.cpp" />
     <ClCompile Include="..\..\..\src\commands\BatchEvalCommand.cpp" />
     <ClCompile Include="..\..\..\src\commands\Command.cpp" />
@@ -541,7 +540,6 @@
     <ClInclude Include="..\..\..\src\widgets\Ruler.h" />
     <ClInclude Include="..\..\..\src\widgets\valnum.h" />
     <ClInclude Include="..\..\..\src\widgets\Warning.h" />
-    <ClInclude Include="..\..\..\src\xml\XMLTagHandler.h" />
     <ClInclude Include="..\..\..\src\commands\AppCommandEvent.h" />
     <ClInclude Include="..\..\..\src\commands\BatchEvalCommand.h" />
     <ClInclude Include="..\..\..\src\commands\Command.h" />

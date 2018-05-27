@@ -2311,8 +2311,6 @@ void AudacityProject::OnCloseWindow(wxCloseEvent & event)
 
    mTags.reset();
 
-   mImportXMLTagHandler.reset();
-
    // Delete all the tracks to free up memory and DirManager references.
    mTracks->Clear();
    mTracks.reset();

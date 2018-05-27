@@ -25,7 +25,6 @@
 #include "Experimental.h"
 #include "SampleFormat.h"
 #include "tracks/ui/CommonTrackPanelCell.h"
-#include "xml/XMLTagHandler.h"
 
 #ifdef __WXMSW__
 #pragma warning(disable:4284)
@@ -90,7 +89,7 @@ private:
 };
 
 class AUDACITY_DLL_API Track /* not final */
-   : public CommonTrackPanelCell, public XMLTagHandler
+   : public CommonTrackPanelCell
 {
    friend class TrackList;
    friend class TrackListIterator;

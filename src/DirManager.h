@@ -19,7 +19,6 @@
 #include <wx/utils.h>
 
 #include "audacity/Types.h"
-#include "xml/XMLTagHandler.h"
 #include "wxFileNameWrapper.h"
 
 #ifndef __AUDACITY_OLD_STD__
@@ -51,7 +50,7 @@ enum {
 };
 
 
-class PROFILE_DLL_API DirManager final : public XMLTagHandler {
+class PROFILE_DLL_API DirManager final {
  public:
 
    // MM: Construct DirManager

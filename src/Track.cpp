@@ -312,13 +312,11 @@ bool PlayableTrack::HandleXMLAttribute(const wxChar *attr, const wxChar *value)
 {
    const wxString strValue{ value };
    long nValue;
-   if (!wxStrcmp(attr, wxT("mute")) &&
-            XMLValueChecker::IsGoodInt(strValue) && strValue.ToLong(&nValue)) {
+   if (!wxStrcmp(attr, wxT("mute")) && strValue.ToLong(&nValue)) {
       mMute = (nValue != 0);
       return true;
    }
-   else if (!wxStrcmp(attr, wxT("solo")) &&
-            XMLValueChecker::IsGoodInt(strValue) && strValue.ToLong(&nValue)) {
+   else if (!wxStrcmp(attr, wxT("solo")) && strValue.ToLong(&nValue)) {
       mSolo = (nValue != 0);
       return true;
    }
