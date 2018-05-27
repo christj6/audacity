@@ -407,9 +407,6 @@
     <ClCompile Include="..\..\..\src\widgets\Warning.cpp">
       <Filter>src\widgets</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\xml\XMLFileReader.cpp">
-      <Filter>src\xml</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\xml\XMLTagHandler.cpp">
       <Filter>src\xml</Filter>
     </ClCompile>
@@ -1074,9 +1071,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\widgets\Warning.h">
       <Filter>src\widgets</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\xml\XMLFileReader.h">
-      <Filter>src\xml</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\xml\XMLTagHandler.h">
       <Filter>src\xml</Filter>

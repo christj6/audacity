@@ -485,11 +485,6 @@ FFmpegPresets::FFmpegPresets()
 {
    mPreset = NULL;
    mAbortImport = false;
-   /*
-   XMLFileReader xmlfile;
-   wxFileName xmlFileName(FileNames::DataDir(), wxT("ffmpeg_presets.xml"));
-   xmlfile.Parse(this,xmlFileName.GetFullPath());
-   */
 }
 
 FFmpegPresets::~FFmpegPresets()
@@ -509,13 +504,6 @@ void FFmpegPresets::ImportPresets(wxString &filename)
    mAbortImport = false;
 
    FFmpegPresetMap savePresets = mPresets;
-   /*
-   XMLFileReader xmlfile;
-   bool success = xmlfile.Parse(this,filename);
-   if (!success || mAbortImport) {
-      mPresets = savePresets;
-   }
-   */
 }
 
 void FFmpegPresets::ExportPresets(wxString &filename)

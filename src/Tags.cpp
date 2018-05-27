@@ -48,7 +48,6 @@
 #include "TranslatableStringArray.h"
 #include "widgets/Grid.h"
 #include "widgets/ErrorDialog.h"
-// #include "xml/XMLFileReader.h"
 
 #include <wx/button.h>
 #include <wx/choice.h>
@@ -1119,18 +1118,6 @@ void TagsEditor::OnLoad(wxCommandEvent & WXUNUSED(event))
 
    // Clear current contents
    mLocal.Clear();
-
-   // Load the metadata
-   /*
-   XMLFileReader reader;
-   if (!reader.Parse(&mLocal, fn)) {
-      // Inform user of load failure
-      AudacityMessageBox(reader.GetErrorStr(),
-                   _("Error Loading Metadata"),
-                   wxOK | wxCENTRE,
-                   this);
-   }
-   */
 
    // Restore title
    if (!mEditTitle) {
