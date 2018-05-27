@@ -111,7 +111,6 @@ scroll information.  It also has some status flags.
 #include "widgets/ErrorDialog.h"
 #include "widgets/Ruler.h"
 #include "widgets/Warning.h"
-#include "xml/XMLFileReader.h"
 #include "PlatformCompatibility.h"
 #include "Experimental.h"
 #include "export/Export.h"

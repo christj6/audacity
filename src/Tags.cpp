@@ -48,7 +48,7 @@
 #include "TranslatableStringArray.h"
 #include "widgets/Grid.h"
 #include "widgets/ErrorDialog.h"
-#include "xml/XMLFileReader.h"
+// #include "xml/XMLFileReader.h"
 
 #include <wx/button.h>
 #include <wx/choice.h>
@@ -1121,6 +1121,7 @@ void TagsEditor::OnLoad(wxCommandEvent & WXUNUSED(event))
    mLocal.Clear();
 
    // Load the metadata
+   /*
    XMLFileReader reader;
    if (!reader.Parse(&mLocal, fn)) {
       // Inform user of load failure
@@ -1129,6 +1130,7 @@ void TagsEditor::OnLoad(wxCommandEvent & WXUNUSED(event))
                    wxOK | wxCENTRE,
                    this);
    }
+   */
 
    // Restore title
    if (!mEditTitle) {
