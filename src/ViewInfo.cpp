@@ -148,31 +148,6 @@ void ViewInfo::SetBeforeScreenWidth(wxInt64 beforeWidth, wxInt64 screenWidth, do
          beforeWidth / zoom));
 }
 
-bool ViewInfo::ReadXMLAttribute(const wxChar *attr, const wxChar *value)
-{
-   if (selectedRegion.HandleXMLAttribute(attr, value, wxT("sel0"), wxT("sel1")))
-      return true;
-
-   if (!wxStrcmp(attr, wxT("vpos"))) {
-      long longVpos;
-      wxString(value).ToLong(&longVpos);
-      vpos = (int)(longVpos);
-      return true;
-   }
-
-   if (!wxStrcmp(attr, wxT("h"))) {
-      Internat::CompatibleToDouble(value, &h);
-      return true;
-   }
-
-   if (!wxStrcmp(attr, wxT("zoom"))) {
-      Internat::CompatibleToDouble(value, &zoom);
-      return true;
-   }
-
-   return false;
-}
-
 void ViewInfo::OnTimer(wxCommandEvent &event)
 {
    mRecentStreamTime = gAudioIO->GetStreamTime();

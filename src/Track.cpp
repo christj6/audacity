@@ -307,23 +307,6 @@ void PlayableTrack::Merge( const Track &orig )
    AudioTrack::Merge( *pOrig );
 }
 
-// Return true iff the attribute is recognized.
-bool PlayableTrack::HandleXMLAttribute(const wxChar *attr, const wxChar *value)
-{
-   const wxString strValue{ value };
-   long nValue;
-   if (!wxStrcmp(attr, wxT("mute")) && strValue.ToLong(&nValue)) {
-      mMute = (nValue != 0);
-      return true;
-   }
-   else if (!wxStrcmp(attr, wxT("solo")) && strValue.ToLong(&nValue)) {
-      mSolo = (nValue != 0);
-      return true;
-   }
-
-   return AudioTrack::HandleXMLAttribute(attr, value);
-}
-
 // TrackListIterator
 TrackListIterator::TrackListIterator(TrackList * val, TrackNodePointer p)
    : l{ val }

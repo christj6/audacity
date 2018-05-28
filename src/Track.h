@@ -324,10 +324,6 @@ public:
    AudioTrack(const std::shared_ptr<DirManager> &projDirManager)
       : Track{ projDirManager } {}
    AudioTrack(const Track &orig) : Track{ orig } {}
-
-   // Return true iff the attribute is recognized.
-   bool HandleXMLAttribute(const wxChar * /*attr*/, const wxChar * /*value*/)
-   { return false; }
 };
 
 class AUDACITY_DLL_API PlayableTrack /* not final */ : public AudioTrack
@@ -343,9 +339,6 @@ public:
 
    void Init( const PlayableTrack &init );
    void Merge( const Track &init ) override;
-
-   // Return true iff the attribute is recognized.
-   bool HandleXMLAttribute(const wxChar *attr, const wxChar *value);
 
 protected:
    bool                mMute { false };

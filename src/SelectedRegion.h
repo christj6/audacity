@@ -140,13 +140,6 @@ public:
    static const wxChar *sDefaultT0Name;
    static const wxChar *sDefaultT1Name;
 
-   // Return true iff the attribute is recognized.
-   // Don't add more legacy arguments as the structure grows.
-   bool HandleXMLAttribute
-      (const wxChar *attr, const wxChar *value,
-       const wxChar *legacyT0Name = sDefaultT0Name,
-       const wxChar *legacyT1Name = sDefaultT1Name);
-
    bool ensureOrdering() 
    {
       if (mT1 < mT0) {

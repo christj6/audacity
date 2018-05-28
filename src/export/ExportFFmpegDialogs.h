@@ -211,8 +211,6 @@ public:
    void OnSavePreset(wxCommandEvent& event);
    void OnLoadPreset(wxCommandEvent& event);
    void OnDeletePreset(wxCommandEvent& event);
-   void OnImportPresets(wxCommandEvent& event);
-   void OnExportPresets(wxCommandEvent& event);
 
    // Static tables
    static CompatibilityEntry CompatibilityList[];

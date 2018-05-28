@@ -188,8 +188,6 @@ public:
    // various other drawing code can use the exact same value.
    double mRecentStreamTime;
 
-   bool ReadXMLAttribute(const wxChar *attr, const wxChar *value);
-
    // Receive track panel timer notifications
    void OnTimer(wxCommandEvent &event);
 };

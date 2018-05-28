@@ -723,8 +723,6 @@ BEGIN_EVENT_TABLE(ExportFFmpegOptions, wxDialogWrapper)
    EVT_BUTTON(FESavePresetID,ExportFFmpegOptions::OnSavePreset)
    EVT_BUTTON(FELoadPresetID,ExportFFmpegOptions::OnLoadPreset)
    EVT_BUTTON(FEDeletePresetID,ExportFFmpegOptions::OnDeletePreset)
-   EVT_BUTTON(FEImportPresetsID,ExportFFmpegOptions::OnImportPresets)
-   EVT_BUTTON(FEExportPresetsID,ExportFFmpegOptions::OnExportPresets)
 END_EVENT_TABLE()
 
 /// Format-codec compatibility list
@@ -1693,41 +1691,6 @@ void ExportFFmpegOptions::OnLoadPreset(wxCommandEvent& WXUNUSED(event))
 
    DoOnFormatList();
    DoOnCodecList();
-}
-
-///
-///
-void ExportFFmpegOptions::OnImportPresets(wxCommandEvent& WXUNUSED(event))
-{
-   wxString path;
-   FileDialogWrapper dlg(this,
-                  _("Select xml file with presets to import"),
-                  gPrefs->Read(wxT("/FileFormats/FFmpegPresetDir")),
-                  wxEmptyString,
-                  wxString(_("XML files (*.xml)|*.xml|All files|*")),
-                  wxFD_OPEN);
-   if (dlg.ShowModal() == wxID_CANCEL) return;
-   path = dlg.GetPath();
-   mPresets->ImportPresets(path);
-   mPresets->GetPresetList(mPresetNames);
-   mPresetCombo->Clear();
-   mPresetCombo->Append(mPresetNames);
-}
-
-///
-///
-void ExportFFmpegOptions::OnExportPresets(wxCommandEvent& WXUNUSED(event))
-{
-   wxString path;
-   FileDialogWrapper dlg(this,
-                  _("Select xml file to export presets into"),
-                  gPrefs->Read(wxT("/FileFormats/FFmpegPresetDir")),
-                  wxEmptyString,
-                  wxString(_("XML files (*.xml)|*.xml|All files|*")),
-                  wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
-   if (dlg.ShowModal() == wxID_CANCEL) return;
-   path = dlg.GetPath();
-   mPresets->ExportPresets(path);
 }
 
 ///

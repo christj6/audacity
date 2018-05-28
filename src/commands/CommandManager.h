@@ -393,7 +393,6 @@ private:
    CommandKeyHash mCommandKeyHash;
    CommandIDHash  mCommandIDHash;
    int mCurrentID;
-   int mXMLKeysRead;
 
    bool mbSeparatorAllowed; // false at the start of a menu and immediately after a separator.
 
