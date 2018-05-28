@@ -1531,8 +1531,8 @@ private:
    int FindValue(CHOICES *choices, int cnt, int needle, int def);
    wxString FindName(CHOICES *choices, int cnt, int needle);
    int AskResample(int bitrate, int rate, int lowrate, int highrate);
-   id3_length_t AddTags(AudacityProject *project, ArrayOf<char> &buffer, bool *endOfFile, const Tags *tags);
 #ifdef USE_LIBID3TAG
+   id3_length_t AddTags(AudacityProject *project, ArrayOf<char> &buffer, bool *endOfFile, const Tags *tags);
    void AddFrame(struct id3_tag *tp, const wxString & n, const wxString & v, const char *name);
 #endif
    int SetNumExportChannels() override;
@@ -1713,6 +1713,7 @@ ProgressResult ExportMP3::Export(AudacityProject *project,
 
    ArrayOf<char> id3buffer;
    bool endOfFile;
+#ifdef USE_LIBID3TAG
    id3_length_t id3len = AddTags(project, id3buffer, &endOfFile, metadata);
    if (id3len && !endOfFile) {
       if (id3len > outFile.Write(id3buffer.get(), id3len)) {
@@ -1721,6 +1722,7 @@ ProgressResult ExportMP3::Export(AudacityProject *project,
          return ProgressResult::Cancelled;
       }
    }
+#endif
 
    wxFileOffset pos = outFile.Tell();
    auto updateResult = ProgressResult::Success;
@@ -1827,6 +1829,7 @@ ProgressResult ExportMP3::Export(AudacityProject *project,
       }
 
       // Write ID3 tag if it was supposed to be at the end of the file
+#ifdef USE_LIBID3TAG
       if (id3len > 0 && endOfFile) {
          if (bytes > (int)outFile.Write(id3buffer.get(), id3len)) {
             // TODO: more precise message
@@ -1834,6 +1837,7 @@ ProgressResult ExportMP3::Export(AudacityProject *project,
             return ProgressResult::Cancelled;
          }
       }
+#endif
 
       // Always write the info (Xing/Lame) tag.  Until we stop supporting Lame
       // versions before 3.98, we must do this after the MP3 file has been
@@ -1958,9 +1962,9 @@ using id3_tag_holder = std::unique_ptr<id3_tag, id3_tag_deleter>;
 #endif
 
 // returns buffer len; caller frees
+#ifdef USE_LIBID3TAG
 id3_length_t ExportMP3::AddTags(AudacityProject *WXUNUSED(project), ArrayOf<char> &buffer, bool *endOfFile, const Tags *tags)
 {
-#ifdef USE_LIBID3TAG
    id3_tag_holder tp { id3_tag_new() };
 
    for (const auto &pair : tags->GetRange()) {
@@ -2014,10 +2018,8 @@ id3_length_t ExportMP3::AddTags(AudacityProject *WXUNUSED(project), ArrayOf<char
    len = id3_tag_render(tp.get(), (id3_byte_t *)buffer.get());
 
    return len;
-#else //ifdef USE_LIBID3TAG
-   return 0;
-#endif
 }
+#endif
 
 #ifdef USE_LIBID3TAG
 void ExportMP3::AddFrame(struct id3_tag *tp, const wxString & n, const wxString & v, const char *name)
