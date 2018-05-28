@@ -78,10 +78,6 @@ void GetMP3ImportPlugin(ImportPluginList &importPluginList,
 
 extern "C" {
 #include "mad.h"
-
-#ifdef USE_LIBID3TAG
-#include <id3tag.h>
-#endif
 }
 
 #include "../WaveTrack.h"
@@ -265,129 +261,6 @@ MP3ImportFileHandle::~MP3ImportFileHandle()
 
 void MP3ImportFileHandle::ImportID3(Tags *tags)
 {
-#ifdef USE_LIBID3TAG
-   wxFile f;   // will be closed when it goes out of scope
-   struct id3_file *fp = NULL;
-   auto cleanup = finally([&]{
-      if (fp)
-         id3_file_close(fp);
-   });
-
-   if (f.Open(mFilename)) {
-      // Use id3_file_fdopen() instead of id3_file_open since wxWidgets can open a
-      // file with a Unicode name and id3_file_open() can't (under Windows).
-      fp = id3_file_fdopen(f.fd(), ID3_FILE_MODE_READONLY);
-   }
-
-   if (!fp) {
-      return;
-   }
-
-   // The file descriptor is now owned by "fp", so we must tell "f" to forget
-   // about it.
-   f.Detach();
-
-   struct id3_tag *tp = id3_file_tag(fp);
-   if (!tp)
-      return;
-
-   tags->Clear();
-
-   // Loop through all frames
-   bool have_year = false;
-   for (int i = 0; i < (int) tp->nframes; i++) {
-      struct id3_frame *frame = tp->frames[i];
-
-      // wxPrintf("ID: %08x '%4s'\n", (int) *(int *)frame->id, frame->id);
-      // wxPrintf("Desc: %s\n", frame->description);
-      // wxPrintf("Num fields: %d\n", frame->nfields);
-
-      // for (int j = 0; j < (int) frame->nfields; j++) {
-      //    wxPrintf("field %d type %d\n", j, frame->fields[j].type );
-      //    if (frame->fields[j].type == ID3_FIELD_TYPE_STRINGLIST) {
-      //       wxPrintf("num strings %d\n", frame->fields[j].stringlist.nstrings);
-      //    }
-      // }
-
-      wxString n, v;
-
-      // Determine the tag name
-      if (strcmp(frame->id, ID3_FRAME_TITLE) == 0) {
-         n = TAG_TITLE;
-      }
-      else if (strcmp(frame->id, ID3_FRAME_ARTIST) == 0) {
-         n = TAG_ARTIST;
-      }
-      else if (strcmp(frame->id, ID3_FRAME_ALBUM) == 0) {
-         n = TAG_ALBUM;
-      }
-      else if (strcmp(frame->id, ID3_FRAME_TRACK) == 0) {
-         n = TAG_TRACK;
-      }
-      else if (strcmp(frame->id, ID3_FRAME_YEAR) == 0) {
-         // LLL:  When libid3tag encounters the "TYER" tag, it converts it to a
-         //       "ZOBS" (obsolete) tag and adds a "TDRC" tag at the end of the
-         //       list of tags using the first 4 characters of the "TYER" tag.
-         //       Since we write both the "TDRC" and "TYER" tags, the "TDRC" tag
-         //       will always be encountered first in the list.  We want use it
-         //       since the converted "TYER" tag may have been truncated.
-         if (have_year) {
-            continue;
-         }
-         n = TAG_YEAR;
-         have_year = true;
-      }
-      else if (strcmp(frame->id, ID3_FRAME_COMMENT) == 0) {
-         n = TAG_COMMENTS;
-      }
-      else if (strcmp(frame->id, ID3_FRAME_GENRE) == 0) {
-         n = TAG_GENRE;
-      }
-   else {
-         // Use frame description as default tag name.  The descriptions
-         // may include several "meanings" separated by "/" characters, so
-         // we just use the first meaning
-         n = UTF8CTOWX(frame->description).BeforeFirst(wxT('/'));
-      }
-
-      const id3_ucs4_t *ustr = NULL;
-
-      if (n == TAG_COMMENTS) {
-         ustr = id3_field_getfullstring(&frame->fields[3]);
-      }
-      else if (frame->nfields == 3) {
-         ustr = id3_field_getstring(&frame->fields[1]);
-         if (ustr) {
-            // Is this duplication really needed?
-            MallocString<> str{ (char *)id3_ucs4_utf8duplicate(ustr) };
-            n = UTF8CTOWX(str.get());
-         }
-
-         ustr = id3_field_getstring(&frame->fields[2]);
-      }
-      else if (frame->nfields >= 2) {
-         ustr = id3_field_getstrings(&frame->fields[1], 0);
-      }
-
-      if (ustr) {
-         // Is this duplication really needed?
-         MallocString<> str{ (char *)id3_ucs4_utf8duplicate(ustr) };
-         v = UTF8CTOWX(str.get());
-      }
-
-      if (!n.IsEmpty() && !v.IsEmpty()) {
-         tags->SetTag(n, v);
-      }
-   }
-
-   // Convert v1 genre to name
-   if (tags->HasTag(TAG_GENRE)) {
-      long g = -1;
-      if (tags->GetTag(TAG_GENRE).ToLong(&g)) {
-         tags->SetTag(TAG_GENRE, tags->GetGenre(g));
-      }
-   }
-#endif // ifdef USE_LIBID3TAG
 }
 
 //
@@ -412,21 +285,6 @@ enum mad_flow input_cb(void *_data, struct mad_stream *stream)
          final padding zeros */
       return MAD_FLOW_STOP;
    }
-
-#ifdef USE_LIBID3TAG
-   if (!data->id3checked) {
-      data->file->Read(data->inputBuffer.get(), ID3_TAG_QUERYSIZE);
-      int len = id3_tag_query(data->inputBuffer.get(), ID3_TAG_QUERYSIZE);
-      if (len > 0) {
-         data->file->Seek(len, wxFromStart);
-      }
-      else {
-         data->file->Seek(0);
-      }
-
-      data->id3checked = true;
-   }
-#endif
 
    /* "Each time you refill your buffer, you need to preserve the data in
     *  your existing buffer from stream.next_frame to the end.

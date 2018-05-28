@@ -97,10 +97,6 @@
 
 #include <lame/lame.h>
 
-#ifdef USE_LIBID3TAG
-#include <id3tag.h>
-#endif
-
 //----------------------------------------------------------------------------
 // ExportMP3Options
 //----------------------------------------------------------------------------
@@ -1531,10 +1527,6 @@ private:
    int FindValue(CHOICES *choices, int cnt, int needle, int def);
    wxString FindName(CHOICES *choices, int cnt, int needle);
    int AskResample(int bitrate, int rate, int lowrate, int highrate);
-#ifdef USE_LIBID3TAG
-   id3_length_t AddTags(AudacityProject *project, ArrayOf<char> &buffer, bool *endOfFile, const Tags *tags);
-   void AddFrame(struct id3_tag *tp, const wxString & n, const wxString & v, const char *name);
-#endif
    int SetNumExportChannels() override;
 };
 
@@ -1713,16 +1705,6 @@ ProgressResult ExportMP3::Export(AudacityProject *project,
 
    ArrayOf<char> id3buffer;
    bool endOfFile;
-#ifdef USE_LIBID3TAG
-   id3_length_t id3len = AddTags(project, id3buffer, &endOfFile, metadata);
-   if (id3len && !endOfFile) {
-      if (id3len > outFile.Write(id3buffer.get(), id3len)) {
-         // TODO: more precise message
-         AudacityMessageBox(_("Unable to export"));
-         return ProgressResult::Cancelled;
-      }
-   }
-#endif
 
    wxFileOffset pos = outFile.Tell();
    auto updateResult = ProgressResult::Success;
@@ -1827,17 +1809,6 @@ ProgressResult ExportMP3::Export(AudacityProject *project,
             return ProgressResult::Cancelled;
          }
       }
-
-      // Write ID3 tag if it was supposed to be at the end of the file
-#ifdef USE_LIBID3TAG
-      if (id3len > 0 && endOfFile) {
-         if (bytes > (int)outFile.Write(id3buffer.get(), id3len)) {
-            // TODO: more precise message
-            AudacityMessageBox(_("Unable to export"));
-            return ProgressResult::Cancelled;
-         }
-      }
-#endif
 
       // Always write the info (Xing/Lame) tag.  Until we stop supporting Lame
       // versions before 3.98, we must do this after the MP3 file has been
@@ -1953,118 +1924,6 @@ int ExportMP3::AskResample(int bitrate, int rate, int lowrate, int highrate)
 
    return wxAtoi(choice->GetStringSelection());
 }
-
-#ifdef USE_LIBID3TAG
-struct id3_tag_deleter {
-   void operator () (id3_tag *p) const { if (p) id3_tag_delete(p); }
-};
-using id3_tag_holder = std::unique_ptr<id3_tag, id3_tag_deleter>;
-#endif
-
-// returns buffer len; caller frees
-#ifdef USE_LIBID3TAG
-id3_length_t ExportMP3::AddTags(AudacityProject *WXUNUSED(project), ArrayOf<char> &buffer, bool *endOfFile, const Tags *tags)
-{
-   id3_tag_holder tp { id3_tag_new() };
-
-   for (const auto &pair : tags->GetRange()) {
-      const auto &n = pair.first;
-      const auto &v = pair.second;
-      const char *name = "TXXX";
-
-      if (n.CmpNoCase(TAG_TITLE) == 0) {
-         name = ID3_FRAME_TITLE;
-      }
-      else if (n.CmpNoCase(TAG_ARTIST) == 0) {
-         name = ID3_FRAME_ARTIST;
-      }
-      else if (n.CmpNoCase(TAG_ALBUM) == 0) {
-         name = ID3_FRAME_ALBUM;
-      }
-      else if (n.CmpNoCase(TAG_YEAR) == 0) {
-         // LLL:  Some apps do not like the newer frame ID (ID3_FRAME_YEAR),
-         //       so we add old one as well.
-         AddFrame(tp.get(), n, v, "TYER");
-         name = ID3_FRAME_YEAR;
-      }
-      else if (n.CmpNoCase(TAG_GENRE) == 0) {
-         name = ID3_FRAME_GENRE;
-      }
-      else if (n.CmpNoCase(TAG_COMMENTS) == 0) {
-         name = ID3_FRAME_COMMENT;
-      }
-      else if (n.CmpNoCase(TAG_TRACK) == 0) {
-         name = ID3_FRAME_TRACK;
-      }
-
-      AddFrame(tp.get(), n, v, name);
-   }
-
-   tp->options &= (~ID3_TAG_OPTION_COMPRESSION); // No compression
-
-   // If this version of libid3tag supports it, use v2.3 ID3
-   // tags instead of the newer, but less well supported, v2.4
-   // that libid3tag uses by default.
-   #ifdef ID3_TAG_HAS_TAG_OPTION_ID3V2_3
-   tp->options |= ID3_TAG_OPTION_ID3V2_3;
-   #endif
-
-   *endOfFile = false;
-
-   id3_length_t len;
-
-   len = id3_tag_render(tp.get(), 0);
-   buffer.reinit(len);
-   len = id3_tag_render(tp.get(), (id3_byte_t *)buffer.get());
-
-   return len;
-}
-#endif
-
-#ifdef USE_LIBID3TAG
-void ExportMP3::AddFrame(struct id3_tag *tp, const wxString & n, const wxString & v, const char *name)
-{
-   struct id3_frame *frame = id3_frame_new(name);
-
-   if (!n.IsAscii() || !v.IsAscii()) {
-      id3_field_settextencoding(id3_frame_field(frame, 0), ID3_FIELD_TEXTENCODING_UTF_16);
-   }
-   else {
-      id3_field_settextencoding(id3_frame_field(frame, 0), ID3_FIELD_TEXTENCODING_ISO_8859_1);
-   }
-
-   MallocString<id3_ucs4_t> ucs4{
-      id3_utf8_ucs4duplicate((id3_utf8_t *) (const char *) v.mb_str(wxConvUTF8)) };
-
-   if (strcmp(name, ID3_FRAME_COMMENT) == 0) {
-      // A hack to get around iTunes not recognizing the comment.  The
-      // language defaults to XXX and, since it's not a valid language,
-      // iTunes just ignores the tag.  So, either set it to a valid language
-      // (which one???) or just clear it.  Unfortunately, there's no supported
-      // way of clearing the field, so do it directly.
-      struct id3_frame *frame2 = id3_frame_new(name);
-      id3_field_setfullstring(id3_frame_field(frame2, 3), ucs4.get());
-      id3_field *f2 = id3_frame_field(frame2, 1);
-      memset(f2->immediate.value, 0, sizeof(f2->immediate.value));
-      id3_tag_attachframe(tp, frame2);
-      // Now install a second frame with the standard default language = "XXX"
-      id3_field_setfullstring(id3_frame_field(frame, 3), ucs4.get());
-   }
-   else if (strcmp(name, "TXXX") == 0) {
-      id3_field_setstring(id3_frame_field(frame, 2), ucs4.get());
-
-      ucs4.reset(id3_utf8_ucs4duplicate((id3_utf8_t *) (const char *) n.mb_str(wxConvUTF8)));
-
-      id3_field_setstring(id3_frame_field(frame, 1), ucs4.get());
-   }
-   else {
-      auto addr = ucs4.get();
-      id3_field_setstrings(id3_frame_field(frame, 1), 1, &addr);
-   }
-
-   id3_tag_attachframe(tp, frame);
-}
-#endif
 
 movable_ptr<ExportPlugin> New_ExportMP3()
 {

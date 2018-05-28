@@ -42,9 +42,6 @@
     <Filter Include="src\widgets">
       <UniqueIdentifier>{daec450f-84fa-4e72-ba52-e0733f2c5acf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\xml">
-      <UniqueIdentifier>{b2dffd13-d86c-4502-833b-3fa052e447a5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\tracks">
       <UniqueIdentifier>{7b403d1f-de11-43d5-becc-d9d118d06f18}</UniqueIdentifier>
     </Filter>

@@ -84,12 +84,6 @@ void GetFLACImportPlugin(ImportPluginList &importPluginList,
 #include "../ondemand/ODDecodeFlacTask.h"
 #include "../ondemand/ODManager.h"
 
-#ifdef USE_LIBID3TAG
-extern "C" {
-#include <id3tag.h>
-}
-#endif
-
 /* FLACPP_API_VERSION_CURRENT is 6 for libFLAC++ from flac-1.1.3 (see <FLAC++/export.h>) */
 #if !defined FLACPP_API_VERSION_CURRENT || FLACPP_API_VERSION_CURRENT < 6
 #define LEGACY_FLAC
@@ -311,16 +305,6 @@ std::unique_ptr<ImportFileHandle> FLACImportPlugin::Open(const wxString &filenam
    if (!binaryFile.Open(filename)) {
       return nullptr; // File not found
    }
-
-   // FIXME: TRAP_ERR wxFILE ops in FLAC Import could fail.
-   // Seek() return value is not examined, for example.
-#ifdef USE_LIBID3TAG
-   // Skip any ID3 tags that might be present
-   id3_byte_t query[ID3_TAG_QUERYSIZE];
-   cnt = binaryFile.Read(query, sizeof(query));
-   cnt = id3_tag_query(query, cnt);
-   binaryFile.Seek(cnt);
-#endif
 
    char buf[5];
    cnt = binaryFile.Read(buf, 4);

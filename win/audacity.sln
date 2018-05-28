@@ -8,8 +8,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libflac", "Projects\libflac
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libflac++", "Projects\libflac++\libflac++.vcxproj", "{B28C9F3F-FF0E-4FEC-844C-685390B8AC06}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libid3tag", "Projects\libid3tag\libid3tag.vcxproj", "{D96C7BE1-E3F1-4767-BBBB-320E082CE425}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libmad", "Projects\libmad\libmad.vcxproj", "{A52BBEA5-8B02-4147-8734-5D9BBF4D1177}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libsndfile", "Projects\libsndfile\libsndfile.vcxproj", "{F4B4A272-4ED3-4951-A6EE-B7BAAC1C4952}"
@@ -48,10 +46,6 @@ Global
 		{B28C9F3F-FF0E-4FEC-844C-685390B8AC06}.Debug|Win32.Build.0 = Debug|Win32
 		{B28C9F3F-FF0E-4FEC-844C-685390B8AC06}.Release|Win32.ActiveCfg = Release|Win32
 		{B28C9F3F-FF0E-4FEC-844C-685390B8AC06}.Release|Win32.Build.0 = Release|Win32
-		{D96C7BE1-E3F1-4767-BBBB-320E082CE425}.Debug|Win32.ActiveCfg = Debug|Win32
-		{D96C7BE1-E3F1-4767-BBBB-320E082CE425}.Debug|Win32.Build.0 = Debug|Win32
-		{D96C7BE1-E3F1-4767-BBBB-320E082CE425}.Release|Win32.ActiveCfg = Release|Win32
-		{D96C7BE1-E3F1-4767-BBBB-320E082CE425}.Release|Win32.Build.0 = Release|Win32
 		{A52BBEA5-8B02-4147-8734-5D9BBF4D1177}.Debug|Win32.ActiveCfg = Debug|Win32
 		{A52BBEA5-8B02-4147-8734-5D9BBF4D1177}.Debug|Win32.Build.0 = Debug|Win32
 		{A52BBEA5-8B02-4147-8734-5D9BBF4D1177}.Release|Win32.ActiveCfg = Release|Win32

@@ -16,12 +16,6 @@
 #include <wx/file.h>
 #include <wx/ffile.h>
 
-#ifdef USE_LIBID3TAG
-extern "C" {
-#include <id3tag.h>
-}
-#endif
-
 #include "../Tags.h"
 
 #define FLAC_HEADER "fLaC"
@@ -286,14 +280,6 @@ ODFileDecoder* ODDecodeFlacTask::CreateFileDecoder(const wxString & fileName)
    if (!binaryFile.Open(fileName)) {
       return NULL; // File not found
    }
-
-#ifdef USE_LIBID3TAG
-   // Skip any ID3 tags that might be present
-   id3_byte_t query[ID3_TAG_QUERYSIZE];
-   cnt = binaryFile.Read(query, sizeof(query));
-   cnt = id3_tag_query(query, cnt);
-   binaryFile.Seek(cnt);
-#endif
 
    char buf[5];
    cnt = binaryFile.Read(buf, 4);

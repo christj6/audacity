@@ -54,18 +54,6 @@
 
 #include <algorithm>
 
-#ifdef USE_LIBID3TAG
-   #include <id3tag.h>
-   // DM: the following functions were supposed to have been
-   // included in id3tag.h - should be fixed in the next release
-   // of mad.
-   extern "C" {
-      struct id3_frame *id3_frame_new(char const *);
-      id3_length_t id3_latin1_length(id3_latin1_t const *);
-      void id3_latin1_decode(id3_latin1_t const *, id3_ucs4_t *);
-   }
-#endif
-
 #define DESC _("WAV, AIFF, and other uncompressed types")
 
 class PCMImportPlugin final : public ImportPlugin
@@ -335,13 +323,6 @@ static wxString AskCopyOrEdit()
    return oldCopyPref;
 }
 
-#ifdef USE_LIBID3TAG
-struct id3_tag_deleter {
-   void operator () (id3_tag *p) const { if (p) id3_tag_delete(p); }
-};
-using id3_tag_holder = std::unique_ptr<id3_tag, id3_tag_deleter>;
-#endif
-
 ProgressResult PCMImportFileHandle::Import(TrackFactory *trackFactory,
                                 TrackHolders &outTracks,
                                 Tags *tags)
@@ -580,149 +561,6 @@ ProgressResult PCMImportFileHandle::Import(TrackFactory *trackFactory,
    if (str) {
       tags->SetTag(TAG_GENRE, UTF8CTOWX(str));
    }
-
-#if defined(USE_LIBID3TAG)
-   if (((mInfo.format & SF_FORMAT_TYPEMASK) == SF_FORMAT_AIFF) ||
-       ((mInfo.format & SF_FORMAT_TYPEMASK) == SF_FORMAT_WAV)) {
-      wxFFile f(mFilename, wxT("rb"));
-      if (f.IsOpened()) {
-         char id[5];
-         wxUint32 len;
-
-         id[4] = '\0';
-
-         f.Seek(12);        // Skip filetype, length, and formtype
-
-         while (!f.Error()) {
-            f.Read(id, 4);    // Get chunk type
-            if (f.Eof()) {
-               break;
-            }
-            f.Read(&len, 4);
-            if((mInfo.format & SF_FORMAT_TYPEMASK) == SF_FORMAT_AIFF)
-               len = wxUINT32_SWAP_ON_LE(len);
-
-            if (wxStricmp(id, "ID3 ") != 0) {  // must be case insensitive
-               f.Seek(len + (len & 0x01), wxFromCurrent);
-               continue;
-            }
-
-
-            id3_tag_holder tp;
-            {
-               ArrayOf<id3_byte_t> buffer{ len };
-               if (!buffer) {
-                  break;
-               }
-
-               f.Read(buffer.get(), len);
-               tp.reset( id3_tag_parse(buffer.get(), len) );
-            }
-
-            if (!tp) {
-               break;
-            }
-
-            // Loop through all frames
-            bool have_year = false;
-            for (int i = 0; i < (int) tp->nframes; i++) {
-               struct id3_frame *frame = tp->frames[i];
-
-               // wxPrintf("ID: %08x '%4s'\n", (int) *(int *)frame->id, frame->id);
-               // wxPrintf("Desc: %s\n", frame->description);
-               // wxPrintf("Num fields: %d\n", frame->nfields);
-
-               // for (int j = 0; j < (int) frame->nfields; j++) {
-               //    wxPrintf("field %d type %d\n", j, frame->fields[j].type );
-               //    if (frame->fields[j].type == ID3_FIELD_TYPE_STRINGLIST) {
-               //       wxPrintf("num strings %d\n", frame->fields[j].stringlist.nstrings);
-               //    }
-               // }
-
-               wxString n, v;
-
-               // Determine the tag name
-               if (strcmp(frame->id, ID3_FRAME_TITLE) == 0) {
-                  n = TAG_TITLE;
-               }
-               else if (strcmp(frame->id, ID3_FRAME_ARTIST) == 0) {
-                  n = TAG_ARTIST;
-               }
-               else if (strcmp(frame->id, ID3_FRAME_ALBUM) == 0) {
-                  n = TAG_ALBUM;
-               }
-               else if (strcmp(frame->id, ID3_FRAME_TRACK) == 0) {
-                  n = TAG_TRACK;
-               }
-               else if (strcmp(frame->id, ID3_FRAME_YEAR) == 0) {
-                  // LLL:  When libid3tag encounters the "TYER" tag, it converts it to a
-                  //       "ZOBS" (obsolete) tag and adds a "TDRC" tag at the end of the
-                  //       list of tags using the first 4 characters of the "TYER" tag.
-                  //       Since we write both the "TDRC" and "TYER" tags, the "TDRC" tag
-                  //       will always be encountered first in the list.  We want use it
-                  //       since the converted "TYER" tag may have been truncated.
-                  if (have_year) {
-                     continue;
-                  }
-                  n = TAG_YEAR;
-                  have_year = true;
-               }
-               else if (strcmp(frame->id, ID3_FRAME_COMMENT) == 0) {
-                  n = TAG_COMMENTS;
-               }
-               else if (strcmp(frame->id, ID3_FRAME_GENRE) == 0) {
-                  n = TAG_GENRE;
-               }
-               else {
-                  // Use frame description as default tag name.  The descriptions
-                  // may include several "meanings" separated by "/" characters, so
-                  // we just use the first meaning
-                  n = UTF8CTOWX(frame->description).BeforeFirst(wxT('/'));
-               }
-
-               const id3_ucs4_t *ustr = NULL;
-
-               if (n == TAG_COMMENTS) {
-                  ustr = id3_field_getfullstring(&frame->fields[3]);
-               }
-               else if (frame->nfields == 3) {
-                  ustr = id3_field_getstring(&frame->fields[1]);
-                  if (ustr) {
-                     // Is this duplication really needed?
-                     MallocString<> str{ (char *)id3_ucs4_utf8duplicate(ustr) };
-                     n = UTF8CTOWX(str.get());
-                  }
-
-                  ustr = id3_field_getstring(&frame->fields[2]);
-               }
-               else if (frame->nfields >= 2) {
-                  ustr = id3_field_getstrings(&frame->fields[1], 0);
-               }
-
-               if (ustr) {
-                  // Is this duplication really needed?
-                  MallocString<> str{ (char *)id3_ucs4_utf8duplicate(ustr) };
-                  v = UTF8CTOWX(str.get());
-               }
-
-               if (!n.IsEmpty() && !v.IsEmpty()) {
-                  tags->SetTag(n, v);
-               }
-            }
-
-            // Convert v1 genre to name
-            if (tags->HasTag(TAG_GENRE)) {
-               long g = -1;
-               if (tags->GetTag(TAG_GENRE).ToLong(&g)) {
-                  tags->SetTag(TAG_GENRE, tags->GetGenre(g));
-               }
-            }
-
-            break;
-         }
-      }
-   }
-#endif
 
    return updateResult;
 }

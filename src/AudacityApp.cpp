@@ -112,10 +112,6 @@ It handles initialization and termination by subclassing wxApp.
 #     pragma comment(lib, "libflac")
 #  endif
 
-#  if defined(USE_LIBID3TAG)
-#     pragma comment(lib, "libid3tag")
-#  endif
-
 #  if defined(USE_LIBMAD)
 #     pragma comment(lib, "libmad")
 #  endif

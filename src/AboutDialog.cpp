@@ -435,13 +435,8 @@ void AboutDialog::PopulateInformationPage( ShuttleGui & S )
          _("Ogg Vorbis Import and Export"), disabled);
    #endif
 
-   #ifdef USE_LIBID3TAG
-   AddBuildinfoRow(&informationStr, wxT("libid3tag"), _("ID3 tag support"),
-         enabled);
-   #else
    AddBuildinfoRow(&informationStr, wxT("libid3tag"), _("ID3 tag support"),
          disabled);
-   #endif
 
    /* i18n-hint: FLAC stands for Free Lossless Audio Codec, but is effectively
     * a proper noun and so shouldn't be translated */
