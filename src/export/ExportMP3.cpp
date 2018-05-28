@@ -87,7 +87,6 @@
 #include "../Prefs.h"
 #include "../Project.h"
 #include "../ShuttleGui.h"
-#include "../Tags.h"
 #include "../Track.h"
 #include "../widgets/HelpSystem.h"
 #include "../widgets/LinkingHtmlWindow.h"
@@ -1519,7 +1518,6 @@ public:
                double t0,
                double t1,
                MixerSpec *mixerSpec = NULL,
-               const Tags *metadata = NULL,
                int subformat = 0) override;
 
 private:
@@ -1576,7 +1574,6 @@ ProgressResult ExportMP3::Export(AudacityProject *project,
                        double t0,
                        double t1,
                        MixerSpec *mixerSpec,
-                       const Tags *metadata,
                        int WXUNUSED(subformat))
 {
    int rate = lrint(project->GetRate());
@@ -1691,10 +1688,6 @@ ProgressResult ExportMP3::Export(AudacityProject *project,
       AudacityMessageBox(_("Unable to initialize MP3 stream"));
       return ProgressResult::Cancelled;
    }
-
-   // Put ID3 tags at beginning of file
-   if (metadata == NULL)
-      metadata = project->GetTags();
 
    // Open file for writing
    wxFFile outFile(fName, wxT("w+b"));

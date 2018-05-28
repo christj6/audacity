@@ -200,7 +200,6 @@
     <ClCompile Include="..\..\..\src\Spectrum.cpp" />
     <ClCompile Include="..\..\..\src\SplashDialog.cpp" />
     <ClCompile Include="..\..\..\src\SseMathFuncs.cpp" />
-    <ClCompile Include="..\..\..\src\Tags.cpp" />
     <ClCompile Include="..\..\..\src\Theme.cpp" />
     <ClCompile Include="..\..\..\src\TimeDialog.cpp" />
     <ClCompile Include="..\..\..\src\Track.cpp" />
@@ -467,7 +466,6 @@
     <ClInclude Include="..\..\..\src\SoundActivatedRecord.h" />
     <ClInclude Include="..\..\..\src\Spectrum.h" />
     <ClInclude Include="..\..\..\src\SplashDialog.h" />
-    <ClInclude Include="..\..\..\src\Tags.h" />
     <ClInclude Include="..\..\..\src\Theme.h" />
     <ClInclude Include="..\..\..\src\TimeDialog.h" />
     <ClInclude Include="..\..\..\src\Track.h" />

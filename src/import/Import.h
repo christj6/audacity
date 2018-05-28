@@ -21,7 +21,6 @@
 
 #include "../widgets/wxPanelWrapper.h"
 
-class Tags;
 class TrackFactory;
 class Track;
 class ImportPlugin;
@@ -142,7 +141,6 @@ public:
    bool Import(const wxString &fName,
               TrackFactory *trackFactory,
               TrackHolders &tracks,
-              Tags *tags,
               wxString &errorMessage);
 
 private:

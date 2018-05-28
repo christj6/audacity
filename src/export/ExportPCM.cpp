@@ -32,7 +32,6 @@
 #include "../Prefs.h"
 #include "../Project.h"
 #include "../ShuttleGui.h"
-#include "../Tags.h"
 #include "../Track.h"
 #include "../ondemand/ODManager.h"
 #include "../widgets/ErrorDialog.h"
@@ -314,7 +313,6 @@ public:
                double t0,
                double t1,
                MixerSpec *mixerSpec = NULL,
-               const Tags *metadata = NULL,
                int subformat = 0) override;
    // optional
    wxString GetExtension(int index);
@@ -323,7 +321,7 @@ public:
 private:
 
    ArrayOf<char> AdjustString(const wxString & wxStr, int sf_format);
-   bool AddStrings(AudacityProject *project, SNDFILE *sf, const Tags *tags, int sf_format);
+   bool AddStrings(AudacityProject *project, SNDFILE *sf, int sf_format);
 
 };
 
@@ -384,7 +382,6 @@ ProgressResult ExportPCM::Export(AudacityProject *project,
                        double t0,
                        double t1,
                        MixerSpec *mixerSpec,
-                       const Tags *metadata,
                        int subformat)
 {
    double       rate = project->GetRate();
@@ -446,15 +443,12 @@ ProgressResult ExportPCM::Export(AudacityProject *project,
                                        fName));
          return ProgressResult::Cancelled;
       }
-      // Retrieve tags if not given a set
-      if (metadata == NULL)
-         metadata = project->GetTags();
 
       // Install the metata at the beginning of the file (except for
       // WAV and WAVEX formats)
       if ((sf_format & SF_FORMAT_TYPEMASK) != SF_FORMAT_WAV &&
           (sf_format & SF_FORMAT_TYPEMASK) != SF_FORMAT_WAVEX) {
-         if (!AddStrings(project, sf.get(), metadata, sf_format)) {
+         if (!AddStrings(project, sf.get(), sf_format)) {
             return ProgressResult::Cancelled;
          }
       }
@@ -517,7 +511,7 @@ ProgressResult ExportPCM::Export(AudacityProject *project,
           updateResult == ProgressResult::Stopped) {
          if ((sf_format & SF_FORMAT_TYPEMASK) == SF_FORMAT_WAV ||
              (sf_format & SF_FORMAT_TYPEMASK) == SF_FORMAT_WAVEX) {
-            if (!AddStrings(project, sf.get(), metadata, sf_format)) {
+            if (!AddStrings(project, sf.get(), sf_format)) {
                // TODO: more precise message
                AudacityMessageBox(_("Unable to export"));
                return ProgressResult::Cancelled;
@@ -621,71 +615,8 @@ ArrayOf<char> ExportPCM::AdjustString(const wxString & wxStr, int sf_format)
    return pDest;
 }
 
-bool ExportPCM::AddStrings(AudacityProject * WXUNUSED(project), SNDFILE *sf, const Tags *tags, int sf_format)
+bool ExportPCM::AddStrings(AudacityProject * WXUNUSED(project), SNDFILE *sf, int sf_format)
 {
-   if (tags->HasTag(TAG_TITLE)) {
-      auto ascii7Str = AdjustString(tags->GetTag(TAG_TITLE), sf_format);
-      if (ascii7Str) {
-         sf_set_string(sf, SF_STR_TITLE, ascii7Str.get());
-      }
-   }
-
-   if (tags->HasTag(TAG_ALBUM)) {
-      auto ascii7Str = AdjustString(tags->GetTag(TAG_ALBUM), sf_format);
-      if (ascii7Str) {
-         sf_set_string(sf, SF_STR_ALBUM, ascii7Str.get());
-      }
-   }
-
-   if (tags->HasTag(TAG_ARTIST)) {
-      auto ascii7Str = AdjustString(tags->GetTag(TAG_ARTIST), sf_format);
-      if (ascii7Str) {
-         sf_set_string(sf, SF_STR_ARTIST, ascii7Str.get());
-      }
-   }
-
-   if (tags->HasTag(TAG_COMMENTS)) {
-      auto ascii7Str = AdjustString(tags->GetTag(TAG_COMMENTS), sf_format);
-      if (ascii7Str) {
-         sf_set_string(sf, SF_STR_COMMENT, ascii7Str.get());
-      }
-   }
-
-   if (tags->HasTag(TAG_YEAR)) {
-      auto ascii7Str = AdjustString(tags->GetTag(TAG_YEAR), sf_format);
-      if (ascii7Str) {
-         sf_set_string(sf, SF_STR_DATE, ascii7Str.get());
-      }
-   }
-
-   if (tags->HasTag(TAG_GENRE)) {
-      auto ascii7Str = AdjustString(tags->GetTag(TAG_GENRE), sf_format);
-      if (ascii7Str) {
-         sf_set_string(sf, SF_STR_GENRE, ascii7Str.get());
-      }
-   }
-
-   if (tags->HasTag(TAG_COPYRIGHT)) {
-      auto ascii7Str = AdjustString(tags->GetTag(TAG_COPYRIGHT), sf_format);
-      if (ascii7Str) {
-         sf_set_string(sf, SF_STR_COPYRIGHT, ascii7Str.get());
-      }
-   }
-
-   if (tags->HasTag(TAG_SOFTWARE)) {
-      auto ascii7Str = AdjustString(tags->GetTag(TAG_SOFTWARE), sf_format);
-      if (ascii7Str) {
-         sf_set_string(sf, SF_STR_SOFTWARE, ascii7Str.get());
-      }
-   }
-
-   if (tags->HasTag(TAG_TRACK)) {
-      auto ascii7Str = AdjustString(tags->GetTag(TAG_TRACK), sf_format);
-      if (ascii7Str) {
-         sf_set_string(sf, SF_STR_TRACKNUMBER, ascii7Str.get());
-      }
-   }
-
    return true;
 }
 

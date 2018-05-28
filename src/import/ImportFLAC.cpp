@@ -41,8 +41,6 @@
 #include "Import.h"
 #include "ImportPlugin.h"
 
-#include "../Tags.h"
-
 #include "../Experimental.h"
 
 #define FLAC_HEADER "fLaC"
@@ -149,8 +147,7 @@ public:
 
    wxString GetFileDescription() override;
    ByteCount GetFileUncompressedBytes() override;
-   ProgressResult Import(TrackFactory *trackFactory, TrackHolders &outTracks,
-              Tags *tags) override;
+   ProgressResult Import(TrackFactory *trackFactory, TrackHolders &outTracks) override;
 
    wxInt32 GetStreamCount() override { return 1; }
 
@@ -405,8 +402,7 @@ auto FLACImportFileHandle::GetFileUncompressedBytes() -> ByteCount
 
 
 ProgressResult FLACImportFileHandle::Import(TrackFactory *trackFactory,
-                                 TrackHolders &outTracks,
-                                 Tags *tags)
+                                 TrackHolders &outTracks)
 {
    outTracks.clear();
 
@@ -499,20 +495,6 @@ ProgressResult FLACImportFileHandle::Import(TrackFactory *trackFactory,
       channel->Flush();
    }
    outTracks.swap(mChannels);
-
-   tags->Clear();
-   size_t cnt = mFile->mComments.GetCount();
-   for (size_t c = 0; c < cnt; c++) {
-      wxString name = mFile->mComments[c].BeforeFirst(wxT('='));
-      wxString value = mFile->mComments[c].AfterFirst(wxT('='));
-      if (name.Upper() == wxT("DATE") && !tags->HasTag(TAG_YEAR)) {
-         long val;
-         if (value.Length() == 4 && value.ToLong(&val)) {
-            name = TAG_YEAR;
-         }
-      }
-      tags->SetTag(name, value);
-   }
 
    return mUpdateResult;
 }

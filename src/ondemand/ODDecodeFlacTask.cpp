@@ -16,8 +16,6 @@
 #include <wx/file.h>
 #include <wx/ffile.h>
 
-#include "../Tags.h"
-
 #define FLAC_HEADER "fLaC"
 
 #define DESC _("FLAC files")

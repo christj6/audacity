@@ -16,7 +16,6 @@
 #include <wx/dialog.h>
 #include <wx/filename.h>
 #include <wx/simplebook.h>
-#include "../Tags.h"
 #include "../SampleFormat.h"
 #include "../widgets/wxPanelWrapper.h"
 
@@ -104,8 +103,6 @@ public:
    *  (working around a problem in wxWidgets for Mac; see bug 1600)
     * @param selectedOnly Set to true if all tracks should be mixed, to false
     * if only the selected tracks should be mixed and exported.
-    * @param metadata A Tags object that will over-ride the one in *project and
-    * be used to tag the file that is exported.
     * @param subformat Control which of the multiple formats this exporter is
     * capable of exporting should be used. Used where a single export plug-in
     * handles a number of related formats, but they have separate
@@ -126,7 +123,6 @@ public:
                        double t0,
                        double t1,
                        MixerSpec *mixerSpec = NULL,
-                       const Tags *metadata = NULL,
                        int subformat = 0) = 0;
 
 protected:

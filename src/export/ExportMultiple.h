@@ -17,7 +17,6 @@
 #include <wx/simplebook.h>
 
 #include "Export.h"
-#include "../Tags.h"       // we need to know about the Tags class for metadata
 #include "../wxFileNameWrapper.h"
 
 class wxButton;
@@ -70,8 +69,7 @@ private:
                  const wxFileName &name,
                  bool selectedOnly,
                  double t0,
-                 double t1,
-                 const Tags &tags);
+                 double t1);
    /** \brief Takes an arbitrary text string and converts it to a form that can
     * be used as a file name, if necessary prompting the user to edit the file
     * name produced */
@@ -185,7 +183,6 @@ private:
    class ExportKit
    {
    public:
-      Tags filetags; /**< The set of metadata to use for the export */
       wxFileNameWrapper destfile; /**< The file to export to */
       double t0;           /**< Start time for the export */
       double t1;           /**< End time for the export */

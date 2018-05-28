@@ -44,7 +44,6 @@
 #include "Import.h"
 #include "ImportPlugin.h"
 #include "../Internat.h"
-#include "../Tags.h"
 
 #define DESC _("MP3 files")
 
@@ -129,8 +128,7 @@ public:
 
    wxString GetFileDescription() override;
    ByteCount GetFileUncompressedBytes() override;
-   ProgressResult Import(TrackFactory *trackFactory, TrackHolders &outTracks,
-              Tags *tags) override;
+   ProgressResult Import(TrackFactory *trackFactory, TrackHolders &outTracks) override;
 
    wxInt32 GetStreamCount() override { return 1; }
 
@@ -144,8 +142,6 @@ public:
    {}
 
 private:
-   void ImportID3(Tags *tags);
-
    std::unique_ptr<wxFile> mFile;
    void *mUserData;
    mad_decoder mDecoder;
@@ -203,8 +199,7 @@ auto MP3ImportFileHandle::GetFileUncompressedBytes() -> ByteCount
    return 0;
 }
 
-ProgressResult MP3ImportFileHandle::Import(TrackFactory *trackFactory, TrackHolders &outTracks,
-                                Tags *tags)
+ProgressResult MP3ImportFileHandle::Import(TrackFactory *trackFactory, TrackHolders &outTracks)
 {
    outTracks.clear();
 
@@ -249,17 +244,10 @@ ProgressResult MP3ImportFileHandle::Import(TrackFactory *trackFactory, TrackHold
    }
    outTracks.swap(privateData.channels);
 
-   /* Read in any metadata */
-   ImportID3(tags);
-
    return privateData.updateResult;
 }
 
 MP3ImportFileHandle::~MP3ImportFileHandle()
-{
-}
-
-void MP3ImportFileHandle::ImportID3(Tags *tags)
 {
 }
 

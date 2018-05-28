@@ -44,7 +44,6 @@
 #include "../Project.h"
 #include "../Prefs.h"
 #include "../ShuttleGui.h"
-#include "../Tags.h"
 #include "../WaveTrack.h"
 #include "../widgets/HelpSystem.h"
 #include "../widgets/ErrorDialog.h"
@@ -711,16 +710,6 @@ ProgressResult ExportMultiple::ExportMultipleByTrack(bool byName,
 
          // Make sure the (final) file name is unique within the set of exports
          FileNames::MakeNameUnique(otherNames, setting.destfile);
-
-         /* do the metadata for this file */
-         // copy project metadata to start with
-         setting.filetags = *(mProject->GetTags());
-         // over-ride with values
-         setting.filetags.SetTag(TAG_TITLE, title);
-         setting.filetags.SetTag(TAG_TRACK, l+1);
-         // let the user have a crack at editing it, exit if cancelled
-         if (!setting.filetags.ShowEditDialog(mProject,_("Edit Metadata Tags"), tagsPrompt))
-            return ProgressResult::Cancelled;
       }
       /* add the settings to the array of settings to be used for export */
       exportSettings.push_back(setting);
@@ -765,7 +754,7 @@ ProgressResult ExportMultiple::ExportMultipleByTrack(bool byName,
       // Export the data. "channels" are per track.
       ok = DoExport(pDialog,
          activeSetting.channels, activeSetting.destfile, true,
-         activeSetting.t0, activeSetting.t1, activeSetting.filetags);
+         activeSetting.t0, activeSetting.t1);
 
       // Stop if an error occurred
       if (ok != ProgressResult::Success && ok != ProgressResult::Stopped) {
@@ -784,8 +773,7 @@ ProgressResult ExportMultiple::DoExport(std::unique_ptr<ProgressDialog> &pDialog
                               const wxFileName &inName,
                               bool selectedOnly,
                               double t0,
-                              double t1,
-                              const Tags &tags)
+                              double t1)
 {
    wxFileName name;
 
@@ -856,7 +844,6 @@ ProgressResult ExportMultiple::DoExport(std::unique_ptr<ProgressDialog> &pDialog
                                                 t0,
                                                 t1,
                                                 NULL,
-                                                &tags,
                                                 mSubFormatIndex);
 
    if (success == ProgressResult::Success || success == ProgressResult::Stopped) {

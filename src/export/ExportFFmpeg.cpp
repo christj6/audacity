@@ -38,7 +38,6 @@ function.
 #include "../Mix.h"
 #include "../Prefs.h"
 #include "../Project.h"
-#include "../Tags.h"
 #include "../Track.h"
 #include "../widgets/ErrorDialog.h"
 
@@ -101,16 +100,10 @@ public:
    bool CheckFileName(wxFileName &filename, int format = 0) override;
 
    /// Format intialization
-   bool Init(const char *shortname, AudacityProject *project, const Tags *metadata, int subformat);
+   bool Init(const char *shortname, AudacityProject *project, int subformat);
 
    /// Codec intialization
    bool InitCodecs(AudacityProject *project);
-
-   /// Writes metadata
-   bool AddTags(const Tags *metadata);
-
-   /// Sets individual metadata values
-   void SetMetadata(const Tags *tags, const char *name, const wxChar *tag);
 
    /// Encodes audio
    bool EncodeAudioFrame(int16_t *pFrame, size_t frameSize);
@@ -148,7 +141,6 @@ public:
       double t0,
       double t1,
       MixerSpec *mixerSpec = NULL,
-      const Tags *metadata = NULL,
       int subformat = 0) override;
 
 private:
@@ -258,7 +250,7 @@ bool ExportFFmpeg::CheckFileName(wxFileName & WXUNUSED(filename), int WXUNUSED(f
    return result;
 }
 
-bool ExportFFmpeg::Init(const char *shortname, AudacityProject *project, const Tags *metadata, int subformat)
+bool ExportFFmpeg::Init(const char *shortname, AudacityProject *project, int subformat)
 {
    // This will undo the acquisition of resources along any early exit path:
    auto deleter = [](ExportFFmpeg *This) {
@@ -339,15 +331,11 @@ bool ExportFFmpeg::Init(const char *shortname, AudacityProject *project, const T
    if (!InitCodecs(project))
       return false;
 
-   if (metadata == NULL)
-      metadata = project->GetTags();
-
    // Add metadata BEFORE writing the header.
    // At the moment that works with ffmpeg-git and ffmpeg-0.5 for MP4.
    if (GetCanMetaData(subformat))
    {
       mSupportsUTF8 = ExportFFmpegOptions::fmts[mSubFormat].canutf8;
-      AddTags(metadata);
    }
 
    // Write headers to the output file.
@@ -854,7 +842,7 @@ ProgressResult ExportFFmpeg::Export(AudacityProject *project,
    std::unique_ptr<ProgressDialog> &pDialog,
    unsigned channels, const wxString &fName,
    bool selectionOnly, double t0, double t1,
-   MixerSpec *mixerSpec, const Tags *metadata, int subformat)
+   MixerSpec *mixerSpec, int subformat)
 {
    if (!CheckFFmpegPresence())
       return ProgressResult::Cancelled;
@@ -884,7 +872,7 @@ ProgressResult ExportFFmpeg::Export(AudacityProject *project,
    wxString shortname(ExportFFmpegOptions::fmts[mSubFormat].shortname);
    if (mSubFormat == FMT_OTHER)
       shortname = gPrefs->Read(wxT("/FileFormats/FFmpegFormat"),wxT("matroska"));
-   ret = Init(shortname.mb_str(),project, metadata, subformat);
+   ret = Init(shortname.mb_str(),project, subformat);
    auto cleanup = finally ( [&] { FreeResources(); } );
 
    if (!ret) {
@@ -953,35 +941,6 @@ void AddStringTagANSI(char field[], int size, wxString value)
       memset(field,0,size);
       memcpy(field,value.mb_str(),(int)strlen(value.mb_str()) > size -1 ? size -1 : strlen(value.mb_str()));
 }
-
-bool ExportFFmpeg::AddTags(const Tags *tags)
-{
-   if (tags == NULL)
-   {
-      return false;
-   }
-
-   SetMetadata(tags, "author", TAG_ARTIST);
-   SetMetadata(tags, "album", TAG_ALBUM);
-   SetMetadata(tags, "comment", TAG_COMMENTS);
-   SetMetadata(tags, "genre", TAG_GENRE);
-   SetMetadata(tags, "title", TAG_TITLE);
-   SetMetadata(tags, "year", TAG_YEAR);
-   SetMetadata(tags, "track", TAG_TRACK);
-
-   return true;
-}
-
-void ExportFFmpeg::SetMetadata(const Tags *tags, const char *name, const wxChar *tag)
-{
-   if (tags->HasTag(tag))
-   {
-      wxString value = tags->GetTag(tag);
-
-      av_dict_set(&mEncFormatCtx->metadata, name, mSupportsUTF8 ? value.ToUTF8() : value.mb_str(), 0);
-   }
-}
-
 
 //----------------------------------------------------------------------------
 // AskResample dialog

@@ -850,7 +850,6 @@ bool Exporter::ExportTracks()
                                        mT0,
                                        mT1,
                                        mMixerSpec.get(),
-                                       NULL,
                                        mSubFormat);
 
    success =

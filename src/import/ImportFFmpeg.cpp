@@ -153,7 +153,6 @@ static const wxChar *exts[] =
 
 // all the includes live here by default
 #include "Import.h"
-#include "../Tags.h"
 #include "../Internat.h"
 #include "../WaveTrack.h"
 #include "ImportPlugin.h"
@@ -203,8 +202,7 @@ public:
 
    ///! Imports audio
    ///\return import status (see Import.cpp)
-   ProgressResult Import(TrackFactory *trackFactory, TrackHolders &outTracks,
-      Tags *tags) override;
+   ProgressResult Import(TrackFactory *trackFactory, TrackHolders &outTracks) override;
 
    ///! Reads next audio frame
    ///\return pointer to the stream context structure to which the frame belongs to or NULL on error, or 1 if stream is not to be imported.
@@ -219,18 +217,6 @@ public:
    ///! Writes decoded data into WaveTracks. Called by DecodeFrame
    ///\param sc - stream context
    ProgressResult WriteData(streamContext *sc);
-
-   ///! Writes extracted metadata to tags object
-   ///\param avf - file context
-   ///\ tags - Audacity tags object
-   void WriteMetadata(Tags *tags);
-
-   ///! Retrieves metadata from FFmpeg and converts to wxString
-   ///\param avf - file context
-   ///\ tags - Audacity tags object
-   ///\ tag - name of tag to set
-   ///\ name - name of metadata item to retrieve
-   void GetMetadata(Tags *tags, const wxChar *tag, const char *name);
 
    ///! Called by Import.cpp
    ///\return number of readable streams in the file
@@ -463,8 +449,7 @@ auto FFmpegImportFileHandle::GetFileUncompressedBytes() -> ByteCount
 }
 
 ProgressResult FFmpegImportFileHandle::Import(TrackFactory *trackFactory,
-              TrackHolders &outTracks,
-              Tags *tags)
+              TrackHolders &outTracks)
 {
    outTracks.clear();
 
@@ -622,9 +607,6 @@ ProgressResult FFmpegImportFileHandle::Import(TrackFactory *trackFactory,
       }
    }
 
-   // Save metadata
-   WriteMetadata(tags);
-
    return res;
 }
 
@@ -749,32 +731,6 @@ ProgressResult FFmpegImportFileHandle::WriteData(streamContext *sc)
 
    return updateResult;
 }
-
-void FFmpegImportFileHandle::WriteMetadata(Tags *tags)
-{
-   tags->Clear();
-
-   GetMetadata(tags, TAG_TITLE, "title");
-   GetMetadata(tags, TAG_ARTIST, "author");
-//   GetMetadata(tags, TAG_COPYRIGHT, "copyright");
-   GetMetadata(tags, TAG_COMMENTS, "comment");
-   GetMetadata(tags, TAG_ALBUM, "album");
-   GetMetadata(tags, TAG_YEAR, "year");
-   GetMetadata(tags, TAG_TRACK, "track");
-   GetMetadata(tags, TAG_GENRE, "genre");
-}
-
-void FFmpegImportFileHandle::GetMetadata(Tags *tags, const wxChar *tag, const char *name)
-{
-   AVDictionaryEntry *meta;
-
-   meta = av_dict_get(mFormatContext->metadata, name, NULL, AV_DICT_IGNORE_SUFFIX);
-   if (meta)
-   {
-      tags->SetTag(tag, wxString::FromUTF8(meta->value));
-   }
-}
-
 
 FFmpegImportFileHandle::~FFmpegImportFileHandle()
 {

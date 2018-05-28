@@ -59,7 +59,6 @@
 #include "../Mix.h"
 #include "../Prefs.h"
 #include "../Project.h"
-#include "../Tags.h"
 #include "../TranslatableStringArray.h"
 #include "../widgets/ErrorDialog.h"
 

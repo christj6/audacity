@@ -55,20 +55,17 @@
 #include "ondemand/ODTaskThread.h"
 #include "SelectedRegion.h"
 
-class Tags;
 class Track;
 class TrackList;
 
 struct UndoStackElem;
 struct UndoState {
    UndoState(std::shared_ptr<TrackList> &&tracks_,
-      const std::shared_ptr<Tags> &tags_,
       const SelectedRegion &selectedRegion_)
-      : tracks(std::move(tracks_)), tags(tags_), selectedRegion(selectedRegion_)
+      : tracks(std::move(tracks_)), selectedRegion(selectedRegion_)
    {}
 
    std::shared_ptr<TrackList> tracks;
-   std::shared_ptr<Tags> tags;
    SelectedRegion selectedRegion; // by value
 };
 
@@ -97,11 +94,10 @@ class AUDACITY_DLL_API UndoManager {
 
    void PushState(const TrackList * l,
                   const SelectedRegion &selectedRegion,
-                  const std::shared_ptr<Tags> &tags,
                   const wxString &longDescription, const wxString &shortDescription,
                   UndoPush flags = UndoPush::AUTOSAVE);
    void ModifyState(const TrackList * l,
-                    const SelectedRegion &selectedRegion, const std::shared_ptr<Tags> &tags);
+                    const SelectedRegion &selectedRegion);
    void ClearStates();
    void RemoveStates(int num);  // removes the 'num' oldest states
    void RemoveStateAt(int n);   // removes the n'th state (1 is oldest)

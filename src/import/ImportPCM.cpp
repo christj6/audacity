@@ -22,7 +22,6 @@
 #include "../Audacity.h"
 #include "ImportPCM.h"
 #include "../Internat.h"
-#include "../Tags.h"
 
 #include <wx/wx.h>
 #include <wx/string.h>
@@ -81,8 +80,7 @@ public:
 
    wxString GetFileDescription() override;
    ByteCount GetFileUncompressedBytes() override;
-   ProgressResult Import(TrackFactory *trackFactory, TrackHolders &outTracks,
-              Tags *tags) override;
+   ProgressResult Import(TrackFactory *trackFactory, TrackHolders &outTracks) override;
 
    wxInt32 GetStreamCount() override { return 1; }
 
@@ -324,8 +322,7 @@ static wxString AskCopyOrEdit()
 }
 
 ProgressResult PCMImportFileHandle::Import(TrackFactory *trackFactory,
-                                TrackHolders &outTracks,
-                                Tags *tags)
+                                TrackHolders &outTracks)
 {
    outTracks.clear();
 
@@ -514,53 +511,6 @@ ProgressResult PCMImportFileHandle::Import(TrackFactory *trackFactory,
       channel->Flush();
    }
    outTracks.swap(channels);
-
-   const char *str;
-
-   str = sf_get_string(mFile.get(), SF_STR_TITLE);
-   if (str) {
-      tags->SetTag(TAG_TITLE, UTF8CTOWX(str));
-   }
-
-   str = sf_get_string(mFile.get(), SF_STR_ALBUM);
-   if (str) {
-      tags->SetTag(TAG_ALBUM, UTF8CTOWX(str));
-   }
-
-   str = sf_get_string(mFile.get(), SF_STR_ARTIST);
-   if (str) {
-      tags->SetTag(TAG_ARTIST, UTF8CTOWX(str));
-   }
-
-   str = sf_get_string(mFile.get(), SF_STR_COMMENT);
-   if (str) {
-      tags->SetTag(TAG_COMMENTS, UTF8CTOWX(str));
-   }
-
-   str = sf_get_string(mFile.get(), SF_STR_DATE);
-   if (str) {
-      tags->SetTag(TAG_YEAR, UTF8CTOWX(str));
-   }
-
-   str = sf_get_string(mFile.get(), SF_STR_COPYRIGHT);
-   if (str) {
-      tags->SetTag(TAG_COPYRIGHT, UTF8CTOWX(str));
-   }
-
-   str = sf_get_string(mFile.get(), SF_STR_SOFTWARE);
-   if (str) {
-      tags->SetTag(TAG_SOFTWARE, UTF8CTOWX(str));
-   }
-
-   str = sf_get_string(mFile.get(), SF_STR_TRACKNUMBER);
-   if (str) {
-      tags->SetTag(TAG_TRACK, UTF8CTOWX(str));
-   }
-
-   str = sf_get_string(mFile.get(), SF_STR_GENRE);
-   if (str) {
-      tags->SetTag(TAG_GENRE, UTF8CTOWX(str));
-   }
 
    return updateResult;
 }

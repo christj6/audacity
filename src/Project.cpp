@@ -101,7 +101,6 @@ scroll information.  It also has some status flags.
 #include "Prefs.h"
 #include "Sequence.h"
 #include "Snap.h"
-#include "Tags.h"
 #include "TrackPanel.h"
 #include "WaveTrack.h"
 #include "DirManager.h"
@@ -1036,9 +1035,6 @@ AudacityProject::AudacityProject(wxWindow * parent, wxWindowID id,
    // MM: Give track panel the focus to ensure keyboard commands work
    mTrackPanel->SetFocus();
 
-   // Create tags object
-   mTags = std::make_shared<Tags>();
-
    InitialState();
    FixScrollbars();
    mRuler->SetLeftOffset(mTrackPanel->GetLeftOffset());  // bevel on AdornedRuler
@@ -1265,11 +1261,6 @@ bool AudacityProject::IsAudioActive() const
 {
    return GetAudioIOToken() > 0 &&
       gAudioIO->IsStreamActive(GetAudioIOToken());
-}
-
-const Tags *AudacityProject::GetTags()
-{
-   return mTags.get();
 }
 
 wxString AudacityProject::GetName()
@@ -2309,8 +2300,6 @@ void AudacityProject::OnCloseWindow(wxCloseEvent & event)
 
    mTrackFactory.reset();
 
-   mTags.reset();
-
    // Delete all the tracks to free up memory and DirManager references.
    mTracks->Clear();
    mTracks.reset();
@@ -2770,14 +2759,9 @@ bool AudacityProject::Import(const wxString &fileName, WaveTrackArray* pTrackArr
    wxString errorMessage = wxEmptyString;
 
    {
-      // Backup Tags, before the import.  Be prepared to roll back changes.
-      auto cleanup = valueRestorer( mTags,
-                                   mTags ? mTags->Duplicate() : decltype(mTags){} );
-
       bool success = Importer::Get().Import(fileName,
                                             GetTrackFactory(),
                                             newTracks,
-                                            mTags.get(),
                                             errorMessage);
 
       if (!errorMessage.IsEmpty()) {
@@ -2790,9 +2774,6 @@ bool AudacityProject::Import(const wxString &fileName, WaveTrackArray* pTrackArr
          return false;
 
       wxGetApp().AddFileToHistory(fileName);
-
-      // no more errors, commit
-      cleanup.release();
    }
 
    // for LOF ("list of files") files, do not import the file as if it
@@ -2883,7 +2864,7 @@ void AudacityProject::InitialState()
 {
    GetUndoManager()->ClearStates();
 
-   GetUndoManager()->PushState(GetTracks(), mViewInfo.selectedRegion, mTags,
+   GetUndoManager()->PushState(GetTracks(), mViewInfo.selectedRegion,
                           _("Created new project"), wxT(""));
 
    GetUndoManager()->StateSaved();
@@ -2919,7 +2900,7 @@ void AudacityProject::PushState(const wxString &desc,
                                 const wxString &shortDesc,
                                 UndoPush flags )
 {
-   GetUndoManager()->PushState(GetTracks(), mViewInfo.selectedRegion, mTags,
+   GetUndoManager()->PushState(GetTracks(), mViewInfo.selectedRegion,
                           desc, shortDesc, flags);
 
    mDirty = true;
@@ -2945,7 +2926,7 @@ void AudacityProject::RollbackState()
 
 void AudacityProject::ModifyState()
 {
-   GetUndoManager()->ModifyState(GetTracks(), mViewInfo.selectedRegion, mTags);
+   GetUndoManager()->ModifyState(GetTracks(), mViewInfo.selectedRegion);
    GetTrackPanel()->HandleCursorForPresentMouseState();
 }
 
@@ -2954,9 +2935,6 @@ void AudacityProject::ModifyState()
 //    Need to keep it and its tracks "t" available for Undo/Redo/SetStateTo.
 void AudacityProject::PopState(const UndoState &state)
 {
-   // Restore tags
-   mTags = state.tags;
-
    TrackList *const tracks = state.tracks.get();
 
    mTracks->Clear();

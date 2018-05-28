@@ -31,7 +31,6 @@ UndoManager
 #include "Sequence.h"
 #include "WaveTrack.h"          // temp
 #include "Diags.h"
-#include "Tags.h"
 
 #include "UndoManager.h"
 
@@ -47,9 +46,8 @@ struct UndoStackElem {
    UndoStackElem(std::shared_ptr<TrackList> &&tracks_,
       const wxString &description_,
       const wxString &shortDescription_,
-      const SelectedRegion &selectedRegion_,
-      const std::shared_ptr<Tags> &tags_)
-      : state(std::move(tracks_), tags_, selectedRegion_)
+      const SelectedRegion &selectedRegion_)
+      : state(std::move(tracks_), selectedRegion_)
       , description(description_)
       , shortDescription(shortDescription_)
    {
@@ -185,7 +183,6 @@ void UndoManager::RemoveStateAt(int n)
    stack.erase(stack.begin() + n);
 }
 
-
 void UndoManager::RemoveStates(int num)
 {
    for (int i = 0; i < num; i++) {
@@ -222,8 +219,7 @@ bool UndoManager::RedoAvailable()
 }
 
 void UndoManager::ModifyState(const TrackList * l,
-                              const SelectedRegion &selectedRegion,
-                              const std::shared_ptr<Tags> &tags)
+                              const SelectedRegion &selectedRegion)
 {
    if (current == wxNOT_FOUND) {
       return;
@@ -243,14 +239,12 @@ void UndoManager::ModifyState(const TrackList * l,
 
    // Replace
    stack[current]->state.tracks = std::move(tracksCopy);
-   stack[current]->state.tags = tags;
 
    stack[current]->state.selectedRegion = selectedRegion;
 }
 
 void UndoManager::PushState(const TrackList * l,
                             const SelectedRegion &selectedRegion,
-                            const std::shared_ptr<Tags> &tags,
                             const wxString &longDescription,
                             const wxString &shortDescription,
                             UndoPush flags)
@@ -260,7 +254,7 @@ void UndoManager::PushState(const TrackList * l,
    if ( ((flags & UndoPush::CONSOLIDATE) != UndoPush::MINIMAL) &&
        lastAction == longDescription &&
        mayConsolidate ) {
-      ModifyState(l, selectedRegion, tags);
+      ModifyState(l, selectedRegion);
       // MB: If the "saved" state was modified by ModifyState, reset
       //  it so that UnsavedChanges returns true.
       if (current == saved) {
@@ -289,7 +283,7 @@ void UndoManager::PushState(const TrackList * l,
    stack.push_back(
       make_movable<UndoStackElem>
          (std::move(tracksCopy),
-            longDescription, shortDescription, selectedRegion, tags)
+            longDescription, shortDescription, selectedRegion)
    );
 
    current++;

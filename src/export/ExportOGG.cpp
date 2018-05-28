@@ -34,7 +34,6 @@
 #include "../ShuttleGui.h"
 
 #include "../Internat.h"
-#include "../Tags.h"
 #include "../Track.h"
 #include "../widgets/ErrorDialog.h"
 
@@ -140,12 +139,7 @@ public:
                double t0,
                double t1,
                MixerSpec *mixerSpec = NULL,
-               const Tags *metadata = NULL,
                int subformat = 0) override;
-
-private:
-
-   bool FillComment(AudacityProject *project, vorbis_comment *comment, const Tags *metadata);
 };
 
 ExportOGG::ExportOGG()
@@ -167,7 +161,6 @@ ProgressResult ExportOGG::Export(AudacityProject *project,
                        double t0,
                        double t1,
                        MixerSpec *mixerSpec,
-                       const Tags *metadata,
                        int WXUNUSED(subformat))
 {
    double    rate    = project->GetRate();
@@ -210,13 +203,6 @@ ProgressResult ExportOGG::Export(AudacityProject *project,
    // Encoding setup
    vorbis_info_init(&info);
    if (vorbis_encode_init_vbr(&info, numChannels, (int)(rate + 0.5), quality)) {
-      // TODO: more precise message
-      AudacityMessageBox(_("Unable to export"));
-      return ProgressResult::Cancelled;
-   }
-
-   // Retrieve tags
-   if (!FillComment(project, &comment, metadata)) {
       // TODO: more precise message
       AudacityMessageBox(_("Unable to export"));
       return ProgressResult::Cancelled;
@@ -370,29 +356,6 @@ wxWindow *ExportOGG::OptionsCreate(wxWindow *parent, int format)
 {
    wxASSERT(parent); // to justify safenew
    return safenew ExportOGGOptions(parent, format);
-}
-
-bool ExportOGG::FillComment(AudacityProject *project, vorbis_comment *comment, const Tags *metadata)
-{
-   // Retrieve tags from project if not over-ridden
-   if (metadata == NULL)
-      metadata = project->GetTags();
-
-   vorbis_comment_init(comment);
-
-   wxString n;
-   for (const auto &pair : metadata->GetRange()) {
-      n = pair.first;
-      const auto &v = pair.second;
-      if (n == TAG_YEAR) {
-         n = wxT("DATE");
-      }
-      vorbis_comment_add_tag(comment,
-                             (char *) (const char *) n.mb_str(wxConvUTF8),
-                             (char *) (const char *) v.mb_str(wxConvUTF8));
-   }
-
-   return true;
 }
 
 movable_ptr<ExportPlugin> New_ExportOGG()

@@ -74,7 +74,6 @@ simplifies construction of menu items.
 #include "ModuleManager.h"
 #include "PluginManager.h"
 #include "Prefs.h"
-#include "Tags.h"
 #include "Mix.h"
 #include "AboutDialog.h"
 #include "ondemand/ODManager.h"

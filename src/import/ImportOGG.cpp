@@ -41,7 +41,6 @@
 #include <wx/intl.h>
 #include "../Prefs.h"
 #include "../Internat.h"
-#include "../Tags.h"
 
 
 #define DESC _("Ogg Vorbis files")
@@ -124,8 +123,7 @@ public:
 
    wxString GetFileDescription() override;
    ByteCount GetFileUncompressedBytes() override;
-   ProgressResult Import(TrackFactory *trackFactory, TrackHolders &outTracks,
-              Tags *tags) override;
+   ProgressResult Import(TrackFactory *trackFactory, TrackHolders &outTracks) override;
 
    wxInt32 GetStreamCount() override
    {
@@ -228,8 +226,7 @@ auto OggImportFileHandle::GetFileUncompressedBytes() -> ByteCount
    return 0;
 }
 
-ProgressResult OggImportFileHandle::Import(TrackFactory *trackFactory, TrackHolders &outTracks,
-   Tags *tags)
+ProgressResult OggImportFileHandle::Import(TrackFactory *trackFactory, TrackHolders &outTracks)
 {
    outTracks.clear();
 
@@ -377,23 +374,6 @@ ProgressResult OggImportFileHandle::Import(TrackFactory *trackFactory, TrackHold
       for (auto &channel : link) {
          channel->Flush();
          outTracks.push_back(std::move(channel));
-      }
-   }
-
-   //\todo { Extract comments from each stream? }
-   if (mVorbisFile->vc[0].comments > 0) {
-      tags->Clear();
-      for (int c = 0; c < mVorbisFile->vc[0].comments; c++) {
-         wxString comment = UTF8CTOWX(mVorbisFile->vc[0].user_comments[c]);
-         wxString name = comment.BeforeFirst(wxT('='));
-         wxString value = comment.AfterFirst(wxT('='));
-         if (name.Upper() == wxT("DATE") && !tags->HasTag(TAG_YEAR)) {
-            long val;
-            if (value.Length() == 4 && value.ToLong(&val)) {
-               name = TAG_YEAR;
-            }
-         }
-         tags->SetTag(name, value);
       }
    }
 

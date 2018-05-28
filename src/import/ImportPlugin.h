@@ -66,7 +66,6 @@ but little else.
 
 class TrackFactory;
 class Track;
-class Tags;
 
 class ImportFileHandle;
 
@@ -157,8 +156,7 @@ public:
    // The given Tags structure may also be modified.
    // In case of errors or exceptions, it is not necessary to leave outTracks
    // or tags unmodified.
-   virtual ProgressResult Import(TrackFactory *trackFactory, TrackHolders &outTracks,
-                      Tags *tags) = 0;
+   virtual ProgressResult Import(TrackFactory *trackFactory, TrackHolders &outTracks) = 0;
 
    // Return number of elements in stream list
    virtual wxInt32 GetStreamCount() = 0;

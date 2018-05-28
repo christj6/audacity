@@ -336,7 +336,6 @@ bool Importer::IsMidi(const wxString &fName)
 bool Importer::Import(const wxString &fName,
                      TrackFactory *trackFactory,
                      TrackHolders &tracks,
-                     Tags *tags,
                      wxString &errorMessage)
 {
    AudacityProject *pProj = GetActiveProject();
@@ -520,7 +519,7 @@ bool Importer::Import(const wxString &fName,
          else
             inFile->SetStreamUsage(0,TRUE);
 
-         auto res = inFile->Import(trackFactory, tracks, tags);
+         auto res = inFile->Import(trackFactory, tracks);
 
          if (res == ProgressResult::Success || res == ProgressResult::Stopped)
          {

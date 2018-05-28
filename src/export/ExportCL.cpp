@@ -294,7 +294,6 @@ public:
                double t0,
                double t1,
                MixerSpec *mixerSpec = NULL,
-               const Tags *metadata = NULL,
                int subformat = 0) override;
 };
 
@@ -317,7 +316,6 @@ ProgressResult ExportCL::Export(AudacityProject *project,
                       double t0,
                       double t1,
                       MixerSpec *mixerSpec,
-                      const Tags *WXUNUSED(metadata),
                       int WXUNUSED(subformat))
 {
    wxString output;

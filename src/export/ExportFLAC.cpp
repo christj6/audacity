@@ -38,7 +38,6 @@ and libvorbis examples, Monty <monty@xiph.org>
 #include "../ShuttleGui.h"
 
 #include "../Internat.h"
-#include "../Tags.h"
 
 #include "../Track.h"
 #include "../widgets/ErrorDialog.h"
@@ -198,13 +197,9 @@ public:
                double t0,
                double t1,
                MixerSpec *mixerSpec = NULL,
-               const Tags *metadata = NULL,
                int subformat = 0) override;
 
 private:
-
-   bool GetMetadata(AudacityProject *project, const Tags *tags);
-
    // Should this be a stack variable instead in Export?
    FLAC__StreamMetadataHandle mMetadata;
 };
@@ -230,7 +225,6 @@ ProgressResult ExportFLAC::Export(AudacityProject *project,
                         double t0,
                         double t1,
                         MixerSpec *mixerSpec,
-                        const Tags *metadata,
                         int WXUNUSED(subformat))
 {
    double    rate    = project->GetRate();
@@ -254,13 +248,6 @@ ProgressResult ExportFLAC::Export(AudacityProject *project,
 #endif
    encoder.set_channels(numChannels) &&
    encoder.set_sample_rate(lrint(rate));
-
-   // See note in GetMetadata() about a bug in libflac++ 1.1.2
-   if (success && !GetMetadata(project, metadata)) {
-      // TODO: more precise message
-      AudacityMessageBox(_("Unable to export"));
-      return ProgressResult::Cancelled;
-   }
 
    if (success && mMetadata) {
       // set_metadata expects an array of pointers to metadata and a size.
@@ -410,38 +397,6 @@ wxWindow *ExportFLAC::OptionsCreate(wxWindow *parent, int format)
 {
    wxASSERT(parent); // to justify safenew
    return safenew ExportFLACOptions(parent, format);
-}
-
-// LL:  There's a bug in libflac++ 1.1.2 that prevents us from using
-//      FLAC::Metadata::VorbisComment directly.  The set_metadata()
-//      function allocates an array on the stack, but the base library
-//      expects that array to be valid until the stream is initialized.
-//
-//      This has been fixed in 1.1.4.
-bool ExportFLAC::GetMetadata(AudacityProject *project, const Tags *tags)
-{
-   // Retrieve tags if needed
-   if (tags == NULL)
-      tags = project->GetTags();
-
-   mMetadata.reset(::FLAC__metadata_object_new(FLAC__METADATA_TYPE_VORBIS_COMMENT));
-
-   wxString n;
-   for (const auto &pair : tags->GetRange()) {
-      n = pair.first;
-      const auto &v = pair.second;
-      if (n == TAG_YEAR) {
-         n = wxT("DATE");
-      }
-      FLAC::Metadata::VorbisComment::Entry entry(n.mb_str(wxConvUTF8),
-                                                 v.mb_str(wxConvUTF8));
-      if (! ::FLAC__metadata_object_vorbiscomment_append_comment(mMetadata.get(),
-                                                           entry.get_entry(),
-                                                           true) )
-         return false;
-   }
-
-   return true;
 }
 
 movable_ptr<ExportPlugin> New_ExportFLAC()
