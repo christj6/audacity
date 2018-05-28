@@ -324,14 +324,12 @@ private:
 
    ArrayOf<char> AdjustString(const wxString & wxStr, int sf_format);
    bool AddStrings(AudacityProject *project, SNDFILE *sf, const Tags *tags, int sf_format);
-   bool AddID3Chunk(wxString fName, const Tags *tags, int sf_format);
 
 };
 
 ExportPCM::ExportPCM()
 :  ExportPlugin()
 {
-
    SF_INFO si;
 
    si.samplerate = 0;
@@ -533,17 +531,6 @@ ProgressResult ExportPCM::Export(AudacityProject *project,
       }
    }
 
-   if (updateResult == ProgressResult::Success ||
-       updateResult == ProgressResult::Stopped)
-      if (((sf_format & SF_FORMAT_TYPEMASK) == SF_FORMAT_AIFF) ||
-          ((sf_format & SF_FORMAT_TYPEMASK) == SF_FORMAT_WAV))
-         // Note: file has closed, and gets reopened and closed again here:
-         if (!AddID3Chunk(fName, metadata, sf_format) ) {
-            // TODO: more precise message
-            AudacityMessageBox(_("Unable to export"));
-            return ProgressResult::Cancelled;
-         }
-
    return updateResult;
 }
 
@@ -699,11 +686,6 @@ bool ExportPCM::AddStrings(AudacityProject * WXUNUSED(project), SNDFILE *sf, con
       }
    }
 
-   return true;
-}
-
-bool ExportPCM::AddID3Chunk(wxString fName, const Tags *tags, int sf_format)
-{
    return true;
 }
 

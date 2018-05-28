@@ -1703,9 +1703,6 @@ ProgressResult ExportMP3::Export(AudacityProject *project,
       return ProgressResult::Cancelled;
    }
 
-   ArrayOf<char> id3buffer;
-   bool endOfFile;
-
    wxFileOffset pos = outFile.Tell();
    auto updateResult = ProgressResult::Success;
    int bytes = 0;
