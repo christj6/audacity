@@ -2805,9 +2805,9 @@ void AudacityProject::OnExportMultiple(const CommandContext &WXUNUSED(context) )
 
 void AudacityProject::OnPreferences(const CommandContext &WXUNUSED(context) )
 {
-   GlobalPrefsDialog dialog(this /* parent */ );
+   GlobalPrefsDialog dialog(this /* parent */ ); // crash occurs here, wxArray out of bounds
 
-   if (!dialog.ShowModal()) { // crash occurs here, wxArray out of bounds
+   if (!dialog.ShowModal()) { 
       // Canceled
       return;
    }
