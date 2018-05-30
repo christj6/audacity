@@ -267,7 +267,6 @@ void KeyConfigPrefs::RefreshBindings(bool bSort)
 {
    wxArrayString Labels;
    wxArrayString Categories;
-   wxArrayString Prefixes;
 
    mNames.Clear();
    mKeys.clear();
@@ -286,7 +285,6 @@ void KeyConfigPrefs::RefreshBindings(bool bSort)
 
    mView->RefreshBindings(mNames,
                           Categories,
-                          Prefixes,
                           Labels,
                           mKeys,
                           bSort);

@@ -81,7 +81,6 @@ public:
 
    void RefreshBindings(const wxArrayString & names,
                         const wxArrayString & categories,
-                        const wxArrayString & prefixes,
                         const wxArrayString & labels,
                         const std::vector<NormalizedKeyString> & keys,
                         bool bSort);

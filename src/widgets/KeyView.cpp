@@ -520,7 +520,6 @@ KeyView::UpdateHScroll()
 void
 KeyView::RefreshBindings(const wxArrayString & names,
                          const wxArrayString & categories,
-                         const wxArrayString & prefixes,
                          const wxArrayString & labels,
                          const std::vector<NormalizedKeyString> & keys,
                          bool bSort
@@ -550,7 +549,6 @@ KeyView::RefreshBindings(const wxArrayString & names,
 
       // Remove any menu code from the category and prefix
       wxString cat = wxMenuItem::GetLabelText(categories[i]);
-      wxString pfx = wxMenuItem::GetLabelText(prefixes[i]);
 
       // Append "Menu" this node is for a menu title
       if (cat != wxT("Command"))
@@ -589,7 +587,6 @@ KeyView::RefreshBindings(const wxArrayString & names,
             // Fill in the node info
             node.name = wxEmptyString;    // don't associate branches with a command
             node.category = cat;
-            node.prefix = pfx;
             node.label = cat;
             node.index = nodecnt++;
             node.iscat = true;
@@ -608,45 +605,9 @@ KeyView::RefreshBindings(const wxArrayString & names,
          }
       }
 
-      // Process a NEW prefix
-      if (pfx != lastpfx)
-      {
-         // Done with prefix branch
-         if (inpfx)
-         {
-            depth--;
-            inpfx = false;
-         }
-
-         // Remember for next iteration
-         lastpfx = pfx;
-
-         // Add a NEW prefix node
-         if (pfx != wxEmptyString)
-         {
-            KeyNode node;
-
-            // Fill in the node info
-            node.name = wxEmptyString;    // don't associate branches with a command
-            node.category = cat;
-            node.prefix = pfx;
-            node.label = pfx;
-            node.index = nodecnt++;
-            node.ispfx = true;
-            node.isparent = true;
-            node.depth = depth++;
-            node.isopen = true;
-
-            // Add it to the tree
-            mNodes.push_back(node);
-            inpfx = true;
-         }
-      }
-
       // Add the key entry
       KeyNode node;
       node.category = cat;
-      node.prefix = pfx;
 
       // Labels for undo and redo change according to the last command
       // which can be undone/redone, so give them a special check in order
