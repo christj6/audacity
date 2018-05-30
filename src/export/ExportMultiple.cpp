@@ -613,7 +613,6 @@ ProgressResult ExportMultiple::ExportMultipleByTrack(bool byName,
    const wxString &prefix, bool addNumber)
 {
    wxASSERT(mProject);
-   bool tagsPrompt = mProject->GetShowId3Dialog();
    Track *tr, *tr2;
    int l = 0;     // track counter
    auto ok = ProgressResult::Success;

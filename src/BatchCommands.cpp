@@ -717,13 +717,6 @@ bool MacroCommands::ApplyCommandInBatchMode( const wxString &friendlyCommand,
 {
    AudacityProject *project = GetActiveProject();
 
-   // enter batch mode...
-   bool prevShowMode = project->GetShowId3Dialog();
-   auto cleanup = finally( [&] {
-      // exit batch mode...
-      project->SetShowId3Dialog(prevShowMode);
-   } );
-
    return ApplyCommand( friendlyCommand, command, params );
 }
 

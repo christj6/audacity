@@ -264,9 +264,6 @@ public:
    bool GetTracksFitVerticallyZoomed() { return mTracksFitVerticallyZoomed; } //lda
    void SetTracksFitVerticallyZoomed(bool flag) { mTracksFitVerticallyZoomed = flag; } //lda
 
-   bool GetShowId3Dialog() { return mShowId3Dialog; } //lda
-   void SetShowId3Dialog(bool flag) { mShowId3Dialog = flag; } //lda
-
    bool GetNormalizeOnLoad() { return mNormalizeOnLoad; } //lda
    void SetNormalizeOnLoad(bool flag) { mNormalizeOnLoad = flag; } //lda
 
@@ -580,7 +577,6 @@ private:
    bool mIsDeleting{ false };
    bool mTracksFitVerticallyZoomed{ false };  //lda
    bool mNormalizeOnLoad;  //lda
-   bool mShowId3Dialog{ true }; //lda
    bool mEmptyCanBeDirty;
 
    // 0 is grey out, 1 is Autoselect, 2 is Give warnings.
