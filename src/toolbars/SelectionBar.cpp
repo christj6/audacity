@@ -483,7 +483,6 @@ void SelectionBar::OnUpdate(wxCommandEvent &evt)
 
    // Save format name before recreating the controls so they resize properly
    format = mStartTime->GetBuiltinName(index);
-   mListener->AS_SetSelectionFormat(format);
 
    // ToolBar::ReCreateButtons() will get rid of our sizers and controls
    // so reset pointers first.
