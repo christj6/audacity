@@ -259,7 +259,6 @@
     <ClCompile Include="..\..\..\src\import\RawAudioGuess.cpp" />
     <ClCompile Include="..\..\..\src\prefs\DevicePrefs.cpp" />
     <ClCompile Include="..\..\..\src\prefs\DirectoriesPrefs.cpp" />
-    <ClCompile Include="..\..\..\src\prefs\EffectsPrefs.cpp" />
     <ClCompile Include="..\..\..\src\prefs\ExtImportPrefs.cpp" />
     <ClCompile Include="..\..\..\src\prefs\GUIPrefs.cpp" />
     <ClCompile Include="..\..\..\src\prefs\ImportExportPrefs.cpp" />
@@ -269,7 +268,6 @@
     <ClCompile Include="..\..\..\src\prefs\MousePrefs.cpp" />
     <ClCompile Include="..\..\..\src\prefs\PlaybackPrefs.cpp" />
     <ClCompile Include="..\..\..\src\prefs\PrefsDialog.cpp" />
-    <ClCompile Include="..\..\..\src\prefs\ProjectsPrefs.cpp" />
     <ClCompile Include="..\..\..\src\prefs\QualityPrefs.cpp" />
     <ClCompile Include="..\..\..\src\prefs\RecordingPrefs.cpp" />
     <ClCompile Include="..\..\..\src\prefs\SpectrumPrefs.cpp" />
@@ -501,7 +499,6 @@
     <ClInclude Include="..\..\..\src\prefs\BatchPrefs.h" />
     <ClInclude Include="..\..\..\src\prefs\DevicePrefs.h" />
     <ClInclude Include="..\..\..\src\prefs\DirectoriesPrefs.h" />
-    <ClInclude Include="..\..\..\src\prefs\EffectsPrefs.h" />
     <ClInclude Include="..\..\..\src\prefs\ExtImportPrefs.h" />
     <ClInclude Include="..\..\..\src\prefs\GUIPrefs.h" />
     <ClInclude Include="..\..\..\src\prefs\ImportExportPrefs.h" />
@@ -512,7 +509,6 @@
     <ClInclude Include="..\..\..\src\prefs\PlaybackPrefs.h" />
     <ClInclude Include="..\..\..\src\prefs\PrefsDialog.h" />
     <ClInclude Include="..\..\..\src\prefs\PrefsPanel.h" />
-    <ClInclude Include="..\..\..\src\prefs\ProjectsPrefs.h" />
     <ClInclude Include="..\..\..\src\prefs\QualityPrefs.h" />
     <ClInclude Include="..\..\..\src\prefs\RecordingPrefs.h" />
     <ClInclude Include="..\..\..\src\prefs\SpectrumPrefs.h" />

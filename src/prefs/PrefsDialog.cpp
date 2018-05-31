@@ -42,7 +42,6 @@
 #include "BatchPrefs.h"
 #include "DevicePrefs.h"
 #include "DirectoriesPrefs.h"
-#include "EffectsPrefs.h"
 #include "GUIPrefs.h"
 #include "ImportExportPrefs.h"
 #include "KeyConfigPrefs.h"
@@ -50,7 +49,6 @@
 #include "MousePrefs.h"
 
 #include "PlaybackPrefs.h"
-#include "ProjectsPrefs.h"
 #include "QualityPrefs.h"
 #include "RecordingPrefs.h"
 #include "SpectrumPrefs.h"
@@ -154,7 +152,6 @@ PrefsDialog::Factories
    static TracksPrefsFactory tracksPrefsFactory;
    static ImportExportPrefsFactory importExportPrefsFactory;
    static ExtImportPrefsFactory extImportPrefsFactory;
-   static ProjectsPrefsFactory projectsPrefsFactory;
 #if !defined(DISABLE_DYNAMIC_LOADING_FFMPEG) || !defined(DISABLE_DYNAMIC_LOADING_LAME)
    static LibraryPrefsFactory libraryPrefsFactory;
 #endif
@@ -163,7 +160,6 @@ PrefsDialog::Factories
    static SpectrumPrefsFactory spectrumPrefsFactory;
    static DirectoriesPrefsFactory directoriesPrefsFactory;
    static WarningsPrefsFactory warningsPrefsFactory;
-   static EffectsPrefsFactory effectsPrefsFactory;
    // static BatchPrefsFactory batchPrefsFactory;
    static KeyConfigPrefsFactory keyConfigPrefsFactory;
    static MousePrefsFactory mousePrefsFactory;
@@ -185,13 +181,11 @@ PrefsDialog::Factories
       PrefsNode(&importExportPrefsFactory, 1),
       &extImportPrefsFactory,
 
-      &projectsPrefsFactory,
 #if !defined(DISABLE_DYNAMIC_LOADING_FFMPEG) || !defined(DISABLE_DYNAMIC_LOADING_LAME)
       &libraryPrefsFactory,
 #endif
       &directoriesPrefsFactory,
       &warningsPrefsFactory,
-      &effectsPrefsFactory,
       &keyConfigPrefsFactory,
       &mousePrefsFactory,
    };

@@ -290,9 +290,6 @@
     <ClCompile Include="..\..\..\src\prefs\DirectoriesPrefs.cpp">
       <Filter>src\prefs</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\prefs\EffectsPrefs.cpp">
-      <Filter>src\prefs</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\prefs\ExtImportPrefs.cpp">
       <Filter>src\prefs</Filter>
     </ClCompile>
@@ -318,9 +315,6 @@
       <Filter>src\prefs</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\prefs\PrefsDialog.cpp">
-      <Filter>src\prefs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\prefs\ProjectsPrefs.cpp">
       <Filter>src\prefs</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\prefs\QualityPrefs.cpp">
@@ -946,9 +940,6 @@
     <ClInclude Include="..\..\..\src\prefs\DirectoriesPrefs.h">
       <Filter>src\prefs</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\prefs\EffectsPrefs.h">
-      <Filter>src\prefs</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\prefs\ExtImportPrefs.h">
       <Filter>src\prefs</Filter>
     </ClInclude>
@@ -977,9 +968,6 @@
       <Filter>src\prefs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\prefs\PrefsPanel.h">
-      <Filter>src\prefs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\prefs\ProjectsPrefs.h">
       <Filter>src\prefs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\prefs\QualityPrefs.h">

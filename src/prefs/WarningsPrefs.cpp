@@ -56,13 +56,7 @@ void WarningsPrefs::PopulateOrExchange(ShuttleGui & S)
 
    S.StartStatic(_("Show Warnings/Prompts for"));
    {
-      S.TieCheckBox(_("Saving &projects"),
-                    wxT("/Warnings/FirstProjectSave"),
-                    true);
-      S.TieCheckBox(_("Saving &empty project"),
-                    wxT("/GUI/EmptyCanBeDirty"),
-                    true);
-      S.TieCheckBox(_("&Low disk space at launch or new project"),
+      S.TieCheckBox(_("&Low disk space at launch"),
                     wxT("/Warnings/DiskSpaceWarning"),
                     true);
       S.TieCheckBox(_("Mixing down to &mono during export"),
