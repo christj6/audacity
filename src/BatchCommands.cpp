@@ -715,8 +715,6 @@ bool MacroCommands::ApplyCommand( const wxString &friendlyCommand,
 bool MacroCommands::ApplyCommandInBatchMode( const wxString &friendlyCommand,
    const wxString & command, const wxString &params)
 {
-   AudacityProject *project = GetActiveProject();
-
    return ApplyCommand( friendlyCommand, command, params );
 }
 
