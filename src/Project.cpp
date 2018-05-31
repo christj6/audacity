@@ -1125,7 +1125,6 @@ void AudacityProject::UpdatePrefsVariables()
 {
    gPrefs->Read(wxT("/AudioFiles/NormalizeOnLoad"),&mNormalizeOnLoad, false);
    gPrefs->Read(wxT("/GUI/AutoScroll"), &mViewInfo.bUpdateTrackIndicator, true);
-   gPrefs->Read(wxT("/GUI/EmptyCanBeDirty"), &mEmptyCanBeDirty, true );
    gPrefs->Read(wxT("/GUI/Help"), &mHelpPref, wxT("Local") );
    bool bSelectAllIfNone;
    gPrefs->Read(wxT("/GUI/SelectAllOnNone"), &bSelectAllIfNone, false);
@@ -2179,7 +2178,7 @@ void AudacityProject::OnCloseWindow(wxCloseEvent & event)
 
    // We may not bother to prompt the user to save, if the
    // project is now empty.
-   if (event.CanVeto() && (mEmptyCanBeDirty || bHasTracks)) {
+   if (event.CanVeto() && bHasTracks) {
       if (GetUndoManager()->UnsavedChanges()) {
          TitleRestorer Restorer( this );// RAII
          /* i18n-hint: The first %s numbers the project, the second %s is the project name.*/

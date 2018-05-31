@@ -577,7 +577,6 @@ private:
    bool mIsDeleting{ false };
    bool mTracksFitVerticallyZoomed{ false };  //lda
    bool mNormalizeOnLoad;  //lda
-   bool mEmptyCanBeDirty;
 
    // 0 is grey out, 1 is Autoselect, 2 is Give warnings.
    int  mWhatIfNoSelection;
