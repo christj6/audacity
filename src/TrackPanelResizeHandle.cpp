@@ -191,7 +191,7 @@ UIHandle::Result TrackPanelResizeHandle::Drag
       case IsResizingBetweenLinkedTracks:
       {
          Track *next = tracks->GetNext(pTrack.get());
-         doResizeBetween(next, false);
+         // doResizeBetween(next, false);
          break;
       }
       case IsResizing:
