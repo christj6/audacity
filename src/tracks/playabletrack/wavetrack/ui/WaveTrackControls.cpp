@@ -96,7 +96,6 @@ enum {
    OnWaveformID,
    OnWaveformDBID,
    OnSpectrumID,
-   OnSpectrogramSettingsID,
 
    OnChannelLeftID,
    OnChannelRightID,
@@ -545,7 +544,6 @@ protected:
    TrackControls::InitMenuData *mpData;
 
    void OnSetDisplay(wxCommandEvent & event);
-   void OnSpectrogramSettings(wxCommandEvent & event);
    void OnChannelChange(wxCommandEvent & event);
    void SplitStereo(bool stereo);
    void OnSwapChannels(wxCommandEvent & event);
@@ -577,12 +575,6 @@ void WaveTrackMenuTable::InitMenu(Menu *pMenu, void *pUserData)
          ? (pTrack->GetWaveformSettings().isLinear()
             ? OnWaveformID : OnWaveformDBID)
          : OnSpectrumID);
-
-   // Bug 1253.  Shouldn't open preferences if audio is busy.
-   // We can't change them on the fly yet anyway.
-   const bool bAudioBusy = gAudioIO->IsBusy();
-   pMenu->Enable(OnSpectrogramSettingsID,
-      (display == WaveTrack::Spectrum) && !bAudioBusy);
 
    const bool isMono = !pTrack->GetLink();
    if ( isMono )
@@ -622,7 +614,6 @@ BEGIN_POPUP_MENU(WaveTrackMenuTable)
    POPUP_MENU_RADIO_ITEM(OnWaveformID, _("Wa&veform"), OnSetDisplay)
    POPUP_MENU_RADIO_ITEM(OnWaveformDBID, _("&Waveform (dB)"), OnSetDisplay)
    POPUP_MENU_RADIO_ITEM(OnSpectrumID, _("&Spectrogram"), OnSetDisplay)
-   POPUP_MENU_ITEM(OnSpectrogramSettingsID, _("S&pectrogram Settings..."), OnSpectrogramSettings)
    POPUP_MENU_SEPARATOR()
 
    POPUP_MENU_ITEM(OnSwapChannelsID, _("Swap Stereo &Channels"), OnSwapChannels)
@@ -688,62 +679,6 @@ void WaveTrackMenuTable::OnSetDisplay(wxCommandEvent & event)
 
       using namespace RefreshCode;
       mpData->result = RefreshAll | UpdateVRuler;
-   }
-}
-
-void WaveTrackMenuTable::OnSpectrogramSettings(wxCommandEvent &)
-{
-   class ViewSettingsDialog final : public PrefsDialog
-   {
-   public:
-      ViewSettingsDialog
-         (wxWindow *parent, const wxString &title, PrefsDialog::Factories &factories,
-         int page)
-         : PrefsDialog(parent, title, factories)
-         , mPage(page)
-      {
-      }
-
-      long GetPreferredPage() override
-      {
-         return mPage;
-      }
-
-      void SavePreferredPage() override
-      {
-      }
-
-   private:
-      const int mPage;
-   };
-
-   if (gAudioIO->IsBusy()){
-      AudacityMessageBox(_("To change Spectrogram Settings, stop any\n"
-                     "playing or recording first."),
-                   _("Stop the Audio First"), wxOK | wxICON_EXCLAMATION | wxCENTRE);
-      return;
-   }
-
-   WaveTrack *const pTrack = static_cast<WaveTrack*>(mpData->pTrack);
-   // WaveformPrefsFactory waveformFactory(pTrack);
-   // TracksBehaviorsPrefsFactory tracksBehaviorsFactory();
-   SpectrumPrefsFactory spectrumFactory(pTrack);
-
-   PrefsDialog::Factories factories;
-   // factories.push_back(&waveformFactory);
-   factories.push_back(&spectrumFactory);
-   const int page =
-      // (pTrack->GetDisplay() == WaveTrack::Spectrum) ? 1 :
-      0;
-
-   wxString title(pTrack->GetName() + wxT(": "));
-   ViewSettingsDialog dialog(mpData->pParent, title, factories, page);
-
-   if (0 != dialog.ShowModal()) {
-      // Redraw
-      AudacityProject *const project = ::GetActiveProject();
-      project->ModifyState();
-      mpData->result = RefreshCode::RefreshAll;
    }
 }
 
