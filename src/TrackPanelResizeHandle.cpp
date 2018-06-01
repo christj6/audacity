@@ -26,6 +26,7 @@ Paul Licameli split from TrackPanel.cpp
 
 HitTestPreview TrackPanelResizeHandle::HitPreview(bool bLinked)
 {
+   static wxCursor defaultCursor{ wxCURSOR_ARROW };
    static wxCursor resizeCursor{ wxCURSOR_SIZENS };
 
    /// When in the resize area we can adjust size or relative size.
@@ -36,8 +37,8 @@ HitTestPreview TrackPanelResizeHandle::HitPreview(bool bLinked)
       // is shorter when it is between stereo tracks).
 
       return {
-         _("Click and drag to adjust relative size of stereo tracks."),
-         &resizeCursor
+		  _(wxEmptyString),
+		 &defaultCursor
       };
    }
    else {
