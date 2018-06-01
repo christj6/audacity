@@ -95,7 +95,6 @@ enum {
 
    OnWaveformID,
    OnWaveformDBID,
-   OnSpectrumID,
 
    OnChannelLeftID,
    OnChannelRightID,
@@ -570,11 +569,17 @@ void WaveTrackMenuTable::InitMenu(Menu *pMenu, void *pUserData)
    std::vector<int> checkedIds;
 
    const int display = pTrack->GetDisplay();
-   checkedIds.push_back(
-      display == WaveTrack::Waveform
-         ? (pTrack->GetWaveformSettings().isLinear()
-            ? OnWaveformID : OnWaveformDBID)
-         : OnSpectrumID);
+   if (display == WaveTrack::Waveform)
+   {
+	   if (pTrack->GetWaveformSettings().isLinear())
+	   {
+		   checkedIds.push_back(OnWaveformID);
+	   }
+	   else
+	   {
+		   checkedIds.push_back(OnWaveformDBID);
+	   }
+   }
 
    const bool isMono = !pTrack->GetLink();
    if ( isMono )
@@ -613,7 +618,6 @@ BEGIN_POPUP_MENU(WaveTrackMenuTable)
 
    POPUP_MENU_RADIO_ITEM(OnWaveformID, _("Wa&veform"), OnSetDisplay)
    POPUP_MENU_RADIO_ITEM(OnWaveformDBID, _("&Waveform (dB)"), OnSetDisplay)
-   POPUP_MENU_RADIO_ITEM(OnSpectrumID, _("&Spectrogram"), OnSetDisplay)
    POPUP_MENU_SEPARATOR()
 
    POPUP_MENU_ITEM(OnSwapChannelsID, _("Swap Stereo &Channels"), OnSwapChannels)
@@ -635,7 +639,7 @@ END_POPUP_MENU()
 void WaveTrackMenuTable::OnSetDisplay(wxCommandEvent & event)
 {
    int idInt = event.GetId();
-   wxASSERT(idInt >= OnWaveformID && idInt <= OnSpectrumID);
+   wxASSERT(idInt >= OnWaveformID && idInt <= OnWaveformDBID);
    WaveTrack *const pTrack = static_cast<WaveTrack*>(mpData->pTrack);
    wxASSERT(pTrack && pTrack->GetKind() == Track::Wave);
 
@@ -647,8 +651,6 @@ void WaveTrackMenuTable::OnSetDisplay(wxCommandEvent & event)
       linear = true, id = WaveTrack::Waveform; break;
    case OnWaveformDBID:
       id = WaveTrack::Waveform; break;
-   case OnSpectrumID:
-      id = WaveTrack::Spectrum; break;
    }
 
    const bool wrongType = pTrack->GetDisplay() != id;
