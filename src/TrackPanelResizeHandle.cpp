@@ -149,26 +149,6 @@ UIHandle::Result TrackPanelResizeHandle::Drag
       prev->SetHeight(newUpperTrackHeight);
    };
 
-   auto doResizeBetween = [&] (Track *next, bool WXUNUSED(vStereo)) {
-      int newUpperTrackHeight = mInitialUpperTrackHeight + delta;
-      int newTrackHeight = mInitialTrackHeight - delta;
-
-      // make sure neither track is smaller than its minimum height
-      if (newTrackHeight < next->GetMinimizedHeight()) {
-         newTrackHeight = next->GetMinimizedHeight();
-         newUpperTrackHeight =
-         mInitialUpperTrackHeight + mInitialTrackHeight - next->GetMinimizedHeight();
-      }
-      if (newUpperTrackHeight < pTrack->GetMinimizedHeight()) {
-         newUpperTrackHeight = pTrack->GetMinimizedHeight();
-         newTrackHeight =
-         mInitialUpperTrackHeight + mInitialTrackHeight - pTrack->GetMinimizedHeight();
-      }
-
-      pTrack->SetHeight(newUpperTrackHeight);
-      next->SetHeight(newTrackHeight);
-   };
-
    auto doResize = [&] {
       int newTrackHeight = mInitialTrackHeight + delta;
       if (newTrackHeight < pTrack->GetMinimizedHeight())
@@ -186,12 +166,6 @@ UIHandle::Result TrackPanelResizeHandle::Drag
       {
          Track *prev = tracks->GetPrev(pTrack.get());
          doResizeBelow(prev, false);
-         break;
-      }
-      case IsResizingBetweenLinkedTracks:
-      {
-         Track *next = tracks->GetNext(pTrack.get());
-         // doResizeBetween(next, false);
          break;
       }
       case IsResizing:
