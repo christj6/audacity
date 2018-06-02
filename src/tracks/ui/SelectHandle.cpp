@@ -150,14 +150,6 @@ namespace
       return &*selectCursor;
    }
 
-   wxCursor *EnvelopeCursor()
-   {
-      // This one doubles as the center frequency cursor for spectral selection:
-      static auto envelopeCursor =
-         ::MakeCursor(wxCURSOR_ARROW, EnvCursorXpm, 16, 16);
-      return &*envelopeCursor;
-   }
-
    void SetTipAndCursorForBoundary
       (SelectionBoundary boundary, wxString &tip, wxCursor *&pCursor)
    {

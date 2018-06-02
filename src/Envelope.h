@@ -177,7 +177,6 @@ public:
 private:
    int InsertOrReplaceRelative(double when, double value);
 
-   friend class EnvelopeEditor;
    /** \brief Accessor for points */
    const EnvPoint &operator[] (int index) const
    {
@@ -262,21 +261,6 @@ public:
       float zoomMin = -1.0, float zoomMax = 1.0);
 
 private:
-   bool HandleMouseButtonDown(const wxMouseEvent & event, wxRect & r,
-      const ZoomInfo &zoomInfo, bool dB, double dBRange,
-      float zoomMin = -1.0, float zoomMax = 1.0);
-   bool HandleDragging(const wxMouseEvent & event, wxRect & r,
-      const ZoomInfo &zoomInfo, bool dB, double dBRange,
-      float zoomMin = -1.0, float zoomMax = 1.0, float eMin = 0., float eMax = 2.);
-   bool HandleMouseButtonUp();
-
-private:
-   float ValueOfPixel(int y, int height, bool upper,
-      bool dB, double dBRange,
-      float zoomMin, float zoomMax);
-   void MoveDragPoint(const wxMouseEvent & event, wxRect & r,
-      const ZoomInfo &zoomInfo, bool dB, double dBRange,
-      float zoomMin, float zoomMax);
 
    Envelope &mEnvelope;
    const bool mMirrored;
