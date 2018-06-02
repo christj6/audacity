@@ -169,7 +169,6 @@ audio tracks.
 #include "WaveTrack.h"
 #include "Prefs.h"
 #include "prefs/GUISettings.h"
-#include "prefs/SpectrogramSettings.h"
 #include "prefs/WaveformSettings.h"
 #include "Spectrum.h"
 #include "ViewInfo.h"

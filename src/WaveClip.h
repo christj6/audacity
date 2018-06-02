@@ -70,13 +70,6 @@ public:
    void Grow(size_t len_, const SpectrogramSettings& settings,
                double pixelsPerSecond, double start_);
 
-   // Calculate the dirty columns at the begin and end of the cache
-   void Populate
-      (const SpectrogramSettings &settings, WaveTrackCache &waveTrackCache,
-       int copyBegin, int copyEnd, size_t numPixels,
-       sampleCount numSamples,
-       double offset, double rate, double pixelsPerSecond);
-
    size_t       len { 0 }; // counts pixels, not samples
    int          algorithm;
    double       pps;
@@ -258,11 +251,6 @@ public:
     * calculations and Contrast */
    bool GetWaveDisplay(WaveDisplay &display,
                        double t0, double pixelsPerSecond, bool &isLoadingOD) const;
-   bool GetSpectrogram(WaveTrackCache &cache,
-                       const float *& spectrogram,
-                       const sampleCount *& where,
-                       size_t numPixels,
-                       double t0, double pixelsPerSecond) const;
    std::pair<float, float> GetMinMax(
       double t0, double t1, bool mayThrow = true) const;
    float GetRMS(double t0, double t1, bool mayThrow = true) const;

@@ -42,9 +42,8 @@ SpectrumPrefs::SpectrumPrefs(wxWindow * parent, wxWindowID winid, WaveTrack *wt)
       SpectrogramSettings &settings = wt->GetSpectrogramSettings();
       mOrigDefaulted = mDefaulted = (&SpectrogramSettings::defaults() == &settings);
       mTempSettings = mOrigSettings = settings;
-      wt->GetSpectrumBounds(&mOrigMin, &mOrigMax);
-      mTempSettings.maxFreq = mOrigMax;
-      mTempSettings.minFreq = mOrigMin;
+      mTempSettings.maxFreq = 1;
+      mTempSettings.minFreq = 0;
       mOrigDisplay = mWt->GetDisplay();
    }
    else  {
@@ -209,10 +208,6 @@ void SpectrumPrefs::PopulateOrExchange(ShuttleGui & S)
 #endif
 
    } S.EndScroller();
-   
-   // Enabling and disabling belongs outside this function.
-   if( S.GetMode() != eIsGettingMetadata )
-      EnableDisableSTFTOnlyControls();
 
    mPopulating = false;
 }
@@ -274,20 +269,16 @@ void SpectrumPrefs::Rollback()
    if (mWt) {
       if (mOrigDefaulted) {
          mWt->SetSpectrogramSettings({});
-         mWt->SetSpectrumBounds(-1, -1);
          if (partner) {
             partner->SetSpectrogramSettings({});
-            partner->SetSpectrumBounds(-1, -1);
          }
       }
       else {
          SpectrogramSettings *pSettings =
             &mWt->GetIndependentSpectrogramSettings();
-         mWt->SetSpectrumBounds(mOrigMin, mOrigMax);
          *pSettings = mOrigSettings;
          if (partner) {
             pSettings = &partner->GetIndependentSpectrogramSettings();
-            partner->SetSpectrumBounds(mOrigMin, mOrigMax);
             *pSettings = mOrigSettings;
          }
       }
@@ -334,21 +325,16 @@ void SpectrumPrefs::Preview()
    if (mWt) {
       if (mDefaulted) {
          mWt->SetSpectrogramSettings({});
-         // ... and so that the vertical scale also defaults:
-         mWt->SetSpectrumBounds(-1, -1);
          if (partner) {
             partner->SetSpectrogramSettings({});
-            partner->SetSpectrumBounds(-1, -1);
          }
       }
       else {
          SpectrogramSettings *pSettings =
             &mWt->GetIndependentSpectrogramSettings();
-         mWt->SetSpectrumBounds(mTempSettings.minFreq, mTempSettings.maxFreq);
          *pSettings = mTempSettings;
          if (partner) {
             pSettings = &partner->GetIndependentSpectrogramSettings();
-            partner->SetSpectrumBounds(mTempSettings.minFreq, mTempSettings.maxFreq);
             *pSettings = mTempSettings;
          }
       }
@@ -425,18 +411,7 @@ void SpectrumPrefs::OnDefaults(wxCommandEvent &)
 
 void SpectrumPrefs::OnAlgorithm(wxCommandEvent &evt)
 {
-   EnableDisableSTFTOnlyControls();
    OnControl(evt);
-}
-
-void SpectrumPrefs::EnableDisableSTFTOnlyControls()
-{
-   // Enable or disable other controls that are applicable only to STFT.
-   const bool STFT =
-      (mAlgorithmChoice->GetSelection() != SpectrogramSettings::algPitchEAC);
-   mGain->Enable(STFT);
-   mRange->Enable(STFT);
-   mFrequencyGain->Enable(STFT);
 }
 
 wxString SpectrumPrefs::HelpPageName()

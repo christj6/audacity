@@ -61,8 +61,6 @@ class SpectrumPrefs final : public PrefsPanel
    void OnAlgorithm(wxCommandEvent &);
    DECLARE_EVENT_TABLE()
 
-   void EnableDisableSTFTOnlyControls();
-
    WaveTrack *const mWt;
    bool mDefaulted, mOrigDefaulted;
 

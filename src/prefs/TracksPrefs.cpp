@@ -74,10 +74,6 @@ void TracksPrefs::Populate()
    mViewChoices.Add(_("Waveform (dB)"));
    mViewCodes.push_back((int)(WaveTrack::obsoleteWaveformDBDisplay));
 
-   mViewChoices.Add(_("Spectrogram"));
-   mViewCodes.push_back(WaveTrack::Spectrum);
-
-
    // How samples are displayed when zoomed in:
 
    mSampleDisplayChoices.Add(_("Connect dots"));

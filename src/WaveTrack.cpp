@@ -334,56 +334,6 @@ void WaveTrack::SetDisplayBounds(float min, float max) const
    mDisplayMax = max;
 }
 
-void WaveTrack::GetSpectrumBounds(float *min, float *max) const
-{
-   const double rate = GetRate();
-
-   const SpectrogramSettings &settings = GetSpectrogramSettings();
-   const SpectrogramSettings::ScaleType type = settings.scaleType;
-
-   const float top = (rate / 2.);
-
-   float bottom;
-   if (type == SpectrogramSettings::stLinear)
-      bottom = 0.0f;
-   else if (type == SpectrogramSettings::stPeriod) {
-      // special case
-      const auto half = settings.GetFFTLength() / 2;
-      // EAC returns no data for below this frequency:
-      const float bin2 = rate / half;
-      bottom = bin2;
-   }
-   else
-      // logarithmic, etc.
-      bottom = 1.0f;
-
-   {
-      float spectrumMax = mSpectrumMax;
-      if (spectrumMax < 0)
-         spectrumMax = settings.maxFreq;
-      if (spectrumMax < 0)
-         *max = top;
-      else
-         *max = std::max(bottom, std::min(top, spectrumMax));
-   }
-
-   {
-      float spectrumMin = mSpectrumMin;
-      if (spectrumMin < 0)
-         spectrumMin = settings.minFreq;
-      if (spectrumMin < 0)
-         *min = std::max(bottom, top / 1000.0f);
-      else
-         *min = std::max(bottom, std::min(top, spectrumMin));
-   }
-}
-
-void WaveTrack::SetSpectrumBounds(float min, float max) const
-{
-   mSpectrumMin = min;
-   mSpectrumMax = max;
-}
-
 int WaveTrack::ZeroLevelYCoordinate(wxRect rect) const
 {
    return rect.GetTop() +

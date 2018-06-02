@@ -25,7 +25,6 @@ Paul Licameli split from TrackPanel.cpp
 #include "../../WaveTrack.h"
 #include "../../commands/Keyboard.h"
 #include "../../ondemand/ODManager.h"
-#include "../../prefs/SpectrogramSettings.h"
 #include "../../../images/Cursors.h"
 
 #include <wx/event.h>
@@ -66,46 +65,6 @@ namespace
       //ask the wavetrack for the corresponding tip - it may not change tip, but that's fine.
       ODManager::Instance()->FillTipForWaveTrack(static_cast<const WaveTrack*>(t), tip);
       return;
-   }
-
-   /// Converts a frequency to screen y position.
-   wxInt64 FrequencyToPosition(const WaveTrack *wt,
-      double frequency,
-      wxInt64 trackTopEdge,
-      int trackHeight)
-   {
-      const SpectrogramSettings &settings = wt->GetSpectrogramSettings();
-      float minFreq, maxFreq;
-      wt->GetSpectrumBounds(&minFreq, &maxFreq);
-      const NumberScale numberScale(settings.GetScale(minFreq, maxFreq));
-      const float p = numberScale.ValueToPosition(frequency);
-      return trackTopEdge + wxInt64((1.0 - p) * trackHeight);
-   }
-
-   /// Converts a position (mouse Y coordinate) to
-   /// frequency, in Hz.
-   double PositionToFrequency(const WaveTrack *wt,
-      bool maySnap,
-      wxInt64 mouseYCoordinate,
-      wxInt64 trackTopEdge,
-      int trackHeight)
-   {
-      const double rate = wt->GetRate();
-
-      // Handle snapping
-      if (maySnap &&
-         mouseYCoordinate - trackTopEdge < FREQ_SNAP_DISTANCE)
-         return rate;
-      if (maySnap &&
-         trackTopEdge + trackHeight - mouseYCoordinate < FREQ_SNAP_DISTANCE)
-         return -1;
-
-      const SpectrogramSettings &settings = wt->GetSpectrogramSettings();
-      float minFreq, maxFreq;
-      wt->GetSpectrumBounds(&minFreq, &maxFreq);
-      const NumberScale numberScale(settings.GetScale(minFreq, maxFreq));
-      const double p = double(mouseYCoordinate - trackTopEdge) / trackHeight;
-      return numberScale.PositionToValue(1.0 - p);
    }
 
    template<typename T>
@@ -893,61 +852,4 @@ void SelectHandle::AssignSelection
    if (pTrack && (pTrack->GetKind() == Track::Wave) && ODManager::IsInstanceCreated())
       ODManager::Instance()->DemandTrackUpdate
          (static_cast<WaveTrack*>(pTrack),sel0); //sel0 is sometimes less than mSelStart
-}
-
-void SelectHandle::HandleCenterFrequencyClick
-(const ViewInfo &viewInfo, bool shiftDown, const WaveTrack *pTrack, double value)
-{
-   if (shiftDown) {
-      // Disable time selection
-      mSelStartValid = false;
-      mFreqSelTrack = Track::Pointer<const WaveTrack>( pTrack );
-      mFreqSelPin = value;
-      mFreqSelMode = FREQ_SEL_DRAG_CENTER;
-   }
-   else {
-#ifndef SPECTRAL_EDITING_ESC_KEY
-      // Start center snapping
-      // Turn center snapping on (the only way to do this)
-      mFreqSelMode = FREQ_SEL_SNAPPING_CENTER;
-      // Disable time selection
-      mSelStartValid = false;
-      StartSnappingFreqSelection(viewInfo, pTrack);
-#endif
-   }
-}
-
-void SelectHandle::StartSnappingFreqSelection
-   (const ViewInfo &viewInfo, const WaveTrack *pTrack)
-{
-   static const size_t minLength = 8;
-
-   // Grab samples, just for this track, at these times
-   std::vector<float> frequencySnappingData;
-   const auto start =
-      pTrack->TimeToLongSamples(viewInfo.selectedRegion.t0());
-   const auto end =
-      pTrack->TimeToLongSamples(viewInfo.selectedRegion.t1());
-   const auto length =
-      std::min(frequencySnappingData.max_size(),
-         limitSampleBufferSize(10485760,
-            end - start));
-   const auto effectiveLength = std::max(minLength, length);
-   frequencySnappingData.resize(effectiveLength, 0.0f);
-   pTrack->Get(
-      reinterpret_cast<samplePtr>(&frequencySnappingData[0]),
-      floatSample, start, length, fillZero,
-      // Don't try to cope with exceptions, just read zeroes instead.
-      false);
-
-   // Use same settings as are now used for spectrogram display,
-   // except, shrink the window as needed so we get some answers
-
-   const SpectrogramSettings &settings = pTrack->GetSpectrogramSettings();
-   auto windowSize = settings.GetFFTLength();
-
-   while(windowSize > effectiveLength)
-      windowSize >>= 1;
-
-   // We can now throw away the sample data but we keep the spectrum.
 }

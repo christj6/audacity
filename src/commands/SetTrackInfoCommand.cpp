@@ -40,7 +40,6 @@ SetTrackAudioCommand and SetTrackVisualsCommand.
 #include "../TrackPanel.h"
 #include "../WaveTrack.h"
 #include "../prefs/WaveformSettings.h"
-#include "../prefs/SpectrogramSettings.h"
 #include "../ShuttleGui.h"
 #include "CommandContext.h"
 
@@ -155,14 +154,12 @@ static const wxString kColourStrings[nColours] =
 enum kDisplayTypes
 {
    kWaveform,
-   kSpectrogram,
    nDisplayTypes
 };
 
 static const wxString kDisplayTypeStrings[nDisplayTypes] =
 {
    XO("Waveform"),
-   XO("Spectrogram"),
 };
 
 enum kScaleTypes
@@ -253,11 +250,8 @@ bool SetTrackVisualsCommand::ApplyInner( Track * t )
       t->SetHeight( mHeight );
 
    if( wt && bHasDisplayType  )
-      wt->SetDisplay(
-         (mDisplayType == kWaveform) ?
-            WaveTrack::WaveTrackDisplayValues::Waveform
-            : WaveTrack::WaveTrackDisplayValues::Spectrum
-         );
+      wt->SetDisplay(WaveTrack::WaveTrackDisplayValues::Waveform);
+
    if( wt && bHasScaleType )
       wt->GetIndependentWaveformSettings().scaleType = 
          (mScaleType==kLinear) ? 
@@ -273,14 +267,6 @@ bool SetTrackVisualsCommand::ApplyInner( Track * t )
       }
    }
 
-   if( wt && bHasUseSpecPrefs   ){
-      wt->UseSpectralPrefs( bUseSpecPrefs );
-   }
-   if( wt && bHasSpectralSelect )
-      wt->GetSpectrogramSettings().spectralSelection = bSpectralSelect;
-   if( wt && bHasGrayScale )
-      wt->GetSpectrogramSettings().isGrayscale = bGrayScale;
-
    return true;
 }
 
@@ -288,7 +274,6 @@ bool SetTrackVisualsCommand::ApplyInner( Track * t )
 SetTrackCommand::SetTrackCommand()
 {
    mSetStatus.mbPromptForTracks = false;
-   // mSetAudio.mbPromptForTracks = false;
    mSetVisuals.mbPromptForTracks = false;
 }
 

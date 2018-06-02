@@ -571,8 +571,6 @@ private:
 
    void GetDisplayBounds(float *min, float *max) const;
    void SetDisplayBounds(float min, float max) const;
-   void GetSpectrumBounds(float *min, float *max) const;
-   void SetSpectrumBounds(float min, float max) const;
 
    // For display purposes, calculate the y coordinate where the midline of
    // the wave should be drawn, if display minimum and maximum map to the

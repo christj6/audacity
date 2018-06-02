@@ -93,12 +93,6 @@ private:
        ViewInfo &viewInfo, int mouseXCoordinate, int trackLeftEdge,
        Track *pTrack);
    void AssignSelection(ViewInfo &viewInfo, double selend, Track *pTrack);
-
-   void HandleCenterFrequencyClick
-      (const ViewInfo &viewInfo, bool shiftDown,
-       const WaveTrack *pTrack, double value);
-   static void StartSnappingFreqSelection
-      (const ViewInfo &viewInfo, const WaveTrack *pTrack);
 private:
    //void ResetFreqSelectionPin
    //   (const ViewInfo &viewInfo, double hintFrequency, bool logF);
