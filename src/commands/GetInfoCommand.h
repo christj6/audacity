@@ -51,7 +51,6 @@ private:
    bool SendPreferences(const CommandContext & context);
    bool SendTracks(const CommandContext & context);
    bool SendClips(const CommandContext & context);
-   bool SendEnvelopes(const CommandContext & context);
    bool SendBoxes(const CommandContext & context);
 
    void ExploreMenu( const CommandContext &context, wxMenu * pMenu, int Id, int depth );
