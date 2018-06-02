@@ -116,20 +116,6 @@ namespace
       *pValue = Value;
    }
 
-   // This returns true if we're a spectral editing track.
-   inline bool isSpectralSelectionTrack(const Track *pTrack) {
-      if (pTrack &&
-         pTrack->GetKind() == Track::Wave) {
-         const WaveTrack *const wt = static_cast<const WaveTrack*>(pTrack);
-         const SpectrogramSettings &settings = wt->GetSpectrogramSettings();
-         const int display = wt->GetDisplay();
-         return (display == WaveTrack::Spectrum) && settings.SpectralSelectionEnabled();
-      }
-      else {
-         return false;
-      }
-   }
-
    enum SelectionBoundary {
       SBNone,
       SBLeft, SBRight,
