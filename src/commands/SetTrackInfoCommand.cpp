@@ -203,10 +203,6 @@ bool SetTrackVisualsCommand::DefineParams( ShuttleParams & S ){
    S.OptionalN( bHasColour         ).DefineEnum( mColour,         wxT("Color"),      kColour0,  colours );
    S.OptionalN( bHasVZoom          ).DefineEnum( mVZoom,          wxT("VZoom"),      kReset,    vzooms );
 
-   S.OptionalN( bHasUseSpecPrefs   ).Define(     bUseSpecPrefs,   wxT("SpecPrefs"),  false );
-   S.OptionalN( bHasSpectralSelect ).Define(     bSpectralSelect, wxT("SpectralSel"),true );
-   S.OptionalN( bHasGrayScale      ).Define(     bGrayScale,      wxT("GrayScale"),  false );
-
    return true;
 };
 
@@ -226,14 +222,6 @@ void SetTrackVisualsCommand::PopulateOrExchange(ShuttleGui & S)
       S.Optional( bHasDisplayType ).TieChoice(          _("Display:"),       mDisplayType, &displays );
       S.Optional( bHasScaleType   ).TieChoice(          _("Scale:"),         mScaleType,   &scales );
       S.Optional( bHasVZoom       ).TieChoice(          _("VZoom:"),         mVZoom,       &vzooms );
-   }
-   S.EndMultiColumn();
-   S.StartMultiColumn(2, wxEXPAND);
-   {
-      S.SetStretchyCol( 1 );
-      S.Optional( bHasUseSpecPrefs   ).TieCheckBox( _("Use Spectral Prefs"), bUseSpecPrefs );
-      S.Optional( bHasSpectralSelect ).TieCheckBox( _("Spectral Select"),    bSpectralSelect);
-      S.Optional( bHasGrayScale      ).TieCheckBox( _("Gray Scale"),         bGrayScale );
    }
    S.EndMultiColumn();
 }

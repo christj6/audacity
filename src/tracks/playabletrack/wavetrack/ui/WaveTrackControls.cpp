@@ -622,7 +622,7 @@ BEGIN_POPUP_MENU(WaveTrackMenuTable)
    POPUP_MENU_ITEM(OnSwapChannelsID, _("Swap Stereo &Channels"), OnSwapChannels)
 
    WaveTrack *const pTrack = static_cast<WaveTrack*>(mpTrack);
-   if( pTrack && pTrack->GetDisplay() != WaveTrack::Spectrum  ){
+   if( pTrack && pTrack->GetDisplay() == WaveTrack::Waveform  ){
       POPUP_MENU_SEPARATOR()
       POPUP_MENU_SUB_MENU(OnWaveColorID, _("&Wave Color"), WaveColorMenuTable)
    }

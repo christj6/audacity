@@ -92,20 +92,12 @@ public:
    int mScaleType;
    int mVZoom;
 
-   bool bUseSpecPrefs;
-   bool bSpectralSelect;
-   bool bGrayScale;
-
 // For tracking optional parameters.
    bool bHasColour;
    bool bHasHeight;
    bool bHasDisplayType;
    bool bHasScaleType;
    bool bHasVZoom;
-
-   bool bHasUseSpecPrefs;
-   bool bHasSpectralSelect;
-   bool bHasGrayScale;
 };
 
 class SetTrackCommand : public SetTrackBase
