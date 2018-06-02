@@ -51,7 +51,6 @@
 #include "PlaybackPrefs.h"
 #include "QualityPrefs.h"
 #include "RecordingPrefs.h"
-#include "SpectrumPrefs.h"
 #include "ThemePrefs.h"
 #include "TracksPrefs.h"
 #include "TracksBehaviorsPrefs.h"
@@ -157,7 +156,6 @@ PrefsDialog::Factories
 #endif
    // static WaveformPrefsFactory waveformPrefsFactory;
    static TracksBehaviorsPrefsFactory tracksBehaviorsPrefsFactory;
-   static SpectrumPrefsFactory spectrumPrefsFactory;
    static DirectoriesPrefsFactory directoriesPrefsFactory;
    static WarningsPrefsFactory warningsPrefsFactory;
    // static BatchPrefsFactory batchPrefsFactory;
@@ -175,7 +173,6 @@ PrefsDialog::Factories
       PrefsNode(&tracksPrefsFactory, 2),
       // &waveformPrefsFactory,
       &tracksBehaviorsPrefsFactory,
-      &spectrumPrefsFactory,
 
       // Group one other page
       PrefsNode(&importExportPrefsFactory, 1),
@@ -478,7 +475,6 @@ void PrefsDialog::OnOK(wxCommandEvent & WXUNUSED(event))
    }
 
    WaveformSettings::defaults().LoadPrefs();
-   SpectrogramSettings::defaults().LoadPrefs();
 
    if( IsModal() )
       EndModal(true);

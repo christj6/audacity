@@ -290,16 +290,6 @@ WaveTrack::ConvertLegacyDisplayValue(int oldValue)
       newValue = WaveTrack::Waveform; break;
    case WaveformDB:
       newValue = WaveTrack::obsoleteWaveformDBDisplay; break;
-   case Spectrogram:
-   case SpectrogramLogF:
-   case Pitch:
-      newValue = WaveTrack::Spectrum; break;
-      /*
-   case SpectrogramLogF:
-      newValue = WaveTrack::SpectrumLogDisplay; break;
-   case Pitch:
-      newValue = WaveTrack::PitchDisplay; break;
-      */
    }
    return newValue;
 }

@@ -23,7 +23,6 @@ Paul Licameli split from TrackPanel.cpp
 #include "../../../../widgets/PopupMenuTable.h"
 #include "../../../../ondemand/ODManager.h"
 #include "../../../../prefs/PrefsDialog.h"
-#include "../../../../prefs/SpectrumPrefs.h"
 #include "../../../../prefs/TracksBehaviorsPrefs.h"
 #include "../../../../prefs/WaveformPrefs.h"
 #include "../../../../widgets/ErrorDialog.h"
@@ -613,8 +612,6 @@ void WaveTrackMenuTable::InitMenu(Menu *pMenu, void *pUserData)
    pMenu->Enable(OnSwapChannelsID, !isMono);
 }
 
-// note: the "removed pTable param from BuildMenu" commit from May 17, 2018 broke the submenus
-// 1 parent 346a67c commit 4524a1080075f501e6e386b1e5419dff0e88e65b
 BEGIN_POPUP_MENU(WaveTrackMenuTable)
    POPUP_MENU_SEPARATOR()
 
