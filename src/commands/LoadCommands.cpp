@@ -31,7 +31,6 @@ modelled on BuiltinEffectsModule
 #include "../commands/HelpCommand.h"
 #include "../commands/ImportExportCommands.h"
 #include "../commands/OpenSaveCommands.h"
-#include "../commands/SetEnvelopeCommand.h"
 #include "../commands/SetClipCommand.h"
 #include "../commands/SetProjectCommand.h"
 #include "../commands/DragCommand.h"
@@ -47,7 +46,6 @@ modelled on BuiltinEffectsModule
    COMMAND( SET_TRACK,           SetTrackCommand, () )         \
    COMMAND( SET_TRACK_STATUS,    SetTrackStatusCommand, () )   \
    COMMAND( SET_TRACK_VISUALS,   SetTrackVisualsCommand, () )  \
-   COMMAND( SET_ENVELOPE,        SetEnvelopeCommand, () )      \
    COMMAND( SET_CLIP,            SetClipCommand, () )          \
    COMMAND( SET_PROJECT,         SetProjectCommand, () )       \
    COMMAND( SELECT,              SelectCommand, () )           \
