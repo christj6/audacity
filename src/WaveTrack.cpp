@@ -51,7 +51,6 @@ Track classes.
 
 #include "ondemand/ODManager.h"
 
-#include "prefs/SpectrumPrefs.h"
 #include "prefs/TracksPrefs.h"
 #include "prefs/WaveformPrefs.h"
 
@@ -156,14 +155,6 @@ void WaveTrack::Reinit(const WaveTrack &orig)
    Init(orig);
 
    {
-      auto &settings = orig.mpSpectrumSettings;
-      if (settings)
-         mpSpectrumSettings = std::make_unique<SpectrogramSettings>(*settings);
-      else
-         mpSpectrumSettings.reset();
-   }
-
-   {
       auto &settings = orig.mpWaveformSettings;
       if (settings)
          mpWaveformSettings = std::make_unique<WaveformSettings>(*settings);
@@ -184,8 +175,6 @@ void WaveTrack::Merge(const Track &orig)
       mPan     = wt.mPan;
       mDisplayMin = wt.mDisplayMin;
       mDisplayMax = wt.mDisplayMax;
-      SetSpectrogramSettings(wt.mpSpectrumSettings
-         ? std::make_unique<SpectrogramSettings>(*wt.mpSpectrumSettings) : nullptr);
       SetWaveformSettings
          (wt.mpWaveformSettings ? std::make_unique<WaveformSettings>(*wt.mpWaveformSettings) : nullptr);
    }
@@ -599,54 +588,6 @@ void WaveTrack::ClearAndAddCutLine(double t0, double t1)
 {
    HandleClear(t0, t1, true, false);
 }
-
-const SpectrogramSettings &WaveTrack::GetSpectrogramSettings() const
-{
-   if (mpSpectrumSettings)
-      return *mpSpectrumSettings;
-   else
-      return SpectrogramSettings::defaults();
-}
-
-SpectrogramSettings &WaveTrack::GetSpectrogramSettings()
-{
-   if (mpSpectrumSettings)
-      return *mpSpectrumSettings;
-   else
-      return SpectrogramSettings::defaults();
-}
-
-SpectrogramSettings &WaveTrack::GetIndependentSpectrogramSettings()
-{
-   if (!mpSpectrumSettings)
-      mpSpectrumSettings =
-      std::make_unique<SpectrogramSettings>(SpectrogramSettings::defaults());
-   return *mpSpectrumSettings;
-}
-
-void WaveTrack::SetSpectrogramSettings(std::unique_ptr<SpectrogramSettings> &&pSettings)
-{
-   if (mpSpectrumSettings != pSettings) {
-      mpSpectrumSettings = std::move(pSettings);
-   }
-}
-
-void WaveTrack::UseSpectralPrefs( bool bUse )
-{  
-   if( bUse ){
-      if( !mpSpectrumSettings )
-         return;
-      // reset it, and next we will be getting the defaults.
-      mpSpectrumSettings.reset();
-   }
-   else {
-      if( mpSpectrumSettings )
-         return;
-      GetIndependentSpectrogramSettings();
-   }
-}
-
-
 
 const WaveformSettings &WaveTrack::GetWaveformSettings() const
 {

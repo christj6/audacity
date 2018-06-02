@@ -30,7 +30,6 @@ class BlockArray;
 class DirManager;
 class Envelope;
 class Sequence;
-class SpectrogramSettings;
 class WaveCache;
 class WaveTrackCache;
 

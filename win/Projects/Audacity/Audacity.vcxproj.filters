@@ -323,9 +323,6 @@
     <ClCompile Include="..\..\..\src\prefs\RecordingPrefs.cpp">
       <Filter>src\prefs</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\prefs\SpectrumPrefs.cpp">
-      <Filter>src\prefs</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\prefs\ThemePrefs.cpp">
       <Filter>src\prefs</Filter>
     </ClCompile>
@@ -526,9 +523,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\ViewInfo.cpp">
       <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\prefs\SpectrogramSettings.cpp">
-      <Filter>src\prefs</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\prefs\WaveformPrefs.cpp">
       <Filter>src\prefs</Filter>
@@ -976,9 +970,6 @@
     <ClInclude Include="..\..\..\src\prefs\RecordingPrefs.h">
       <Filter>src\prefs</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\prefs\SpectrumPrefs.h">
-      <Filter>src\prefs</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\prefs\ThemePrefs.h">
       <Filter>src\prefs</Filter>
     </ClInclude>
@@ -1212,9 +1203,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\AudacityHeaders.h">
       <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\prefs\SpectrogramSettings.h">
-      <Filter>src\prefs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\NumberScale.h">
       <Filter>src</Filter>

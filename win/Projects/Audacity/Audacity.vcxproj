@@ -175,7 +175,6 @@
     <ClCompile Include="..\..\..\src\PluginManager.cpp" />
     <ClCompile Include="..\..\..\src\Prefs.cpp" />
     <ClCompile Include="..\..\..\src\prefs\BatchPrefs.cpp" />
-    <ClCompile Include="..\..\..\src\prefs\SpectrogramSettings.cpp" />
     <ClCompile Include="..\..\..\src\prefs\WaveformPrefs.cpp" />
     <ClCompile Include="..\..\..\src\prefs\WaveformSettings.cpp" />
     <ClCompile Include="..\..\..\src\Profiler.cpp" />
@@ -270,7 +269,6 @@
     <ClCompile Include="..\..\..\src\prefs\PrefsDialog.cpp" />
     <ClCompile Include="..\..\..\src\prefs\QualityPrefs.cpp" />
     <ClCompile Include="..\..\..\src\prefs\RecordingPrefs.cpp" />
-    <ClCompile Include="..\..\..\src\prefs\SpectrumPrefs.cpp" />
     <ClCompile Include="..\..\..\src\prefs\ThemePrefs.cpp" />
     <ClCompile Include="..\..\..\src\prefs\TracksBehaviorsPrefs.cpp" />
     <ClCompile Include="..\..\..\src\prefs\TracksPrefs.cpp" />
@@ -383,7 +381,6 @@
     <ClInclude Include="..\..\..\src\ModuleManager.h" />
     <ClInclude Include="..\..\..\src\NumberScale.h" />
     <ClInclude Include="..\..\..\src\prefs\GUISettings.h" />
-    <ClInclude Include="..\..\..\src\prefs\SpectrogramSettings.h" />
     <ClInclude Include="..\..\..\src\prefs\WaveformPrefs.h" />
     <ClInclude Include="..\..\..\src\prefs\WaveformSettings.h" />
     <ClInclude Include="..\..\..\src\RefreshCode.h" />
@@ -511,7 +508,6 @@
     <ClInclude Include="..\..\..\src\prefs\PrefsPanel.h" />
     <ClInclude Include="..\..\..\src\prefs\QualityPrefs.h" />
     <ClInclude Include="..\..\..\src\prefs\RecordingPrefs.h" />
-    <ClInclude Include="..\..\..\src\prefs\SpectrumPrefs.h" />
     <ClInclude Include="..\..\..\src\prefs\ThemePrefs.h" />
     <ClInclude Include="..\..\..\src\prefs\TracksPrefs.h" />
     <ClInclude Include="..\..\..\src\prefs\WarningsPrefs.h" />

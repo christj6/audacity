@@ -24,7 +24,6 @@
 
 #include "WaveTrackLocation.h"
 
-class SpectrogramSettings;
 class WaveformSettings;
 
 class CutlineHandle;
@@ -136,16 +135,10 @@ private:
    sampleFormat GetSampleFormat() const { return mFormat; }
    void ConvertToSampleFormat(sampleFormat format);
 
-   const SpectrogramSettings &GetSpectrogramSettings() const;
-   SpectrogramSettings &GetSpectrogramSettings();
-   SpectrogramSettings &GetIndependentSpectrogramSettings();
-   void SetSpectrogramSettings(std::unique_ptr<SpectrogramSettings> &&pSettings);
-
    const WaveformSettings &GetWaveformSettings() const;
    WaveformSettings &GetWaveformSettings();
    WaveformSettings &GetIndependentWaveformSettings();
    void SetWaveformSettings(std::unique_ptr<WaveformSettings> &&pSettings);
-   void UseSpectralPrefs( bool bUse=true );
    //
    // High-level editing
    //
@@ -620,7 +613,6 @@ private:
    double mLegacyProjectFileOffset;
    int mAutoSaveIdent;
 
-   std::unique_ptr<SpectrogramSettings> mpSpectrumSettings;
    std::unique_ptr<WaveformSettings> mpWaveformSettings;
 
    std::weak_ptr<CutlineHandle> mCutlineHandle;

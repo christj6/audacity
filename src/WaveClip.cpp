@@ -34,12 +34,9 @@
 #include "Resample.h"
 #include "Project.h"
 #include "WaveTrack.h"
-// #include "FFT.h"
 #include "Profiler.h"
 #include "InconsistencyException.h"
 #include "UserException.h"
-
-#include "prefs/SpectrogramSettings.h"
 
 #include <wx/listimpl.cpp>
 
@@ -267,35 +264,6 @@ protected:
    ODLock mRegionsMutex;
 
 };
-
-static void ComputeSpectrumUsingRealFFTf
-   (float * __restrict buffer, const FFTParam *hFFT,
-    const float * __restrict window, size_t len, float * __restrict out)
-{
-   size_t i;
-   if(len > hFFT->Points * 2)
-      len = hFFT->Points * 2;
-   for(i = 0; i < len; i++)
-      buffer[i] *= window[i];
-   for( ; i < (hFFT->Points * 2); i++)
-      buffer[i] = 0; // zero pad as needed
-   RealFFTf(buffer, hFFT);
-   // Handle the (real-only) DC
-   float power = buffer[0] * buffer[0];
-   if(power <= 0)
-      out[0] = -160.0;
-   else
-      out[0] = 10.0 * log10f(power);
-   for(i = 1; i < hFFT->Points; i++) {
-      const int index = hFFT->BitReversed[i];
-      const float re = buffer[index], im = buffer[index + 1];
-      power = re * re + im * im;
-      if(power <= 0)
-         out[i] = -160.0;
-      else
-         out[i] = 10.0*log10f(power);
-   }
-}
 
 WaveClip::WaveClip(const std::shared_ptr<DirManager> &projDirManager,
                    sampleFormat format, int rate, int colourIndex)
