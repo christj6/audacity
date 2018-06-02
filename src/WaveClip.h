@@ -52,24 +52,6 @@ public:
    {
    }
 
-   bool Matches(int dirty_, double pixelsPerSecond,
-      const SpectrogramSettings &settings, double rate) const;
-
-   // Calculate one column of the spectrum
-   bool CalculateOneSpectrum
-      (const SpectrogramSettings &settings,
-       WaveTrackCache &waveTrackCache,
-       const int xx, sampleCount numSamples,
-       double offset, double rate, double pixelsPerSecond,
-       int lowerBoundX, int upperBoundX,
-       const std::vector<float> &gainFactors,
-       float* __restrict scratch,
-       float* __restrict out) const;
-
-   // Grow the cache while preserving the (possibly now invalid!) contents
-   void Grow(size_t len_, const SpectrogramSettings& settings,
-               double pixelsPerSecond, double start_);
-
    size_t       len { 0 }; // counts pixels, not samples
    int          algorithm;
    double       pps;
