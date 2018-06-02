@@ -52,9 +52,7 @@ and sample size to help you importing data of an unknown format.
 #include <wx/textctrl.h>
 #include <wx/timer.h>
 
-// #include "RawAudioGuess.h"
 #include "MultiFormatReader.h"
-#include "FormatClassifier.h"
 
 #include "sndfile.h"
 

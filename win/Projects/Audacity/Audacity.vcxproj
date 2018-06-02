@@ -160,9 +160,7 @@
     <ClCompile Include="..\..\..\src\HelpText.cpp" />
     <ClCompile Include="..\..\..\src\HistoryWindow.cpp" />
     <ClCompile Include="..\..\..\src\ImageManipulation.cpp" />
-    <ClCompile Include="..\..\..\src\import\FormatClassifier.cpp" />
     <ClCompile Include="..\..\..\src\import\MultiFormatReader.cpp" />
-    <ClCompile Include="..\..\..\src\import\SpecPowerMeter.cpp" />
     <ClCompile Include="..\..\..\src\InconsistencyException.cpp" />
     <ClCompile Include="..\..\..\src\Internat.cpp" />
     <ClCompile Include="..\..\..\src\LangChoice.cpp" />
@@ -371,10 +369,8 @@
     <ClInclude Include="..\..\..\src\Diags.h" />
     <ClInclude Include="..\..\..\src\FileException.h" />
     <ClInclude Include="..\..\..\src\HitTestResult.h" />
-    <ClInclude Include="..\..\..\src\import\FormatClassifier.h" />
     <ClInclude Include="..\..\..\src\import\ImportForwards.h" />
     <ClInclude Include="..\..\..\src\import\MultiFormatReader.h" />
-    <ClInclude Include="..\..\..\src\import\SpecPowerMeter.h" />
     <ClInclude Include="..\..\..\src\InconsistencyException.h" />
     <ClInclude Include="..\..\..\src\MemoryX.h" />
     <ClInclude Include="..\..\..\src\ModuleManager.h" />

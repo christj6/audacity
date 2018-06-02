@@ -497,12 +497,6 @@
     <ClCompile Include="..\..\..\src\widgets\HelpSystem.cpp">
       <Filter>src\widgets</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\import\FormatClassifier.cpp">
-      <Filter>src\import</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\import\SpecPowerMeter.cpp">
-      <Filter>src\import</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\import\MultiFormatReader.cpp">
       <Filter>src\import</Filter>
     </ClCompile>
@@ -1146,12 +1140,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\widgets\HelpSystem.h">
       <Filter>src\widgets</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\import\FormatClassifier.h">
-      <Filter>src\import</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\import\SpecPowerMeter.h">
-      <Filter>src\import</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\import\MultiFormatReader.h">
       <Filter>src\import</Filter>
