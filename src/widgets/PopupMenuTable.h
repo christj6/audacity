@@ -89,7 +89,7 @@ public:
    // Optional pUserData gets passed to the InitMenu routines of tables.
    // No memory management responsibility is assumed by this function.
    static std::unique_ptr<Menu> BuildMenu
-      (wxEvtHandler *pParent, void *pUserData = NULL);
+      (wxEvtHandler *pParent, PopupMenuTable *pTable, void *pUserData = NULL);
 };
 
 /*
@@ -132,7 +132,7 @@ Elswhere,
 
 MyTable myTable;
 MyData data;
-auto pMenu = PopupMenuTable::BuildMenu(pParent, &data);
+auto pMenu = PopupMenuTable::BuildMenu(pParent, &myTable, &data);
 
 // Optionally:
 OtherTable otherTable;

@@ -52,7 +52,8 @@ void PopupMenuTable::Menu::Extend(PopupMenuTable *pTable)
          break;
       case PopupMenuTable::Entry::SubMenu:
       {
-         auto subMenu = BuildMenu( this->pParent, pUserData );
+         const auto subTable = pEntry->subTable;
+         auto subMenu = BuildMenu( this->pParent, subTable, pUserData );
          this->AppendSubMenu( subMenu.release(), pEntry->caption );
       }
       default:
@@ -86,9 +87,10 @@ void PopupMenuTable::Menu::Disconnect()
 
 // static
 std::unique_ptr<PopupMenuTable::Menu> PopupMenuTable::BuildMenu
-( wxEvtHandler *pParent, void *pUserData )
+( wxEvtHandler *pParent, PopupMenuTable *pTable, void *pUserData )
 {
    // Rebuild as needed each time.  That makes it safe in case of language change.
    std::unique_ptr<Menu> theMenu{ safenew Menu( pParent, pUserData ) };
+   theMenu->Extend(pTable);
    return std::move( theMenu );
 }
