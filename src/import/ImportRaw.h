@@ -43,8 +43,4 @@ using TrackHolders = std::vector<std::unique_ptr<WaveTrack>>;
 
 #endif
 
-
-void ImportRaw(wxWindow *parent, const wxString &fileName,
-   TrackFactory *trackFactory, TrackHolders &outTracks);
-
 #endif

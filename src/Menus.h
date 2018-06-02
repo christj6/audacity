@@ -258,8 +258,6 @@ void OnRescanDevices(const CommandContext &context );
 // Import Submenu
 void OnImport(const CommandContext &context );
 
-void OnImportRaw(const CommandContext &context );
-
 private:
    bool mCursorPositionHasBeenStored{false};
    double mCursorPositionStored;

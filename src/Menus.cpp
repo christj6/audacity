@@ -216,7 +216,6 @@ void AudacityProject::CreateMenusAndCommands()
       c->BeginSubMenu(_("&Import"));
 
       c->AddItem(wxT("ImportAudio"), XXO("&Audio..."), FN(OnImport), wxT("Ctrl+Shift+I"));
-      c->AddItem(wxT("ImportRaw"), XXO("&Raw Data..."), FN(OnImportRaw));
 
       c->EndSubMenu();
       c->AddSeparator();
@@ -4153,32 +4152,6 @@ void AudacityProject::OnImport(const CommandContext &WXUNUSED(context) )
    }
 
    ZoomAfterImport(nullptr);
-}
-
-void AudacityProject::OnImportRaw(const CommandContext &WXUNUSED(context) )
-{
-   wxString fileName =
-       FileNames::SelectFile(FileNames::Operation::Open,
-                    _("Select any uncompressed audio file"),
-                    wxEmptyString,     // Path
-                    wxT(""),       // Name
-                    wxT(""),       // Extension
-                    _("All files|*"),
-                    wxRESIZE_BORDER,        // Flags
-                    this);    // Parent
-
-   if (fileName == wxT(""))
-      return;
-
-   TrackHolders newTracks;
-
-   ::ImportRaw(this, fileName, GetTrackFactory(), newTracks);
-
-   if (newTracks.size() <= 0)
-      return;
-
-   AddImportedTracks(fileName, std::move(newTracks));
-   HandleResize(); // Adjust scrollers for NEW track sizes.
 }
 
 void AudacityProject::OnCursorPositionStore(const CommandContext &WXUNUSED(context) )
