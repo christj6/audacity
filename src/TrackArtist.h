@@ -97,19 +97,11 @@ class AUDACITY_DLL_API TrackArtist {
                      const SelectedRegion &selectedRegion, const ZoomInfo &zoomInfo,
                      bool muted);
 
-   void DrawSpectrum(const WaveTrack *track,
-                     wxDC & dc, const wxRect & rect,
-                     const SelectedRegion &selectedRegion, const ZoomInfo &zoomInfo);
-
    void DrawClipWaveform(TrackPanelDrawingContext &context,
                          const WaveTrack *track, const WaveClip *clip,
                          const wxRect & rect,
                          const SelectedRegion &selectedRegion, const ZoomInfo &zoomInfo,
                          bool dB, bool muted);
-
-   void DrawClipSpectrum(WaveTrackCache &cache, const WaveClip *clip,
-                         wxDC & dc, const wxRect & rect,
-                         const SelectedRegion &selectedRegion, const ZoomInfo &zoomInfo);
 
    // Waveform utility functions
 
