@@ -143,7 +143,6 @@
     <ClCompile Include="..\..\..\src\commands\LoadCommands.cpp" />
     <ClCompile Include="..\..\..\src\commands\OpenSaveCommands.cpp" />
     <ClCompile Include="..\..\..\src\commands\SetClipCommand.cpp" />
-    <ClCompile Include="..\..\..\src\commands\SetEnvelopeCommand.cpp" />
     <ClCompile Include="..\..\..\src\commands\SetProjectCommand.cpp" />
     <ClCompile Include="..\..\..\src\Dependencies.cpp" />
     <ClCompile Include="..\..\..\src\DeviceManager.cpp" />
@@ -364,7 +363,6 @@
     <ClInclude Include="..\..\..\src\commands\LoadCommands.h" />
     <ClInclude Include="..\..\..\src\commands\OpenSaveCommands.h" />
     <ClInclude Include="..\..\..\src\commands\SetClipCommand.h" />
-    <ClInclude Include="..\..\..\src\commands\SetEnvelopeCommand.h" />
     <ClInclude Include="..\..\..\src\commands\SetProjectCommand.h" />
     <ClInclude Include="..\..\..\src\Diags.h" />
     <ClInclude Include="..\..\..\src\FileException.h" />

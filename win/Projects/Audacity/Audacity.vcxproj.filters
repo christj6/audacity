@@ -662,9 +662,6 @@
     <ClCompile Include="..\..\..\src\commands\SetProjectCommand.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\commands\SetEnvelopeCommand.cpp">
-      <Filter>src\commands</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\commands\DragCommand.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
@@ -1373,9 +1370,6 @@
       <Filter>src\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\commands\SetProjectCommand.h">
-      <Filter>src\commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\commands\SetEnvelopeCommand.h">
       <Filter>src\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\commands\DragCommand.h">
