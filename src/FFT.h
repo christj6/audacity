@@ -53,17 +53,6 @@
 #endif
 
 /*
- * This is the function you will use the most often.
- * Given an array of floats, this will compute the power
- * spectrum by doing a Real FFT and then computing the
- * sum of the squares of the real and imaginary parts.
- * Note that the output array is half the length of the
- * input array, and that NumSamples must be a power of two.
- */
-
-void PowerSpectrum(size_t NumSamples, const float *In, float *Out);
-
-/*
  * Computes an FFT when the input data is real but you still
  * want complex data as output.  The output arrays are the
  * same length as the input, but will be conjugate-symmetric

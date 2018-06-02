@@ -322,10 +322,6 @@ public:
    // used by commands which interact with clips using the keyboard
    bool SharesBoundaryWithNextClip(const WaveClip* next) const;
 
-public:
-   // Cache of values to colour pixels of Spectrogram - used by TrackArtist
-   mutable std::unique_ptr<SpecPxCache> mSpecPxCache;
-
 protected:
    mutable wxRect mDisplayRect {};
 

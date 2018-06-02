@@ -292,38 +292,6 @@ void InverseRealFFT(size_t NumSamples, const float *RealIn, const float *ImagIn,
 }
 
 /*
- * PowerSpectrum
- *
- * This function uses RealFFTf() from RealFFTf.h to perform the real
- * FFT computation, and then squares the real and imaginary part of
- * each coefficient, extracting the power and throwing away the phase.
- *
- * For speed, it does not call RealFFT, but duplicates some
- * of its code.
- */
-
-void PowerSpectrum(size_t NumSamples, const float *In, float *Out)
-{
-   auto hFFT = GetFFT(NumSamples);
-   Floats pFFT{ NumSamples };
-   // Copy the data into the processing buffer
-   for (size_t i = 0; i<NumSamples; i++)
-      pFFT[i] = In[i];
-
-   // Perform the FFT
-   RealFFTf(pFFT.get(), hFFT.get());
-
-   // Copy the data into the real and imaginary outputs
-   for (size_t i = 1; i<NumSamples / 2; i++) {
-      Out[i]= (pFFT[hFFT->BitReversed[i]  ]*pFFT[hFFT->BitReversed[i]  ])
-         + (pFFT[hFFT->BitReversed[i]+1]*pFFT[hFFT->BitReversed[i]+1]);
-   }
-   // Handle the (real-only) DC and Fs/2 bins
-   Out[0] = pFFT[0]*pFFT[0];
-   Out[NumSamples / 2] = pFFT[1]*pFFT[1];
-}
-
-/*
  * Windowing Functions
  */
 

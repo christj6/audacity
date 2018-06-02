@@ -275,7 +275,6 @@ WaveClip::WaveClip(const std::shared_ptr<DirManager> &projDirManager,
 
    mWaveCache = std::make_unique<WaveCache>();
    mSpecCache = std::make_unique<SpecCache>();
-   mSpecPxCache = std::make_unique<SpecPxCache>(1);
 }
 
 WaveClip::WaveClip(const WaveClip& orig,
@@ -295,7 +294,6 @@ WaveClip::WaveClip(const WaveClip& orig,
 
    mWaveCache = std::make_unique<WaveCache>();
    mSpecCache = std::make_unique<SpecCache>();
-   mSpecPxCache = std::make_unique<SpecPxCache>(1);
 
    if ( copyCutlines )
       for (const auto &clip: orig.mCutLines)
@@ -318,7 +316,6 @@ WaveClip::WaveClip(const WaveClip& orig,
 
    mWaveCache = std::make_unique<WaveCache>();
    mSpecCache = std::make_unique<SpecCache>();
-   mSpecPxCache = std::make_unique<SpecPxCache>(1);
 
    mIsPlaceholder = orig.GetIsPlaceholder();
 

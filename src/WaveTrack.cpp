@@ -260,9 +260,6 @@ WaveTrack::ConvertLegacyDisplayValue(int oldValue)
    enum OldValues {
       Waveform,
       WaveformDB,
-      Spectrogram,
-      SpectrogramLogF,
-      Pitch,
    };
 
    WaveTrackDisplay newValue;
