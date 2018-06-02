@@ -28,7 +28,6 @@
 #include <wx/log.h>
 
 #include "Sequence.h"
-#include "Spectrum.h"
 #include "Prefs.h"
 #include "Envelope.h"
 #include "Resample.h"

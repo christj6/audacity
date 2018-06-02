@@ -170,7 +170,6 @@ audio tracks.
 #include "Prefs.h"
 #include "prefs/GUISettings.h"
 #include "prefs/WaveformSettings.h"
-#include "Spectrum.h"
 #include "ViewInfo.h"
 #include "widgets/Ruler.h"
 #include "Theme.h"

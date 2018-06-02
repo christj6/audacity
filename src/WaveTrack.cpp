@@ -41,7 +41,6 @@ Track classes.
 
 #include "Envelope.h"
 #include "Sequence.h"
-#include "Spectrum.h"
 
 #include "Project.h"
 #include "Internat.h"
