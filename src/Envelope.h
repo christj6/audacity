@@ -246,34 +246,4 @@ inline void EnvPoint::SetVal( Envelope *pEnvelope, double val )
    mVal = val;
 }
 
-// A class that holds state for the duration of dragging
-// of an envelope point.
-class EnvelopeEditor
-{
-public:
-   EnvelopeEditor(Envelope &envelope, bool mirrored);
-   ~EnvelopeEditor();
-
-   // Event Handlers
-   // Each of these returns true if the envelope needs to be redrawn
-   bool MouseEvent(const wxMouseEvent & event, wxRect & r,
-      const ZoomInfo &zoomInfo, bool dB, double dBRange,
-      float zoomMin = -1.0, float zoomMax = 1.0);
-
-private:
-
-   Envelope &mEnvelope;
-   const bool mMirrored;
-
-   /** \brief Number of pixels contour is from the true envelope. */
-   int mContourOffset;
-
-   // double mInitialVal;
-
-   // int mInitialY;
-   bool mUpper;
-   int mButton;
-   bool mDirty;
-};
-
 #endif
