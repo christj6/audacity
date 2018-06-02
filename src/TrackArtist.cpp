@@ -778,8 +778,7 @@ void TrackArtist::DrawWaveformBackground(wxDC &dc, int leftOffset, const wxRect 
                                          int zeroLevelYCoordinate,
                                          bool dB, float dBRange,
                                          double t0, double t1,
-                                         const ZoomInfo &zoomInfo,
-                                         bool highlightEnvelope)
+                                         const ZoomInfo &zoomInfo)
 {
 
    // Visually (one vertical slice of the waveform background, on its side;
@@ -852,11 +851,6 @@ void TrackArtist::DrawWaveformBackground(wxDC &dc, int leftOffset, const wxRect 
          dc.DrawRectangle(l, rect.y + lmaxtop, w, lminbot - lmaxtop);
       }
 
-      if (highlightEnvelope && lmaxbot < lmintop - 1) {
-         dc.SetBrush( AColor::uglyBrush );
-         dc.DrawRectangle(l, rect.y + lmaxbot, w, lmintop - lmaxbot);
-      }
-
       lmaxtop = maxtop;
       lmintop = mintop;
       lmaxbot = maxbot;
@@ -874,10 +868,6 @@ void TrackArtist::DrawWaveformBackground(wxDC &dc, int leftOffset, const wxRect 
    }
    else {
       dc.DrawRectangle(l, rect.y + lmaxtop, w, lminbot - lmaxtop);
-   }
-   if (highlightEnvelope && lmaxbot < lmintop - 1) {
-      dc.SetBrush( AColor::uglyBrush );
-      dc.DrawRectangle(l, rect.y + lmaxbot, w, lmintop - lmaxbot);
    }
 
    //OK, the display bounds are between min and max, which
@@ -1407,8 +1397,6 @@ void TrackArtist::DrawClipWaveform(TrackPanelDrawingContext &context,
    Profiler profiler;
 #endif
 
-   bool highlightEnvelope = false;
-
    const ClipParameters params(false, track, clip, rect, selectedRegion, zoomInfo);
    const wxRect &hiddenMid = params.hiddenMid;
    // The "hiddenMid" rect contains the part of the display actually
@@ -1470,8 +1458,7 @@ void TrackArtist::DrawClipWaveform(TrackPanelDrawingContext &context,
          zoomMin, zoomMax,
          track->ZeroLevelYCoordinate(mid),
          dB, dBRange,
-         t0, t1, zoomInfo,
-         highlightEnvelope);
+         t0, t1, zoomInfo);
    }
 
    WaveDisplay display(hiddenMid.width);

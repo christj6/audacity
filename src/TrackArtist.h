@@ -110,8 +110,7 @@ class AUDACITY_DLL_API TrackArtist {
                                float zoomMin, float zoomMax,
                                int zeroLevelYCoordinate,
                                bool dB, float dBRange,
-                               double t0, double t1, const ZoomInfo &zoomInfo,
-                               bool highlightEnvelope);
+                               double t0, double t1, const ZoomInfo &zoomInfo);
    void DrawMinMaxRMS(wxDC &dc, const wxRect & rect, const double env[],
                       float zoomMin, float zoomMax,
                       bool dB, float dBRange,
