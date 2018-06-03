@@ -53,24 +53,6 @@
 #endif
 
 /*
- * Computes an FFT when the input data is real but you still
- * want complex data as output.  The output arrays are the
- * same length as the input, but will be conjugate-symmetric
- * NumSamples must be a power of two.
- */
-
-void RealFFT(size_t NumSamples,
-             const float *RealIn, float *RealOut, float *ImagOut);
-
-/*
- * Computes an Inverse FFT when the input data is conjugate symmetric
- * so the output is purely real.  NumSamples must be a power of
- * two.
- */
-void InverseRealFFT(size_t NumSamples,
-		    const float *RealIn, const float *ImagIn, float *RealOut);
-
-/*
  * Computes a FFT of complex input and returns complex output.
  * Currently this is the only function here that supports the
  * inverse transform as well.
