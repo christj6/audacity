@@ -104,7 +104,6 @@ public:
    // Control
    void SetOffset(double newOffset);
    void SetTrackLen( double trackLen, double sampleDur = 0.0 );
-   void RescaleValues(double minValue, double maxValue);
    void RescaleTimes( double newLength );
 
    // Accessors
@@ -149,7 +148,6 @@ public:
    double AverageOfInverse( double t0, double t1 ) const;
    double Integral( double t0, double t1 ) const;
    double IntegralOfInverse( double t0, double t1 ) const;
-   double SolveIntegralOfInverse( double t0, double area) const;
 
    void print() const;
    void testMe();
@@ -159,11 +157,6 @@ public:
    /** \brief Add a point at a particular absolute time coordinate */
    int InsertOrReplace(double when, double value)
    { return InsertOrReplaceRelative( when - mOffset, value ); }
-
-   /** \brief Move a point at when to value
-    *
-    * Returns 0 if point moved, -1 if not found.*/
-   int Reassign(double when, double value);
 
    /** \brief DELETE a point by its position in array */
    void Delete(int point);

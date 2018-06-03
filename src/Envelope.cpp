@@ -106,31 +106,6 @@ bool Envelope::ConsistencyCheck()
    return consistent;
 }
 
-/// Rescale function for time tracks (could also be used for other tracks though).
-/// This is used to load old time track project files where the envelope used a 0 to 1
-/// range instead of storing the actual time track values. This function will change the range of the envelope
-/// and rescale all envelope points accordingly (unlike SetRange, which clamps the envelope points to the NEW range).
-/// @minValue - the NEW minimum value
-/// @maxValue - the NEW maximum value
-void Envelope::RescaleValues(double minValue, double maxValue)
-{
-   double oldMinValue = mMinValue;
-   double oldMaxValue = mMaxValue;
-   mMinValue = minValue;
-   mMaxValue = maxValue;
-
-   // rescale the default value
-   double factor = (mDefaultValue - oldMinValue) / (oldMaxValue - oldMinValue);
-   mDefaultValue = ClampValue(mMinValue + (mMaxValue - mMinValue) * factor);
-
-   // rescale all points
-   for( unsigned int i = 0; i < mEnv.size(); i++ ) {
-      factor = (mEnv[i].GetVal() - oldMinValue) / (oldMaxValue - oldMinValue);
-      mEnv[i].SetVal( this, mMinValue + (mMaxValue - mMinValue) * factor );
-   }
-
-}
-
 /// Flatten removes all points from the envelope to
 /// make it horizontal at a chosen y-value.
 /// @value - the y-value for the flat envelope.
@@ -368,11 +343,6 @@ void Envelope::DrawPoints
          }
       }
    }
-}
-
-namespace
-{
-inline int SQR(int x) { return x * x; }
 }
 
 void Envelope::Delete( int point )
@@ -670,26 +640,6 @@ void Envelope::InsertSpace( double t0, double tlen )
    RemoveUnneededPoints( range.second, true );
    RemoveUnneededPoints( range.first - 1, false );
 }
-
-int Envelope::Reassign(double when, double value)
-{
-   when -= mOffset;
-
-   int len = mEnv.size();
-   if (len == 0)
-      return -1;
-
-   int i = 0;
-   while (i < len && when > mEnv[i].GetT())
-      i++;
-
-   if (i >= len || when < mEnv[i].GetT())
-      return -1;
-
-   mEnv[i].SetVal( this, value );
-   return 0;
-}
-
 
 size_t Envelope::GetNumberOfPoints() const
 {
@@ -1333,109 +1283,6 @@ double Envelope::IntegralOfInverse( double t0, double t1 ) const
          i++;
       }
    }
-}
-
-double Envelope::SolveIntegralOfInverse( double t0, double area ) const
-{
-   if(area == 0.0)
-      return t0;
-
-   const auto count = mEnv.size();
-   if(count == 0) // 'empty' envelope
-      return t0 + area * mDefaultValue;
-
-   // Correct for offset!
-   t0 -= mOffset;
-   return mOffset + [&] {
-      // Now we can safely assume t0 is relative time!
-      double lastT, lastVal;
-      int i; // this is the next point to check
-      if(t0 < mEnv[0].GetT()) // t0 preceding the first point
-      {
-         if (area < 0) {
-            return t0 + area * mEnv[0].GetVal();
-         }
-         else {
-            i = 1;
-            lastT = mEnv[0].GetT();
-            lastVal = mEnv[0].GetVal();
-            double added = (lastT - t0) / lastVal;
-            if(added >= area)
-               return t0 + area * mEnv[0].GetVal();
-            area -= added;
-         }
-      }
-      else if(t0 >= mEnv[count - 1].GetT()) // t0 at or following the last point
-      {
-         if (area < 0) {
-            i = (int)count - 2;
-            lastT = mEnv[count - 1].GetT();
-            lastVal = mEnv[count - 1].GetVal();
-            double added = (lastT - t0) / lastVal; // negative
-            if(added <= area)
-               return t0 + area * mEnv[count - 1].GetVal();
-            area -= added;
-         }
-         else {
-            return t0 + area * mEnv[count - 1].GetVal();
-         }
-      }
-      else // t0 enclosed by points
-      {
-         // Skip any points that come before t0 using binary search
-         int lo, hi;
-         BinarySearchForTime(lo, hi, t0);
-         lastVal = InterpolatePoints(mEnv[lo].GetVal(), mEnv[hi].GetVal(), (t0 - mEnv[lo].GetT()) / (mEnv[hi].GetT() - mEnv[lo].GetT()), mDB);
-         lastT = t0;
-         if (area < 0)
-            i = lo;
-         else
-            i = hi; // the point immediately after t0.
-      }
-
-      if (area < 0) {
-         // loop BACKWARDS through the rest of the envelope points until we get to t1
-         // (which is less than t0)
-         while (1)
-         {
-            if(i < 0) // the requested range extends beyond the leftmost point
-            {
-               return lastT + area * lastVal;
-            }
-            else
-            {
-               double added =
-                  -IntegrateInverseInterpolated(mEnv[i].GetVal(), lastVal, lastT - mEnv[i].GetT(), mDB);
-               if(added <= area)
-                  return lastT - SolveIntegrateInverseInterpolated(lastVal, mEnv[i].GetVal(), lastT - mEnv[i].GetT(), -area, mDB);
-               area -= added;
-               lastT = mEnv[i].GetT();
-               lastVal = mEnv[i].GetVal();
-               --i;
-            }
-         }
-      }
-      else {
-         // loop through the rest of the envelope points until we get to t1
-         while (1)
-         {
-            if(i >= (int)count) // the requested range extends beyond the last point
-            {
-               return lastT + area * lastVal;
-            }
-            else
-            {
-               double added = IntegrateInverseInterpolated(lastVal, mEnv[i].GetVal(), mEnv[i].GetT() - lastT, mDB);
-               if(added >= area)
-                  return lastT + SolveIntegrateInverseInterpolated(lastVal, mEnv[i].GetVal(), mEnv[i].GetT() - lastT, area, mDB);
-               area -= added;
-               lastT = mEnv[i].GetT();
-               lastVal = mEnv[i].GetVal();
-               i++;
-            }
-         }
-      }
-   }();
 }
 
 void Envelope::print() const
