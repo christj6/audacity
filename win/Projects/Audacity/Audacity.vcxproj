@@ -151,7 +151,6 @@
     <ClCompile Include="..\..\..\src\Dither.cpp" />
     <ClCompile Include="..\..\..\src\Envelope.cpp" />
     <ClCompile Include="..\..\..\src\FFmpeg.cpp" />
-    <ClCompile Include="..\..\..\src\FFT.cpp" />
     <ClCompile Include="..\..\..\src\FileException.cpp" />
     <ClCompile Include="..\..\..\src\FileFormats.cpp" />
     <ClCompile Include="..\..\..\src\FileIO.cpp" />
@@ -176,7 +175,6 @@
     <ClCompile Include="..\..\..\src\prefs\WaveformSettings.cpp" />
     <ClCompile Include="..\..\..\src\Profiler.cpp" />
     <ClCompile Include="..\..\..\src\Project.cpp" />
-    <ClCompile Include="..\..\..\src\RealFFTf.cpp" />
     <ClCompile Include="..\..\..\src\Resample.cpp" />
     <ClCompile Include="..\..\..\src\RingBuffer.cpp" />
     <ClCompile Include="..\..\..\src\SampleFormat.cpp" />
@@ -423,7 +421,6 @@
     <ClInclude Include="..\..\..\src\Envelope.h" />
     <ClInclude Include="..\..\..\src\Experimental.h" />
     <ClInclude Include="..\..\..\src\FFmpeg.h" />
-    <ClInclude Include="..\..\..\src\FFT.h" />
     <ClInclude Include="..\..\..\src\FileFormats.h" />
     <ClInclude Include="..\..\..\src\FileIO.h" />
     <ClInclude Include="..\..\..\src\FileNames.h" />
@@ -442,7 +439,6 @@
     <ClInclude Include="..\..\..\src\Prefs.h" />
     <ClInclude Include="..\..\..\src\Profiler.h" />
     <ClInclude Include="..\..\..\src\Project.h" />
-    <ClInclude Include="..\..\..\src\RealFFTf.h" />
     <ClInclude Include="..\..\..\src\Resample.h" />
     <ClInclude Include="..\..\..\src\RingBuffer.h" />
     <ClInclude Include="..\..\..\src\SampleFormat.h" />

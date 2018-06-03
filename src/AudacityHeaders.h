@@ -48,7 +48,6 @@
 #include "Diags.h"
 #include "DirManager.h"
 #include "Envelope.h"
-#include "FFT.h"
 #include "FileFormats.h"
 #include "ImageManipulation.h"
 #include "Internat.h"

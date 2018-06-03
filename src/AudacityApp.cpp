@@ -76,7 +76,6 @@ It handles initialization and termination by subclassing wxApp.
 #include "PlatformCompatibility.h"
 #include "FileNames.h"
 #include "SplashDialog.h"
-#include "FFT.h"
 #include "BlockFile.h"
 #include "ondemand/ODManager.h"
 #include "commands/Keyboard.h"

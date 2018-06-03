@@ -107,9 +107,6 @@
     <ClCompile Include="..\..\..\src\FFmpeg.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\FFT.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\FileFormats.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -159,9 +156,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\Project.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\RealFFTf.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\Resample.cpp">
@@ -724,9 +718,6 @@
     <ClInclude Include="..\..\..\src\FFmpeg.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\FFT.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\FileFormats.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -779,9 +770,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\Project.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\RealFFTf.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\Resample.h">
