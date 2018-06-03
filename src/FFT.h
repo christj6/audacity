@@ -80,61 +80,6 @@ void FFT(size_t NumSamples,
          bool InverseTransform,
          const float *RealIn, const float *ImagIn, float *RealOut, float *ImagOut);
 
-/*
- * Multiply values in data by values of the chosen function
- * DO NOT REUSE!  Prefer NewWindowFunc instead
- * This version was inconsistent whether the window functions were
- * symmetrical about NumSamples / 2, or about (NumSamples - 1) / 2
- * It remains for compatibility until we decide to upgrade all the old uses
- * All functions have 0 in data[0] except Rectangular, Hamming and Gaussians
- */
-
-enum eWindowFunctions
-{
-   eWinFuncRectangular,
-   eWinFuncBartlett,
-   eWinFuncHamming,
-   eWinFuncHanning,
-   eWinFuncBlackman,
-   eWinFuncBlackmanHarris,
-   eWinFuncWelch,
-   eWinFuncGaussian25,
-   eWinFuncGaussian35,
-   eWinFuncGaussian45,
-   eWinFuncCount
-};
-
-void WindowFunc(int whichFunction, size_t NumSamples, float *data);
-
-/*
- * Multiply values in data by values of the chosen function
- * All functions are symmetrical about NumSamples / 2 if extraSample is false,
- * otherwise about (NumSamples - 1) / 2
- * All functions have 0 in data[0] except Rectangular, Hamming and Gaussians
- */
-void NewWindowFunc(int whichFunction, size_t NumSamples, bool extraSample, float *data);
-
-/*
- * Multiply values in data by derivative of the chosen function, assuming
- * sampling interval is unit
- * All functions are symmetrical about NumSamples / 2 if extraSample is false,
- * otherwise about (NumSamples - 1) / 2
- * All functions have 0 in data[0] except Rectangular, Hamming and Gaussians
- */
-void DerivativeOfWindowFunc(int whichFunction, size_t NumSamples, bool extraSample, float *data);
-
-/*
- * Returns the name of the windowing function (for UI display)
- */
-
-const wxChar *WindowFuncName(int whichFunction);
-
-/*
- * Returns the number of windowing functions supported
- */
-
-int NumWindowFuncs();
-
 void DeinitFFT();
 
 #endif
