@@ -33,35 +33,6 @@
 #define __AUDACITY_FFT_H__
 
 #include <wx/defs.h>
-
-/*
-  Salvo Ventura - November 2006
-  Added more window functions:
-    * 4: Blackman
-    * 5: Blackman-Harris
-    * 6: Welch
-    * 7: Gaussian(a=2.5)
-    * 8: Gaussian(a=3.5)
-    * 9: Gaussian(a=4.5)
-*/
-
-#include <wx/defs.h>
 #include <wx/wxchar.h>
-
-#ifndef M_PI
-#define	M_PI		3.14159265358979323846  /* pi */
-#endif
-
-/*
- * Computes a FFT of complex input and returns complex output.
- * Currently this is the only function here that supports the
- * inverse transform as well.
- */
-
-void FFT(size_t NumSamples,
-         bool InverseTransform,
-         const float *RealIn, const float *ImagIn, float *RealOut, float *ImagOut);
-
-void DeinitFFT();
 
 #endif

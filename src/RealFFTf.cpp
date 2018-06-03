@@ -47,48 +47,6 @@
 
 #include "RealFFTf.h"
 
-#ifndef M_PI
-#define	M_PI		3.14159265358979323846  /* pi */
-#endif
-
-/*
-*  Initialize the Sine table and Twiddle pointers (bit-reversed pointers)
-*  for the FFT routine.
-*/
-HFFT InitializeFFT(size_t fftlen)
-{
-   int temp;
-   HFFT h{ safenew FFTParam };
-
-   /*
-   *  FFT size is only half the number of data points
-   *  The full FFT output can be reconstructed from this FFT's output.
-   *  (This optimization can be made since the data is real.)
-   */
-   h->Points = fftlen / 2;
-
-   h->SinTable.reinit(2*h->Points);
-
-   h->BitReversed.reinit(h->Points);
-
-   for(size_t i = 0; i < h->Points; i++)
-   {
-      temp = 0;
-      for(size_t mask = h->Points / 2; mask > 0; mask >>= 1)
-         temp = (temp >> 1) + (i & mask ? h->Points : 0);
-
-      h->BitReversed[i] = temp;
-   }
-
-   for(size_t i = 0; i < h->Points; i++)
-   {
-      h->SinTable[h->BitReversed[i]  ]=(fft_type)-sin(2*M_PI*i/(2*h->Points));
-      h->SinTable[h->BitReversed[i]+1]=(fft_type)-cos(2*M_PI*i/(2*h->Points));
-   }
-
-   return h;
-}
-
 enum : size_t { MAX_HFFT = 10 };
 
 // Maintain a pool:

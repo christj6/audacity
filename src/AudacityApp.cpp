@@ -1903,8 +1903,6 @@ int AudacityApp::OnExit()
    DropFFmpegLibs();
 #endif
 
-   DeinitFFT();
-
    DeinitAudioIO();
 
    if (mIPCServ)
