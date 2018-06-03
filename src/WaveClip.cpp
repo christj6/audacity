@@ -982,9 +982,6 @@ void WaveClip::Paste(double t0, const WaveClip* other)
 
    // Assume NOFAIL-GUARANTEE in the remaining
    MarkChanged();
-   auto sampleTime = 1.0 / GetRate();
-   mEnvelope->Paste
-      (s0.as_double()/mRate + mOffset, pastedClip->mEnvelope.get(), sampleTime);
    OffsetCutLines(t0, pastedClip->GetEndTime() - pastedClip->GetStartTime());
 
    for (auto &holder : newCutlines)
@@ -1083,9 +1080,6 @@ void WaveClip::Clear(double t0, double t1)
       }
    }
 
-   // Collapse envelope
-   auto sampleTime = 1.0 / GetRate();
-   GetEnvelope()->CollapseRegion( t0, t1, sampleTime );
    if (t0 < GetStartTime())
       Offset(-(GetStartTime() - t0));
 
@@ -1136,9 +1130,6 @@ void WaveClip::ClearAndAddCutLine(double t0, double t1)
    // use WEAK-GUARANTEE
    GetSequence()->Delete(s0, s1-s0);
 
-   // Collapse envelope
-   auto sampleTime = 1.0 / GetRate();
-   GetEnvelope()->CollapseRegion( t0, t1, sampleTime );
    if (t0 < GetStartTime())
       Offset(-(GetStartTime() - t0));
 

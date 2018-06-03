@@ -65,39 +65,16 @@ public:
 
    virtual ~Envelope();
 
-   // Return true if violations of point ordering invariants were detected
-   // and repaired
-   bool ConsistencyCheck();
-
    double GetOffset() const { return mOffset; }
    double GetTrackLen() const { return mTrackLen; }
 
    bool GetExponential() const { return mDB; }
    void SetExponential(bool db) { mDB = db; }
 
-   void Flatten(double value);
-
    double GetMinValue() const { return mMinValue; }
    double GetMaxValue() const { return mMaxValue; }
-   void SetRange(double minValue, double maxValue);
 
    double ClampValue(double value) { return std::max(mMinValue, std::min(mMaxValue, value)); }
-
-   void DrawPoints(
-      TrackPanelDrawingContext &context,
-      const wxRect & r, const ZoomInfo &zoomInfo,
-      bool dB, double dBRange,
-      float zoomMin, float zoomMax, bool mirrored) const;
-
-   // Handling Cut/Copy/Paste events
-   // sampleDur determines when the endpoint of the collapse is near enough
-   // to an endpoint of the domain, that an extra control point is not needed.
-   void CollapseRegion(double t0, double t1, double sampleDur);
-
-   // Envelope has no notion of rate and control point times are not quantized;
-   // but a tolerance is needed in the Paste routine, and better to inform it
-   // of an appropriate number, than use hidden arbitrary constants.
-   void Paste(double t0, const Envelope *e, double sampleDur);
 
    void InsertSpace(double t0, double tlen);
 
@@ -128,11 +105,6 @@ public:
    void Cap( double sampleDur );
 
 private:
-   std::pair< int, int > ExpandRegion
-      ( double t0, double tlen, double *pLeftVal, double *pRightVal );
-
-   void RemoveUnneededPoints
-      ( size_t startAt, bool rightward, bool testNeighbors = true );
 
    double GetValueRelative(double t, bool leftLimit = false) const;
    void GetValuesRelative
@@ -187,20 +159,11 @@ public:
    // UI-related
    // The drag point needs to display differently.
    int GetDragPoint() const { return mDragPoint; }
-   // Choose the drag point.
-   void SetDragPoint(int dragPoint);
-   // Mark or unmark the drag point for deletion.
-   void SetDragPointValid(bool valid);
    bool GetDragPointValid() const { return mDragPointValid; }
    // Modify the dragged point and change its value.
    // But consistency constraints may move it less then you ask for.
 
 private:
-   void MoveDragPoint(double newWhen, double value);
-   // May delete the drag point.  Restores envelope consistency.
-   void ClearDragPoint();
-   void AddPointAtEnd( double t, double val );
-   void CopyRange(const Envelope &orig, size_t begin, size_t end);
    // relative time
    void BinarySearchForTime( int &Lo, int &Hi, double t ) const;
    void BinarySearchForTime_LeftLimit( int &Lo, int &Hi, double t ) const;
