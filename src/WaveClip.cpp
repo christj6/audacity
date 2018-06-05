@@ -989,12 +989,8 @@ void WaveClip::InsertSilence( double t, double len, double *pEnvelopeValue )
    // use NOFAIL-GUARANTEE
    OffsetCutLines(t, len);
 
-   const auto sampleTime = 1.0 / GetRate();
    auto pEnvelope = GetEnvelope();
    if ( pEnvelopeValue ) {
-
-      // Preserve limit value at the end
-      pEnvelope->Cap( sampleTime );
    }
    else
       pEnvelope->InsertSpace( t, len );

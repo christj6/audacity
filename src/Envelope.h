@@ -96,9 +96,6 @@ public:
         double *buffer, int bufferLen, int leftOffset,
         const ZoomInfo &zoomInfo) const;
 
-   // Guarantee an envelope point at the end of the domain.
-   void Cap( double sampleDur );
-
 private:
 
    double GetValueRelative(double t, bool leftLimit = false) const;
@@ -111,9 +108,7 @@ private:
    double NextPointAfter(double t) const;
 
 public:
-   double Average( double t0, double t1 ) const;
    double AverageOfInverse( double t0, double t1 ) const;
-   double Integral( double t0, double t1 ) const;
    double IntegralOfInverse( double t0, double t1 ) const;
 
    void print() const;
@@ -140,11 +135,6 @@ private:
    std::pair<int, int> EqualRange( double when, double sampleDur ) const;
 
 public:
-   /** \brief Returns the sets of when and value pairs */
-   void GetPoints(double *bufferWhen,
-      double *bufferValue,
-      int bufferLen) const;
-
    // UI-related
    // The drag point needs to display differently.
    int GetDragPoint() const { return mDragPoint; }

@@ -98,16 +98,6 @@ size_t Envelope::GetNumberOfPoints() const
    return mEnv.size();
 }
 
-void Envelope::GetPoints(double *bufferWhen,
-                         double *bufferValue,
-                         int bufferLen) const
-{
-}
-
-void Envelope::Cap( double sampleDur )
-{
-}
-
 // Private methods
 
 std::pair<int, int> Envelope::EqualRange( double when, double sampleDur ) const
@@ -434,14 +424,6 @@ double Envelope::NextPointAfter(double t) const
       return mEnv[hi].GetT();
 }
 
-double Envelope::Average( double t0, double t1 ) const
-{
-  if( t0 == t1 )
-    return GetValue( t0 );
-  else
-    return Integral( t0, t1 ) / (t1 - t0);
-}
-
 double Envelope::AverageOfInverse( double t0, double t1 ) const
 {
   if( t0 == t1 )
@@ -467,27 +449,7 @@ static double InterpolatePoints(double y1, double y2, double factor, bool logari
    else
       return y1 * (1.0 - factor) + y2 * factor;
 }
-static double IntegrateInterpolated(double y1, double y2, double time, bool logarithmic)
-{
-   // Calculates: integral(interpolate(y1, y2, x), x = 0 .. time)
-   // Integrating logarithmic interpolated segments is surprisingly simple. You can check this formula here:
-   // http://www.wolframalpha.com/input/?i=integrate+10%5E%28log10%28y1%29*%28T-x%29%2FT%2Blog10%28y2%29*x%2FT%29+from+0+to+T
-   // Again, the base you use for interpolation is irrelevant, the formula below should always use the natural
-   // logarithm (i.e. 'log' in C/C++). If the denominator is too small, it's better to use linear interpolation
-   // because the rounding errors would otherwise get too large. The threshold value is 1.0e-5 because at that
-   // point the rounding errors become larger than the difference between linear and logarithmic (I tested this in Octave).
-   if(logarithmic)
-   {
-      double l = log(y1 / y2);
-      if(fabs(l) < 1.0e-5) // fall back to linear interpolation
-         return (y1 + y2) * 0.5 * time;
-      return (y1 - y2) / l * time;
-   }
-   else
-   {
-      return (y1 + y2) * 0.5 * time;
-   }
-}
+
 static double IntegrateInverseInterpolated(double y1, double y2, double time, bool logarithmic)
 {
    // Calculates: integral(1 / interpolate(y1, y2, x), x = 0 .. time)
@@ -504,95 +466,6 @@ static double IntegrateInverseInterpolated(double y1, double y2, double time, bo
       return (y1 - y2) / (l * y1 * y2) * time;
    else
       return l / (y1 - y2) * time;
-}
-static double SolveIntegrateInverseInterpolated(double y1, double y2, double time, double area, bool logarithmic)
-{
-   // Calculates: solve (integral(1 / interpolate(y1, y2, x), x = 0 .. res) = area) for res
-   // Don't try to derive these formulas by hand :). The threshold is 1.0e5 again.
-   double a = area / time, res;
-   if(logarithmic)
-   {
-      double l = log(y1 / y2);
-      if(fabs(l) < 1.0e-5) // fall back to average
-         res = a * (y1 + y2) * 0.5;
-      else if(1.0 + a * y1 * l <= 0.0)
-         res = 1.0;
-      else
-         res = log1p(a * y1 * l) / l;
-   }
-   else
-   {
-      if(fabs(y2 - y1) < 1.0e-5) // fall back to average
-         res = a * (y1 + y2) * 0.5;
-      else
-         res = y1 * expm1(a * (y2 - y1)) / (y2 - y1);
-   }
-   return std::max(0.0, std::min(1.0, res)) * time;
-}
-
-// We should be able to write a very efficient memoizer for this
-// but make sure it gets reset when the envelope is changed.
-double Envelope::Integral( double t0, double t1 ) const
-{
-   if(t0 == t1)
-      return 0.0;
-   if(t0 > t1)
-   {
-      return -Integral(t1, t0); // this makes more sense than returning the default value
-   }
-
-   unsigned int count = mEnv.size();
-   if(count == 0) // 'empty' envelope
-      return (t1 - t0) * mDefaultValue;
-
-   t0 -= mOffset;
-   t1 -= mOffset;
-
-   double total = 0.0, lastT, lastVal;
-   unsigned int i; // this is the next point to check
-   if(t0 < mEnv[0].GetT()) // t0 preceding the first point
-   {
-      if(t1 <= mEnv[0].GetT())
-         return (t1 - t0) * mEnv[0].GetVal();
-      i = 1;
-      lastT = mEnv[0].GetT();
-      lastVal = mEnv[0].GetVal();
-      total += (lastT - t0) * lastVal;
-   }
-   else if(t0 >= mEnv[count - 1].GetT()) // t0 at or following the last point
-   {
-      return (t1 - t0) * mEnv[count - 1].GetVal();
-   }
-   else // t0 enclosed by points
-   {
-      // Skip any points that come before t0 using binary search
-      int lo, hi;
-      BinarySearchForTime(lo, hi, t0);
-      lastVal = InterpolatePoints(mEnv[lo].GetVal(), mEnv[hi].GetVal(), (t0 - mEnv[lo].GetT()) / (mEnv[hi].GetT() - mEnv[lo].GetT()), mDB);
-      lastT = t0;
-      i = hi; // the point immediately after t0.
-   }
-
-   // loop through the rest of the envelope points until we get to t1
-   while (1)
-   {
-      if(i >= count) // the requested range extends beyond the last point
-      {
-         return total + (t1 - lastT) * lastVal;
-      }
-      else if(mEnv[i].GetT() >= t1) // this point follows the end of the range
-      {
-         double thisVal = InterpolatePoints(mEnv[i - 1].GetVal(), mEnv[i].GetVal(), (t1 - mEnv[i - 1].GetT()) / (mEnv[i].GetT() - mEnv[i - 1].GetT()), mDB);
-         return total + IntegrateInterpolated(lastVal, thisVal, t1 - lastT, mDB);
-      }
-      else // this point precedes the end of the range
-      {
-         total += IntegrateInterpolated(lastVal, mEnv[i].GetVal(), mEnv[i].GetT() - lastT, mDB);
-         lastT = mEnv[i].GetT();
-         lastVal = mEnv[i].GetVal();
-         i++;
-      }
-   }
 }
 
 double Envelope::IntegralOfInverse( double t0, double t1 ) const
@@ -662,13 +535,4 @@ void Envelope::print() const
 {
    for( unsigned int i = 0; i < mEnv.size(); i++ )
       wxPrintf( "(%.2f, %.2f)\n", mEnv[i].GetT(), mEnv[i].GetVal() );
-}
-
-static void checkResult( int n, double a, double b )
-{
-   if( (a-b > 0 ? a-b : b-a) > 0.0000001 )
-   {
-      wxPrintf( "Envelope:  Result #%d is: %f, should be %f\n", n, a, b );
-      //exit( -1 );
-   }
 }
