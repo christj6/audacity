@@ -65,8 +65,6 @@ public:
 
    virtual ~Envelope();
 
-   double GetTrackLen() const { return mTrackLen; }
-
    bool GetExponential() const { return mDB; }
    void SetExponential(bool db) { mDB = db; }
 
