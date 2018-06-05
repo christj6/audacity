@@ -65,7 +65,6 @@ public:
 
    virtual ~Envelope();
 
-   double GetOffset() const { return mOffset; }
    double GetTrackLen() const { return mTrackLen; }
 
    bool GetExponential() const { return mDB; }
