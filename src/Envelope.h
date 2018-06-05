@@ -80,7 +80,6 @@ public:
 
    // Control
    void SetOffset(double newOffset);
-   void SetTrackLen( double trackLen, double sampleDur = 0.0 );
    void RescaleTimes( double newLength );
 
    // Accessors

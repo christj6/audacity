@@ -793,13 +793,6 @@ void WaveClip::ConvertToSampleFormat(sampleFormat format)
       MarkChanged();
 }
 
-void WaveClip::UpdateEnvelopeTrackLen()
-// NOFAIL-GUARANTEE
-{
-   mEnvelope->SetTrackLen
-      ((mSequence->GetNumSamples().as_double()) / mRate, 1.0 / GetRate());
-}
-
 void WaveClip::TimeToSamplesClip(double t0, sampleCount *s0) const
 {
    if (t0 < mOffset)
@@ -843,7 +836,6 @@ void WaveClip::Append(samplePtr buffer, sampleFormat format,
 
    auto cleanup = finally( [&] {
       // use NOFAIL-GUARANTEE
-      UpdateEnvelopeTrackLen();
       MarkChanged();
    } );
 
@@ -889,7 +881,6 @@ void WaveClip::AppendAlias(const wxString &fName, sampleCount start,
    mSequence->AppendAlias(fName, start, len, channel,useOD);
 
    // use NOFAIL-GUARANTEE
-   UpdateEnvelopeTrackLen();
    MarkChanged();
 }
 
@@ -901,7 +892,6 @@ void WaveClip::AppendCoded(const wxString &fName, sampleCount start,
    mSequence->AppendCoded(fName, start, len, channel, decodeType);
 
    // use NOFAIL-GUARANTEE
-   UpdateEnvelopeTrackLen();
    MarkChanged();
 }
 
@@ -923,7 +913,6 @@ void WaveClip::Flush()
 
          // Use NOFAIL-GUARANTEE of these steps.
          mAppendBufferLen = 0;
-         UpdateEnvelopeTrackLen();
          MarkChanged();
       } );
 
@@ -1009,9 +998,6 @@ void WaveClip::InsertSilence( double t, double len, double *pEnvelopeValue )
       auto oldLen = pEnvelope->GetTrackLen();
       auto newLen = oldLen + len;
       pEnvelope->Cap( sampleTime );
-
-      // Ramp across the silence to the given value
-      pEnvelope->SetTrackLen( newLen, sampleTime );
    }
    else
       pEnvelope->InsertSpace( t, len );

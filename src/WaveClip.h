@@ -241,11 +241,6 @@ public:
    void SetDisplayRect(const wxRect& r) const;
    void GetDisplayRect(wxRect* r);
 
-   /** Whenever you do an operation to the sequence that will change the number
-    * of samples (that is, the length of the clip), you will want to call this
-    * function to tell the envelope about it. */
-   void UpdateEnvelopeTrackLen();
-
    /// You must call Flush after the last Append
    void Append(samplePtr buffer, sampleFormat format,
                size_t len, unsigned int stride=1);
