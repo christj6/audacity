@@ -79,7 +79,6 @@ public:
    void InsertSpace(double t0, double tlen);
 
    // Control
-   void SetOffset(double newOffset);
    void RescaleTimes( double newLength );
 
    // Accessors

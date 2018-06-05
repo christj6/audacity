@@ -132,13 +132,6 @@ std::pair<int, int> Envelope::EqualRange( double when, double sampleDur ) const
 }
 
 // Control
-
-void Envelope::SetOffset(double newOffset)
-// NOFAIL-GUARANTEE
-{
-   mOffset = newOffset;
-}
-
 void Envelope::RescaleTimes( double newLength )
 // NOFAIL-GUARANTEE
 {
