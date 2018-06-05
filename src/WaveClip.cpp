@@ -1012,8 +1012,6 @@ void WaveClip::InsertSilence( double t, double len, double *pEnvelopeValue )
 
       // Ramp across the silence to the given value
       pEnvelope->SetTrackLen( newLen, sampleTime );
-      pEnvelope->InsertOrReplace
-         ( pEnvelope->GetOffset() + newLen, *pEnvelopeValue );
    }
    else
       pEnvelope->InsertSpace( t, len );

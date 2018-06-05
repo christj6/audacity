@@ -110,46 +110,6 @@ void Envelope::Cap( double sampleDur )
 
 // Private methods
 
-/** @brief Add a control point to the envelope
- *
- * @param when the time in seconds when the envelope point should be created.
- * @param value the envelope value to use at the given point.
- * @return the index of the NEW envelope point within array of envelope points.
- */
-int Envelope::InsertOrReplaceRelative(double when, double value)
-{
-#if defined(__WXDEBUG__)
-   // in debug builds, do a spot of argument checking
-   if(when > mTrackLen + 0.0000001)
-   {
-      wxString msg;
-      msg = wxString::Format(wxT("when %.20f mTrackLen %.20f diff %.20f"), when, mTrackLen, when-mTrackLen);
-      wxASSERT_MSG(when <= (mTrackLen), msg);
-   }
-   if(when < 0)
-   {
-      wxString msg;
-      msg = wxString::Format(wxT("when %.20f mTrackLen %.20f"), when, mTrackLen);
-      wxASSERT_MSG(when >= 0, msg);
-   }
-#endif
-
-   when = std::max( 0.0, std::min( mTrackLen, when ) );
-
-   auto range = EqualRange( when, 0 );
-   int index = range.first;
-
-   if ( index < range.second )
-      // modify existing
-      // In case of a discontinuity, ALWAYS CHANGING LEFT LIMIT ONLY!
-      mEnv[ index ].SetVal( this, value );
-   else
-     // Add NEW
-      Insert( index, EnvPoint { when, value } );
-
-   return index;
-}
-
 std::pair<int, int> Envelope::EqualRange( double when, double sampleDur ) const
 {
    // Find range of envelope points matching the given time coordinate
@@ -736,55 +696,4 @@ static void checkResult( int n, double a, double b )
       wxPrintf( "Envelope:  Result #%d is: %f, should be %f\n", n, a, b );
       //exit( -1 );
    }
-}
-
-void Envelope::testMe()
-{
-   double t0=0, t1=0;
-
-   SetExponential(false);
-
-   checkResult( 1, Integral(0.0,100.0), 50);
-   checkResult( 2, Integral(-10.0,10.0), 10);
-
-   checkResult( 3, Integral(0.0,100.0), 50);
-   checkResult( 4, Integral(-10.0,10.0), 10);
-   checkResult( 5, Integral(-20.0,-10.0), 5);
-
-   InsertOrReplaceRelative( 5.0, 0.5 );
-   checkResult( 6, Integral(0.0,100.0), 50);
-   checkResult( 7, Integral(-10.0,10.0), 10);
-
-   InsertOrReplaceRelative( 0.0, 0.0 );
-   InsertOrReplaceRelative( 5.0, 1.0 );
-   InsertOrReplaceRelative( 10.0, 0.0 );
-   t0 = 10.0 - .1;
-   t1 = 10.0 + .1;
-   double result = Integral(0.0,t1);
-   double resulta = Integral(0.0,t0);
-   double resultb = Integral(t0,t1);
-   // Integrals should be additive
-   checkResult( 8, result - resulta - resultb, 0);
-
-   InsertOrReplaceRelative( 0.0, 0.0 );
-   InsertOrReplaceRelative( 5.0, 1.0 );
-   InsertOrReplaceRelative( 10.0, 0.0 );
-   t0 = 10.0 - .1;
-   t1 = 10.0 + .1;
-   checkResult( 9, Integral(0.0,t1), 5);
-   checkResult( 10, Integral(0.0,t0), 4.999);
-   checkResult( 11, Integral(t0,t1), .001);
-
-   mEnv.clear();
-   InsertOrReplaceRelative( 0.0, 0.0 );
-   InsertOrReplaceRelative( 5.0, 1.0 );
-   InsertOrReplaceRelative( 10.0, 0.0 );
-   checkResult( 12, NumberOfPointsAfter( -1 ), 3 );
-   checkResult( 13, NumberOfPointsAfter( 0 ), 2 );
-   checkResult( 14, NumberOfPointsAfter( 1 ), 2 );
-   checkResult( 15, NumberOfPointsAfter( 5 ), 1 );
-   checkResult( 16, NumberOfPointsAfter( 7 ), 1 );
-   checkResult( 17, NumberOfPointsAfter( 10 ), 0 );
-   checkResult( 18, NextPointAfter( 0 ), 5 );
-   checkResult( 19, NextPointAfter( 5 ), 10 );
 }

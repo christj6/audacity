@@ -126,10 +126,6 @@ public:
 
    bool IsDirty() const;
 
-   /** \brief Add a point at a particular absolute time coordinate */
-   int InsertOrReplace(double when, double value)
-   { return InsertOrReplaceRelative( when - mOffset, value ); }
-
    /** \brief DELETE a point by its position in array */
    void Delete(int point);
 
@@ -140,8 +136,6 @@ public:
    size_t GetNumberOfPoints() const;
 
 private:
-   int InsertOrReplaceRelative(double when, double value);
-
    /** \brief Accessor for points */
    const EnvPoint &operator[] (int index) const
    {
