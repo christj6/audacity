@@ -405,15 +405,6 @@ void Envelope::GetValues
 }
 
 // relative time
-int Envelope::NumberOfPointsAfter(double t) const
-{
-   int lo,hi;
-   BinarySearchForTime( lo, hi, t );
-
-   return mEnv.size() - hi;
-}
-
-// relative time
 double Envelope::NextPointAfter(double t) const
 {
    int lo,hi;
@@ -422,14 +413,6 @@ double Envelope::NextPointAfter(double t) const
       return t;
    else
       return mEnv[hi].GetT();
-}
-
-double Envelope::AverageOfInverse( double t0, double t1 ) const
-{
-  if( t0 == t1 )
-    return 1.0 / GetValue( t0 );
-  else
-    return IntegralOfInverse( t0, t1 ) / (t1 - t0);
 }
 
 //
@@ -466,69 +449,6 @@ static double IntegrateInverseInterpolated(double y1, double y2, double time, bo
       return (y1 - y2) / (l * y1 * y2) * time;
    else
       return l / (y1 - y2) * time;
-}
-
-double Envelope::IntegralOfInverse( double t0, double t1 ) const
-{
-   if(t0 == t1)
-      return 0.0;
-   if(t0 > t1)
-   {
-      return -IntegralOfInverse(t1, t0); // this makes more sense than returning the default value
-   }
-
-   unsigned int count = mEnv.size();
-   if(count == 0) // 'empty' envelope
-      return (t1 - t0) / mDefaultValue;
-
-   t0 -= mOffset;
-   t1 -= mOffset;
-
-   double total = 0.0, lastT, lastVal;
-   unsigned int i; // this is the next point to check
-   if(t0 < mEnv[0].GetT()) // t0 preceding the first point
-   {
-      if(t1 <= mEnv[0].GetT())
-         return (t1 - t0) / mEnv[0].GetVal();
-      i = 1;
-      lastT = mEnv[0].GetT();
-      lastVal = mEnv[0].GetVal();
-      total += (lastT - t0) / lastVal;
-   }
-   else if(t0 >= mEnv[count - 1].GetT()) // t0 at or following the last point
-   {
-      return (t1 - t0) / mEnv[count - 1].GetVal();
-   }
-   else // t0 enclosed by points
-   {
-      // Skip any points that come before t0 using binary search
-      int lo, hi;
-      BinarySearchForTime(lo, hi, t0);
-      lastVal = InterpolatePoints(mEnv[lo].GetVal(), mEnv[hi].GetVal(), (t0 - mEnv[lo].GetT()) / (mEnv[hi].GetT() - mEnv[lo].GetT()), mDB);
-      lastT = t0;
-      i = hi; // the point immediately after t0.
-   }
-
-   // loop through the rest of the envelope points until we get to t1
-   while (1)
-   {
-      if(i >= count) // the requested range extends beyond the last point
-      {
-         return total + (t1 - lastT) / lastVal;
-      }
-      else if(mEnv[i].GetT() >= t1) // this point follows the end of the range
-      {
-         double thisVal = InterpolatePoints(mEnv[i - 1].GetVal(), mEnv[i].GetVal(), (t1 - mEnv[i - 1].GetT()) / (mEnv[i].GetT() - mEnv[i - 1].GetT()), mDB);
-         return total + IntegrateInverseInterpolated(lastVal, thisVal, t1 - lastT, mDB);
-      }
-      else // this point precedes the end of the range
-      {
-         total += IntegrateInverseInterpolated(lastVal, mEnv[i].GetVal(), mEnv[i].GetT() - lastT, mDB);
-         lastT = mEnv[i].GetT();
-         lastVal = mEnv[i].GetVal();
-         i++;
-      }
-   }
 }
 
 void Envelope::print() const

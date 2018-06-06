@@ -103,14 +103,9 @@ private:
       (double *buffer, int len, double t0, double tstep, bool leftLimit = false)
       const;
    // relative time
-   int NumberOfPointsAfter(double t) const;
-   // relative time
    double NextPointAfter(double t) const;
 
 public:
-   double AverageOfInverse( double t0, double t1 ) const;
-   double IntegralOfInverse( double t0, double t1 ) const;
-
    void print() const;
    void testMe();
 
