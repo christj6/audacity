@@ -342,7 +342,6 @@ void WaveTrack::SetRate(double newRate)
    auto ratio = mRate / newRate;
    mRate = (int) newRate;
    for (const auto &clip : mClips) {
-      clip->SetRate((int)newRate);
       clip->SetOffset( clip->GetOffset() * ratio );
    }
 }

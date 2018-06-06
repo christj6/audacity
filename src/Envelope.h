@@ -75,9 +75,6 @@ public:
 
    void InsertSpace(double t0, double tlen);
 
-   // Control
-   void RescaleTimes( double newLength );
-
    // Accessors
    /** \brief Get envelope value at time t */
    double GetValue( double t, double sampleDur = 0 ) const;

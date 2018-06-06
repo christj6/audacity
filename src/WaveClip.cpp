@@ -1209,14 +1209,6 @@ void WaveClip::Unlock()
       cutline->Unlock();
 }
 
-void WaveClip::SetRate(int rate)
-{
-   mRate = rate;
-   auto newLength = mSequence->GetNumSamples().as_double() / mRate;
-   mEnvelope->RescaleTimes( newLength );
-   MarkChanged();
-}
-
 void WaveClip::Resample(int rate, ProgressDialog *progress)
 // STRONG-GUARANTEE
 {

@@ -121,22 +121,6 @@ std::pair<int, int> Envelope::EqualRange( double when, double sampleDur ) const
    return { first - begin, after - begin };
 }
 
-// Control
-void Envelope::RescaleTimes( double newLength )
-// NOFAIL-GUARANTEE
-{
-   if ( mTrackLen == 0 ) {
-      for ( auto &point : mEnv )
-         point.SetT( 0 );
-   }
-   else {
-      auto ratio = newLength / mTrackLen;
-      for ( auto &point : mEnv )
-         point.SetT( point.GetT() * ratio );
-   }
-   mTrackLen = newLength;
-}
-
 // Accessors
 double Envelope::GetValue( double t, double sampleDur ) const
 {
