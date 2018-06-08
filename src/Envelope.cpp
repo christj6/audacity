@@ -377,13 +377,14 @@ void Envelope::GetValues
                GetValue( prevDiscreteTime + sampleDur, sampleDur );
          }
          auto ratio = ( time - leftDiscreteTime ) / sampleDur;
-         if ( GetExponential() )
-            buffer[ xx ] = exp(
-               ( 1.0 - ratio ) * log( prevSampleVal )
-                  + ratio * log( nextSampleVal ) );
-         else
-            buffer[ xx ] =
-               ( 1.0 - ratio ) * prevSampleVal + ratio * nextSampleVal;
+		 if (GetExponential())
+		 {
+			 buffer[xx] = exp((1.0 - ratio) * log(prevSampleVal) + ratio * log(nextSampleVal));
+		 }
+		 else
+		 {
+			 buffer[xx] = (1.0 - ratio) * prevSampleVal + ratio * nextSampleVal;
+		 }
       }
    }
 }
