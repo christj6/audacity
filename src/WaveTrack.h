@@ -458,9 +458,6 @@ private:
    // clipidx1 and clipidx2 are indices into the clip list.
    void MergeClips(int clipidx1, int clipidx2);
 
-   // Cache special locations (e.g. cut lines) for later speedy access
-   void UpdateLocationsCache() const;
-
    // Get cached locations
    const std::vector<Location> &GetCachedLocations() const { return mDisplayLocationsCache; }
 

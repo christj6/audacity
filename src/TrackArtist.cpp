@@ -1148,9 +1148,6 @@ void TrackArtist::DrawWaveform(TrackPanelDrawingContext &context,
       DrawClipWaveform(context, track, clip.get(), rect, selectedRegion, zoomInfo,
                        dB, muted);
 
-   // Update cache for locations, e.g. cutlines and merge points
-   track->UpdateLocationsCache();
-
    for (const auto loc : track->GetCachedLocations()) {
       bool highlight = false;
       const int xx = zoomInfo.TimeToPosition(loc.pos);
