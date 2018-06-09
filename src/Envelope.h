@@ -73,8 +73,6 @@ public:
 
    double ClampValue(double value) { return std::max(mMinValue, std::min(mMaxValue, value)); }
 
-   void InsertSpace(double t0, double tlen);
-
    // Accessors
    /** \brief Get envelope value at time t */
    double GetValue( double t, double sampleDur = 0 ) const;
@@ -107,12 +105,6 @@ public:
    void testMe();
 
    bool IsDirty() const;
-
-   /** \brief DELETE a point by its position in array */
-   void Delete(int point);
-
-   /** \brief insert a point */
-   void Insert(int point, const EnvPoint &p);
 
    /** \brief Return number of points */
    size_t GetNumberOfPoints() const;

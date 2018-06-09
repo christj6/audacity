@@ -80,19 +80,6 @@ Envelope::Envelope(const Envelope &orig)
    mTrackLen = orig.mTrackLen;
 }
 
-void Envelope::Delete( int point )
-{
-}
-
-void Envelope::Insert(int point, const EnvPoint &p)
-{
-}
-
-void Envelope::InsertSpace( double t0, double tlen )
-// NOFAIL-GUARANTEE
-{
-}
-
 size_t Envelope::GetNumberOfPoints() const
 {
    return mEnv.size();
@@ -398,42 +385,6 @@ double Envelope::NextPointAfter(double t) const
       return t;
    else
       return mEnv[hi].GetT();
-}
-
-//
-// Integration and debugging functions
-//
-// The functions below do not affect normal amplitude envelopes
-// for waveforms, nor frequency envelopes for equalization.
-// The 'Average' function also uses 'Integral'.
-//
-
-// A few helper functions to make the code below more readable.
-static double InterpolatePoints(double y1, double y2, double factor, bool logarithmic)
-{
-   if(logarithmic)
-      // you can use any base you want, it doesn't change the result
-      return exp(log(y1) * (1.0 - factor) + log(y2) * factor);
-   else
-      return y1 * (1.0 - factor) + y2 * factor;
-}
-
-static double IntegrateInverseInterpolated(double y1, double y2, double time, bool logarithmic)
-{
-   // Calculates: integral(1 / interpolate(y1, y2, x), x = 0 .. time)
-   // This one is a bit harder. Linear:
-   // http://www.wolframalpha.com/input/?i=integrate+1%2F%28y1*%28T-x%29%2FT%2By2*x%2FT%29+from+0+to+T
-   // Logarithmic:
-   // http://www.wolframalpha.com/input/?i=integrate+1%2F%2810%5E%28log10%28y1%29*%28T-x%29%2FT%2Blog10%28y2%29*x%2FT%29%29+from+0+to+T
-   // Here both cases need a special case for y1 == y2. The threshold is 1.0e5 again, this is still the
-   // best value in both cases.
-   double l = log(y1 / y2);
-   if(fabs(l) < 1.0e-5) // fall back to average
-      return 2.0 / (y1 + y2) * time;
-   if(logarithmic)
-      return (y1 - y2) / (l * y1 * y2) * time;
-   else
-      return l / (y1 - y2) * time;
 }
 
 void Envelope::print() const

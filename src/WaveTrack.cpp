@@ -1303,10 +1303,7 @@ void WaveTrack::Join(double t0, double t1)
 
       if (clip->GetOffset() - t > (1.0 / mRate)) {
          double addedSilence = (clip->GetOffset() - t);
-         //wxPrintf("Adding %.6f seconds of silence\n");
-         auto offset = clip->GetOffset();
-         auto value = clip->GetEnvelope()->GetValue( offset );
-         newClip->AppendSilence( addedSilence, value );
+         newClip->AppendSilence( addedSilence );
          t += addedSilence;
       }
 
