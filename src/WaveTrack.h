@@ -171,9 +171,6 @@ private:
    Track::Holder SplitCut(double t0, double t1) /* not override */;
    // May assume precondition: t0 <= t1
    void SplitDelete(double t0, double t1) /* not override */;
-   void Join(double t0, double t1) /* not override */;
-   // May assume precondition: t0 <= t1
-   void Disjoin(double t0, double t1) /* not override */;
 
    // May assume precondition: t0 <= t1
    void Trim(double t0, double t1) /* not override */;
