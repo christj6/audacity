@@ -1431,8 +1431,7 @@ void TrackArtist::DrawClipWaveform(TrackPanelDrawingContext &context,
    std::vector<double> vEnv(mid.width);
    double *const env = &vEnv[0];
    clip->GetEnvelope()->GetValues
-      ( tOffset,
-
+      ( 
         // PRL: change back to make envelope evaluate only at sample times
         // and then interpolate the display
         0, // 1.0 / rate,
@@ -1568,8 +1567,7 @@ void TrackArtist::DrawClipWaveform(TrackPanelDrawingContext &context,
             std::vector<double> vEnv2(rect.width);
             double *const env2 = &vEnv2[0];
             clip->GetEnvelope()->GetValues
-               ( tOffset,
-
+               (
                  // PRL: change back to make envelope evaluate only at sample times
                  // and then interpolate the display
                  0, // 1.0 / rate,

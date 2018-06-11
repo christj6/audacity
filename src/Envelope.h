@@ -87,7 +87,7 @@ public:
     * but don't assume uniform time per pixel.
    */
    void GetValues
-      ( double aligned_time, double sampleDur,
+      ( double sampleDur,
         double *buffer, int bufferLen, int leftOffset,
         const ZoomInfo &zoomInfo) const;
 
