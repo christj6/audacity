@@ -1430,7 +1430,7 @@ void TrackArtist::DrawClipWaveform(TrackPanelDrawingContext &context,
 
    std::vector<double> vEnv(mid.width);
    double *const env = &vEnv[0];
-   clip->GetEnvelope()->GetValues( 0, env, mid.width, leftOffset, zoomInfo );
+   clip->GetEnvelope()->GetValues( 0, env, mid.width, leftOffset, zoomInfo ); // removing this line messes with the blue "selection" bar
 
    // Draw the background of the track, outlining the shape of
    // the envelope and using a colored pen for the selected
@@ -1560,7 +1560,7 @@ void TrackArtist::DrawClipWaveform(TrackPanelDrawingContext &context,
          if (!showIndividualSamples) {
             std::vector<double> vEnv2(rect.width);
             double *const env2 = &vEnv2[0];
-            clip->GetEnvelope()->GetValues( 0, env2, rect.width, leftOffset, zoomInfo );
+            clip->GetEnvelope()->GetValues( 0, env2, rect.width, leftOffset, zoomInfo ); // removing this line makes the waveform invisible
             DrawMinMaxRMS(dc, rect, env2,
                zoomMin, zoomMax,
                dB, dBRange,
