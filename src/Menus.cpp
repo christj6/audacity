@@ -2682,27 +2682,10 @@ bool AudacityProject::DoAudacityCommand(const PluginID & ID, const CommandContex
    if (flags & OnEffectFlags::kConfigured)
    {
       OnStop(*this);
-//    SelectAllIfNone();
    }
 
-/*
-   if (em.GetSkipStateFlag())
-      flags = flags | OnEffectFlags::kSkipState;
-
-   if (!(flags & OnEffectFlags::kSkipState))
-   {
-      wxString shortDesc = em.GetCommandName(ID);
-      wxString longDesc = em.GetCommandDescription(ID);
-      PushState(longDesc, shortDesc);
-   }
-*/
    RedrawProject();
    return true;
-}
-
-void AudacityProject::OnEffect(const CommandContext &context)
-{
-   // DoEffect(context.parameter, context, 0);
 }
 
 void AudacityProject::RebuildAllMenuBars(){
