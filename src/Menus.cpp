@@ -53,7 +53,7 @@ simplifies construction of menu items.
 
 #include "TrackPanel.h"
 
-#include "effects/EffectManager.h"
+// #include "effects/EffectManager.h"
 
 #include "AudacityApp.h"
 #include "AudacityLogger.h"
@@ -2708,10 +2708,12 @@ void AudacityProject::RebuildAllMenuBars(){
 
 void AudacityProject::OnAudacityCommand(const CommandContext & ctx)
 {
+	/*
    wxLogDebug( "Command was: %s", ctx.parameter);
    DoAudacityCommand(EffectManager::Get().GetEffectByIdentifier(ctx.parameter),
       ctx,
       OnEffectFlags::kNone);  // Not configured, so prompt user.
+	  */
 }
 
 //

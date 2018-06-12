@@ -27,7 +27,7 @@ processing.  See also MacrosWindow and ApplyMacroDialog.
 #include "AudacityApp.h"
 #include "Project.h"
 #include "commands/CommandManager.h"
-#include "effects/EffectManager.h"
+// #include "effects/EffectManager.h"
 #include "FileNames.h"
 #include "Internat.h"
 #include "Prefs.h"
@@ -383,6 +383,7 @@ auto MacroCommandsCatalog::ByCommandId( const wxString &commandId ) const
 
 wxString MacroCommands::GetCurrentParamsFor(const wxString & command)
 {
+	/*
    const PluginID & ID = EffectManager::Get().GetEffectByIdentifier(command);
    if (ID.empty())
    {
@@ -390,10 +391,14 @@ wxString MacroCommands::GetCurrentParamsFor(const wxString & command)
    }
 
    return EffectManager::Get().GetEffectParameters(ID);
+   */
+
+   return wxEmptyString;
 }
 
 wxString MacroCommands::PromptForParamsFor(const wxString & command, const wxString & params, wxWindow *parent)
 {
+	/*
    const PluginID & ID = EffectManager::Get().GetEffectByIdentifier(command);
    if (ID.empty())
    {
@@ -413,10 +418,13 @@ wxString MacroCommands::PromptForParamsFor(const wxString & command, const wxStr
    }
 
    return res;
+   */
+   return wxEmptyString;
 }
 
 wxString MacroCommands::PromptForPresetFor(const wxString & command, const wxString & params, wxWindow *parent)
 {
+	/*
    const PluginID & ID = EffectManager::Get().GetEffectByIdentifier(command);
    if (ID.empty())
    {
@@ -433,6 +441,8 @@ wxString MacroCommands::PromptForPresetFor(const wxString & command, const wxStr
    }
 
    return preset;
+   */
+	return wxEmptyString;
 }
 
 double MacroCommands::GetEndTime()
@@ -683,11 +693,13 @@ bool MacroCommands::ApplyCommand( const wxString &friendlyCommand,
    // end CLEANSPEECH remnant
 
    // Test for an effect.
+   /*
    const PluginID & ID = EffectManager::Get().GetEffectByIdentifier( command );
    if (!ID.empty())
    {
 	   return false;
    }
+   */
 
    AudacityProject *project = GetActiveProject();
    CommandManager * pManager = project->GetCommandManager();
