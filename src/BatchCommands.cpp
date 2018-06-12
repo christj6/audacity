@@ -27,7 +27,6 @@ processing.  See also MacrosWindow and ApplyMacroDialog.
 #include "AudacityApp.h"
 #include "Project.h"
 #include "commands/CommandManager.h"
-// #include "effects/EffectManager.h"
 #include "FileNames.h"
 #include "Internat.h"
 #include "Prefs.h"
@@ -383,65 +382,16 @@ auto MacroCommandsCatalog::ByCommandId( const wxString &commandId ) const
 
 wxString MacroCommands::GetCurrentParamsFor(const wxString & command)
 {
-	/*
-   const PluginID & ID = EffectManager::Get().GetEffectByIdentifier(command);
-   if (ID.empty())
-   {
-      return wxEmptyString;   // effect not found.
-   }
-
-   return EffectManager::Get().GetEffectParameters(ID);
-   */
-
    return wxEmptyString;
 }
 
 wxString MacroCommands::PromptForParamsFor(const wxString & command, const wxString & params, wxWindow *parent)
 {
-	/*
-   const PluginID & ID = EffectManager::Get().GetEffectByIdentifier(command);
-   if (ID.empty())
-   {
-      return wxEmptyString;   // effect not found
-   }
-
-   wxString res = params;
-
-   auto cleanup = EffectManager::Get().SetBatchProcessing(ID);
-
-   if (EffectManager::Get().SetEffectParameters(ID, params))
-   {
-      if (EffectManager::Get().PromptUser(ID, parent))
-      {
-         res = EffectManager::Get().GetEffectParameters(ID);
-      }
-   }
-
-   return res;
-   */
    return wxEmptyString;
 }
 
 wxString MacroCommands::PromptForPresetFor(const wxString & command, const wxString & params, wxWindow *parent)
 {
-	/*
-   const PluginID & ID = EffectManager::Get().GetEffectByIdentifier(command);
-   if (ID.empty())
-   {
-      return wxEmptyString;   // effect not found.
-   }
-
-   wxString preset = EffectManager::Get().GetPreset(ID, params, parent);
-
-   // Preset will be empty if the user cancelled the dialog, so return the original
-   // parameter value.
-   if (preset.IsEmpty())
-   {
-      return params;
-   }
-
-   return preset;
-   */
 	return wxEmptyString;
 }
 
@@ -691,15 +641,6 @@ bool MacroCommands::ApplyCommand( const wxString &friendlyCommand,
          return ApplySpecialCommand( i, friendlyCommand, command, params );
    }
    // end CLEANSPEECH remnant
-
-   // Test for an effect.
-   /*
-   const PluginID & ID = EffectManager::Get().GetEffectByIdentifier( command );
-   if (!ID.empty())
-   {
-	   return false;
-   }
-   */
 
    AudacityProject *project = GetActiveProject();
    CommandManager * pManager = project->GetCommandManager();
