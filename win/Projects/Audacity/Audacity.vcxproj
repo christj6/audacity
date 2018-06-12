@@ -231,7 +231,6 @@
     <ClCompile Include="..\..\..\src\widgets\PopupMenuTable.cpp" />
     <ClCompile Include="..\..\..\src\WrappedType.cpp" />
     <ClCompile Include="..\..\..\src\effects\Effect.cpp" />
-    <ClCompile Include="..\..\..\src\effects\EffectManager.cpp" />
     <ClCompile Include="..\..\..\src\export\Export.cpp" />
     <ClCompile Include="..\..\..\src\export\ExportCL.cpp" />
     <ClCompile Include="..\..\..\src\export\ExportFFmpeg.cpp" />
@@ -461,7 +460,6 @@
     <ClInclude Include="..\..\..\src\WaveTrack.h" />
     <ClInclude Include="..\..\..\src\WrappedType.h" />
     <ClInclude Include="..\..\..\src\effects\Effect.h" />
-    <ClInclude Include="..\..\..\src\effects\EffectManager.h" />
     <ClInclude Include="..\..\..\src\export\Export.h" />
     <ClInclude Include="..\..\..\src\export\ExportCL.h" />
     <ClInclude Include="..\..\..\src\export\ExportFFmpeg.h" />
