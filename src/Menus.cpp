@@ -617,31 +617,6 @@ void AudacityProject::CreateMenusAndCommands()
 
       wxArrayString defaults;
 
-      //////////////////////////////////////////////////////////////////////////
-      // Tools Menu
-      //////////////////////////////////////////////////////////////////////////
-	  /*
-      c->BeginMenu(_("T&ools"));
-
-      c->AddItem(wxT("ManageMacros"), XXO("&Macros..."), FN(OnManageMacros));
-
-      c->BeginSubMenu(_("&Apply Macro"));
-      c->AddItem(wxT("ApplyMacrosPalette"), XXO("&Palette..."), FN(OnApplyMacrosPalette));
-      c->AddSeparator();
-      PopulateMacrosMenu( c, AudioIONotBusyFlag );
-      c->EndSubMenu();
-      c->AddSeparator();
-
-#ifdef IS_ALPHA
-      c->AddCheck(wxT("DetectUpstreamDropouts"),
-                  XXO("Detect Upstream Dropouts"),
-                  FN(OnDetectUpstreamDropouts),
-                  gAudioIO->mDetectUpstreamDropouts);
-#endif
-
-      c->EndMenu();
-	  */
-
 #ifdef __WXMAC__
       /////////////////////////////////////////////////////////////////////////////
       // poor imitation of the Mac Windows Menu
@@ -941,22 +916,6 @@ void AudacityProject::CreateMenusAndCommands()
 }
 
 #undef XXO
-
-
-
-void AudacityProject::PopulateMacrosMenu( CommandManager* c, CommandFlag flags  )
-{
-   wxArrayString names = MacroCommands::GetNames();
-   int i;
-
-   for (i = 0; i < (int)names.GetCount(); i++) {
-      wxString MacroID = ApplyMacroDialog::MacroIdOfName( names[i] );
-      c->AddItem(MacroID, names[i], false, FN(OnApplyMacroDirectly),
-         flags,
-         flags);
-   }
-
-}
 
 #undef FN
 
@@ -3933,26 +3892,6 @@ void AudacityProject::OnApplyMacroDirectly(const CommandContext &context )
    ModifyUndoMenuItems();
 }
 
-void AudacityProject::OnApplyMacrosPalette(const CommandContext &WXUNUSED(context) )
-{
-   const bool bExpanded = false;
-   if (!mMacrosWindow)
-      mMacrosWindow = safenew MacrosWindow(this, bExpanded);
-   mMacrosWindow->Show();
-   mMacrosWindow->Raise();
-   mMacrosWindow->UpdateDisplay( bExpanded);
-}
-
-void AudacityProject::OnManageMacros(const CommandContext &WXUNUSED(context) )
-{
-   const bool bExpanded = true;
-   if (!mMacrosWindow)
-      mMacrosWindow = safenew MacrosWindow(this, bExpanded);
-   mMacrosWindow->Show();
-   mMacrosWindow->Raise();
-   mMacrosWindow->UpdateDisplay( bExpanded);
-}
-
 void AudacityProject::OnHistory(const CommandContext &WXUNUSED(context) )
 {
    if (!mHistoryWindow)
@@ -4562,13 +4501,6 @@ void AudacityProject::OnShowLog(const CommandContext &WXUNUSED(context) )
    if (logger) {
       logger->Show();
    }
-}
-
-void AudacityProject::OnDetectUpstreamDropouts(const CommandContext &WXUNUSED(context) )
-{
-   bool &setting = gAudioIO->mDetectUpstreamDropouts;
-   mCommandManager.Check(wxT("DetectUpstreamDropouts"), !setting);
-   setting = !setting;
 }
 
 void AudacityProject::OnAudioDeviceInfo(const CommandContext &WXUNUSED(context) )

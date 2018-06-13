@@ -24,7 +24,6 @@
 
 private:
 void CreateMenusAndCommands();
-void PopulateMacrosMenu( CommandManager* c, CommandFlag flags );
 void CreateRecentFilesMenu(CommandManager *c);
 void ModifyUndoMenuItems();
 
@@ -307,8 +306,6 @@ public:
 
 bool DoAudacityCommand(const PluginID & ID, const CommandContext &, int flags);
 void OnApplyMacroDirectly(const CommandContext &context );
-void OnApplyMacrosPalette(const CommandContext &context );
-void OnManageMacros(const CommandContext &context );
 static void RebuildAllMenuBars();
 
 
@@ -320,7 +317,6 @@ void OnQuickHelp(const CommandContext &context );
 void OnManual(const CommandContext &context );
 void OnShowLog(const CommandContext &context );
 void OnHelpWelcome(const CommandContext &context );
-void OnDetectUpstreamDropouts(const CommandContext &context );
 void OnAudioDeviceInfo(const CommandContext &context );
 
        //
