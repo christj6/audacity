@@ -156,23 +156,13 @@ void MacroCommandDialog::OnHelp(wxCommandEvent & WXUNUSED(event))
 
 void MacroCommandDialog::OnEditParams(wxCommandEvent & WXUNUSED(event))
 {
-   wxString command = mInternalCommandName;
-   wxString params  = mParameters->GetValue();
-
-   params = MacroCommands::PromptForParamsFor(command, params, this).Trim();
-
-   mParameters->SetValue(params);
+   mParameters->SetValue(wxEmptyString);
    mParameters->Refresh();
 }
 
 void MacroCommandDialog::OnUsePreset(wxCommandEvent & WXUNUSED(event))
 {
-   wxString command = mInternalCommandName;
-   wxString params  = mParameters->GetValue();
-
-   wxString preset = MacroCommands::PromptForPresetFor(command, params, this).Trim();
-
-   mParameters->SetValue(preset);
+   mParameters->SetValue(wxEmptyString);
    mParameters->Refresh();
 }
 

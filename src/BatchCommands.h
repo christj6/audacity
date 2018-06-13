@@ -78,10 +78,6 @@ class MacroCommands final {
    static wxArrayString GetNames();
    static wxArrayString GetNamesOfDefaultMacros();
 
-   static wxString GetCurrentParamsFor(const wxString & command);
-   static wxString PromptForParamsFor(const wxString & command, const wxString & params, wxWindow *parent);
-   static wxString PromptForPresetFor(const wxString & command, const wxString & params, wxWindow *parent);
-
    // These commands do depend on the command list.
    void ResetMacro();
 

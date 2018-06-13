@@ -378,23 +378,6 @@ auto MacroCommandsCatalog::ByCommandId( const wxString &commandId ) const
          { return entry.name.Internal() == commandId; });
 }
 
-
-
-wxString MacroCommands::GetCurrentParamsFor(const wxString & command)
-{
-   return wxEmptyString;
-}
-
-wxString MacroCommands::PromptForParamsFor(const wxString & command, const wxString & params, wxWindow *parent)
-{
-   return wxEmptyString;
-}
-
-wxString MacroCommands::PromptForPresetFor(const wxString & command, const wxString & params, wxWindow *parent)
-{
-	return wxEmptyString;
-}
-
 double MacroCommands::GetEndTime()
 {
    AudacityProject *project = GetActiveProject();
@@ -751,7 +734,7 @@ void MacroCommands::AbortBatch()
 
 void MacroCommands::AddToMacro(const wxString &command, int before)
 {
-   AddToMacro(command, GetCurrentParamsFor(command), before);
+	AddToMacro(command, wxEmptyString, before);
 }
 
 void MacroCommands::AddToMacro(const wxString &command, const wxString &params, int before)

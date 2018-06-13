@@ -26,7 +26,6 @@ responsible for calling the appropriate callback functions.
 class Command;
 class LoadableModule;
 class CommandDefinitionInterface;
-class Effect;
 
 class AUDACITY_DLL_API Registrar 
 {
@@ -35,16 +34,13 @@ public:
       bWantsModules = false;
       bWantsCommands= false;
       bWantsCommandTypes= false;
-      bWantsEffects= false;
    }
    bool bWantsModules;
    bool bWantsCommands;
    bool bWantsCommandTypes;
-   bool bWantsEffects;
    virtual void AddCommandType(movable_ptr<CommandDefinitionInterface> && WXUNUSED(comDef) ){;};
    virtual void AddCommand(movable_ptr<AudacityCommand> && WXUNUSED(command) ){;};
    virtual void AddModule(movable_ptr<LoadableModule> && WXUNUSED(module) ){;};
-   virtual void AddEffect(movable_ptr<Effect> && WXUNUSED(effect) ){;};
 };
 
 #endif
