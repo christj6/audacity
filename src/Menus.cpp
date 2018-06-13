@@ -620,7 +620,7 @@ void AudacityProject::CreateMenusAndCommands()
       //////////////////////////////////////////////////////////////////////////
       // Tools Menu
       //////////////////////////////////////////////////////////////////////////
-
+	  /*
       c->BeginMenu(_("T&ools"));
 
       c->AddItem(wxT("ManageMacros"), XXO("&Macros..."), FN(OnManageMacros));
@@ -640,7 +640,7 @@ void AudacityProject::CreateMenusAndCommands()
 #endif
 
       c->EndMenu();
-
+	  */
 
 #ifdef __WXMAC__
       /////////////////////////////////////////////////////////////////////////////
