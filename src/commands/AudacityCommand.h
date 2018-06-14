@@ -91,8 +91,6 @@ class AUDACITY_DLL_API AudacityCommand /* not final */ : public wxEvtHandler,
    virtual bool GetAutomationParameters(wxString & parms);
    virtual bool SetAutomationParameters(const wxString & parms);
 
-   bool DoAudacityCommand(wxWindow *parent, const CommandContext & context,bool shouldPrompt = true);
-
    // Nonvirtual
    // Display a message box, using effect's (translated) name as the prefix
    // for the title.

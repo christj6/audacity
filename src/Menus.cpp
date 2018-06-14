@@ -612,11 +612,6 @@ void AudacityProject::CreateMenusAndCommands()
 
       c->EndMenu();
 
-      // All of this is a bit hacky until we can get more things connected into
-      // the plugin manager...sorry! :-(
-
-      wxArrayString defaults;
-
 #ifdef __WXMAC__
       /////////////////////////////////////////////////////////////////////////////
       // poor imitation of the Mac Windows Menu
@@ -2558,25 +2553,6 @@ void AudacityProject::OnZeroCrossing(const CommandContext &WXUNUSED(context) )
    ModifyState();
 
    mTrackPanel->Refresh(false);
-}
-
-
-/// DoAudacityCommand() takes a PluginID and executes the assocated effect.
-///
-/// At the moment flags are used only to indicate whether to prompt for parameters,
-bool AudacityProject::DoAudacityCommand(const PluginID & ID, const CommandContext & context, int flags)
-{
-   const PluginDescriptor *plug = PluginManager::Get().GetPlugin(ID);
-   if (!plug)
-      return false;
-
-   if (flags & OnEffectFlags::kConfigured)
-   {
-      OnStop(*this);
-   }
-
-   RedrawProject();
-   return true;
 }
 
 void AudacityProject::RebuildAllMenuBars(){

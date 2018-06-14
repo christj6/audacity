@@ -180,45 +180,6 @@ bool AudacityCommand::SetAutomationParameters(const wxString & parms)
    return TransferDataToWindow();
 }
 
-bool AudacityCommand::DoAudacityCommand(wxWindow *parent, 
-                      const CommandContext & context,
-                      bool shouldPrompt /* = true */)
-{
-   // Note: Init may read parameters from preferences
-   if (!Init())
-   {
-      return false;
-   }
-
-   // Prompting will be bypassed when applying a command that has already 
-   // been configured, e.g. repeating the last effect on a different selection.
-   // Prompting may call AudacityCommand::Preview
-   if (shouldPrompt && !PromptUser(parent))
-   {
-      return false;
-   }
-
-   auto cleanup = finally( [&] {
-      End();
-   } );
-
-   bool returnVal = true;
-   bool skipFlag = CheckWhetherSkipAudacityCommand();
-   if (skipFlag == false)
-   {
-      auto name = GetTranslatedName();
-      ProgressDialog progress{
-         name,
-         wxString::Format(_("Applying %s..."), name),
-         pdlgHideStopButton
-      };
-      auto vr = valueRestorer( mProgress, &progress );
-
-      returnVal = Apply(context);
-   }
-   return returnVal;
-}
-
 // This is used from Macros.
 bool AudacityCommand::PromptUser(wxWindow *parent)
 {
