@@ -377,9 +377,6 @@
     <ClCompile Include="..\..\..\src\commands\AppCommandEvent.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\commands\BatchEvalCommand.cpp">
-      <Filter>src\commands</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\commands\Command.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
@@ -986,9 +983,6 @@
       <Filter>src\widgets</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\commands\AppCommandEvent.h">
-      <Filter>src\commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\commands\BatchEvalCommand.h">
       <Filter>src\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\commands\Command.h">

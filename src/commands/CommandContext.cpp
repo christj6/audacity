@@ -33,7 +33,7 @@ messaging from a command back to its invoker.
 #include "CommandMisc.h"
 #include "CommandBuilder.h"
 #include "CommandTargets.h"
-#include "CommandDirectory.h"
+// #include "CommandDirectory.h"
 
 //#include "CommandContext.h"
 #include "CommandContext.h"

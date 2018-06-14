@@ -20,7 +20,6 @@ functions to look up a command by name.
 
 #include "HelpCommand.h"
 #include "MessageCommand.h"
-#include "BatchEvalCommand.h"
 
 std::unique_ptr<CommandDirectory> CommandDirectory::mInstance;
 
@@ -28,7 +27,7 @@ CommandDirectory::CommandDirectory()
 {
    // Create the command map.
    // First we have commands which return information
-   AddCommand(make_movable<BatchEvalCommandType>());
+   // AddCommand(make_movable<BatchEvalCommandType>());
 }
 
 CommandDirectory::~CommandDirectory()

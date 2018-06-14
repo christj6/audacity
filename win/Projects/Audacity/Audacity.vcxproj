@@ -283,7 +283,6 @@
     <ClCompile Include="..\..\..\src\widgets\valnum.cpp" />
     <ClCompile Include="..\..\..\src\widgets\Warning.cpp" />
     <ClCompile Include="..\..\..\src\commands\AppCommandEvent.cpp" />
-    <ClCompile Include="..\..\..\src\commands\BatchEvalCommand.cpp" />
     <ClCompile Include="..\..\..\src\commands\Command.cpp" />
     <ClCompile Include="..\..\..\src\commands\CommandBuilder.cpp" />
     <ClCompile Include="..\..\..\src\commands\CommandDirectory.cpp" />
@@ -511,7 +510,6 @@
     <ClInclude Include="..\..\..\src\widgets\valnum.h" />
     <ClInclude Include="..\..\..\src\widgets\Warning.h" />
     <ClInclude Include="..\..\..\src\commands\AppCommandEvent.h" />
-    <ClInclude Include="..\..\..\src\commands\BatchEvalCommand.h" />
     <ClInclude Include="..\..\..\src\commands\Command.h" />
     <ClInclude Include="..\..\..\src\commands\CommandBuilder.h" />
     <ClInclude Include="..\..\..\src\commands\CommandDirectory.h" />
