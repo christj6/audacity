@@ -78,7 +78,6 @@ simplifies construction of menu items.
 #include "AboutDialog.h"
 #include "ondemand/ODManager.h"
 
-#include "BatchProcessDialog.h"
 #include "BatchCommands.h"
 #include "prefs/BatchPrefs.h"
 

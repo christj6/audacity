@@ -83,9 +83,6 @@
     <ClCompile Include="..\..\..\src\BatchCommands.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\BatchProcessDialog.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\BlockFile.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -683,9 +680,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\BatchCommands.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\BatchProcessDialog.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\BlockFile.h">
