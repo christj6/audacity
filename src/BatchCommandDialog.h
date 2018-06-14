@@ -42,24 +42,11 @@ class MacroCommandDialog final : public wxDialogWrapper {
  public:
    // constructors and destructors
    MacroCommandDialog(wxWindow *parent, wxWindowID id);
-   void SetCommandAndParams(const wxString &Command, const wxString &Params);
  public:
    wxString   mSelectedCommand;
    wxString   mSelectedParameters;
  private:
-   void Populate();
-   void PopulateOrExchange(ShuttleGui &S);
-   void OnEditParams(wxCommandEvent &event);
-   void OnUsePreset(wxCommandEvent &event);
-   void OnChoice(wxCommandEvent &event);
-   void OnOk(wxCommandEvent &event);
-   void OnCancel(wxCommandEvent &event);
-   void OnHelp(wxCommandEvent &event);
    wxString GetHelpPageName() { return wxT("Scripting Reference") ; }
-
-   void ValidateChoices();
-   void PopulateCommandList();
-   //int GetSelectedItem();
 
    wxButton   *mEditParams;
    wxButton   *mUsePreset;
