@@ -3849,25 +3849,6 @@ void AudacityProject::OnShowExtraMenus(const CommandContext &WXUNUSED(context) )
    RebuildAllMenuBars();
 }
 
-void AudacityProject::OnApplyMacroDirectly(const CommandContext &context )
-{
-   //wxLogDebug( "Macro was: %s", context.parameter);
-   ApplyMacroDialog dlg(this);
-   wxString Name = context.parameter;
-
-// We used numbers previously, but macros could get renumbered, making
-// macros containing macros unpredictable.
-#ifdef MACROS_BY_NUMBERS
-   long item=0;
-   // Take last three letters (of e.g. Macro007) and convert to a number.
-   Name.Mid( Name.Length() - 3 ).ToLong( &item, 10 );
-   dlg.ApplyMacroToProject( item, false );
-#else
-   dlg.ApplyMacroToProject( Name, false );
-#endif
-   ModifyUndoMenuItems();
-}
-
 void AudacityProject::OnHistory(const CommandContext &WXUNUSED(context) )
 {
    if (!mHistoryWindow)

@@ -62,10 +62,6 @@
 #define ShrinkID           7006
 
 BEGIN_EVENT_TABLE(ApplyMacroDialog, wxDialogWrapper)
-   EVT_BUTTON(ApplyToProjectID, ApplyMacroDialog::OnApplyToProject)
-   EVT_BUTTON(ApplyToFilesID, ApplyMacroDialog::OnApplyToFiles)
-   EVT_BUTTON(wxID_CANCEL, ApplyMacroDialog::OnCancel)
-   EVT_BUTTON(wxID_HELP, ApplyMacroDialog::OnHelp)
 END_EVENT_TABLE()
 
 ApplyMacroDialog::ApplyMacroDialog(wxWindow * parent, bool bInherited):
@@ -183,25 +179,6 @@ void ApplyMacroDialog::PopulateMacros()
    }
 }
 
-void ApplyMacroDialog::OnHelp(wxCommandEvent & WXUNUSED(event))
-{
-   wxString page = GetHelpPageName();
-   HelpSystem::ShowHelp(this, page, true);
-}
-
-void ApplyMacroDialog::OnApplyToProject(wxCommandEvent & WXUNUSED(event))
-{
-   long item = mMacros->GetNextItem(-1,
-                                    wxLIST_NEXT_ALL,
-                                    wxLIST_STATE_SELECTED);
-
-   if (item == -1) {
-      AudacityMessageBox(_("No macro selected"));
-      return;
-   }
-   ApplyMacroToProject( item );
-}
-
 wxString ApplyMacroDialog::MacroIdOfName( const wxString & MacroName )
 {
    wxString Temp = MacroName;
@@ -284,188 +261,6 @@ void ApplyMacroDialog::ApplyMacroToProject( int iMacro, bool bHasGui )
    Raise();
 }
 
-void ApplyMacroDialog::OnApplyToFiles(wxCommandEvent & WXUNUSED(event))
-{
-   long item = mMacros->GetNextItem(-1,
-                                    wxLIST_NEXT_ALL,
-                                    wxLIST_STATE_SELECTED);
-   if (item == -1) {
-      AudacityMessageBox(_("No macro selected"));
-      return;
-   }
-
-   wxString name = mMacros->GetItemText(item);
-   gPrefs->Write(wxT("/Batch/ActiveMacro"), name);
-   gPrefs->Flush();
-
-   AudacityProject *project = GetActiveProject();
-   if (!project->GetIsEmpty()) {
-      AudacityMessageBox(_("Please save and close the current project first."));
-      return;
-   }
-
-   wxString prompt =  _("Select file(s) for batch processing...");
-
-   FormatList l;
-   wxString filter;
-   wxString all;
-
-   Importer::Get().GetSupportedImportFormats(&l);
-   for (const auto &format : l) {
-      const Format *f = &format;
-
-      wxString newfilter = f->formatName + wxT("|");
-      for (size_t i = 0; i < f->formatExtensions.size(); i++) {
-         if (!newfilter.Contains(wxT("*.") + f->formatExtensions[i] + wxT(";")))
-            newfilter += wxT("*.") + f->formatExtensions[i] + wxT(";");
-         if (!all.Contains(wxT("*.") + f->formatExtensions[i] + wxT(";")))
-            all += wxT("*.") + f->formatExtensions[i] + wxT(";");
-      }
-      newfilter.RemoveLast(1);
-      filter += newfilter;
-      filter += wxT("|");
-   }
-   all.RemoveLast(1);
-   filter.RemoveLast(1);
-
-   wxString mask = _("All files|*|All supported files|") +
-                   all + wxT("|") +
-                   filter;
-
-   wxString type = gPrefs->Read(wxT("/DefaultOpenType"),mask.BeforeFirst(wxT('|')));
-   // Convert the type to the filter index
-   int index = mask.First(type + wxT("|"));
-   if (index == wxNOT_FOUND) {
-      index = 0;
-   }
-   else {
-      index = mask.Left(index).Freq(wxT('|')) / 2;
-      if (index < 0) {
-         index = 0;
-      }
-   }
-
-   auto path = FileNames::FindDefaultPath(FileNames::Operation::Open);
-   FileDialogWrapper dlog(this,
-                   prompt,
-                   path,
-                   wxT(""),
-                   mask,
-                   wxFD_OPEN | wxFD_MULTIPLE | wxRESIZE_BORDER);
-
-   dlog.SetFilterIndex(index);
-   if (dlog.ShowModal() != wxID_OK) {
-      Raise();
-      return;
-   }
-   Raise();
-   
-   wxArrayString files;
-   dlog.GetPaths(files);
-
-   files.Sort();
-
-   wxDialogWrapper activityWin(this, wxID_ANY, GetTitle());
-   activityWin.SetName(activityWin.GetTitle());
-   ShuttleGui S(&activityWin, eIsCreating);
-
-   S.StartVerticalLay(false);
-   {
-      S.StartStatic(_("Applying..."), 1);
-      {
-         auto imageList = std::make_unique<wxImageList>(9, 16);
-         imageList->Add(wxIcon(empty9x16_xpm));
-         imageList->Add(wxIcon(arrow_xpm));
-
-         S.SetStyle(wxSUNKEN_BORDER | wxLC_REPORT | wxLC_HRULES | wxLC_VRULES |
-                    wxLC_SINGLE_SEL);
-         mList = S.Id(CommandsListID).AddListControlReportMode();
-         // AssignImageList takes ownership
-         mList->AssignImageList(imageList.release(), wxIMAGE_LIST_SMALL);
-         mList->InsertColumn(0, _("File"), wxLIST_FORMAT_LEFT);
-      }
-      S.EndStatic();
-
-      S.StartHorizontalLay(wxCENTER, false);
-      {
-         S.Id(wxID_CANCEL).AddButton(_("&Cancel"));
-      }
-      S.EndHorizontalLay();
-   }
-   S.EndVerticalLay();
-
-   int i;
-   for (i = 0; i < (int)files.GetCount(); i++ ) {
-      mList->InsertItem(i, files[i], i == 0);
-   }
-
-   // Set the column size for the files list.
-   mList->SetColumnWidth(0, wxLIST_AUTOSIZE);
-
-   int width = mList->GetColumnWidth(0);
-   wxSize sz = mList->GetClientSize();
-   if (width > sz.GetWidth() && width < 500) {
-      sz.SetWidth(width);
-      mList->SetInitialSize(sz);
-   }
-
-   activityWin.Layout();
-   activityWin.Fit();
-   activityWin.CenterOnScreen();
-   // Avoid overlap with progress.
-   int x,y;
-   activityWin.GetPosition( &x, &y );
-   activityWin.Move(wxMax(0,x-300), 0);
-   activityWin.Show();
-
-   // Without this the newly created dialog may not show completely.
-   wxYield();
-   // We could avoid hiding, but there are many dialogs on screen,
-   // and hiding this one temporarily has some advantages.
-   Hide();
-
-   mMacroCommands.ReadMacro(name);
-   for (i = 0; i < (int)files.GetCount(); i++) {
-      wxWindowDisabler wd(&activityWin);
-      if (i > 0) {
-         //Clear the arrow in previous item.
-         mList->SetItemImage(i - 1, 0, 0);
-      }
-      mList->SetItemImage(i, 1, 1);
-      mList->EnsureVisible(i);
-
-      auto success = GuardedCall< bool >( [&] {
-         project->Import(files[i]);
-         project->ZoomAfterImport(nullptr);
-         project->OnSelectAll(*project);
-         if (!mMacroCommands.ApplyMacro(mCatalog))
-            return false;
-
-         if (!activityWin.IsShown() || mAbort)
-            return false;
-
-         return true;
-      } );
-
-      if (!success)
-         break;
-      
-      UndoManager *um = project->GetUndoManager();
-      um->ClearStates();
-      project->OnSelectAll(*project);
-      project->OnRemoveTracks(*project);
-   }
-   project->OnRemoveTracks(*project);
-   
-   Show();
-   Raise();
-}
-
-void ApplyMacroDialog::OnCancel(wxCommandEvent & WXUNUSED(event))
-{
-   Hide();
-}
-
 /////////////////////////////////////////////////////////////////////
 #include <wx/textdlg.h>
 #include "BatchCommandDialog.h"
@@ -490,19 +285,6 @@ enum {
 };
 
 BEGIN_EVENT_TABLE(MacrosWindow, ApplyMacroDialog)
-   EVT_LIST_ITEM_SELECTED(MacrosListID, MacrosWindow::OnMacroSelected)
-   EVT_LIST_ITEM_SELECTED(CommandsListID, MacrosWindow::OnListSelected)
-   EVT_LIST_BEGIN_LABEL_EDIT(MacrosListID, MacrosWindow::OnMacrosBeginEdit)
-   EVT_LIST_END_LABEL_EDIT(MacrosListID, MacrosWindow::OnMacrosEndEdit)
-   EVT_BUTTON(AddButtonID, MacrosWindow::OnAdd)
-   EVT_BUTTON(RemoveButtonID, MacrosWindow::OnRemove)
-   EVT_BUTTON(RenameButtonID, MacrosWindow::OnRename)
-   EVT_BUTTON(ExpandID, MacrosWindow::OnExpand)
-   EVT_BUTTON(ShrinkID, MacrosWindow::OnShrink)
-
-   EVT_SIZE(MacrosWindow::OnSize)
-
-   EVT_LIST_ITEM_ACTIVATED(CommandsListID, MacrosWindow::OnCommandActivated)
    EVT_BUTTON(InsertButtonID, MacrosWindow::OnInsert)
    EVT_BUTTON(EditButtonID, MacrosWindow::OnEditCommandParams)
    EVT_BUTTON(DeleteButtonID, MacrosWindow::OnDelete)
@@ -511,7 +293,6 @@ BEGIN_EVENT_TABLE(MacrosWindow, ApplyMacroDialog)
    EVT_BUTTON(DefaultsButtonID, MacrosWindow::OnDefaults)
 
    EVT_BUTTON(wxID_OK, MacrosWindow::OnOK)
-   EVT_BUTTON(wxID_CANCEL, MacrosWindow::OnCancel)
 
    EVT_KEY_DOWN(MacrosWindow::OnKeyDown)
 END_EVENT_TABLE()
@@ -749,13 +530,6 @@ void MacrosWindow::UpdateDisplay( bool bExpanded )
    SetTitle( Title );
 }
 
-void MacrosWindow::OnExpand(wxCommandEvent &WXUNUSED(event))
-{  UpdateDisplay( true );}
-
-void MacrosWindow::OnShrink(wxCommandEvent &WXUNUSED(event))
-{  UpdateDisplay( false );}
-
-
 bool MacrosWindow::ChangeOK()
 {
    if (mChanged) {
@@ -781,50 +555,6 @@ bool MacrosWindow::ChangeOK()
    }
 
    return true;
-}
-/// An item in the macros list has been selected.
-void MacrosWindow::OnMacroSelected(wxListEvent & event)
-{
-   if (!ChangeOK()) {
-      event.Veto();
-      return;
-   }
-
-   int item = event.GetIndex();
-
-   mActiveMacro = mMacros->GetItemText(item);
-   mMacroCommands.ReadMacro(mActiveMacro);
-   if( !mbExpanded )
-      return;
-   
-   if (mMacroCommands.IsFixed(mActiveMacro)) {
-      mRemove->Disable();
-      mRename->Disable();
-      mDefaults->Enable();
-   }
-   else {
-      mRemove->Enable();
-      mRename->Enable();
-      mDefaults->Disable();
-   }
-
-   PopulateList();
-}
-
-/// An item in the macros list has been selected.
-void MacrosWindow::OnListSelected(wxListEvent & WXUNUSED(event))
-{
-   FitColumns();
-}
-
-/// The window has been resized.
-void MacrosWindow::OnSize(wxSizeEvent & WXUNUSED(event))
-{
-   // Refrsh the layout and re-fit the columns.
-   Layout();
-   if( !mbExpanded )
-      return;
-   FitColumns();
 }
 
 void MacrosWindow::FitColumns()
@@ -869,140 +599,6 @@ void MacrosWindow::FitColumns()
    bestfit = (bestfit > clientsize-col1-col2)? bestfit : clientsize-col1-col2;
    mList->SetColumnWidth(3, bestfit);
 
-}
-
-///
-void MacrosWindow::OnMacrosBeginEdit(wxListEvent &event)
-{
-   int itemNo = event.GetIndex();
-
-   wxString macro = mMacros->GetItemText(itemNo);
-
-   if (mMacroCommands.IsFixed(mActiveMacro)) {
-      wxBell();
-      event.Veto();
-   }
-}
-
-///
-void MacrosWindow::OnMacrosEndEdit(wxListEvent &event)
-{
-   if (event.IsEditCancelled()) {
-      return;
-   }
-
-   wxString newname = event.GetLabel();
-
-   mMacroCommands.RenameMacro(mActiveMacro, newname);
-
-   mActiveMacro = newname;
-
-   PopulateMacros();
-}
-
-///
-void MacrosWindow::OnAdd(wxCommandEvent & WXUNUSED(event))
-{
-   while (true) {
-      AudacityTextEntryDialog d(this,
-                          _("Enter name of new macro"),
-                          _("Name of new macro"));
-      d.SetName(d.GetTitle());
-      wxString name;
-
-      if (d.ShowModal() == wxID_CANCEL) {
-         Raise();
-         return;
-      }
-      Raise();
-
-      name = d.GetValue().Strip(wxString::both);
-
-      if (name.Length() == 0) {
-         AudacityMessageBox(_("Name must not be blank"),
-                      GetTitle(),
-                      wxOK | wxICON_ERROR,
-                      this);
-         continue;
-      }
-
-      if (name.Contains(wxFILE_SEP_PATH) ||
-          name.Contains(wxFILE_SEP_PATH_UNIX)) {
-         /*i18n-hint: The %c will be replaced with 'forbidden characters', like '/' and '\'.*/
-         AudacityMessageBox(wxString::Format(_("Names may not contain '%c' and '%c'"),
-                      wxFILE_SEP_PATH, wxFILE_SEP_PATH_UNIX),
-                      GetTitle(),
-                      wxOK | wxICON_ERROR,
-                      this);
-         continue;
-      }
-
-      mMacroCommands.AddMacro(name);
-
-      mActiveMacro = name;
-
-      PopulateMacros();
-      UpdateMenus();
-
-      break;
-   }
-}
-
-///
-void MacrosWindow::OnRemove(wxCommandEvent & WXUNUSED(event))
-{
-   long item = mMacros->GetNextItem(-1,
-                                    wxLIST_NEXT_ALL,
-                                    wxLIST_STATE_SELECTED);
-   if (item == -1) {
-      return;
-   }
-
-   wxString name = mMacros->GetItemText(item);
-   AudacityMessageDialog m(this,
-   /*i18n-hint: %s will be replaced by the name of a file.*/
-                     wxString::Format(_("Are you sure you want to delete %s?"), name),
-                     GetTitle(),
-                     wxYES_NO | wxICON_QUESTION);
-   if (m.ShowModal() == wxID_NO) {
-      Raise();
-      return;
-   }
-   Raise();
-
-   mMacroCommands.DeleteMacro(name);
-
-   item++;
-   if (item >= (mMacros->GetItemCount() - 1) && item >= 0) {
-      item--;
-   }
-
-   mActiveMacro = mMacros->GetItemText(item);
-
-   PopulateMacros();
-   UpdateMenus();
-}
-
-///
-void MacrosWindow::OnRename(wxCommandEvent & WXUNUSED(event))
-{
-   long item = mMacros->GetNextItem(-1,
-                                    wxLIST_NEXT_ALL,
-                                    wxLIST_STATE_SELECTED);
-   if (item == -1) {
-      return;
-   }
-
-   mMacros->EditLabel(item);
-   UpdateMenus();
-}
-
-/// An item in the list has been selected.
-/// Bring up a dialog to allow its parameters to be edited.
-void MacrosWindow::OnCommandActivated(wxListEvent & WXUNUSED(event))
-{
-   wxCommandEvent dummy;
-   OnEditCommandParams( dummy );
 }
 
 ///
@@ -1133,20 +729,6 @@ void MacrosWindow::OnDown(wxCommandEvent & WXUNUSED(event))
    PopulateList();
 }
 
-void MacrosWindow::OnApplyToProject(wxCommandEvent & event)
-{
-   if( !SaveChanges() )
-      return;
-   ApplyMacroDialog::OnApplyToProject( event );
-}
-
-void MacrosWindow::OnApplyToFiles(wxCommandEvent & event)
-{
-   if( !SaveChanges() )
-      return;
-   ApplyMacroDialog::OnApplyToFiles( event );
-}
-
 /// Select the empty Command macro.
 void MacrosWindow::OnDefaults(wxCommandEvent & WXUNUSED(event))
 {
@@ -1177,15 +759,6 @@ void MacrosWindow::OnOK(wxCommandEvent & WXUNUSED(event))
       return;
    Hide();
    //EndModal(true);
-}
-
-///
-void MacrosWindow::OnCancel(wxCommandEvent &WXUNUSED(event))
-{
-   if (!ChangeOK()) {
-      return;
-   }
-   Hide();
 }
 
 ///

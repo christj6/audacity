@@ -72,7 +72,6 @@ class ToolManager;
 // windows and frames
 class AdornedRulerPanel;
 class HistoryWindow;
-class MacrosWindow;
 
 struct AudioIOStartStreamOptions;
 struct UndoState;
@@ -541,7 +540,6 @@ private:
    bool mActive{ true };
    bool mIconized;
 
-   MacrosWindow *mMacrosWindow{};
    HistoryWindow *mHistoryWindow{};
 
    // dialog for missing alias warnings

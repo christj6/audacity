@@ -144,10 +144,8 @@ void SelectFrequenciesCommand::PopulateOrExchange(ShuttleGui & S)
    S.EndMultiColumn();
 }
 
-bool SelectFrequenciesCommand::Apply(const CommandContext & context){
-   if( !bHasBottom && !bHasTop )
-      return true;
-
+bool SelectFrequenciesCommand::Apply(const CommandContext & context)
+{
    return true;
 }
 

@@ -304,7 +304,6 @@ public:
    static const int kDontRepeatLast = 0x04;
 };
 
-void OnApplyMacroDirectly(const CommandContext &context );
 static void RebuildAllMenuBars();
 
 
