@@ -24,7 +24,6 @@
 #include "../Languages.h"
 #include "../Prefs.h"
 #include "../Project.h"
-#include "../BatchCommandDialog.h"
 #include "../ShuttleGui.h"
 #include "../toolbars/ToolManager.h"
 
