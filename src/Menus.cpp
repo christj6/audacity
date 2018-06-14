@@ -79,7 +79,6 @@ simplifies construction of menu items.
 #include "ondemand/ODManager.h"
 
 #include "BatchCommands.h"
-#include "prefs/BatchPrefs.h"
 
 #include "toolbars/ToolManager.h"
 #include "toolbars/ControlToolBar.h"

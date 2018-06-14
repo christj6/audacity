@@ -10,7 +10,7 @@
 
 \class PrefsPanel
 \brief Used within the PrefsDialog, classes derived from this class
-include AudioIOPrefs, BatchPrefs, DirectoriesPrefs, FileFormatPrefs,
+include AudioIOPrefs, DirectoriesPrefs, FileFormatPrefs,
 GUIPrefs, KeyConfigPrefs, MousePrefs, QualityPrefs, and ThemePrefs.
 
   The interface works like this: Each panel in the preferences dialog

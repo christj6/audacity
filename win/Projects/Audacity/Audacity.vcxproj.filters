@@ -551,9 +551,6 @@
     <ClCompile Include="..\..\..\src\UIHandle.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\prefs\BatchPrefs.cpp">
-      <Filter>src\prefs</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\tracks\ui\TrackControls.cpp">
       <Filter>src\tracks\ui</Filter>
     </ClCompile>
@@ -879,9 +876,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\import\RawAudioGuess.h">
       <Filter>src\import</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\prefs\BatchPrefs.h">
-      <Filter>src\prefs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\prefs\DevicePrefs.h">
       <Filter>src\prefs</Filter>

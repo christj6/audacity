@@ -168,7 +168,6 @@
     <ClCompile Include="..\..\..\src\PlatformCompatibility.cpp" />
     <ClCompile Include="..\..\..\src\PluginManager.cpp" />
     <ClCompile Include="..\..\..\src\Prefs.cpp" />
-    <ClCompile Include="..\..\..\src\prefs\BatchPrefs.cpp" />
     <ClCompile Include="..\..\..\src\prefs\WaveformPrefs.cpp" />
     <ClCompile Include="..\..\..\src\prefs\WaveformSettings.cpp" />
     <ClCompile Include="..\..\..\src\Profiler.cpp" />
@@ -475,7 +474,6 @@
     <ClInclude Include="..\..\..\src\import\ImportPlugin.h" />
     <ClInclude Include="..\..\..\src\import\ImportRaw.h" />
     <ClInclude Include="..\..\..\src\import\RawAudioGuess.h" />
-    <ClInclude Include="..\..\..\src\prefs\BatchPrefs.h" />
     <ClInclude Include="..\..\..\src\prefs\DevicePrefs.h" />
     <ClInclude Include="..\..\..\src\prefs\DirectoriesPrefs.h" />
     <ClInclude Include="..\..\..\src\prefs\ExtImportPrefs.h" />

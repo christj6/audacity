@@ -39,7 +39,6 @@
 
 #include "PrefsPanel.h"
 
-#include "BatchPrefs.h"
 #include "DevicePrefs.h"
 #include "DirectoriesPrefs.h"
 #include "GUIPrefs.h"
@@ -158,7 +157,6 @@ PrefsDialog::Factories
    static TracksBehaviorsPrefsFactory tracksBehaviorsPrefsFactory;
    static DirectoriesPrefsFactory directoriesPrefsFactory;
    static WarningsPrefsFactory warningsPrefsFactory;
-   // static BatchPrefsFactory batchPrefsFactory;
    static KeyConfigPrefsFactory keyConfigPrefsFactory;
    static MousePrefsFactory mousePrefsFactory;
 
