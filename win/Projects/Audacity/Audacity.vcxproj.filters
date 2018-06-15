@@ -1135,9 +1135,6 @@
     <ClInclude Include="..\..\..\src\AudacityHeaders.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\NumberScale.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\prefs\WaveformPrefs.h">
       <Filter>src\prefs</Filter>
     </ClInclude>

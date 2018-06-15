@@ -24,7 +24,6 @@
 class ViewInfo;
 class AudacityProject;
 class SnapManager;
-class NumberScale;
 class TrackList;
 class ZoomInfo;
 
@@ -94,9 +93,6 @@ class AUDACITY_DLL_API Ruler {
    struct Fonts { wxFont *major, *minor, *minorMinor; };
    Fonts GetFonts() const
    { return { mMajorFont.get(), mMinorFont.get(), mMinorMinorFont.get() }; }
-
-   // Copies *pScale if it is not NULL
-   void SetNumberScale(const NumberScale *pScale);
 
    // The ruler will not draw text within this (pixel) range.
    // Use this if you have another graphic object obscuring part
@@ -220,8 +216,6 @@ private:
    bool         mTwoTone;
    const ZoomInfo *mUseZoomInfo;
    int          mLeftOffset;
-
-   std::unique_ptr<NumberScale> mpNumberScale;
 };
 
 class AUDACITY_DLL_API RulerPanel final : public wxPanelWrapper {

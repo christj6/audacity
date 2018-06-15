@@ -88,7 +88,6 @@ array of Ruler::Label.
 #include "../Experimental.h"
 #include "../TrackPanel.h"
 #include "../TrackPanelCellIterator.h"
-#include "../NumberScale.h"
 #include "../Prefs.h"
 #include "../Snap.h"
 #include "../prefs/PlaybackPrefs.h"
@@ -114,7 +113,6 @@ using std::max;
 //
 
 Ruler::Ruler()
-   : mpNumberScale{}
 {
    mMin = mHiddenMin = 0.0;
    mMax = mHiddenMax = 100.0;
@@ -276,22 +274,6 @@ void Ruler::SetFonts(const wxFont &minorFont, const wxFont &majorFont, const wxF
    mUserFonts = true;
 
    Invalidate();
-}
-
-void Ruler::SetNumberScale(const NumberScale *pScale)
-{
-   if (!pScale) {
-      if (mpNumberScale) {
-         mpNumberScale.reset();
-         Invalidate();
-      }
-   }
-   else {
-      if (!mpNumberScale || *mpNumberScale != *pScale) {
-         mpNumberScale = std::make_unique<NumberScale>(*pScale);
-         Invalidate();
-      }
-   }
 }
 
 void Ruler::OfflimitsPixels(int start, int end)

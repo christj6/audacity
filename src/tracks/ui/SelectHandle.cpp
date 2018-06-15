@@ -15,7 +15,6 @@ Paul Licameli split from TrackPanel.cpp
 
 #include "../../AColor.h"
 #include "../../HitTestResult.h"
-#include "../../NumberScale.h"
 #include "../../Project.h"
 #include "../../RefreshCode.h"
 #include "../../Snap.h"

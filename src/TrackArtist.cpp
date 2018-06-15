@@ -165,7 +165,6 @@ audio tracks.
 #include "AColor.h"
 #include "BlockFile.h"
 #include "Envelope.h"
-#include "NumberScale.h"
 #include "WaveTrack.h"
 #include "Prefs.h"
 #include "prefs/GUISettings.h"
