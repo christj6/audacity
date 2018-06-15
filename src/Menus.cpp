@@ -78,8 +78,6 @@ simplifies construction of menu items.
 #include "AboutDialog.h"
 #include "ondemand/ODManager.h"
 
-#include "BatchCommands.h"
-
 #include "toolbars/ToolManager.h"
 #include "toolbars/ControlToolBar.h"
 #include "toolbars/EditToolBar.h"
@@ -121,8 +119,6 @@ enum {
 };
 
 #include "commands/CommandContext.h"
-
-#include "BatchCommands.h"
 
 /// CreateMenusAndCommands builds the menus, and also rebuilds them after
 /// changes in configured preferences - for example changes in key-bindings

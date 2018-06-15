@@ -130,7 +130,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\AudacityLogger.cpp" />
     <ClCompile Include="..\..\..\src\AudioIO.cpp" />
-    <ClCompile Include="..\..\..\src\BatchCommands.cpp" />
     <ClCompile Include="..\..\..\src\BlockFile.cpp" />
     <ClCompile Include="..\..\..\src\blockfile\NotYetAvailableException.cpp" />
     <ClCompile Include="..\..\..\src\commands\AudacityCommand.cpp" />
@@ -342,7 +341,6 @@
     <ClInclude Include="..\..\..\src\AudacityLogger.h" />
     <ClInclude Include="..\..\..\src\AudioIO.h" />
     <ClInclude Include="..\..\..\src\AudioIOListener.h" />
-    <ClInclude Include="..\..\..\src\BatchCommands.h" />
     <ClInclude Include="..\..\..\src\BlockFile.h" />
     <ClInclude Include="..\..\..\src\blockfile\NotYetAvailableException.h" />
     <ClInclude Include="..\..\..\src\commands\AudacityCommand.h" />
