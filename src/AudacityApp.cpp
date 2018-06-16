@@ -85,8 +85,6 @@ It handles initialization and termination by subclassing wxApp.
 //temporarilly commented out till it is added to all projects
 //#include "Profiler.h"
 
-#include "ModuleManager.h"
-
 #include "import/Import.h"
 
 #include "Experimental.h"
@@ -207,8 +205,6 @@ void QuitAudacity(bool bForce)
          }
       }
    }
-
-   ModuleManager::Get().Dispatch(AppQuiting);
 
    //release ODManager Threads
    ODManager::Quit();
@@ -1368,6 +1364,7 @@ bool AudacityApp::OnInit()
    {
       project = CreateNewAudacityProject();
       mCmdHandler->SetProject(project);
+	  /*
       wxWindow * pWnd = MakeHijackPanel();
       if (pWnd)
       {
@@ -1376,6 +1373,7 @@ bool AudacityApp::OnInit()
          SetTopWindow(pWnd);
          pWnd->Show(true);
       }
+	  */
    }
 
    if( project->mShowSplashScreen ){
@@ -1389,8 +1387,6 @@ bool AudacityApp::OnInit()
    Importer::Get().Initialize();
 
    gInited = true;
-
-   ModuleManager::Get().Dispatch(AppInitialized);
 
    mWindowRectAlreadySaved = FALSE;
 

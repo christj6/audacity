@@ -118,7 +118,6 @@ scroll information.  It also has some status flags.
 #include "ondemand/ODManager.h"
 #include "ondemand/ODTask.h"
 #include "ondemand/ODComputeSummaryTask.h"
-#include "ModuleManager.h"
 
 #include "Theme.h"
 #include "AllThemeResources.h"
@@ -491,8 +490,6 @@ AudacityProject *CreateNewAudacityProject()
    // Okay, GetActiveProject() is ready. Now we can get its CommandManager,
    // and add the shortcut keys to the tooltips.
    p->GetToolManager()->RegenerateTooltips();
-
-   ModuleManager::Get().Dispatch(ProjectInitialized);
 
    p->Show(true);
 
@@ -2212,8 +2209,6 @@ void AudacityProject::OnCloseWindow(wxCloseEvent & event)
    //  momentary blackness.)
    ShowFullScreen(false);
 #endif
-
-   ModuleManager::Get().Dispatch(ProjectClosing);
 
    // Stop the timer since there's no need to update anything anymore
    mTimer.reset();

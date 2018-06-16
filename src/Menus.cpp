@@ -71,7 +71,6 @@ simplifies construction of menu items.
 #include "HistoryWindow.h"
 #include "Internat.h"
 #include "FileFormats.h"
-#include "ModuleManager.h"
 #include "PluginManager.h"
 #include "Prefs.h"
 #include "Mix.h"
@@ -984,8 +983,6 @@ void AudacityProject::RebuildMenuBar()
    mCommandManager.PurgeData();
 
    CreateMenusAndCommands();
-
-   ModuleManager::Get().Dispatch(MenusRebuilt);
 }
 
 void AudacityProject::RebuildOtherMenus()
