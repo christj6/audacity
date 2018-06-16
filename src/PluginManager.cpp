@@ -426,7 +426,6 @@ public:
 private:
    void Populate();
    void PopulateOrExchange(ShuttleGui & S);
-   void RegenerateEffectsList(int iShowWhat);
    void SetState(int i, bool toggle, bool state = true);
 
    static int wxCALLBACK SortCompare(long item1, long item2, long sortData);
@@ -662,8 +661,6 @@ void PluginRegistrationDialog::PopulateOrExchange(ShuttleGui &S)
    int w = r.GetWidth() - (GetClientSize().GetWidth() - mEffects->GetSize().GetWidth());
    mEffects->SetSizeHints(wxSize(wxMin(maxW, w), 200), wxSize(w, -1));
 
-   RegenerateEffectsList(ID_ShowAll);
-
    Layout();
    Fit();
 
@@ -685,67 +682,6 @@ void PluginRegistrationDialog::PopulateOrExchange(ShuttleGui &S)
 #endif
    }
 
-}
-
-void PluginRegistrationDialog::RegenerateEffectsList(int filter)
-{
-   mFilter = filter;
-
-   mEffects->DeleteAllItems();
-
-   int i = 0;
-   for (ItemDataMap::iterator iter = mItems.begin(); iter != mItems.end(); ++iter)
-   {
-      ItemData & item = iter->second;
-      bool add = false;
-
-      switch (mFilter)
-      {
-      case ID_ShowAll:
-         add = true;
-         break;
-      case ID_ShowNew:
-         if (item.state == STATE_New)
-         {
-            add = true;
-         }
-         break;
-      case ID_ShowEnabled:
-         if (item.state == STATE_Enabled)
-         {
-            add = true;
-         }
-         break;
-      case ID_ShowDisabled:
-         if (item.state == STATE_Disabled)
-         {
-            add = true;
-         }
-         break;
-      }
-
-      if (add)
-      {
-         mEffects->InsertItem(i, item.name);
-         mEffects->SetItem(i, COL_State, mStates[item.state]);
-         mEffects->SetItem(i, COL_Path, item.path);
-         mEffects->SetItemPtrData(i, (wxUIntPtr) &item);
-
-         ++i;
-      }
-   }
-
-   mEffects->SortItems(SortCompare, (wxUIntPtr) this);
-
-   if (mEffects->GetItemCount() > 0)
-   {
-      // Make sure first item is selected/focused.
-//      mEffects->SetFocus();
-      mEffects->SetItemState(0, wxLIST_STATE_FOCUSED|wxLIST_STATE_SELECTED, wxLIST_STATE_FOCUSED|wxLIST_STATE_SELECTED);
-#if wxUSE_ACCESSIBILITY
-      mAx->SetSelected(0, false);
-#endif
-   }
 }
 
 void PluginRegistrationDialog::SetState(int i, bool toggle, bool state)
@@ -837,8 +773,6 @@ int PluginRegistrationDialog::SortCompare(ItemData *item1, ItemData *item2)
 
 void PluginRegistrationDialog::OnChangedVisibility(wxCommandEvent & evt)
 {
-   // Go and show the relevant items.
-   RegenerateEffectsList(evt.GetId());
 }
 
 void PluginRegistrationDialog::OnSort(wxListEvent & evt)
@@ -1051,7 +985,6 @@ PluginDescriptor::PluginDescriptor()
    mValid = false;
    mInstance = NULL;
 
-   mEffectType = EffectTypeNone;
    mEffectInteractive = false;
    mEffectDefault = false;
    mEffectLegacy = false;
@@ -1230,11 +1163,6 @@ wxString PluginDescriptor::GetEffectFamilyId() const
    return mEffectFamily;
 }
 
-EffectType PluginDescriptor::GetEffectType() const
-{
-   return mEffectType;
-}
-
 bool PluginDescriptor::IsEffectInteractive() const
 {
    return mEffectInteractive;
@@ -1263,11 +1191,6 @@ bool PluginDescriptor::IsEffectAutomatable() const
 void PluginDescriptor::SetEffectFamilyId(const wxString & family)
 {
    mEffectFamily = family;
-}
-
-void PluginDescriptor::SetEffectType(EffectType type)
-{
-   mEffectType = type;
 }
 
 void PluginDescriptor::SetEffectInteractive(bool interactive)
@@ -1439,7 +1362,6 @@ const PluginID & PluginManager::RegisterPlugin(ModuleInterface *provider, Effect
 
    plug.SetProviderID(PluginManager::GetID(provider));
 
-   plug.SetEffectType(effect->GetType());
    plug.SetEffectFamilyId(effect->GetFamilyId());
    plug.SetEffectDefault(effect->IsDefault());
    plug.SetEffectRealtime(effect->SupportsRealtime());
@@ -1736,21 +1658,6 @@ void PluginManager::LoadGroup(wxFileConfig *pRegistry, PluginType type)
             if (!pRegistry->Read(KEY_EFFECTTYPE, &strVal))
                continue;
 
-            if (strVal.IsSameAs(KEY_EFFECTTYPE_NONE))
-               plug.SetEffectType(EffectTypeNone);
-            else if (strVal.IsSameAs(KEY_EFFECTTYPE_ANALYZE))
-               plug.SetEffectType(EffectTypeAnalyze);
-            else if (strVal.IsSameAs(KEY_EFFECTTYPE_GENERATE))
-               plug.SetEffectType(EffectTypeGenerate);
-            else if (strVal.IsSameAs(KEY_EFFECTTYPE_PROCESS))
-               plug.SetEffectType(EffectTypeProcess);
-            else if (strVal.IsSameAs(KEY_EFFECTTYPE_TOOL))
-               plug.SetEffectType(EffectTypeTool);
-            else if (strVal.IsSameAs(KEY_EFFECTTYPE_HIDDEN))
-               plug.SetEffectType(EffectTypeHidden);
-            else
-               continue;
-
             // Get the effect family and bypass group if not found
             if (!pRegistry->Read(KEY_EFFECTFAMILY, &strVal))
             {
@@ -1902,34 +1809,7 @@ void PluginManager::SaveGroup(wxFileConfig *pRegistry, PluginType type)
       switch (type)
       {
          case PluginTypeModule:
-         break;
-
-         case PluginTypeEffect:
-         {
-            EffectType etype = plug.GetEffectType();
-            wxString stype;
-            if (etype == EffectTypeNone)
-               stype = KEY_EFFECTTYPE_NONE;
-            else if (etype == EffectTypeAnalyze)
-               stype = KEY_EFFECTTYPE_ANALYZE;
-            else if (etype == EffectTypeGenerate)
-               stype = KEY_EFFECTTYPE_GENERATE;
-            else if (etype == EffectTypeProcess)
-               stype = KEY_EFFECTTYPE_PROCESS;
-            else if (etype == EffectTypeTool)
-               stype = KEY_EFFECTTYPE_TOOL;
-            else if (etype == EffectTypeHidden)
-               stype = KEY_EFFECTTYPE_HIDDEN;
-
-            pRegistry->Write(KEY_EFFECTTYPE, stype);
-            pRegistry->Write(KEY_EFFECTFAMILY, plug.GetEffectFamilyId());
-            pRegistry->Write(KEY_EFFECTDEFAULT, plug.IsEffectDefault());
-            pRegistry->Write(KEY_EFFECTINTERACTIVE, plug.IsEffectInteractive());
-            pRegistry->Write(KEY_EFFECTREALTIME, plug.IsEffectRealtime());
-            pRegistry->Write(KEY_EFFECTAUTOMATABLE, plug.IsEffectAutomatable());
-         }
-         break;
-
+			break;
          case PluginTypeImporter:
          {
             pRegistry->Write(KEY_IMPORTERIDENT, plug.GetImporterIdentifier());
@@ -1943,10 +1823,10 @@ void PluginManager::SaveGroup(wxFileConfig *pRegistry, PluginType type)
             strExt.RemoveLast(1);
             pRegistry->Write(KEY_IMPORTEREXTENSIONS, strExt);
          }
-         break;
+			break;
 
          default:
-         break;
+			break;
       }
    }
 
@@ -1965,7 +1845,6 @@ const PluginID & PluginManager::RegisterPlugin(EffectDefinitionInterface *effect
 {
    PluginDescriptor & plug = CreatePlugin(GetID(effect), effect, type);
 
-   plug.SetEffectType(effect->GetType());
    plug.SetEffectFamilyId(effect->GetFamilyId());
    plug.SetEffectDefault(effect->IsDefault());
    plug.SetEffectRealtime(effect->SupportsRealtime());
@@ -2058,36 +1937,11 @@ const PluginDescriptor *PluginManager::GetNextPlugin(int type)
 
 const PluginDescriptor *PluginManager::GetFirstPluginForEffectType(EffectType type)
 {
-   for (mPluginsIter = mPlugins.begin(); mPluginsIter != mPlugins.end(); ++mPluginsIter)
-   {
-      PluginDescriptor & plug = mPluginsIter->second;
-
-      bool familyEnabled;
-      // This preference may be written by EffectsPrefs
-      gPrefs->Read(plug.GetEffectFamilyId() + wxT("/Enable"), &familyEnabled, true);
-      if (plug.IsValid() && plug.IsEnabled() && plug.GetEffectType() == type && familyEnabled)
-      {
-         return &plug;
-      }
-   }
-
    return NULL;
 }
 
 const PluginDescriptor *PluginManager::GetNextPluginForEffectType(EffectType type)
 {
-   while (++mPluginsIter != mPlugins.end())
-   {
-      PluginDescriptor & plug = mPluginsIter->second;
-      bool familyEnabled;
-      // This preference may be written by EffectsPrefs
-      gPrefs->Read(plug.GetEffectFamilyId() + wxT("/Enable"), &familyEnabled, true);
-      if (plug.IsValid() && plug.IsEnabled() && plug.GetEffectType() == type && familyEnabled)
-      {
-         return &plug;
-      }
-   }
-
    return NULL;
 }
 
