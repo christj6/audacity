@@ -40,7 +40,6 @@ class wxWindow;
 
 #include "../Track.h"
 #include "../effects/Effect.h"
-// #include "../Registrar.h"
 
 class ShuttleGui;
 

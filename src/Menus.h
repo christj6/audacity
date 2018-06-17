@@ -233,7 +233,6 @@ void OnExpandAllTracks(const CommandContext &context );
 void OnCollapseAllTracks(const CommandContext &context );
 
 void OnShowClipping(const CommandContext &context );
-void OnShowExtraMenus(const CommandContext &context );
 
 void OnHistory(const CommandContext &context );
 
@@ -303,10 +302,6 @@ public:
    // Flag used to disable "Repeat Last Effect"
    static const int kDontRepeatLast = 0x04;
 };
-
-static void RebuildAllMenuBars();
-
-
 
         // Help Menu
 

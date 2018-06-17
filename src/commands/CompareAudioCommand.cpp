@@ -34,14 +34,7 @@ threshold of difference in two selected tracks
 #include "../widgets/valnum.h"
 #include "../SampleFormat.h"
 #include "CommandContext.h"
-/*
-extern void RegisterCompareAudio( Registrar & R){
-   R.AddCommand( make_movable<CompareAudioCommand>() );
-// std::unique_ptr<CommandOutputTargets> &&target
-//   return std::make_shared<CompareAudioCommand>(*this, std::move(target));
 
-}
-*/
 bool CompareAudioCommand::DefineParams( ShuttleParams & S ){
    S.Define( errorThreshold,  wxT("Threshold"),   0.0f,  0.0f,    0.01f,    1.0f );
    return true;

@@ -457,8 +457,6 @@ void AudacityProject::CreateMenusAndCommands()
 
       c->AddSeparator();
 
-      c->AddCheck(wxT("ShowExtraMenus"), XXO("&Extra Menus (on/off)"), FN(OnShowExtraMenus),
-         gPrefs->Read(wxT("/GUI/ShowExtraMenus"), 0L), AlwaysEnabledFlag, AlwaysEnabledFlag);
       c->AddCheck(wxT("ShowClipping"), XXO("&Show Clipping (on/off)"), FN(OnShowClipping),
          gPrefs->Read(wxT("/GUI/ShowClipping"), 0L), AlwaysEnabledFlag, AlwaysEnabledFlag);
 
@@ -2546,24 +2544,6 @@ void AudacityProject::OnZeroCrossing(const CommandContext &WXUNUSED(context) )
    mTrackPanel->Refresh(false);
 }
 
-void AudacityProject::RebuildAllMenuBars(){
-   for( size_t i = 0; i < gAudacityProjects.size(); i++ ) {
-      AudacityProject *p = gAudacityProjects[i].get();
-
-      p->RebuildMenuBar();
-#if defined(__WXGTK__)
-      // Workaround for:
-      //
-      //   http://bugzilla.audacityteam.org/show_bug.cgi?id=458
-      //
-      // This workaround should be removed when Audacity updates to wxWidgets 3.x which has a fix.
-      wxRect r = p->GetRect();
-      p->SetSize(wxSize(1,1));
-      p->SetSize(r.GetSize());
-#endif
-   }
-}
-
 //
 // File Menu
 //
@@ -3829,15 +3809,6 @@ void AudacityProject::OnShowClipping(const CommandContext &WXUNUSED(context) )
    mCommandManager.Check(wxT("ShowClipping"), checked);
    mTrackPanel->UpdatePrefs();
    mTrackPanel->Refresh(false);
-}
-
-void AudacityProject::OnShowExtraMenus(const CommandContext &WXUNUSED(context) )
-{
-   bool checked = !gPrefs->Read(wxT("/GUI/ShowExtraMenus"), 0L);
-   gPrefs->Write(wxT("/GUI/ShowExtraMenus"), checked);
-   gPrefs->Flush();
-   mCommandManager.Check(wxT("ShowExtraMenus"), checked);
-   RebuildAllMenuBars();
 }
 
 void AudacityProject::OnHistory(const CommandContext &WXUNUSED(context) )
