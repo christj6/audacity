@@ -365,7 +365,6 @@
     <ClInclude Include="..\..\..\src\prefs\WaveformPrefs.h" />
     <ClInclude Include="..\..\..\src\prefs\WaveformSettings.h" />
     <ClInclude Include="..\..\..\src\RefreshCode.h" />
-    <ClInclude Include="..\..\..\src\Registrar.h" />
     <ClInclude Include="..\..\..\src\RevisionIdent.h" />
     <ClInclude Include="..\..\..\src\SelectedRegion.h" />
     <ClInclude Include="..\..\..\src\SelectionState.h" />

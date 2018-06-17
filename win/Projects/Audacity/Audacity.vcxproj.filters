@@ -1306,9 +1306,6 @@
     <ClInclude Include="..\..\..\src\commands\PreferenceCommands.h">
       <Filter>src\commands</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\Registrar.h">
-      <Filter>src\commands</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\commands\SelectCommand.h">
       <Filter>src\commands</Filter>
     </ClInclude>
