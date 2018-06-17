@@ -168,13 +168,6 @@ private:
    // May assume precondition: t0 <= t1
    void ClearAndAddCutLine(double t0, double t1) /* not override */;
 
-   Track::Holder SplitCut(double t0, double t1) /* not override */;
-   // May assume precondition: t0 <= t1
-   void SplitDelete(double t0, double t1) /* not override */;
-
-   // May assume precondition: t0 <= t1
-   void Trim(double t0, double t1) /* not override */;
-
    // May assume precondition: t0 <= t1
    void HandleClear(double t0, double t1, bool addCutLines, bool split);
 

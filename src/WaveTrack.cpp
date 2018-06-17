@@ -439,66 +439,6 @@ Track::Holder WaveTrack::Cut(double t0, double t1)
    return tmp;
 }
 
-Track::Holder WaveTrack::SplitCut(double t0, double t1)
-// STRONG-GUARANTEE
-{
-   if (t1 < t0)
-      THROW_INCONSISTENCY_EXCEPTION;
-
-   // SplitCut is the same as 'Copy', then 'SplitDelete'
-   auto tmp = Copy(t0, t1);
-
-   SplitDelete(t0, t1);
-
-   return tmp;
-}
-
-
-//Trim trims within a clip, rather than trimming everything.
-//If a bound is outside a clip, it trims everything.
-void WaveTrack::Trim (double t0, double t1)
-// WEAK-GUARANTEE
-{
-   bool inside0 = false;
-   bool inside1 = false;
-   //Keeps track of the offset of the first clip greater than
-   // the left selection t0.
-   double firstGreaterOffset = -1;
-
-   for (const auto &clip : mClips)
-   {
-      //Find the first clip greater than the offset.
-      //If we end up clipping the entire track, this is useful.
-      if(firstGreaterOffset < 0 &&
-            clip->GetStartTime() >= t0)
-         firstGreaterOffset = clip->GetStartTime();
-
-      if(t1 > clip->GetStartTime() && t1 < clip->GetEndTime())
-      {
-         clip->Clear(t1,clip->GetEndTime());
-         inside1 = true;
-      }
-
-      if(t0 > clip->GetStartTime() && t0 < clip->GetEndTime())
-      {
-         clip->Clear(clip->GetStartTime(),t0);
-         clip->SetOffset(t0);
-         inside0 = true;
-      }
-   }
-
-   //if inside0 is false, then the left selector was between
-   //clips, so DELETE everything to its left.
-   if(!inside1 && t1 < GetEndTime())
-      Clear(t1,GetEndTime());
-
-   if(!inside0 && t0 > GetStartTime())
-      SplitDelete(GetStartTime(), t0);
-}
-
-
-
-
 Track::Holder WaveTrack::Copy(double t0, double t1, bool forClipboard) const
 {
    if (t1 < t0)
@@ -751,14 +691,6 @@ void WaveTrack::ClearAndPaste(double t0, // Start of time to clear
          }
       }
    }
-}
-
-void WaveTrack::SplitDelete(double t0, double t1)
-// STRONG-GUARANTEE
-{
-   bool addCutLines = false;
-   bool split = true;
-   HandleClear(t0, t1, addCutLines, split);
 }
 
 namespace
