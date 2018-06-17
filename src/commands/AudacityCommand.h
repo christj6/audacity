@@ -49,8 +49,7 @@ class AudacityProject;
 class CommandContext;
 
 
-class AUDACITY_DLL_API AudacityCommand /* not final */ : public wxEvtHandler,
-                                public CommandDefinitionInterface
+class AUDACITY_DLL_API AudacityCommand /* not final */ : public wxEvtHandler, public IdentInterface, public ParamsInterface
 {
  public:
    //std::unique_ptr<CommandOutputTargets> mOutput;

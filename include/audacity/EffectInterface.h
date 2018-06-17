@@ -77,19 +77,6 @@ public:
 
 /*************************************************************************************//**
 
-\class CommandDefinitionInterface 
-\brief CommandDefinitionInterface is an IdentInterface (to name the command) along with a
-DefineParameters virtual function, that defines the parameters of the command.
-
-*******************************************************************************************/
-class AUDACITY_DLL_API CommandDefinitionInterface  /* not final */ : public IdentInterface, public ParamsInterface
-{
-public:
-   virtual ~CommandDefinitionInterface() {};
-};
-
-/*************************************************************************************//**
-
 \class EffectDefinitionInterface 
 
 \brief EffectDefinitionInterface is a CommandDefinitionInterface that additionally tracks
