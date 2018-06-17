@@ -721,14 +721,6 @@ bool Effect::SetAutomationParameters(const wxString & parms)
 
    if (!success)
    {
-      Effect::MessageBox(
-         wxString::Format(
-            _("%s: Could not load settings below. Default settings will be used.\n\n%s"),
-            GetTranslatedName(),
-            preset
-         )
-      );
-
       return false;
    }
 
@@ -858,14 +850,6 @@ bool Effect::DoEffect(wxWindow *parent,
    bool skipFlag = CheckWhetherSkipEffect();
    if (skipFlag == false)
    {
-      auto name = GetTranslatedName();
-      ProgressDialog progress{
-         name,
-         wxString::Format(_("Applying %s..."), name),
-         pdlgHideStopButton
-      };
-      auto vr = valueRestorer( mProgress, &progress );
-
       returnVal = Process();
    }
 
@@ -1910,13 +1894,6 @@ void Effect::Preview(bool dryOnly)
 
    // Apply effect
    if (!dryOnly) {
-      ProgressDialog progress{
-         GetTranslatedName(),
-         _("Preparing preview"),
-         pdlgHideCancelButton
-      }; // Have only "Stop" button.
-      auto vr = valueRestorer( mProgress, &progress );
-
       auto vr2 = valueRestorer( mIsPreview, true );
 
       success = Process();
@@ -1949,13 +1926,6 @@ void Effect::Preview(bool dryOnly)
          // to allow events to flow to the app during StopStream processing.
          // The progress dialog blocks these events.
          {
-            ProgressDialog progress
-            (GetTranslatedName(), _("Previewing"), pdlgHideCancelButton);
-
-            while (gAudioIO->IsStreamActive(token) && previewing == ProgressResult::Success) {
-               ::wxMilliSleep(100);
-               previewing = progress.Update(gAudioIO->GetStreamTime() - mT0, t1 - mT0);
-            }
          }
 
          gAudioIO->StopStream();
@@ -1975,12 +1945,7 @@ void Effect::Preview(bool dryOnly)
 int Effect::MessageBox
 (const wxString& message, long style, const wxString &titleStr)
 {
-   wxString title;
-   if (titleStr.empty())
-      title = GetTranslatedName();
-   else
-      title = wxString::Format(_("%s: %s"), GetTranslatedName(), titleStr);
-   return AudacityMessageBox(message, title, style, mUIParent);
+   return AudacityMessageBox(message, wxEmptyString, style, mUIParent);
 }
 
 BEGIN_EVENT_TABLE(EffectDialog, wxDialogWrapper)
@@ -2139,7 +2104,7 @@ END_EVENT_TABLE()
 EffectUIHost::EffectUIHost(wxWindow *parent,
                            Effect *effect,
                            EffectUIClientInterface *client)
-:  wxDialogWrapper(parent, wxID_ANY, effect->GetTranslatedName(),
+:  wxDialogWrapper(parent, wxID_ANY, wxEmptyString,
             wxDefaultPosition, wxDefaultSize,
             wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER | wxMINIMIZE_BOX | wxMAXIMIZE_BOX)
 {
@@ -2148,7 +2113,7 @@ EffectUIHost::EffectUIHost(wxWindow *parent,
    [[((NSView *)GetHandle()) window] setLevel:NSFloatingWindowLevel];
 #endif
 
-   SetName( effect->GetTranslatedName() );
+   SetName( wxEmptyString );
    SetExtraStyle(wxWS_EX_VALIDATE_RECURSIVELY);
 
    mParent = parent;
@@ -2171,7 +2136,7 @@ EffectUIHost::EffectUIHost(wxWindow *parent,
 EffectUIHost::EffectUIHost(wxWindow *parent,
                            AudacityCommand *command,
                            EffectUIClientInterface *client)
-:  wxDialogWrapper(parent, wxID_ANY, _("Some Command") /*command->GetTranslatedName()*/,
+:  wxDialogWrapper(parent, wxID_ANY, _("Some Command"),
             wxDefaultPosition, wxDefaultSize,
             wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER | wxMINIMIZE_BOX | wxMAXIMIZE_BOX)
 {
@@ -2180,7 +2145,6 @@ EffectUIHost::EffectUIHost(wxWindow *parent,
    [[((NSView *)GetHandle()) window] setLevel:NSFloatingWindowLevel];
 #endif
 
-   //SetName( command->GetTranslatedName() );
    SetExtraStyle(wxWS_EX_VALIDATE_RECURSIVELY);
 
    mParent = parent;

@@ -620,7 +620,7 @@ void PluginRegistrationDialog::PopulateOrExchange(ShuttleGui &S)
 
       if (plugType == PluginTypeEffect)
       {
-         item.name = plug.GetTranslatedName();
+		  item.name = wxEmptyString;
       }
       // This is not right and will not work when other plugin types are added.
       // But it's presumed that the plugin manager dialog will be fully developed
@@ -1083,7 +1083,7 @@ wxString PluginDescriptor::GetUntranslatedVersion() const
 
 wxString PluginDescriptor::GetTranslatedName() const
 {
-   return wxGetTranslation(mName);
+	return wxEmptyString;
 }
 
 wxString PluginDescriptor::GetUntranslatedVendor() const
@@ -1618,7 +1618,7 @@ void PluginManager::LoadGroup(wxFileConfig *pRegistry, PluginType type)
       // Get the symbol...use name if not found
       if (!pRegistry->Read(KEY_SYMBOL, &strVal))
       {
-         strVal = plug.GetTranslatedName();
+		  strVal = wxEmptyString;
       }
       plug.SetSymbol(strVal);
 
@@ -1978,12 +1978,7 @@ const wxString & PluginManager::GetSymbol(const PluginID & ID)
 
 wxString PluginManager::GetName(const PluginID & ID)
 {
-   if (mPlugins.find(ID) == mPlugins.end())
-   {
-      return wxEmptyString;
-   }
-
-   return mPlugins[ID].GetTranslatedName();
+   return wxEmptyString;
 }
 
 IdentInterface *PluginManager::GetInstance(const PluginID & ID)
