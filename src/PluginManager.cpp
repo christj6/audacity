@@ -1081,11 +1081,6 @@ wxString PluginDescriptor::GetUntranslatedVersion() const
    return mVersion;
 }
 
-wxString PluginDescriptor::GetTranslatedName() const
-{
-	return wxEmptyString;
-}
-
 wxString PluginDescriptor::GetUntranslatedVendor() const
 {
    return mVendor;
@@ -2546,11 +2541,4 @@ int PluginManager::b64decode(const wxString &in, void *out)
    }
 
    return p - (unsigned char *) out;
-}
-
-// These are defined out-of-line here, to keep IdentInterface free of other
-// #include directives.
-const wxString& IdentInterface::GetTranslatedName()
-{
-   return wxGetTranslation( GetName() );
 }

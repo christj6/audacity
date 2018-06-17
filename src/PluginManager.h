@@ -66,7 +66,6 @@ public:
    // There is no translated version
 
    wxString GetUntranslatedName() const;
-   wxString GetTranslatedName() const;
 
    wxString GetUntranslatedVendor() const;
    wxString GetTranslatedVendor() const;

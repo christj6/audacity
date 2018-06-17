@@ -1921,13 +1921,6 @@ void Effect::Preview(bool dryOnly)
                             mT0, t1, options);
 
       if (token) {
-         auto previewing = ProgressResult::Success;
-         // The progress dialog must be deleted before stopping the stream
-         // to allow events to flow to the app during StopStream processing.
-         // The progress dialog blocks these events.
-         {
-         }
-
          gAudioIO->StopStream();
 
          while (gAudioIO->IsBusy()) {

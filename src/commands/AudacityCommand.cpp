@@ -124,7 +124,7 @@ bool AudacityCommand::ShowInterface(wxWindow *parent, bool WXUNUSED(forceModal))
 wxDialog *AudacityCommand::CreateUI(wxWindow *parent, AudacityCommand * WXUNUSED(client))
 {
    Destroy_ptr<AudacityCommandDialog> dlg { safenew AudacityCommandDialog{
-      parent, GetTranslatedName(), this}};
+      parent, wxEmptyString, this}};
 
    if (dlg->Init())
    {
@@ -168,7 +168,7 @@ bool AudacityCommand::SetAutomationParameters(const wxString & parms)
       AudacityCommand::MessageBox(
          wxString::Format(
             _("%s: Could not load settings below. Default settings will be used.\n\n%s"),
-            GetTranslatedName(),
+			wxEmptyString,
             preset
          )
       );
@@ -202,12 +202,7 @@ bool AudacityCommand::TransferDataFromWindow()
 
 int AudacityCommand::MessageBox(const wxString& message, long style, const wxString &titleStr)
 {
-   wxString title;
-   if (titleStr.empty())
-      title = GetTranslatedName();
-   else
-      title = wxString::Format(_("%s: %s"), GetTranslatedName(), titleStr);
-   return AudacityMessageBox(message, title, style, mUIParent);
+   return AudacityMessageBox(message, wxEmptyString, style, mUIParent);
 }
 
 BEGIN_EVENT_TABLE(AudacityCommandDialog, wxDialogWrapper)
