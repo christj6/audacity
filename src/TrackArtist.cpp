@@ -232,7 +232,6 @@ TrackArtist::TrackArtist()
    mMarginBottom = 0;
 
    mdBrange = ENV_DB_RANGE;
-   mShowClipping = false;
    mSampleDisplay = 1;// Stem plots by default.
    UpdatePrefs();
 
@@ -897,10 +896,6 @@ void TrackArtist::DrawMinMaxRMS(wxDC &dc, const wxRect & rect, const double env[
    ArrayOf<int> clipped;
    int clipcnt = 0;
 
-   if (mShowClipping) {
-      clipped.reinit( size_t(rect.width) );
-   }
-
    long pixAnimOffset = (long)fabs((double)(wxDateTime::Now().GetTicks() * -10)) +
       wxDateTime::Now().GetMillisecond() / 100; //10 pixels a second
 
@@ -912,22 +907,10 @@ void TrackArtist::DrawMinMaxRMS(wxDC &dc, const wxRect & rect, const double env[
       int xx = rect.x + x0;
       double v;
       v = min[x0] * env[x0];
-      if (clipped && mShowClipping && (v <= -MAX_AUDIO))
-      {
-         if (clipcnt == 0 || clipped[clipcnt - 1] != xx) {
-            clipped[clipcnt++] = xx;
-         }
-      }
       h1 = GetWaveYPos(v, zoomMin, zoomMax,
                        rect.height, dB, true, dBRange, true);
 
       v = max[x0] * env[x0];
-      if (clipped && mShowClipping && (v >= MAX_AUDIO))
-      {
-         if (clipcnt == 0 || clipped[clipcnt - 1] != xx) {
-            clipped[clipcnt++] = xx;
-         }
-      }
       h2 = GetWaveYPos(v, zoomMin, zoomMax,
                        rect.height, dB, true, dBRange, true);
 
@@ -1051,9 +1034,6 @@ void TrackArtist::DrawIndividualSamples(wxDC &dc, int leftOffset, const wxRect &
    ArrayOf<int> clipped;
    int clipcnt = 0;
 
-   if (mShowClipping)
-      clipped.reinit( size_t(slen) );
-
    auto &pen = highlight ? AColor::uglyPen : muted ? muteSamplePen : samplePen;
    dc.SetPen( pen );
 
@@ -1069,8 +1049,6 @@ void TrackArtist::DrawIndividualSamples(wxDC &dc, int leftOffset, const wxRect &
          clip->GetEnvelope()->GetValue( time, 1.0 / clip->GetRate() );
       const double tt = buffer[s] * value;
 
-      if (clipped && mShowClipping && ((tt <= -MAX_AUDIO) || (tt >= MAX_AUDIO)))
-         clipped[clipcnt++] = xx;
       ypos[s] =
          std::max(-1,
             std::min(rect.height,
@@ -1635,7 +1613,6 @@ static inline float findValue
 void TrackArtist::UpdatePrefs()
 {
    mdBrange = gPrefs->Read(ENV_DB_KEY, mdBrange);
-   mShowClipping = gPrefs->Read(wxT("/GUI/ShowClipping"), mShowClipping);
    gPrefs->Read(wxT("/GUI/SampleView"), &mSampleDisplay, 1);
    SetColours(0);
 }

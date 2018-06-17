@@ -455,12 +455,6 @@ void AudacityProject::CreateMenusAndCommands()
 
       c->EndSubMenu();
 
-      c->AddSeparator();
-
-      c->AddCheck(wxT("ShowClipping"), XXO("&Show Clipping (on/off)"), FN(OnShowClipping),
-         gPrefs->Read(wxT("/GUI/ShowClipping"), 0L), AlwaysEnabledFlag, AlwaysEnabledFlag);
-
-
       c->EndMenu();
 
       /////////////////////////////////////////////////////////////////////////////
@@ -3799,16 +3793,6 @@ void AudacityProject::OnGoSelEnd(const CommandContext &WXUNUSED(context) )
       return;
 
    TP_ScrollWindow(mViewInfo.selectedRegion.t1() - ((GetScreenEndTime() - mViewInfo.h) / 2));
-}
-
-void AudacityProject::OnShowClipping(const CommandContext &WXUNUSED(context) )
-{
-   bool checked = !gPrefs->Read(wxT("/GUI/ShowClipping"), 0L);
-   gPrefs->Write(wxT("/GUI/ShowClipping"), checked);
-   gPrefs->Flush();
-   mCommandManager.Check(wxT("ShowClipping"), checked);
-   mTrackPanel->UpdatePrefs();
-   mTrackPanel->Refresh(false);
 }
 
 void AudacityProject::OnHistory(const CommandContext &WXUNUSED(context) )

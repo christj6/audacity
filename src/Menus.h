@@ -232,8 +232,6 @@ void OnGoSelEnd(const CommandContext &context );
 void OnExpandAllTracks(const CommandContext &context );
 void OnCollapseAllTracks(const CommandContext &context );
 
-void OnShowClipping(const CommandContext &context );
-
 void OnHistory(const CommandContext &context );
 
 void OnShowTransportToolBar(const CommandContext &context );
