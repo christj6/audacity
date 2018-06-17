@@ -476,9 +476,6 @@
     <ClCompile Include="..\..\..\src\import\MultiFormatReader.cpp">
       <Filter>src\import</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\ModuleManager.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\widgets\NumericTextCtrl.cpp">
       <Filter>src\widgets</Filter>
     </ClCompile>
@@ -609,9 +606,6 @@
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\commands\ImportExportCommands.cpp">
-      <Filter>src\commands</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\commands\LoadCommands.cpp">
       <Filter>src\commands</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\commands\OpenSaveCommands.cpp">
@@ -1096,14 +1090,8 @@
     <ClInclude Include="..\..\..\include\audacity\ImporterInterface.h">
       <Filter>includes\audacity</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\audacity\ModuleInterface.h">
-      <Filter>includes\audacity</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\audacity\Types.h">
       <Filter>includes\audacity</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\ModuleManager.h">
-      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\widgets\NumericTextCtrl.h">
       <Filter>src\widgets</Filter>
@@ -1286,9 +1274,6 @@
       <Filter>src\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\commands\ImportExportCommands.h">
-      <Filter>src\commands</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\commands\LoadCommands.h">
       <Filter>src\commands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\commands\OpenSaveCommands.h">

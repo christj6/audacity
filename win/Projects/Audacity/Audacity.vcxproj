@@ -137,7 +137,6 @@
     <ClCompile Include="..\..\..\src\commands\CommandTargets.cpp" />
     <ClCompile Include="..\..\..\src\commands\Demo.cpp" />
     <ClCompile Include="..\..\..\src\commands\DragCommand.cpp" />
-    <ClCompile Include="..\..\..\src\commands\LoadCommands.cpp" />
     <ClCompile Include="..\..\..\src\commands\OpenSaveCommands.cpp" />
     <ClCompile Include="..\..\..\src\commands\SetClipCommand.cpp" />
     <ClCompile Include="..\..\..\src\commands\SetProjectCommand.cpp" />
@@ -163,7 +162,6 @@
     <ClCompile Include="..\..\..\src\Menus.cpp" />
     <ClCompile Include="..\..\..\src\Mix.cpp" />
     <ClCompile Include="..\..\..\lib-src\lib-widget-extra\NonGuiThread.cpp" />
-    <ClCompile Include="..\..\..\src\ModuleManager.cpp" />
     <ClCompile Include="..\..\..\src\PlatformCompatibility.cpp" />
     <ClCompile Include="..\..\..\src\Prefs.cpp" />
     <ClCompile Include="..\..\..\src\prefs\WaveformPrefs.cpp" />
@@ -327,7 +325,6 @@
     <ClInclude Include="..\..\..\include\audacity\EffectInterface.h" />
     <ClInclude Include="..\..\..\include\audacity\IdentInterface.h" />
     <ClInclude Include="..\..\..\include\audacity\ImporterInterface.h" />
-    <ClInclude Include="..\..\..\include\audacity\ModuleInterface.h" />
     <ClInclude Include="..\..\..\include\audacity\Types.h" />
     <ClInclude Include="..\..\..\src\AboutDialog.h" />
     <ClInclude Include="..\..\..\src\AColor.h" />
@@ -347,7 +344,6 @@
     <ClInclude Include="..\..\..\src\commands\CommandFunctors.h" />
     <ClInclude Include="..\..\..\src\commands\Demo.h" />
     <ClInclude Include="..\..\..\src\commands\DragCommand.h" />
-    <ClInclude Include="..\..\..\src\commands\LoadCommands.h" />
     <ClInclude Include="..\..\..\src\commands\OpenSaveCommands.h" />
     <ClInclude Include="..\..\..\src\commands\SetClipCommand.h" />
     <ClInclude Include="..\..\..\src\commands\SetProjectCommand.h" />
@@ -358,7 +354,6 @@
     <ClInclude Include="..\..\..\src\import\MultiFormatReader.h" />
     <ClInclude Include="..\..\..\src\InconsistencyException.h" />
     <ClInclude Include="..\..\..\src\MemoryX.h" />
-    <ClInclude Include="..\..\..\src\ModuleManager.h" />
     <ClInclude Include="..\..\..\src\prefs\GUISettings.h" />
     <ClInclude Include="..\..\..\src\prefs\WaveformPrefs.h" />
     <ClInclude Include="..\..\..\src\prefs\WaveformSettings.h" />
