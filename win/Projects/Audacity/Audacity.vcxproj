@@ -165,7 +165,6 @@
     <ClCompile Include="..\..\..\lib-src\lib-widget-extra\NonGuiThread.cpp" />
     <ClCompile Include="..\..\..\src\ModuleManager.cpp" />
     <ClCompile Include="..\..\..\src\PlatformCompatibility.cpp" />
-    <ClCompile Include="..\..\..\src\PluginManager.cpp" />
     <ClCompile Include="..\..\..\src\Prefs.cpp" />
     <ClCompile Include="..\..\..\src\prefs\WaveformPrefs.cpp" />
     <ClCompile Include="..\..\..\src\prefs\WaveformSettings.cpp" />
@@ -329,7 +328,6 @@
     <ClInclude Include="..\..\..\include\audacity\IdentInterface.h" />
     <ClInclude Include="..\..\..\include\audacity\ImporterInterface.h" />
     <ClInclude Include="..\..\..\include\audacity\ModuleInterface.h" />
-    <ClInclude Include="..\..\..\include\audacity\PluginInterface.h" />
     <ClInclude Include="..\..\..\include\audacity\Types.h" />
     <ClInclude Include="..\..\..\src\AboutDialog.h" />
     <ClInclude Include="..\..\..\src\AColor.h" />
@@ -424,7 +422,6 @@
     <ClInclude Include="..\..\..\src\Mix.h" />
     <ClInclude Include="..\..\..\lib-src\lib-widget-extra\NonGuiThread.h" />
     <ClInclude Include="..\..\..\src\PlatformCompatibility.h" />
-    <ClInclude Include="..\..\..\src\PluginManager.h" />
     <ClInclude Include="..\..\..\src\Prefs.h" />
     <ClInclude Include="..\..\..\src\Profiler.h" />
     <ClInclude Include="..\..\..\src\Project.h" />

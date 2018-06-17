@@ -137,9 +137,6 @@
     <ClCompile Include="..\..\..\src\PlatformCompatibility.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\PluginManager.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\Prefs.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -733,9 +730,6 @@
     <ClInclude Include="..\..\..\src\PlatformCompatibility.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\PluginManager.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\Prefs.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -1103,9 +1097,6 @@
       <Filter>includes\audacity</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\audacity\ModuleInterface.h">
-      <Filter>includes\audacity</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\audacity\PluginInterface.h">
       <Filter>includes\audacity</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\audacity\Types.h">

@@ -52,7 +52,6 @@
 
 #include "audacity/Types.h"
 #include "audacity/IdentInterface.h"
-#include "audacity/PluginInterface.h"
 
 // ============================================================================
 //

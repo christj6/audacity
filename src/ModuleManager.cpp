@@ -28,12 +28,9 @@ i.e. an alternative to the usual interface, for Audacity.
 #include "AudacityApp.h"
 #include "FileNames.h"
 #include "Internat.h"
-#include "PluginManager.h"
 
 #include "commands/ScriptCommandRelay.h"
 #include <NonGuiThread.h>  // header from libwidgetextra
-
-#include "audacity/PluginInterface.h"
 
 #include "ModuleManager.h"
 #include "widgets/MultiDialog.h"
@@ -310,61 +307,10 @@ ModuleManager & ModuleManager::Get()
 
 void ModuleManager::InitializeBuiltins()
 {
-   PluginManager & pm = PluginManager::Get();
-
-   for (auto moduleMain : builtinModuleList())
-   {
-      ModuleInterfaceHandle module {
-         moduleMain(this, NULL), ModuleInterfaceDeleter{}
-      };
-
-      if (module->Initialize())
-      {
-         // Register the provider
-         ModuleInterface *pInterface = module.get();
-         const PluginID & id = pm.RegisterPlugin(pInterface);
-
-         // Need to remember it 
-         mDynModules[id] = std::move(module);
-      }
-      else
-      {
-         // Don't leak!  Destructor of module does that.
-      }
-   }
 }
 
 ModuleInterface *ModuleManager::LoadModule(const wxString & path)
 {
-   auto lib = make_movable<wxDynamicLibrary>();
-
-   if (lib->Load(path, wxDL_NOW))
-   {
-      bool success = false;
-      ModuleMain audacityMain = (ModuleMain) lib->GetSymbol(wxSTRINGIZE_T(MODULE_ENTRY),
-                                                            &success);
-      if (success && audacityMain)
-      {
-         ModuleInterfaceHandle handle {
-            audacityMain(this, &path), ModuleInterfaceDeleter{}
-         };
-         if (handle)
-         {
-            if (handle->Initialize())
-            {
-
-               auto module = handle.get();
-               mDynModules[PluginManager::GetID(module)] = std::move(handle);
-               mLibs[module] = std::move(lib);
-
-               return module;
-            }
-         }
-      }
-
-      lib->Unload();
-   }
-
    return NULL;
 }
 
@@ -386,23 +332,6 @@ void ModuleInterfaceDeleter::operator() (ModuleInterface *pInterface) const
 
 void ModuleManager::RegisterModule(ModuleInterface *inModule)
 {
-   std::unique_ptr<ModuleInterface> module{ inModule };
-
-   PluginID id = PluginManager::GetID(module.get());
-
-   if (mDynModules.find(id) != mDynModules.end())
-   {
-      // TODO:  Should we complain about a duplicate registeration????
-      // PRL:  Don't leak resources!
-      module->Terminate();
-      return;
-   }
-
-   mDynModules[id] = ModuleInterfaceHandle {
-      module.release(), ModuleInterfaceDeleter{}
-   };
-
-   PluginManager::Get().RegisterPlugin(inModule);
 }
 
 bool ModuleManager::RegisterEffectPlugin(const PluginID & providerID, wxString &errMsg)

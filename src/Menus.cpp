@@ -71,7 +71,6 @@ simplifies construction of menu items.
 #include "HistoryWindow.h"
 #include "Internat.h"
 #include "FileFormats.h"
-#include "PluginManager.h"
 #include "Prefs.h"
 #include "Mix.h"
 #include "AboutDialog.h"
