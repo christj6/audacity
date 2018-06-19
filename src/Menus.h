@@ -213,7 +213,6 @@ bool ChannelsHaveSameClipBoundaries(const WaveTrack* wt);
 void OnSelectPrevClip(const CommandContext &context );
 void OnSelectNextClip(const CommandContext &context );
 void OnSelectClip(bool next);
-void OnSelectCursorStoredCursor(const CommandContext &context );
 
 void OnZoomIn(const CommandContext &context );
 void OnZoomOut(const CommandContext &context );
@@ -243,9 +242,7 @@ void OnResetToolBars(const CommandContext &context );
         // Transport Menu
 
 void OnSoundActivated(const CommandContext &context );
-void OnToggleSoundActivated(const CommandContext &context );
 void OnTogglePlayRecording(const CommandContext &context );
-void OnToggleSWPlaythrough(const CommandContext &context );
 void OnRescanDevices(const CommandContext &context );
 
 // Import Submenu
@@ -255,8 +252,6 @@ private:
    bool mCursorPositionHasBeenStored{false};
    double mCursorPositionStored;
 public:
-void OnCursorPositionStore(const CommandContext &context );
-
 void OnCursorTrackStart(const CommandContext &context );
 void OnCursorTrackEnd(const CommandContext &context );
 void OnCursorSelStart(const CommandContext &context );

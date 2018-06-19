@@ -346,17 +346,6 @@ void AudacityProject::CreateMenusAndCommands()
 
       c->AddSeparator();
 
-      c->SetLongName( _("Select Cursor to Stored"))->AddItem(wxT("SelCursorStoredCursor"), XXO("Cursor to Stored &Cursor Position"), FN(OnSelectCursorStoredCursor),
-         wxT(""), TracksExistFlag, TracksExistFlag);
-
-      c->AddItem(wxT("StoreCursorPosition"), XXO("Store Cursor Pos&ition"), FN(OnCursorPositionStore),
-         WaveTracksExistFlag,
-         WaveTracksExistFlag);
-      // Save cursor position is used in some selections.
-      // Maybe there should be a restore for it?
-
-      c->AddSeparator();
-
       c->SetLongName( _("Select Zero Crossing"))->AddItem(wxT("ZeroCross"), XXO("At &Zero Crossings"), FN(OnZeroCrossing), wxT("Z"));
 
       c->EndMenu();
@@ -528,12 +517,6 @@ void AudacityProject::CreateMenusAndCommands()
 
       /////////////////////////////////////////////////////////////////////////////
 
-      c->BeginSubMenu(_("Pla&y Region"));
-
-	  c->EndSubMenu();
-
-	  c->AddSeparator();
-
       c->AddItem(wxT("RescanDevices"), XXO("R&escan Audio Devices"), FN(OnRescanDevices),
                  AudioIONotBusyFlag | CanStopAudioStreamFlag,
                  AudioIONotBusyFlag | CanStopAudioStreamFlag);
@@ -543,15 +526,9 @@ void AudacityProject::CreateMenusAndCommands()
       c->AddItem(wxT("SoundActivationLevel"), XXO("Sound Activation Le&vel..."), FN(OnSoundActivated),
                  AudioIONotBusyFlag | CanStopAudioStreamFlag,
                  AudioIONotBusyFlag | CanStopAudioStreamFlag);
-      c->AddCheck(wxT("SoundActivation"), XXO("Sound A&ctivated Recording (on/off)"), FN(OnToggleSoundActivated), 0,
-                  AudioIONotBusyFlag | CanStopAudioStreamFlag,
-                  AudioIONotBusyFlag | CanStopAudioStreamFlag);
       c->AddSeparator();
 
       c->AddCheck(wxT("Duplex"), XXO("&Overdub (on/off)"), FN(OnTogglePlayRecording), 0,
-                  AudioIONotBusyFlag | CanStopAudioStreamFlag,
-                  AudioIONotBusyFlag | CanStopAudioStreamFlag);
-      c->AddCheck(wxT("SWPlaythrough"), XXO("So&ftware Playthrough (on/off)"), FN(OnToggleSWPlaythrough), 0,
                   AudioIONotBusyFlag | CanStopAudioStreamFlag,
                   AudioIONotBusyFlag | CanStopAudioStreamFlag);
       c->EndSubMenu();
@@ -1567,27 +1544,11 @@ void AudacityProject::OnStopSelect(const CommandContext &WXUNUSED(context) )
    }
 }
 
-void AudacityProject::OnToggleSoundActivated(const CommandContext &WXUNUSED(context) )
-{
-   bool pause;
-   gPrefs->Read(wxT("/AudioIO/SoundActivatedRecord"), &pause, false);
-   gPrefs->Write(wxT("/AudioIO/SoundActivatedRecord"), !pause);
-   gPrefs->Flush();
-}
-
 void AudacityProject::OnTogglePlayRecording(const CommandContext &WXUNUSED(context) )
 {
    bool Duplex;
    gPrefs->Read(wxT("/AudioIO/Duplex"), &Duplex, true);
    gPrefs->Write(wxT("/AudioIO/Duplex"), !Duplex);
-   gPrefs->Flush();
-}
-
-void AudacityProject::OnToggleSWPlaythrough(const CommandContext &WXUNUSED(context) )
-{
-   bool SWPlaythrough;
-   gPrefs->Read(wxT("/AudioIO/SWPlaythrough"), &SWPlaythrough, false);
-   gPrefs->Write(wxT("/AudioIO/SWPlaythrough"), !SWPlaythrough);
    gPrefs->Flush();
 }
 
@@ -3560,18 +3521,6 @@ void AudacityProject::OnSelectClip(bool next)
    }
 }
 
-void AudacityProject::OnSelectCursorStoredCursor(const CommandContext &WXUNUSED(context) )
-{
-   if (mCursorPositionHasBeenStored) {
-      double cursorPositionCurrent = IsAudioActive() ? gAudioIO->GetStreamTime() : mViewInfo.selectedRegion.t0();
-      mViewInfo.selectedRegion.setTimes(std::min(cursorPositionCurrent, mCursorPositionStored),
-         std::max(cursorPositionCurrent, mCursorPositionStored));
-
-      ModifyState();
-      mTrackPanel->Refresh(false);
-   }
-}
-
 //
 // View Menu
 //
@@ -3890,12 +3839,6 @@ void AudacityProject::OnImport(const CommandContext &WXUNUSED(context) )
    }
 
    ZoomAfterImport(nullptr);
-}
-
-void AudacityProject::OnCursorPositionStore(const CommandContext &WXUNUSED(context) )
-{
-   mCursorPositionStored = IsAudioActive() ? gAudioIO->GetStreamTime() : mViewInfo.selectedRegion.t0();
-   mCursorPositionHasBeenStored = true;
 }
 
 void AudacityProject::OnCursorTrackStart(const CommandContext &WXUNUSED(context) )
