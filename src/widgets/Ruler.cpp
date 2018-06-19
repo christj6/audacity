@@ -939,10 +939,6 @@ BEGIN_EVENT_TABLE(AdornedRulerPanel, OverlayPanel)
    EVT_PAINT(AdornedRulerPanel::OnPaint)
    EVT_SIZE(AdornedRulerPanel::OnSize)
    EVT_MOUSE_CAPTURE_LOST(AdornedRulerPanel::OnCaptureLost)
-
-   // Pop up menus on Windows
-   EVT_CONTEXT_MENU(AdornedRulerPanel::OnContextMenu)
-
 END_EVENT_TABLE()
 
 AdornedRulerPanel::AdornedRulerPanel(AudacityProject* project,
@@ -1181,11 +1177,6 @@ void AdornedRulerPanel::SetPanelSize()
    GetParent()->PostSizeEventToParent();
 }
 
-void AdornedRulerPanel::OnContextMenu(wxContextMenuEvent & WXUNUSED(event))
-{
-   ShowContextMenu(MenuChoice::QuickPlay, nullptr);
-}
-
 void AdornedRulerPanel::OnCaptureLost(wxMouseCaptureLostEvent & WXUNUSED(evt))
 {
    wxMouseEvent e(wxEVT_LEFT_UP);
@@ -1203,85 +1194,6 @@ void AdornedRulerPanel::UpdateQuickPlayPos(wxCoord &mousePosX)
 
    mLastMouseX = mousePosX;
    mQuickPlayPosUnsnapped = mQuickPlayPos = Pos2Time(mousePosX);
-}
-
-// Pop-up menus
-
-void AdornedRulerPanel::ShowMenu(const wxPoint & pos)
-{
-   wxMenu rulerMenu;
-
-   PopupMenu(&rulerMenu, pos);
-}
-
-void AdornedRulerPanel::OnToggleQuickPlay(wxCommandEvent&)
-{
-   mQuickPlayEnabled = (mQuickPlayEnabled)? false : true;
-   gPrefs->Write(wxT("/QuickPlay/QuickPlayEnabled"), mQuickPlayEnabled);
-   gPrefs->Flush();
-}
-
-void AdornedRulerPanel::OnSyncSelToQuickPlay(wxCommandEvent&)
-{
-   mPlayRegionDragsSelection = (mPlayRegionDragsSelection)? false : true;
-   gPrefs->Write(wxT("/QuickPlay/DragSelection"), mPlayRegionDragsSelection);
-   gPrefs->Flush();
-}
-
-void AdornedRulerPanel::DragSelection()
-{
-   mViewInfo->selectedRegion.setT0(mPlayRegionStart, false);
-   mViewInfo->selectedRegion.setT1(mPlayRegionEnd, true);
-}
-
-void AdornedRulerPanel::HandleSnapping()
-{
-   if (!mSnapManager) {
-      mSnapManager = std::make_unique<SnapManager>(mTracks, mViewInfo);
-   }
-
-   auto results = mSnapManager->Snap(NULL, mQuickPlayPos, false);
-   mQuickPlayPos = results.outTime;
-   mIsSnapped = results.Snapped();
-}
-
-void AdornedRulerPanel::OnTimelineToolTips(wxCommandEvent&)
-{
-   mTimelineToolTip = (mTimelineToolTip)? false : true;
-   gPrefs->Write(wxT("/QuickPlay/ToolTips"), mTimelineToolTip);
-   gPrefs->Flush();
-}
-
-void AdornedRulerPanel::OnAutoScroll(wxCommandEvent&)
-{
-   if (mViewInfo->bUpdateTrackIndicator)
-      gPrefs->Write(wxT("/GUI/AutoScroll"), false);
-   else
-      gPrefs->Write(wxT("/GUI/AutoScroll"), true);
-   mProject->UpdatePrefs();
-   gPrefs->Flush();
-}
-
-void AdornedRulerPanel::ShowContextMenu( MenuChoice choice, const wxPoint *pPosition)
-{
-   wxPoint position;
-   if(pPosition)
-      position = *pPosition;
-   else
-   {
-      auto rect = GetRect();
-      position = { rect.GetLeft() + 1, rect.GetBottom() + 1 };
-   }
-
-   switch (choice) {
-      case MenuChoice::QuickPlay:
-         ShowMenu(position); break;
-      default:
-         return;
-   }
-
-   if (HasCapture())
-      ReleaseMouse();
 }
 
 void AdornedRulerPanel::DoDrawBackground(wxDC * dc)

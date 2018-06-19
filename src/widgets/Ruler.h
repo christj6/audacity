@@ -343,7 +343,6 @@ public:
 
 private:
    enum class MenuChoice { QuickPlay };
-   void ShowContextMenu( MenuChoice choice, const wxPoint *pPosition);
 
    double Pos2Time(int p, bool ignoreFisheye = false);
    int Time2Pos(double t, bool ignoreFisheye = false);
@@ -382,23 +381,6 @@ private:
    double mOldPlayRegionEnd;
 
    bool mIsRecording;
-
-   //
-   // Pop-up menu
-   //
-   void ShowMenu(const wxPoint & pos);
-   void DragSelection();
-   void HandleSnapping();
-   void OnToggleQuickPlay(wxCommandEvent &evt);
-   void OnSyncSelToQuickPlay(wxCommandEvent &evt);
-   void OnTimelineToolTips(wxCommandEvent &evt);
-   void OnAutoScroll(wxCommandEvent &evt);
-
-   void OnContextMenu(wxContextMenuEvent & WXUNUSED(event));
-
-   bool mPlayRegionDragsSelection;
-   bool mTimelineToolTip;
-   bool mQuickPlayEnabled;
 
    enum MouseEventState {
       mesNone,
