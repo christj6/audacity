@@ -120,9 +120,6 @@ void OnSelToEnd(const CommandContext &context );
 
 void OnZeroCrossing(const CommandContext &context );
 
-void OnLockPlayRegion(const CommandContext &context );
-void OnUnlockPlayRegion(const CommandContext &context );
-
 double GetTime(const Track *t);
 
 void OnFullScreen(const CommandContext &context );

@@ -170,7 +170,6 @@ class AUDACITY_DLL_API AudacityProject final : public wxFrame,
    std::shared_ptr<Track> GetFirstVisible();
 
    void GetPlayRegion(double* playRegionStart, double *playRegionEnd);
-   bool IsPlayRegionLocked() { return mLockPlayRegion; }
 
    void SetSel0(double);        //Added by STM
    void SetSel1(double);        //Added by STM
@@ -579,8 +578,6 @@ private:
    // 0 is grey out, 1 is Autoselect, 2 is Give warnings.
    int  mWhatIfNoSelection;
    bool mStopIfWasPaused;
-
-   bool mLockPlayRegion;
 
    // Are we currently auto-saving or not?
    bool mAutoSaving{ false };

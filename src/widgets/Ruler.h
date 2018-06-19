@@ -393,7 +393,6 @@ private:
    void OnSyncSelToQuickPlay(wxCommandEvent &evt);
    void OnTimelineToolTips(wxCommandEvent &evt);
    void OnAutoScroll(wxCommandEvent &evt);
-   void OnLockPlayRegion(wxCommandEvent &evt);
 
    void OnContextMenu(wxContextMenuEvent & WXUNUSED(event));
 

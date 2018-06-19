@@ -1262,15 +1262,6 @@ void AdornedRulerPanel::OnAutoScroll(wxCommandEvent&)
    gPrefs->Flush();
 }
 
-
-void AdornedRulerPanel::OnLockPlayRegion(wxCommandEvent&)
-{
-   if (mProject->IsPlayRegionLocked())
-      mProject->OnUnlockPlayRegion(*mProject);
-   else
-      mProject->OnLockPlayRegion(*mProject);
-}
-
 void AdornedRulerPanel::ShowContextMenu( MenuChoice choice, const wxPoint *pPosition)
 {
    wxPoint position;

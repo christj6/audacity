@@ -530,16 +530,9 @@ void AudacityProject::CreateMenusAndCommands()
 
       c->BeginSubMenu(_("Pla&y Region"));
 
-      c->AddItem(wxT("LockPlayRegion"), XXO("&Lock"), FN(OnLockPlayRegion),
-         PlayRegionNotLockedFlag,
-         PlayRegionNotLockedFlag);
-      c->AddItem(wxT("UnlockPlayRegion"), XXO("&Unlock"), FN(OnUnlockPlayRegion),
-         PlayRegionLockedFlag,
-         PlayRegionLockedFlag);
+	  c->EndSubMenu();
 
-      c->EndSubMenu();
-
-      c->AddSeparator();
+	  c->AddSeparator();
 
       c->AddItem(wxT("RescanDevices"), XXO("R&escan Audio Devices"), FN(OnRescanDevices),
                  AudioIONotBusyFlag | CanStopAudioStreamFlag,
@@ -1089,10 +1082,7 @@ CommandFlag AudacityProject::GetUpdateFlags(bool checkActive)
 
    double start, end;
    GetPlayRegion(&start, &end);
-   if (IsPlayRegionLocked())
-      flags |= PlayRegionLockedFlag;
-   else if (start != end)
-      flags |= PlayRegionNotLockedFlag;
+   flags |= PlayRegionNotLockedFlag;
 
    if (flags & AudioIONotBusyFlag) {
       if (flags & TimeSelectedFlag) {
@@ -4478,26 +4468,6 @@ void AudacityProject::OnExpandAllTracks(const CommandContext &WXUNUSED(context) 
 
    ModifyState();
    RedrawProject();
-}
-
-void AudacityProject::OnLockPlayRegion(const CommandContext &WXUNUSED(context) )
-{
-   double start, end;
-   GetPlayRegion(&start, &end);
-   if (start >= mTracks->GetEndTime()) {
-       AudacityMessageBox(_("Cannot lock region beyond\nend of project."),
-                    _("Error"));
-   }
-   else {
-      mLockPlayRegion = true;
-      mRuler->Refresh(false);
-   }
-}
-
-void AudacityProject::OnUnlockPlayRegion(const CommandContext &WXUNUSED(context) )
-{
-   mLockPlayRegion = false;
-   mRuler->Refresh(false);
 }
 
 void AudacityProject::OnResample(const CommandContext &WXUNUSED(context) )

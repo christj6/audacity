@@ -852,8 +852,6 @@ AudacityProject::AudacityProject(wxWindow * parent, wxWindowID id,
 
    UpdatePrefs();
 
-   mLockPlayRegion = false;
-
    // LLL:  Read this!!!
    //
    // Until the time (and cpu) required to refresh the track panel is
@@ -3225,7 +3223,7 @@ void AudacityProject::TP_DisplaySelection()
    double audioTime;
 
    if (mRuler) {
-      if (!gAudioIO->IsBusy() && !mLockPlayRegion)
+      if (!gAudioIO->IsBusy())
          mRuler->SetPlayRegion(mViewInfo.selectedRegion.t0(),
          mViewInfo.selectedRegion.t1());
       else
