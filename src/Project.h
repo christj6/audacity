@@ -120,8 +120,6 @@ enum StatusBarField {
 ////////////////////////////////////////////////////////////
 DECLARE_EXPORTED_EVENT_TYPE(AUDACITY_DLL_API, EVT_CAPTURE_KEY, -1);
 
-class EffectPlugs;
-typedef wxArrayString PluginIDList;
 class CommandContext;
 class CommandManager;
 class Track;

@@ -48,16 +48,6 @@
 
 #include <wx/dialog.h>
 
-typedef enum EffectType
-{
-   EffectTypeNone,
-   EffectTypeHidden,
-   EffectTypeGenerate,
-   EffectTypeProcess,
-   EffectTypeAnalyze,
-   EffectTypeTool,
-} EffectType;
-
 class ShuttleParams;
 
 /*************************************************************************************//**
@@ -87,8 +77,6 @@ class AUDACITY_DLL_API EffectDefinitionInterface  /* not final */ : public Ident
 {
 public:
    virtual ~EffectDefinitionInterface() {};
-
-   virtual EffectType GetType() = 0;
 
    // This string persists in configuration files
    // So config compatibility will break if it is changed across Audacity versions

@@ -53,8 +53,6 @@ simplifies construction of menu items.
 
 #include "TrackPanel.h"
 
-// #include "effects/EffectManager.h"
-
 #include "AudacityApp.h"
 #include "AudacityLogger.h"
 #include "AudioIO.h"
