@@ -21,9 +21,6 @@
     <Filter Include="src\commands">
       <UniqueIdentifier>{045249ee-cc52-4743-a1b9-e0532f4488d5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\effects">
-      <UniqueIdentifier>{eaa919b2-fa74-43bf-882e-d62b1365d884}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\export">
       <UniqueIdentifier>{45fbd203-4e13-441d-a7a2-e4614d6a67f7}</UniqueIdentifier>
     </Filter>
@@ -792,9 +789,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\WrappedType.h">
       <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\effects\Effect.h">
-      <Filter>src\effects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\export\Export.h">
       <Filter>src\export</Filter>

@@ -39,7 +39,7 @@ class wxWindow;
 #include "../include/audacity/EffectAutomationParameters.h" // for command automation
 
 #include "../Track.h"
-#include "../effects/Effect.h"
+#include "audacity/EffectInterface.h"
 
 class ShuttleGui;
 
