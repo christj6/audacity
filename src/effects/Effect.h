@@ -47,7 +47,6 @@ class AudacityCommand;
 
 class AudacityProject;
 class SelectedRegion;
-class EffectUIHost;
 class Track;
 class TrackList;
 class TrackFactory;
@@ -402,10 +401,6 @@ private:
    const static wxString kFactoryPresetIdent;
    const static wxString kCurrentSettingsIdent;
    const static wxString kFactoryDefaultsIdent;
-
-   friend class EffectRack;
-   friend class EffectUIHost;
-   friend class EffectPresetsDialog;
 };
 
 
@@ -414,110 +409,6 @@ private:
 // FIXME:
 
 #define ID_EFFECT_PREVIEW ePreviewID
-
-//
-class EffectUIHost final : public wxDialogWrapper,
-                     public EffectUIHostInterface
-{
-public:
-   // constructors and destructors
-   EffectUIHost(wxWindow *parent,
-                Effect *effect,
-                EffectUIClientInterface *client);
-   EffectUIHost(wxWindow *parent,
-                AudacityCommand *command,
-                EffectUIClientInterface *client);
-   virtual ~EffectUIHost();
-
-   bool TransferDataToWindow() override;
-   bool TransferDataFromWindow() override;
-
-   int ShowModal() override;
-
-   bool Initialize();
-
-private:
-   void OnPlayback(wxCommandEvent & evt);
-   void OnCapture(wxCommandEvent & evt);
-
-   void UpdateControls();
-   wxBitmap CreateBitmap(const char *xpm[], bool up, bool pusher);
-
-   void InitializeRealtime();
-   void CleanupRealtime();
-   void Resume();
-
-private:
-   AudacityProject *mProject;
-   wxWindow *mParent;
-   Effect *mEffect;
-   AudacityCommand * mCommand;
-   EffectUIClientInterface *mClient;
-
-   wxArrayString mUserPresets;
-   bool mInitialized;
-   bool mSupportsRealtime;
-   bool mIsGUI;
-   bool mIsBatch;
-
-   wxButton *mApplyBtn;
-   wxButton *mCloseBtn;
-   wxButton *mMenuBtn;
-   wxButton *mPlayBtn;
-   wxButton *mRewindBtn;
-   wxButton *mFFwdBtn;
-   wxCheckBox *mEnableCb;
-
-   wxButton *mEnableToggleBtn;
-   wxButton *mPlayToggleBtn;
-
-   wxBitmap mPlayBM;
-   wxBitmap mPlayDisabledBM;
-   wxBitmap mStopBM;
-   wxBitmap mStopDisabledBM;
-
-   bool mEnabled;
-
-   bool mDisableTransport;
-   bool mPlaying;
-   bool mCapturing;
-
-   SelectedRegion mRegion;
-   double mPlayPos;
-
-   bool mDismissed{};
-   bool mNeedsResume{};
-
-   DECLARE_EVENT_TABLE()
-};
-
-class EffectPresetsDialog final : public wxDialogWrapper
-{
-public:
-   EffectPresetsDialog(wxWindow *parent, Effect *effect);
-   virtual ~EffectPresetsDialog();
-
-   wxString GetSelected() const;
-   void SetSelected(const wxString & parms);
-
-private:
-   void SetPrefix(const wxString & type, const wxString & prefix);
-   void UpdateUI();
-
-   void OnType(wxCommandEvent & evt);
-   void OnOk(wxCommandEvent & evt);
-   void OnCancel(wxCommandEvent & evt);
-
-private:
-   wxChoice *mType;
-   wxListBox *mPresets;
-
-   wxArrayString mFactoryPresets;
-   wxArrayString mUserPresets;
-   wxString mSelection;
-
-   DECLARE_EVENT_TABLE()
-};
 
 // Helper macros for defining, reading and verifying effect parameters
 
