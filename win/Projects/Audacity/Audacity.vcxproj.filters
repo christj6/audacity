@@ -203,9 +203,6 @@
     <ClCompile Include="..\..\..\src\WrappedType.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\effects\Effect.cpp">
-      <Filter>src\effects</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\export\Export.cpp">
       <Filter>src\export</Filter>
     </ClCompile>

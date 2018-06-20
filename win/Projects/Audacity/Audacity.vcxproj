@@ -223,7 +223,6 @@
     <ClCompile Include="..\..\..\src\widgets\wxPanelWrapper.cpp" />
     <ClCompile Include="..\..\..\src\widgets\PopupMenuTable.cpp" />
     <ClCompile Include="..\..\..\src\WrappedType.cpp" />
-    <ClCompile Include="..\..\..\src\effects\Effect.cpp" />
     <ClCompile Include="..\..\..\src\export\Export.cpp" />
     <ClCompile Include="..\..\..\src\export\ExportCL.cpp" />
     <ClCompile Include="..\..\..\src\export\ExportFFmpeg.cpp" />
