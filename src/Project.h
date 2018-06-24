@@ -577,12 +577,6 @@ private:
    int  mWhatIfNoSelection;
    bool mStopIfWasPaused;
 
-   // Are we currently auto-saving or not?
-   bool mAutoSaving{ false };
-
-   // Has this project been recovered from an auto-saved version
-   bool mIsRecovered{ false };
-
    // Dependencies have been imported and a warning should be shown on save
    bool mImportedDependencies{ false };
 

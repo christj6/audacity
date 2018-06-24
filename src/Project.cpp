@@ -1286,13 +1286,6 @@ void AudacityProject::SetProjectTitle( int number)
       name = _TS("Audacity");
    }
 
-   if (mIsRecovered)
-   {
-      name += wxT(" ");
-      /* i18n-hint: E.g this is recovered audio that had been lost.*/
-      name += _("(Recovered)");
-   }
-
    SetTitle( name );
    SetName(name);       // to make the nvda screen reader read the correct title
 }
