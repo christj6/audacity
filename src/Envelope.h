@@ -25,7 +25,6 @@ class wxDC;
 class wxMouseEvent;
 class wxTextFile;
 
-class DirManager;
 class Envelope;
 class EnvPoint;
 
@@ -121,7 +120,7 @@ private:
     * underlying track (normally) */
    double mTrackLen { 0.0 };
 
-   bool mDB;
+   // bool mDB;
    double mMinValue, mMaxValue;
    double mDefaultValue;
 

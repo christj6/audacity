@@ -40,14 +40,12 @@ a draggable point type.
 #include <wx/log.h>
 
 #include "AColor.h"
-#include "DirManager.h"
 #include "TrackArtist.h"
 
 static const double VALUE_TOLERANCE = 0.001;
 
 Envelope::Envelope(bool exponential, double minValue, double maxValue, double defaultValue)
-   : mDB(exponential)
-   , mMinValue(minValue)
+   : mMinValue(minValue)
    , mMaxValue(maxValue)
    , mDefaultValue { ClampValue(defaultValue) }
 {
@@ -58,8 +56,7 @@ Envelope::~Envelope()
 }
 
 Envelope::Envelope(const Envelope &orig, double t0, double t1)
-   : mDB(orig.mDB)
-   , mMinValue(orig.mMinValue)
+   : mMinValue(orig.mMinValue)
    , mMaxValue(orig.mMaxValue)
    , mDefaultValue(orig.mDefaultValue)
 {
@@ -71,8 +68,7 @@ Envelope::Envelope(const Envelope &orig, double t0, double t1)
 }
 
 Envelope::Envelope(const Envelope &orig)
-   : mDB(orig.mDB)
-   , mMinValue(orig.mMinValue)
+   : mMinValue(orig.mMinValue)
    , mMaxValue(orig.mMaxValue)
    , mDefaultValue(orig.mDefaultValue)
 {
@@ -182,18 +178,12 @@ void Envelope::BinarySearchForTime_LeftLimit( int &Lo, int &Hi, double t ) const
    mSearchGuess = Lo;
 }
 
-/// GetInterpolationStartValueAtPoint() is used to select either the
-/// envelope value or its log depending on whether we are doing linear
-/// or log interpolation.
+/// GetInterpolationStartValueAtPoint() is used to select the
+/// envelope value (assuming we are doing linear interpolation).
 /// @param iPoint index in env array to look at.
-/// @return value there, or its (safe) log10.
 double Envelope::GetInterpolationStartValueAtPoint( int iPoint ) const
 {
-   double v = mEnv[ iPoint ].GetVal();
-   if( !mDB )
-      return v;
-   else
-      return log10(v);
+	return mEnv[iPoint].GetVal();
 }
 
 void Envelope::GetValues( double *buffer, int bufferLen,
@@ -300,20 +290,9 @@ void Envelope::GetValuesRelative
             vstep = 0.0;
          }
 
-         // An adjustment if logarithmic scale.
-         if( mDB )
-         {
-            v = pow(10.0, v);
-            vstep = pow( 10.0, vstep );
-         }
-
          buffer[b] = v;
       } else {
-         if (mDB){
-            buffer[b] = buffer[b - 1] * vstep;
-         }else{
-            buffer[b] = buffer[b - 1] + vstep;
-         }
+         buffer[b] = buffer[b - 1] + vstep;
       }
 
       t += tstep;
