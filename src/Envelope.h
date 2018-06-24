@@ -65,9 +65,6 @@ public:
 
    virtual ~Envelope();
 
-   bool GetExponential() const { return mDB; }
-   void SetExponential(bool db) { mDB = db; }
-
    double GetMinValue() const { return mMinValue; }
    double GetMaxValue() const { return mMaxValue; }
 
@@ -93,21 +90,12 @@ public:
 
 private:
 
-   double GetValueRelative(double t, bool leftLimit = false) const;
    void GetValuesRelative
       (double *buffer, int len, double t0, double tstep, bool leftLimit = false)
       const;
-   // relative time
-   double NextPointAfter(double t) const;
 
 public:
    void print() const;
-   void testMe();
-
-   bool IsDirty() const;
-
-   /** \brief Return number of points */
-   size_t GetNumberOfPoints() const;
 
 private:
    /** \brief Accessor for points */
@@ -117,14 +105,6 @@ private:
    }
 
    std::pair<int, int> EqualRange( double when, double sampleDur ) const;
-
-public:
-   // UI-related
-   // The drag point needs to display differently.
-   int GetDragPoint() const { return mDragPoint; }
-   bool GetDragPointValid() const { return mDragPointValid; }
-   // Modify the dragged point and change its value.
-   // But consistency constraints may move it less then you ask for.
 
 private:
    // relative time
@@ -141,18 +121,9 @@ private:
     * underlying track (normally) */
    double mTrackLen { 0.0 };
 
-   // TODO: mTrackEpsilon based on assumption of 200KHz.  Needs review if/when
-   // we support higher sample rates.
-   /** \brief The shortest distance appart that points on an envelope can be
-    * before being considered the same point */
-   double mTrackEpsilon { 1.0 / 200000.0 };
    bool mDB;
    double mMinValue, mMaxValue;
    double mDefaultValue;
-
-   // UI stuff
-   bool mDragPointValid { false };
-   int mDragPoint { -1 };
 
    mutable int mSearchGuess { -2 };
    friend class GetInfoCommand;

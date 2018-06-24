@@ -80,11 +80,6 @@ Envelope::Envelope(const Envelope &orig)
    mTrackLen = orig.mTrackLen;
 }
 
-size_t Envelope::GetNumberOfPoints() const
-{
-   return mEnv.size();
-}
-
 // Private methods
 
 std::pair<int, int> Envelope::EqualRange( double when, double sampleDur ) const
@@ -115,14 +110,6 @@ double Envelope::GetValue( double t, double sampleDur ) const
    double temp;
 
    GetValues( &temp, 1, t, sampleDur );
-   return temp;
-}
-
-double Envelope::GetValueRelative(double t, bool leftLimit) const
-{
-   double temp;
-
-   GetValuesRelative(&temp, 1, t, 0.0, leftLimit);
    return temp;
 }
 
@@ -351,17 +338,6 @@ void Envelope::GetValues
 		  buffer[xx] = GetValue(time);
 	  }
    }
-}
-
-// relative time
-double Envelope::NextPointAfter(double t) const
-{
-   int lo,hi;
-   BinarySearchForTime( lo, hi, t );
-   if (hi >= (int)mEnv.size())
-      return t;
-   else
-      return mEnv[hi].GetT();
 }
 
 void Envelope::print() const
