@@ -191,7 +191,11 @@ void Envelope::GetValues( double *buffer, int bufferLen,
 {
    // Convert t0 from absolute to clip-relative time
    t0 -= mOffset;
-   GetValuesRelative( buffer, bufferLen, t0, tstep);
+
+   // If this line is commented out,
+   // trying to record anything makes the entire track a solid blue bar (like how white noise would be represented).
+   // Importing audio files causes no issues.
+   GetValuesRelative( buffer, bufferLen, t0, tstep); 
 }
 
 void Envelope::GetValuesRelative

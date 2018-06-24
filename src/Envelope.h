@@ -120,7 +120,6 @@ private:
     * underlying track (normally) */
    double mTrackLen { 0.0 };
 
-   // bool mDB;
    double mMinValue, mMaxValue;
    double mDefaultValue;
 

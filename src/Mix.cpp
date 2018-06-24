@@ -329,29 +329,22 @@ size_t Mixer::MixSameRate(int *channelFlags, WaveTrackCache &cache,
       sampleCount{ (backwards ? t - tEnd : tEnd - t) * track->GetRate() + 0.5 }
    );
 
-   if (backwards) {
+   if (backwards) { // Is it even possible to play something backwards anymore? Consider removing this branch.
       auto results = cache.Get(floatSample, *pos - (slen - 1), slen, mMayThrow);
       if (results)
          memcpy(mFloatBuffer.get(), results, sizeof(float) * slen);
       else
          memset(mFloatBuffer.get(), 0, sizeof(float) * slen);
-      track->GetEnvelopeValues(mEnvValues.get(), slen, t - (slen - 1) / mRate);
-      for(decltype(slen) i = 0; i < slen; i++)
-         mFloatBuffer[i] *= mEnvValues[i]; // Track gain control will go here?
       ReverseSamples((samplePtr)mFloatBuffer.get(), floatSample, 0, slen);
 
       *pos -= slen;
    }
-   else {
+   else { // forwards (probably the only case)
       auto results = cache.Get(floatSample, *pos, slen, mMayThrow);
       if (results)
          memcpy(mFloatBuffer.get(), results, sizeof(float) * slen);
       else
          memset(mFloatBuffer.get(), 0, sizeof(float) * slen);
-      track->GetEnvelopeValues(mEnvValues.get(), slen, t);
-      for(decltype(slen) i = 0; i < slen; i++)
-         mFloatBuffer[i] *= mEnvValues[i]; // Track gain control will go here?
-
       *pos += slen;
    }
 
