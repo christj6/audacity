@@ -114,10 +114,7 @@ Mixer::Mixer(const WaveTrackConstArray &inputTracks,
    for(size_t i=0; i<mNumInputTracks; i++) {
       double factor = (mRate / mInputTrack[i].GetTrack()->GetRate());
       double minFactor, maxFactor;
-
-         // constant rate resampling
-         mbVariableRates = false;
-         minFactor = maxFactor = factor;
+      minFactor = maxFactor = factor;
 
       mResample[i] = std::make_unique<Resample>(mHighQuality, minFactor, maxFactor);
       mQueueStart[i] = 0;
@@ -171,138 +168,6 @@ void MixBuffers(unsigned numChannels, int *channelFlags, float *gains,
          dest += skip;
       }
    }
-}
-
-size_t Mixer::MixVariableRates(int *channelFlags, WaveTrackCache &cache,
-                                    sampleCount *pos, float *queue,
-                                    int *queueStart, int *queueLen,
-                                    Resample * pResample)
-{
-   const WaveTrack *const track = cache.GetTrack();
-   const double trackRate = track->GetRate();
-   const double initialWarp = mRate / mSpeed / trackRate;
-   auto sampleSize = SAMPLE_SIZE(floatSample);
-
-   decltype(mMaxOut) out = 0;
-
-   /* time is floating point. Sample rate is integer. The number of samples
-    * has to be integer, but the multiplication gives a float result, which we
-    * round to get an integer result. TODO: is this always right or can it be
-    * off by one sometimes? Can we not get this information directly from the
-    * clip (which must know) rather than convert the time?
-    *
-    * LLL:  Not at this time.  While WaveClips provide methods to retrieve the
-    *       start and end sample, they do the same float->sampleCount conversion
-    *       to calculate the position.
-    */
-
-   // Find the last sample
-   double endTime = track->GetEndTime();
-   double startTime = track->GetStartTime();
-   const bool backwards = (mT1 < mT0);
-   const double tEnd = backwards
-      ? std::max(startTime, mT1)
-      : std::min(endTime, mT1);
-   const auto endPos = track->TimeToLongSamples(tEnd);
-   // Find the time corresponding to the start of the queue, for use with time track
-   double t = ((*pos).as_long_long() +
-               (backwards ? *queueLen : - *queueLen)) / trackRate;
-
-   while (out < mMaxOut) {
-      if (*queueLen < (int)mProcessLen) {
-         // Shift pending portion to start of the buffer
-         memmove(queue, &queue[*queueStart], (*queueLen) * sampleSize);
-         *queueStart = 0;
-
-         auto getLen = limitSampleBufferSize(
-            mQueueMaxLen - *queueLen,
-            backwards ? *pos - endPos : endPos - *pos
-         );
-
-         // Nothing to do if past end of play interval
-         if (getLen > 0) {
-            if (backwards) {
-               auto results = cache.Get(floatSample, *pos - (getLen - 1), getLen, mMayThrow);
-               if (results)
-                  memcpy(&queue[*queueLen], results, sizeof(float) * getLen);
-               else
-                  memset(&queue[*queueLen], 0, sizeof(float) * getLen);
-
-               track->GetEnvelopeValues(mEnvValues.get(),
-                                        getLen,
-                                        (*pos - (getLen- 1)).as_double() / trackRate);
-               *pos -= getLen;
-            }
-            else {
-               auto results = cache.Get(floatSample, *pos, getLen, mMayThrow);
-               if (results)
-                  memcpy(&queue[*queueLen], results, sizeof(float) * getLen);
-               else
-                  memset(&queue[*queueLen], 0, sizeof(float) * getLen);
-
-               track->GetEnvelopeValues(mEnvValues.get(),
-                                        getLen,
-                                        (*pos).as_double() / trackRate);
-
-               *pos += getLen;
-            }
-
-            for (decltype(getLen) i = 0; i < getLen; i++) {
-               queue[(*queueLen) + i] *= mEnvValues[i];
-            }
-
-            if (backwards)
-               ReverseSamples((samplePtr)&queue[0], floatSample,
-                              *queueLen, getLen);
-
-            *queueLen += getLen;
-         }
-      }
-
-      auto thisProcessLen = mProcessLen;
-      bool last = (*queueLen < (int)mProcessLen);
-      if (last) {
-         thisProcessLen = *queueLen;
-      }
-
-      double factor = initialWarp;
-
-      auto results = pResample->Process(factor,
-                                      &queue[*queueStart],
-                                      thisProcessLen,
-                                      last,
-                                      &mFloatBuffer[out],
-                                      mMaxOut - out);
-
-      const auto input_used = results.first;
-      *queueStart += input_used;
-      *queueLen -= input_used;
-      out += results.second;
-      t += (input_used / trackRate) * (backwards ? -1 : 1);
-
-      if (last) {
-         break;
-      }
-   }
-
-   for (size_t c = 0; c < mNumChannels; c++) {
-      if (mApplyTrackGains) {
-         mGains[c] = track->GetChannelGain(c);
-      }
-      else {
-         mGains[c] = 1.0;
-      }
-   }
-
-   MixBuffers(mNumChannels,
-              channelFlags,
-              mGains.get(),
-              (samplePtr)mFloatBuffer.get(),
-              mTemp.get(),
-              out,
-              mInterleaved);
-
-   return out;
 }
 
 size_t Mixer::MixSameRate(int *channelFlags, WaveTrackCache &cache,
@@ -400,14 +265,9 @@ size_t Mixer::Process(size_t maxToProcess)
                channelFlags[0] = 1;
             break;
          }
-      }
-      if (mbVariableRates || track->GetRate() != mRate)
-         maxOut = std::max(maxOut,
-            MixVariableRates(channelFlags.get(), mInputTrack[i],
-               &mSamplePos[i], mSampleQueue[i].get(),
-               &mQueueStart[i], &mQueueLen[i], mResample[i].get()));
-      else
-         maxOut = std::max(maxOut,
+      
+	  }
+      maxOut = std::max(maxOut,
             MixSameRate(channelFlags.get(), mInputTrack[i], &mSamplePos[i]));
 
       double t = mSamplePos[i].as_double() / (double)track->GetRate();

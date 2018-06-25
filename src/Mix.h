@@ -125,17 +125,11 @@ class AUDACITY_DLL_API Mixer {
    size_t MixSameRate(int *channelFlags, WaveTrackCache &cache,
                            sampleCount *pos);
 
-   size_t MixVariableRates(int *channelFlags, WaveTrackCache &cache,
-                                sampleCount *pos, float *queue,
-                                int *queueStart, int *queueLen,
-                                Resample * pResample);
-
  private:
 
     // Input
    size_t           mNumInputTracks;
    ArrayOf<WaveTrackCache> mInputTrack;
-   bool             mbVariableRates;
    ArrayOf<sampleCount> mSamplePos;
    bool             mApplyTrackGains;
    Doubles          mEnvValues;
