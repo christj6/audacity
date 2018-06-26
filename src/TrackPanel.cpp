@@ -358,14 +358,6 @@ TrackPanel::~TrackPanel()
       ReleaseMouse();
 }
 
-LWSlider *TrackPanel::GainSlider( const WaveTrack *wt )
-{
-   auto rect = FindTrackRect( wt, true );
-   wxRect sliderRect;
-   TrackInfo::GetGainRect( rect.GetTopLeft(), sliderRect );
-   return TrackInfo::GainSlider(sliderRect, wt, false, this);
-}
-
 LWSlider *TrackPanel::PanSlider( const WaveTrack *wt )
 {
    auto rect = FindTrackRect( wt, true );
@@ -2782,22 +2774,6 @@ std::unique_ptr<LWSlider>
    , TrackInfo::gGain
    , TrackInfo::gPan
 ;
-
-LWSlider * TrackInfo::GainSlider
-(const wxRect &sliderRect, const WaveTrack *t, bool captured, wxWindow *pParent)
-{
-   wxPoint pos = sliderRect.GetPosition();
-   float gain = 1.0;
-
-   gGain->Move(pos);
-   gGain->Set(gain);
-   gGainCaptured->Move(pos);
-   gGainCaptured->Set(gain);
-
-   auto slider = (captured ? gGainCaptured : gGain).get();
-   slider->SetParent( pParent ? pParent : ::GetActiveProject() );
-   return slider;
-}
 
 LWSlider * TrackInfo::PanSlider
 (const wxRect &sliderRect, const WaveTrack *t, bool captured, wxWindow *pParent)

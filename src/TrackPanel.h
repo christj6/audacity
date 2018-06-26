@@ -132,9 +132,6 @@ public:
    static unsigned DefaultNoteTrackHeight();
    static unsigned DefaultWaveTrackHeight();
 
-   static LWSlider * GainSlider
-      (const wxRect &sliderRect, const WaveTrack *t, bool captured,
-       wxWindow *pParent);
    static LWSlider * PanSlider
       (const wxRect &sliderRect, const WaveTrack *t, bool captured,
        wxWindow *pParent);
@@ -341,7 +338,6 @@ protected:
 
 public:
 
-   LWSlider *GainSlider( const WaveTrack *wt );
    LWSlider *PanSlider( const WaveTrack *wt );
 
    TrackInfo *GetTrackInfo() { return &mTrackInfo; }
