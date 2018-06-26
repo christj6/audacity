@@ -83,24 +83,6 @@ void ClearSamples(samplePtr dst, sampleFormat format,
    memset(dst + start*size, 0, len*size);
 }
 
-void ReverseSamples(samplePtr dst, sampleFormat format,
-                  int start, int len)
-{
-   auto size = SAMPLE_SIZE(format);
-   samplePtr first = dst + start * size;
-   samplePtr last = dst + (start + len - 1) * size;
-   enum : size_t { fixedSize = SAMPLE_SIZE(floatSample) };
-   wxASSERT(size <= fixedSize);
-   char temp[fixedSize];
-   while (first < last) {
-      memcpy(temp, first, size);
-      memcpy(first, last, size);
-      memcpy(last, temp, size);
-      first += size;
-      last -= size;
-   }
-}
-
 void CopySamples(samplePtr src, sampleFormat srcFormat,
                  samplePtr dst, sampleFormat dstFormat,
                  unsigned int len,

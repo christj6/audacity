@@ -188,24 +188,12 @@ size_t Mixer::MixSameRate(int *channelFlags, WaveTrackCache &cache,
       sampleCount{ (backwards ? t - tEnd : tEnd - t) * track->GetRate() + 0.5 }
    );
 
-   if (backwards) { // Is it even possible to play something backwards anymore? Consider removing this branch.
-      auto results = cache.Get(floatSample, *pos - (slen - 1), slen, mMayThrow);
-      if (results)
-         memcpy(mFloatBuffer.get(), results, sizeof(float) * slen);
-      else
-         memset(mFloatBuffer.get(), 0, sizeof(float) * slen);
-      ReverseSamples((samplePtr)mFloatBuffer.get(), floatSample, 0, slen);
-
-      *pos -= slen;
-   }
-   else { // forwards (probably the only case)
       auto results = cache.Get(floatSample, *pos, slen, mMayThrow);
       if (results)
          memcpy(mFloatBuffer.get(), results, sizeof(float) * slen);
       else
          memset(mFloatBuffer.get(), 0, sizeof(float) * slen);
       *pos += slen;
-   }
 
    for(size_t c=0; c<mNumChannels; c++)
       mGains[c] = 1.0;

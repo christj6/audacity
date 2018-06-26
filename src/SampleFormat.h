@@ -126,9 +126,6 @@ void      CopySamplesNoDither(samplePtr src, sampleFormat srcFormat,
 void      ClearSamples(samplePtr buffer, sampleFormat format,
                        size_t start, size_t len);
 
-void      ReverseSamples(samplePtr buffer, sampleFormat format,
-                         int start, int len);
-
 //
 // This must be called on startup and everytime NEW ditherers
 // are set in preferences.
