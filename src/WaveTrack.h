@@ -126,9 +126,6 @@ private:
    float GetPan() const;
    void SetPan(float newPan) override;
 
-   // Takes gain and pan into account
-   float GetChannelGain(int channel) const;
-
    int GetWaveColorIndex() const { return mWaveColorIndex; };
    void SetWaveColorIndex(int colorIndex);
 

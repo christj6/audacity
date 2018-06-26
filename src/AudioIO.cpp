@@ -2762,7 +2762,7 @@ int audacityAudioCallback(const void *inputBuffer, void *outputBuffer,
                if (vt->GetChannel() == Track::LeftChannel ||
                    vt->GetChannel() == Track::MonoChannel)
                {
-                  float gain = vt->GetChannelGain(0);
+                  float gain = 1.0;
 
                   // Output volume emulation: possibly copy meter samples, then
                   // apply volume, then copy to the output buffer
@@ -2781,7 +2781,7 @@ int audacityAudioCallback(const void *inputBuffer, void *outputBuffer,
                if (vt->GetChannel() == Track::RightChannel ||
                    vt->GetChannel() == Track::MonoChannel)
                {
-                  float gain = vt->GetChannelGain(1);
+                  float gain = 1.0;
 
                   // Output volume emulation (as above)
                   if (outputMeterFloats != outputFloats)

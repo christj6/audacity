@@ -371,22 +371,6 @@ void WaveTrack::SetPan(float newPan)
       mPan = newPan;
 }
 
-float WaveTrack::GetChannelGain(int channel) const
-{
-   float left = 1.0;
-   float right = 1.0;
-
-   if (mPan < 0)
-      right = (mPan + 1.0);
-   else if (mPan > 0)
-      left = 1.0 - mPan;
-
-   if ((channel%2) == 0)
-      return left*mGain;
-   else
-      return right*mGain;
-}
-
 void WaveTrack::SetWaveColorIndex(int colorIndex)
 // STRONG-GUARANTEE
 {
