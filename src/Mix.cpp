@@ -76,7 +76,6 @@ Mixer::Mixer(const WaveTrackConstArray &inputTracks,
    mRate = outRate;
    mSpeed = 1.0;
    mFormat = outFormat;
-   mApplyTrackGains = true;
    if( mixerSpec && mixerSpec->GetNumChannels() == mNumChannels &&
          mixerSpec->GetNumTracks() == mNumInputTracks )
       mMixerSpec = mixerSpec;
@@ -127,11 +126,6 @@ Mixer::Mixer(const WaveTrackConstArray &inputTracks,
 
 Mixer::~Mixer()
 {
-}
-
-void Mixer::ApplyTrackGains(bool apply)
-{
-   mApplyTrackGains = apply;
 }
 
 void Mixer::Clear()
@@ -214,10 +208,7 @@ size_t Mixer::MixSameRate(int *channelFlags, WaveTrackCache &cache,
    }
 
    for(size_t c=0; c<mNumChannels; c++)
-      if (mApplyTrackGains)
-         mGains[c] = track->GetChannelGain(c);
-      else
-         mGains[c] = 1.0;
+      mGains[c] = 1.0;
 
    MixBuffers(mNumChannels, channelFlags, mGains.get(),
               (samplePtr)mFloatBuffer.get(), mTemp.get(), slen, mInterleaved);

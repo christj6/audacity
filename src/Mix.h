@@ -87,12 +87,6 @@ class AUDACITY_DLL_API Mixer {
    virtual ~ Mixer();
 
    //
-   // Setup
-   //
-
-   void ApplyTrackGains(bool apply = true); // True by default
-
-   //
    // Processing
    //
 
@@ -131,7 +125,6 @@ class AUDACITY_DLL_API Mixer {
    size_t           mNumInputTracks;
    ArrayOf<WaveTrackCache> mInputTrack;
    ArrayOf<sampleCount> mSamplePos;
-   bool             mApplyTrackGains;
    Doubles          mEnvValues;
    double           mT0; // Start time
    double           mT1; // Stop time (none if mT0==mT1)

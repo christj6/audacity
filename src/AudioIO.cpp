@@ -1126,7 +1126,6 @@ int AudioIO::StartStream(const WaveTrackConstArray &playbackTracks,
                   mT0, mT1, 1,
                   playbackMixBufferSize, false,
                   mRate, floatSample, false);
-               mPlaybackMixers[i]->ApplyTrackGains(false);
             }
          }
 
