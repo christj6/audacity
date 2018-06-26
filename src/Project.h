@@ -353,9 +353,6 @@ public:
    typedef void (WaveTrack::* EditFunction)(double, double);
    typedef std::unique_ptr<Track> (WaveTrack::* EditDestFunction)(double, double);
 
-   void SetTrackGain(WaveTrack * track, LWSlider * slider);
-   void SetTrackPan(WaveTrack * track, LWSlider * slider);
-
    void RemoveTrack(Track * toRemove);
 
    // Snap To

@@ -118,10 +118,6 @@ private:
    double GetRate() const;
    void SetRate(double newRate);
 
-   // Multiplicative factor.  Only converted to dB for display.
-   float GetGain() const;
-   void SetGain(float newGain);
-
    // -1.0 (left) -> 1.0 (right)
    float GetPan() const;
    void SetPan(float newPan) override;

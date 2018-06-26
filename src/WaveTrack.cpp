@@ -346,16 +346,6 @@ void WaveTrack::SetRate(double newRate)
    }
 }
 
-float WaveTrack::GetGain() const
-{
-   return mGain;
-}
-
-void WaveTrack::SetGain(float newGain)
-{
-   mGain = newGain;
-}
-
 float WaveTrack::GetPan() const
 {
    return mPan;

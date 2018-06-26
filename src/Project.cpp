@@ -2567,7 +2567,6 @@ bool AudacityProject::Save()
             pWaveTrack->SetSelected(pSavedTrack->GetSelected());
             pWaveTrack->SetMute(pSavedWaveTrack->GetMute());
 
-            pWaveTrack->SetGain(((WaveTrack*)pSavedTrack)->GetGain());
             pWaveTrack->SetPan(((WaveTrack*)pSavedTrack)->GetPan());
          }
       } );
@@ -2584,7 +2583,6 @@ bool AudacityProject::Save()
          pWaveTrack->SetSelected(false);
          pWaveTrack->SetMute(false);
 
-         pWaveTrack->SetGain(1.0);
          pWaveTrack->SetPan(0.0);
       }
 
@@ -3348,38 +3346,6 @@ void AudacityProject::OnAudioIOStopRecording()
 int AudacityProject::GetSnapTo() const
 {
    return false;
-}
-
-void AudacityProject::SetTrackGain(WaveTrack * wt, LWSlider * slider)
-{
-   wxASSERT(wt);
-   float newValue = slider->Get();
-
-   // Assume linked track is wave or null
-   const auto link = static_cast<WaveTrack*>(wt->GetLink());
-   wt->SetGain(newValue);
-   if (link)
-      link->SetGain(newValue);
-
-   PushState(_("Adjusted gain"), _("Gain"), UndoPush::CONSOLIDATE);
-
-   GetTrackPanel()->RefreshTrack(wt);
-}
-
-void AudacityProject::SetTrackPan(WaveTrack * wt, LWSlider * slider)
-{
-   wxASSERT(wt);
-   float newValue = slider->Get();
-
-   // Assume linked track is wave or null
-   const auto link = static_cast<WaveTrack*>(wt->GetLink());
-   wt->SetPan(newValue);
-   if (link)
-      link->SetPan(newValue);
-
-   PushState(_("Adjusted Pan"), _("Pan"), UndoPush::CONSOLIDATE);
-
-   GetTrackPanel()->RefreshTrack(wt);
 }
 
 /// Removes the specified track.  Called from HandleClosing.

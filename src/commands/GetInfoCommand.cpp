@@ -224,7 +224,6 @@ bool GetInfoCommand::SendTracks(const CommandContext & context)
          context.AddItem( t->GetStartTime(), "start" );
          context.AddItem( t->GetEndTime(), "end" );
          // context.AddItem( t->GetPan() , "pan");
-         // context.AddItem( t->GetGain() , "gain");
          context.AddBool( t->GetSelected(), "selected" );
          context.AddBool( t->GetLinked(), "linked");
       }
