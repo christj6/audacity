@@ -461,14 +461,6 @@ private:
    void Resample(int rate, ProgressDialog *progress = NULL);
 
    //
-   // AutoSave related
-   //
-   // Retrieve the unique autosave ID
-   int GetAutoSaveIdent();
-   // Set the unique autosave ID
-   void SetAutoSaveIdent(int id);
-
-   //
    // The following code will eventually become part of a GUIWaveTrack
    // and will be taken out of the WaveTrack class:
    //
@@ -585,14 +577,7 @@ private:
    // Private variables
    //
 
-   wxCriticalSection mFlushCriticalSection;
-   wxCriticalSection mAppendCriticalSection;
-   double mLegacyProjectFileOffset;
-   int mAutoSaveIdent;
-
    std::unique_ptr<WaveformSettings> mpWaveformSettings;
-
-   std::weak_ptr<CutlineHandle> mCutlineHandle;
 
 protected:
    std::shared_ptr<TrackControls> GetControls() override;

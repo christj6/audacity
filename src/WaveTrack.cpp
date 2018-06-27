@@ -94,8 +94,6 @@ WaveTrack::WaveTrack(const std::shared_ptr<DirManager> &projDirManager, sampleFo
       settings.scaleType = WaveformSettings::stLogarithmic;
    }
 
-   mLegacyProjectFileOffset = 0;
-
    mFormat = format;
    mRate = (int) rate;
    mPan = 0.0;
@@ -106,7 +104,6 @@ WaveTrack::WaveTrack(const std::shared_ptr<DirManager> &projDirManager, sampleFo
    mDisplayMax = 1.0;
    mLastScaleType = -1;
    mLastdBRange = -1;
-   mAutoSaveIdent = 0;
 
    SetHeight( TrackInfo::DefaultWaveTrackHeight() );
 }
@@ -118,8 +115,6 @@ WaveTrack::WaveTrack(const WaveTrack &orig):
 {
    mLastScaleType = -1;
    mLastdBRange = -1;
-
-   mLegacyProjectFileOffset = 0;
 
    Init(orig);
 
@@ -1898,16 +1893,6 @@ void WaveTrack::AddInvalidRegion(sampleCount startSample, sampleCount endSample)
 {
    for (const auto &clip : mClips)
       clip->AddInvalidRegion(startSample, endSample);
-}
-
-int WaveTrack::GetAutoSaveIdent()
-{
-   return mAutoSaveIdent;
-}
-
-void WaveTrack::SetAutoSaveIdent(int ident)
-{
-   mAutoSaveIdent = ident;
 }
 
 WaveTrackCache::~WaveTrackCache()
