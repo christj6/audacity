@@ -559,7 +559,6 @@ private:
 
    sampleFormat  mFormat;
    int           mRate;
-   float         mGain;
    float         mPan;
    int           mWaveColorIndex;
 
@@ -570,8 +569,6 @@ private:
    //
    mutable float         mDisplayMin;
    mutable float         mDisplayMax;
-   mutable float         mSpectrumMin;
-   mutable float         mSpectrumMax;
 
    WaveTrackDisplay mDisplay;
    mutable int   mLastScaleType; // last scale type choice

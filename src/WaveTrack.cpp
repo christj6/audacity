@@ -98,14 +98,12 @@ WaveTrack::WaveTrack(const std::shared_ptr<DirManager> &projDirManager, sampleFo
 
    mFormat = format;
    mRate = (int) rate;
-   mGain = 1.0;
    mPan = 0.0;
    mWaveColorIndex = 0;
    SetDefaultName(TracksPrefs::GetDefaultAudioTrackNamePreference());
    SetName(GetDefaultName());
    mDisplayMin = -1.0;
    mDisplayMax = 1.0;
-   mSpectrumMin = mSpectrumMax = -1; // so values will default to settings
    mLastScaleType = -1;
    mLastdBRange = -1;
    mAutoSaveIdent = 0;
@@ -137,15 +135,12 @@ void WaveTrack::Init(const WaveTrack &orig)
    mFormat = orig.mFormat;
    mWaveColorIndex = orig.mWaveColorIndex;
    mRate = orig.mRate;
-   mGain = orig.mGain;
    mPan = orig.mPan;
    SetDefaultName(orig.GetDefaultName());
    SetName(orig.GetName());
    mDisplay = orig.mDisplay;
    mDisplayMin = orig.mDisplayMin;
    mDisplayMax = orig.mDisplayMax;
-   mSpectrumMin = orig.mSpectrumMin;
-   mSpectrumMax = orig.mSpectrumMax;
    mDisplayLocationsCache.clear();
 }
 
@@ -170,7 +165,6 @@ void WaveTrack::Merge(const Track &orig)
    {
       const WaveTrack &wt = static_cast<const WaveTrack&>(orig);
       mDisplay = wt.mDisplay;
-      mGain    = wt.mGain;
       mPan     = wt.mPan;
       mDisplayMin = wt.mDisplayMin;
       mDisplayMax = wt.mDisplayMax;
