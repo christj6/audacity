@@ -475,17 +475,6 @@ private:
 
       obsoleteWaveformDBDisplay,
 
-      Spectrum,
-
-      obsolete1, // was SpectrumLogDisplay
-      obsolete2, // was SpectralSelectionDisplay
-      obsolete3, // was SpectralSelectionLogDisplay
-      obsolete4, // was PitchDisplay
-
-      // Add values here, and update MaxDisplay.
-
-      MaxDisplay = Spectrum,
-
       NoDisplay,            // Preview track has no display
    };
 
