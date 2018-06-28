@@ -206,15 +206,6 @@ int WaveTrack::GetChannel() const
    return mChannel;
 }
 
-void WaveTrack::SetPanFromChannelType()
-{ 
-   if( mChannel == Track::LeftChannel )
-      SetPan( -1.0f );
-   else if( mChannel == Track::RightChannel )
-      SetPan( 1.0f );
-};
-
-
 //static
 WaveTrack::WaveTrackDisplay WaveTrack::FindDefaultViewMode()
 {

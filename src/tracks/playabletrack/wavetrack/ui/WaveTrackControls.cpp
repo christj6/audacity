@@ -721,9 +721,6 @@ void WaveTrackMenuTable::SplitStereo(bool stereo)
 {
    WaveTrack *const pTrack = static_cast<WaveTrack*>(mpData->pTrack);
    wxASSERT(pTrack);
-
-   if (stereo)
-      pTrack->SetPanFromChannelType();
    pTrack->SetChannel(Track::MonoChannel);
 
    // Assume partner is present, and is wave
@@ -736,8 +733,6 @@ void WaveTrackMenuTable::SplitStereo(bool stereo)
    {
       // Keep original stereo track name.
       partner->SetName(pTrack->GetName());
-      if (stereo)
-         partner->SetPanFromChannelType();
       partner->SetChannel(Track::MonoChannel);
 
       //On Demand - have each channel add its own.

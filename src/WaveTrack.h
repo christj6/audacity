@@ -90,7 +90,6 @@ private:
    double GetOffset() const override;
    void SetOffset(double o) override;
    virtual int GetChannel() const override;
-   virtual void SetPanFromChannelType() override;
 
    /** @brief Get the time at which the first clip in the track starts
     *
