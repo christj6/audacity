@@ -45,7 +45,7 @@ class WaveTrackCache;
  * no explicit time range to process, and the whole occupied length of the
  * input tracks is processed.
  */
-void MixBuffers(unsigned numChannels, int *channelFlags, float *gains,
+void MixBuffers(unsigned numChannels, int *channelFlags,
                 samplePtr src,
                 samplePtr *dests, int len, bool interleaved);
 

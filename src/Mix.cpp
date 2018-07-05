@@ -135,7 +135,7 @@ void Mixer::Clear()
    }
 }
 
-void MixBuffers(unsigned numChannels, int *channelFlags, float *gains,
+void MixBuffers(unsigned numChannels, int *channelFlags, 
                 samplePtr src, SampleBuffer *dests,
                 int len, bool interleaved)
 {
@@ -154,11 +154,10 @@ void MixBuffers(unsigned numChannels, int *channelFlags, float *gains,
          skip = 1;
       }
 
-      float gain = gains[c];
       float *dest = (float *)destPtr;
       float *temp = (float *)src;
       for (int j = 0; j < len; j++) {
-         *dest += temp[j] * gain;   // the actual mixing process
+         *dest += temp[j];  
          dest += skip;
       }
    }
@@ -198,7 +197,7 @@ size_t Mixer::MixSameRate(int *channelFlags, WaveTrackCache &cache,
    for(size_t c=0; c<mNumChannels; c++)
       mGains[c] = 1.0;
 
-   MixBuffers(mNumChannels, channelFlags, mGains.get(),
+   MixBuffers(mNumChannels, channelFlags,
               (samplePtr)mFloatBuffer.get(), mTemp.get(), slen, mInterleaved);
 
    return slen;
