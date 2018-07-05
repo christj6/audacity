@@ -54,7 +54,6 @@ Mixer::Mixer(const WaveTrackConstArray &inputTracks,
    , mSampleQueue{ mNumInputTracks, mQueueMaxLen }
 
    , mNumChannels{ numOutChannels }
-   , mGains{ mNumChannels }
 
    , mMayThrow{ mayThrow }
 {
@@ -193,9 +192,6 @@ size_t Mixer::MixSameRate(int *channelFlags, WaveTrackCache &cache,
       else
          memset(mFloatBuffer.get(), 0, sizeof(float) * slen);
       *pos += slen;
-
-   for(size_t c=0; c<mNumChannels; c++)
-      mGains[c] = 1.0;
 
    MixBuffers(mNumChannels, channelFlags,
               (samplePtr)mFloatBuffer.get(), mTemp.get(), slen, mInterleaved);

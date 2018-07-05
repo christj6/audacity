@@ -140,7 +140,6 @@ class AUDACITY_DLL_API Mixer {
    // Output
    size_t              mMaxOut;
    unsigned         mNumChannels;
-   Floats           mGains;
    unsigned         mNumBuffers;
    size_t              mBufferSize;
    size_t              mInterleavedBufferSize;
