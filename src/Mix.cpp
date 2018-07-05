@@ -168,14 +168,10 @@ size_t Mixer::MixSameRate(int *channelFlags, WaveTrackCache &cache,
    const WaveTrack *const track = cache.GetTrack();
    const double t = ( *pos ).as_double() / track->GetRate();
    const double trackEndTime = track->GetEndTime();
-   const double trackStartTime = track->GetStartTime();
-   const bool backwards = (mT1 < mT0);
-   const double tEnd = backwards
-      ? std::max(trackStartTime, mT1)
-      : std::min(trackEndTime, mT1);
+   const double tEnd = std::min(trackEndTime, mT1);
 
    //don't process if we're at the end of the selection or track.
-   if ((backwards ? t <= tEnd : t >= tEnd))
+   if (t >= tEnd)
       return 0;
    //if we're about to approach the end of the track or selection, figure out how much we need to grab
    auto slen = limitSampleBufferSize(
@@ -183,7 +179,7 @@ size_t Mixer::MixSameRate(int *channelFlags, WaveTrackCache &cache,
       // PRL: maybe t and tEnd should be given as sampleCount instead to
       // avoid trouble subtracting one large value from another for a small
       // difference
-      sampleCount{ (backwards ? t - tEnd : tEnd - t) * track->GetRate() + 0.5 }
+      sampleCount{ (tEnd - t) * track->GetRate() + 0.5 }
    );
 
       auto results = cache.Get(floatSample, *pos, slen, mMayThrow);
