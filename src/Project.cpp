@@ -2901,10 +2901,6 @@ void AudacityProject::PushState(const wxString &desc,
    GetTrackPanel()->HandleCursorForPresentMouseState();
 }
 
-void AudacityProject::RollbackState()
-{
-}
-
 void AudacityProject::ModifyState()
 {
    GetUndoManager()->ModifyState(GetTracks(), mViewInfo.selectedRegion);

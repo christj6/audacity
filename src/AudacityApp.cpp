@@ -955,48 +955,6 @@ void AudacityApp::OnFatalException()
 #pragma warning( disable : 4702) // unreachable code warning.
 #endif //_MSC_VER
 
-bool AudacityApp::OnExceptionInMainLoop()
-{
-   // This function is invoked from catch blocks in the wxWidgets framework,
-   // and throw; without argument re-throws the exception being handled,
-   // letting us dispatch according to its type.
-
-   try { throw; }
-   catch ( AudacityException &e ) {
-      // Here is the catch-all for our own exceptions
-
-      // Use CallAfter to delay this to the next pass of the event loop,
-      // rather than risk doing it inside stack unwinding.
-      auto pProject = ::GetActiveProject();
-      std::shared_ptr< AudacityException > pException { e.Move().release() };
-      CallAfter( [=]      // Capture pException by value!
-      {
-
-         // Restore the state of the project to what it was before the
-         // failed operation
-         pProject->RollbackState();
-
-         // Forget pending changes in the TrackList
-         pProject->GetTracks()->ClearPendingTracks();
-
-         pProject->RedrawProject();
-
-         // Give the user an alert
-         pException->DelayedHandlerAction();
-
-      } );
-
-      // Don't quit the program
-      return true;
-   }
-   catch ( ... ) {
-      // There was some other type of exception we don't know.
-      // Let the inherited function do throw; again and whatever else it does.
-      return wxApp::OnExceptionInMainLoop();
-   }
-   // Shouldn't ever reach this line
-   return false;
-}
 #ifdef _MSC_VER
 #pragma warning( pop )
 #endif //_MSC_VER

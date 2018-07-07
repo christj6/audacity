@@ -242,7 +242,6 @@ UIHandle::Result CutlineHandle::Cancel(AudacityProject *pProject)
 {
    using namespace RefreshCode;
    UIHandle::Result result = RefreshCell;
-   pProject->RollbackState();
    if (mOperation == Expand) {
       AudacityProject *const project = pProject;
       project->SetSel0(mStartTime);

@@ -441,8 +441,6 @@ public:
 
    void PushState(const wxString &desc, const wxString &shortDesc); // use UndoPush::AUTOSAVE
    void PushState(const wxString &desc, const wxString &shortDesc, UndoPush flags);
-   void RollbackState();
-
 
  private:
 
