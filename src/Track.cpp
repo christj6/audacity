@@ -1362,67 +1362,6 @@ void TrackList::ClearPendingTracks( ListOfTracks *pAdded )
       RecalcPositions(getBegin());
 }
 
-bool TrackList::ApplyPendingTracks()
-{
-   bool result = false;
-
-   ListOfTracks additions;
-   ListOfTracks updates;
-   {
-      // Always clear, even if one of the update functions throws
-      auto cleanup = finally( [&] { ClearPendingTracks( &additions ); } );
-      UpdatePendingTracks();
-      updates.swap( mPendingUpdates );
-   }
-
-   // Remaining steps must be NOFAIL-GUARANTEE so that this function
-   // gives STRONG-GUARANTEE
-
-   std::vector< std::shared_ptr<Track> > reinstated;
-
-   for (auto &pendingTrack : updates) {
-      if (pendingTrack) {
-         auto src = FindById( pendingTrack->GetId() );
-         if (src)
-            this->Replace(src, std::move(pendingTrack)), result = true;
-         else
-            // Perhaps a track marked for pending changes got deleted by
-            // some other action.  Recreate it so we don't lose the
-            // accumulated changes.
-            reinstated.push_back(pendingTrack);
-      }
-   }
-
-   // If there are tracks to reinstate, append them to the list.
-   for (auto &pendingTrack : reinstated)
-      if (pendingTrack)
-         this->Add(std::move(pendingTrack)), result = true;
-
-   // Put the pending added tracks back into the list, preserving their
-   // positions.
-   bool inserted = false;
-   ListOfTracks::iterator first;
-   for (auto &pendingTrack : additions) {
-      if (pendingTrack) {
-         auto iter = ListOfTracks::begin();
-         std::advance( iter, pendingTrack->GetIndex() );
-         iter = ListOfTracks::insert( iter, pendingTrack );
-         pendingTrack->SetOwner( mSelf, {iter, this} );
-         pendingTrack->SetId( TrackId{ ++sCounter } );
-         if (!inserted) {
-            first = iter;
-            inserted = true;
-         }
-      }
-   }
-   if (inserted) {
-      RecalcPositions({first, this});
-      result = true;
-   }
-
-   return result;
-}
-
 std::shared_ptr<Track> TrackList::FindPendingChangedTrack(TrackId id) const
 {
    // Linear search.  Tracks in a project are usually very few.

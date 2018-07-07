@@ -774,12 +774,6 @@ public:
    // if requested, give back the pending added tracks.
    void ClearPendingTracks( ListOfTracks *pAdded = nullptr );
 
-   // Change the state of the project.
-   // Strong guarantee for project state in case of exceptions.
-   // Will always clear the pending updates.
-   // Return true if the state of the track list really did change.
-   bool ApplyPendingTracks();
-
    // Find anything registered with RegisterPendingChangedTrack and not yet
    // cleared or applied
    std::shared_ptr<Track> FindPendingChangedTrack(TrackId id) const;
