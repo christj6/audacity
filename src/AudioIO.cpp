@@ -2260,12 +2260,6 @@ void AudioIO::FillBuffers()
             // How many samples to produce for each channel.
             auto frames = available;
             bool progress = true;
-#ifdef EXPERIMENTAL_SCRUBBING_SUPPORT
-            if (mPlayMode == PLAY_SCRUB)
-               // scrubbing does not use warped time and length
-               frames = limitSampleBufferSize(frames, mScrubDuration);
-            else
-#endif
             {
                double deltat = frames / mRate;
                if (mWarpedTime + deltat > mWarpedLength)
