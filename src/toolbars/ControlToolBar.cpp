@@ -1317,11 +1317,11 @@ void ControlToolBar::StopScrolling()
 void ControlToolBar::CommitRecording()
 {
    const auto project = GetActiveProject();
-   project->GetTracks()->ApplyPendingTracks();
+   project->GetTracks()->ApplyPendingTracks(); // do we need this?
 }
 
 void ControlToolBar::CancelRecording()
 {
    const auto project = GetActiveProject();
-   project->GetTracks()->ClearPendingTracks();
+   project->GetTracks()->ClearPendingTracks(); // do we need this?
 }
