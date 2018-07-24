@@ -142,7 +142,6 @@ void OnCheckDependencies(const CommandContext &context );
 
 void OnExport(const wxString & Format);
 void OnExportAudio(const CommandContext &context );
-void OnExportMp3(const CommandContext &context );
 void OnExportWav(const CommandContext &context );
 void OnExportOgg(const CommandContext &context );
 void OnExportSelection(const CommandContext &context );

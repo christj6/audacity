@@ -176,10 +176,6 @@ void AudacityProject::CreateMenusAndCommands()
       c->BeginSubMenu( _("&Export") );
 
       // Enable Export audio commands only when there are audio tracks.
-      c->AddItem(wxT("ExportMp3"), XXO("Export as MP&3"), FN(OnExportMp3), wxT(""),
-         AudioIONotBusyFlag | WaveTracksExistFlag,
-         AudioIONotBusyFlag | WaveTracksExistFlag);
-
       c->AddItem(wxT("ExportWav"), XXO("Export as &WAV"), FN(OnExportWav), wxT(""),
          AudioIONotBusyFlag | WaveTracksExistFlag,
          AudioIONotBusyFlag | WaveTracksExistFlag);
@@ -2535,7 +2531,6 @@ void AudacityProject::OnExport(const wxString & Format )
 }
 
 void AudacityProject::OnExportAudio(const CommandContext &WXUNUSED(context) ){   OnExport("");}
-void AudacityProject::OnExportMp3(const CommandContext &WXUNUSED(context) ){   OnExport("MP3");}
 void AudacityProject::OnExportWav(const CommandContext &WXUNUSED(context) ){   OnExport("WAV");}
 void AudacityProject::OnExportOgg(const CommandContext &WXUNUSED(context) ){   OnExport("OGG");}
 

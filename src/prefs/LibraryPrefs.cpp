@@ -23,7 +23,6 @@ MP3 and FFmpeg encoding libraries.
 
 #include "../FFmpeg.h"
 #include "../ShuttleGui.h"
-#include "../export/ExportMP3.h"
 #include "../widgets/LinkingHtmlWindow.h"
 #include "../widgets/HelpSystem.h"
 #include "../widgets/ErrorDialog.h"
@@ -163,7 +162,6 @@ void LibraryPrefs::PopulateOrExchange(ShuttleGui & S)
 /// of the MP3 Library version.
 void LibraryPrefs::SetMP3VersionText(bool prompt)
 {
-   mMP3Version->SetLabel(GetMP3Version(this, prompt));
    mMP3Version->SetName(mMP3Version->GetLabel()); // fix for bug 577 (NVDA/Narrator screen readers do not read static text in dialogs)
 }
 

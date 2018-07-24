@@ -215,9 +215,6 @@
     <ClCompile Include="..\..\..\src\export\ExportFLAC.cpp">
       <Filter>src\export</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\export\ExportMP3.cpp">
-      <Filter>src\export</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\export\ExportMultiple.cpp">
       <Filter>src\export</Filter>
     </ClCompile>
@@ -803,9 +800,6 @@
       <Filter>src\export</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\export\ExportFLAC.h">
-      <Filter>src\export</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\export\ExportMP3.h">
       <Filter>src\export</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\export\ExportMultiple.h">

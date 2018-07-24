@@ -228,7 +228,6 @@
     <ClCompile Include="..\..\..\src\export\ExportFFmpeg.cpp" />
     <ClCompile Include="..\..\..\src\export\ExportFFmpegDialogs.cpp" />
     <ClCompile Include="..\..\..\src\export\ExportFLAC.cpp" />
-    <ClCompile Include="..\..\..\src\export\ExportMP3.cpp" />
     <ClCompile Include="..\..\..\src\export\ExportMultiple.cpp" />
     <ClCompile Include="..\..\..\src\export\ExportOGG.cpp" />
     <ClCompile Include="..\..\..\src\export\ExportPCM.cpp" />
@@ -445,7 +444,6 @@
     <ClInclude Include="..\..\..\src\export\ExportFFmpeg.h" />
     <ClInclude Include="..\..\..\src\export\ExportFFmpegDialogs.h" />
     <ClInclude Include="..\..\..\src\export\ExportFLAC.h" />
-    <ClInclude Include="..\..\..\src\export\ExportMP3.h" />
     <ClInclude Include="..\..\..\src\export\ExportMultiple.h" />
     <ClInclude Include="..\..\..\src\export\ExportOGG.h" />
     <ClInclude Include="..\..\..\src\export\ExportPCM.h" />
