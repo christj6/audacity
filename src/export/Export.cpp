@@ -47,7 +47,6 @@
 #include "ExportPCM.h"
 #include "ExportOGG.h"
 #include "ExportFLAC.h"
-#include "ExportCL.h"
 #include "ExportFFmpeg.h"
 
 #include "sndfile.h"
@@ -283,9 +282,6 @@ Exporter::Exporter()
 #ifdef USE_LIBFLAC
    RegisterPlugin(New_ExportFLAC());
 #endif
-
-   // Command line export not available on Windows and Mac platforms
-   RegisterPlugin(New_ExportCL());
 
 #if defined(USE_FFMPEG)
    RegisterPlugin(New_ExportFFmpeg());
