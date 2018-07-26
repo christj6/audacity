@@ -45,8 +45,6 @@
 #include <wx/window.h>
 
 #include "ExportPCM.h"
-#include "ExportOGG.h"
-#include "ExportFLAC.h"
 #include "ExportFFmpeg.h"
 
 #include "sndfile.h"
@@ -274,14 +272,6 @@ Exporter::Exporter()
    SetFileDialogTitle( _("Export Audio") );
 
    RegisterPlugin(New_ExportPCM());
-
-#ifdef USE_LIBVORBIS
-   RegisterPlugin(New_ExportOGG());
-#endif
-
-#ifdef USE_LIBFLAC
-   RegisterPlugin(New_ExportFLAC());
-#endif
 
 #if defined(USE_FFMPEG)
    RegisterPlugin(New_ExportFFmpeg());

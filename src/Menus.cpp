@@ -180,10 +180,6 @@ void AudacityProject::CreateMenusAndCommands()
          AudioIONotBusyFlag | WaveTracksExistFlag,
          AudioIONotBusyFlag | WaveTracksExistFlag);
 
-      c->AddItem(wxT("ExportOgg"), XXO("Export as &OGG"), FN(OnExportOgg), wxT(""),
-         AudioIONotBusyFlag | WaveTracksExistFlag,
-         AudioIONotBusyFlag | WaveTracksExistFlag);
-
       c->AddItem(wxT("Export"), XXO("&Export Audio..."), FN(OnExportAudio), wxT("Ctrl+Shift+E"),
          AudioIONotBusyFlag | WaveTracksExistFlag,
          AudioIONotBusyFlag | WaveTracksExistFlag);
@@ -2532,7 +2528,6 @@ void AudacityProject::OnExport(const wxString & Format )
 
 void AudacityProject::OnExportAudio(const CommandContext &WXUNUSED(context) ){   OnExport("");}
 void AudacityProject::OnExportWav(const CommandContext &WXUNUSED(context) ){   OnExport("WAV");}
-void AudacityProject::OnExportOgg(const CommandContext &WXUNUSED(context) ){   OnExport("OGG");}
 
 void AudacityProject::OnExportSelection(const CommandContext &WXUNUSED(context) )
 {

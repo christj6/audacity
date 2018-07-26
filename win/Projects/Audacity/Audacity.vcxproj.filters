@@ -209,13 +209,7 @@
     <ClCompile Include="..\..\..\src\export\ExportFFmpegDialogs.cpp">
       <Filter>src\export</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\export\ExportFLAC.cpp">
-      <Filter>src\export</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\export\ExportMultiple.cpp">
-      <Filter>src\export</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\export\ExportOGG.cpp">
       <Filter>src\export</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\export\ExportPCM.cpp">
@@ -793,13 +787,7 @@
     <ClInclude Include="..\..\..\src\export\ExportFFmpegDialogs.h">
       <Filter>src\export</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\export\ExportFLAC.h">
-      <Filter>src\export</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\export\ExportMultiple.h">
-      <Filter>src\export</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\export\ExportOGG.h">
       <Filter>src\export</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\export\ExportPCM.h">
