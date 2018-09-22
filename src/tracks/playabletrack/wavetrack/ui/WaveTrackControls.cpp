@@ -543,7 +543,7 @@ protected:
 
    void OnSetDisplay(wxCommandEvent & event);
    void OnChannelChange(wxCommandEvent & event);
-   void SplitStereo(bool stereo);
+   void SplitStereo();
    void OnSwapChannels(wxCommandEvent & event);
 };
 
@@ -717,7 +717,7 @@ void WaveTrackMenuTable::OnChannelChange(wxCommandEvent & event)
 }
 
 /// Split a stereo track into two tracks...
-void WaveTrackMenuTable::SplitStereo(bool stereo)
+void WaveTrackMenuTable::SplitStereo()
 {
    WaveTrack *const pTrack = static_cast<WaveTrack*>(mpData->pTrack);
    wxASSERT(pTrack);
@@ -772,7 +772,7 @@ void WaveTrackMenuTable::OnSwapChannels(wxCommandEvent &)
    const bool hasFocus =
       (focused == pTrack || focused == partner);
 
-   SplitStereo(false);
+   SplitStereo();
    pTrack->SetChannel(Track::RightChannel);
    partner->SetChannel(Track::LeftChannel);
 

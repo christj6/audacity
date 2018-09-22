@@ -45,7 +45,6 @@
 #include <wx/window.h>
 
 #include "ExportPCM.h"
-#include "ExportFFmpeg.h"
 
 #include "sndfile.h"
 
@@ -272,10 +271,6 @@ Exporter::Exporter()
    SetFileDialogTitle( _("Export Audio") );
 
    RegisterPlugin(New_ExportPCM());
-
-#if defined(USE_FFMPEG)
-   RegisterPlugin(New_ExportFFmpeg());
-#endif
 }
 
 Exporter::~Exporter()

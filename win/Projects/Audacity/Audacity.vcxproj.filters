@@ -203,12 +203,6 @@
     <ClCompile Include="..\..\..\src\export\Export.cpp">
       <Filter>src\export</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\export\ExportFFmpeg.cpp">
-      <Filter>src\export</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\export\ExportFFmpegDialogs.cpp">
-      <Filter>src\export</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\export\ExportMultiple.cpp">
       <Filter>src\export</Filter>
     </ClCompile>
@@ -779,12 +773,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\export\Export.h">
-      <Filter>src\export</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\export\ExportFFmpeg.h">
-      <Filter>src\export</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\export\ExportFFmpegDialogs.h">
       <Filter>src\export</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\export\ExportMultiple.h">
