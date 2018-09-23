@@ -56,21 +56,6 @@ void PlaybackPrefs::PopulateOrExchange(ShuttleGui & S)
    S.StartScroller();
    S.SetBorder(2);
 
-   S.StartStatic(_("Effects Preview"));
-   {
-      S.StartThreeColumn();
-      {
-         w = S.TieNumericTextBox(_("&Length:"),
-                                 wxT("/AudioIO/EffectsPreviewLen"),
-                                 6.0,
-                                 9);
-         S.AddUnits(_("seconds"));
-         if( w ) w->SetName(w->GetName() + wxT(" ") + _("seconds"));
-      }
-      S.EndThreeColumn();
-   }
-   S.EndStatic();
-
    /* i18n-hint: (noun) this is a preview of the cut */
    S.StartStatic(_("Cut Preview"));
    {

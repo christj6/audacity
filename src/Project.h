@@ -554,7 +554,6 @@ private:
    //in the future we might have 0x01 as sort ascending and we can bit or it
 #define kAudacitySortByTime (1 << 1)
 #define kAudacitySortByName (1 << 2)
-   void SortTracks(int flags);
 
    int  mAudioIOToken{ -1 };
 
@@ -564,9 +563,6 @@ private:
    // 0 is grey out, 1 is Autoselect, 2 is Give warnings.
    int  mWhatIfNoSelection;
    bool mStopIfWasPaused;
-
-   // Dependencies have been imported and a warning should be shown on save
-   bool mImportedDependencies{ false };
 
    wxArrayString mStrOtherNamesArray; // used to make sure compressed file names are unique
    

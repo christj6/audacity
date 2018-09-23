@@ -2563,23 +2563,6 @@ AudacityProject::AddImportedTracks(const wxString &fileName,
       else {
          newTrack->SetName(trackNameBase);
       }
-
-      // Check if NEW track contains aliased blockfiles and if yes,
-      // remember this to show a warning later
-      if (newTrack->GetKind() == WaveTrack::Wave)
-      {
-         if (WaveClip* clip = ((WaveTrack*)newTrack)->GetClipByIndex(0)) {
-            BlockArray &blocks = clip->GetSequence()->GetBlockArray();
-            if (blocks.size())
-            {
-               SeqBlock& block = blocks[0];
-               if (block.f->IsAlias())
-               {
-                  mImportedDependencies = true;
-               }
-            }
-         }
-      }
    }
 
    // Automatically assign rate of imported file to whole project,
