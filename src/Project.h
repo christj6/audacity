@@ -239,9 +239,6 @@ public:
    bool Save();
    bool SaveAs();
    bool SaveAs(const wxString & newFileName, bool addToHistory = true);
-   #ifdef USE_LIBVORBIS
-      bool SaveCompressedWaveTracks(const wxString & strProjectPathName); // full path for aup except extension
-   #endif
 public:
 
    void Clear();
@@ -259,9 +256,6 @@ public:
 
    bool GetTracksFitVerticallyZoomed() { return mTracksFitVerticallyZoomed; } //lda
    void SetTracksFitVerticallyZoomed(bool flag) { mTracksFitVerticallyZoomed = flag; } //lda
-
-   bool GetNormalizeOnLoad() { return mNormalizeOnLoad; } //lda
-   void SetNormalizeOnLoad(bool flag) { mNormalizeOnLoad = flag; } //lda
 
    /** \brief Sets the wxDialog that is being displayed
      * Used by the custom dialog warning constructor and destructor
@@ -566,7 +560,6 @@ private:
 
    bool mIsDeleting{ false };
    bool mTracksFitVerticallyZoomed{ false };  //lda
-   bool mNormalizeOnLoad;  //lda
 
    // 0 is grey out, 1 is Autoselect, 2 is Give warnings.
    int  mWhatIfNoSelection;

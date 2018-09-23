@@ -1118,7 +1118,6 @@ AudioIOStartStreamOptions AudacityProject::GetDefaultPlayOptions()
 
 void AudacityProject::UpdatePrefsVariables()
 {
-   gPrefs->Read(wxT("/AudioFiles/NormalizeOnLoad"),&mNormalizeOnLoad, false);
    gPrefs->Read(wxT("/GUI/AutoScroll"), &mViewInfo.bUpdateTrackIndicator, true);
    gPrefs->Read(wxT("/GUI/Help"), &mHelpPref, wxT("Local") );
    bool bSelectAllIfNone;
@@ -2531,109 +2530,6 @@ bool AudacityProject::Save()
 
    return true;
 }
-
-#ifdef USE_LIBVORBIS
-   bool AudacityProject::SaveCompressedWaveTracks(const wxString & strProjectPathName) // full path for aup except extension
-   {
-      // Some of this is similar to code in ExportMultiple::ExportMultipleByTrack
-      // but that code is really tied into the dialogs.
-
-      // Copy the tracks because we're going to do some state changes before exporting.
-      Track* pTrack;
-      WaveTrack* pWaveTrack;
-      TrackListOfKindIterator iter(Track::Wave, GetTracks());
-      unsigned int numWaveTracks = 0;
-
-      auto ppSavedTrackList = TrackList::Create();
-      auto &pSavedTrackList = *ppSavedTrackList;
-
-      for (pTrack = iter.First(); pTrack != NULL; pTrack = iter.Next())
-      {
-         numWaveTracks++;
-         pWaveTrack = (WaveTrack*)pTrack;
-         pSavedTrackList.Add(mTrackFactory->DuplicateWaveTrack(*pWaveTrack));
-      }
-      auto cleanup = finally( [&] {
-         // Restore the saved track states and clean up.
-         TrackListIterator savedTrackIter(&pSavedTrackList);
-         Track *pSavedTrack;
-         for (pTrack = iter.First(), pSavedTrack = savedTrackIter.First();
-              ((pTrack != NULL) && (pSavedTrack != NULL));
-              pTrack = iter.Next(), pSavedTrack = savedTrackIter.Next())
-         {
-            pWaveTrack = static_cast<WaveTrack*>(pTrack);
-            auto pSavedWaveTrack = static_cast<const WaveTrack*>(pSavedTrack);
-
-            pWaveTrack->SetSelected(pSavedTrack->GetSelected());
-            pWaveTrack->SetMute(pSavedWaveTrack->GetMute());
-
-            pWaveTrack->SetPan(((WaveTrack*)pSavedTrack)->GetPan());
-         }
-      } );
-
-      if (numWaveTracks == 0)
-         // Nothing to save compressed => success. Delete the copies and go.
-         return true;
-
-      // Okay, now some bold state-faking to default values.
-      for (pTrack = iter.First(); pTrack != NULL; pTrack = iter.Next())
-      {
-         pWaveTrack = (WaveTrack*)pTrack;
-
-         pWaveTrack->SetSelected(false);
-         pWaveTrack->SetMute(false);
-
-         pWaveTrack->SetPan(0.0);
-      }
-
-      wxString strDataDirPathName = strProjectPathName + wxT("_data");
-      if (!wxFileName::DirExists(strDataDirPathName) &&
-            !wxFileName::Mkdir(strDataDirPathName, 0777, wxPATH_MKDIR_FULL))
-         return false;
-      strDataDirPathName += wxFileName::GetPathSeparator();
-
-      // Export all WaveTracks to OGG.
-      bool bSuccess = true;
-
-      // This accumulates the names of the .ogg files, to be written as
-      // dependencies in the .aup file
-      mStrOtherNamesArray.clear();
-
-      Exporter theExporter;
-      Track* pRightTrack;
-      wxFileName uniqueTrackFileName;
-      for (pTrack = iter.First(); ((pTrack != NULL) && bSuccess); pTrack = iter.Next())
-      {
-         if (pTrack->GetKind() == Track::Wave)
-         {
-            SelectionStateChanger changer{ GetSelectionState(), *GetTracks() };
-            pTrack->SetSelected(true);
-            if (pTrack->GetLinked())
-            {
-               pRightTrack = iter.Next();
-               pRightTrack->SetSelected(true);
-            }
-            else
-               pRightTrack = NULL;
-
-            uniqueTrackFileName = wxFileName(strDataDirPathName, pTrack->GetName(), wxT("ogg"));
-            FileNames::MakeNameUnique(mStrOtherNamesArray, uniqueTrackFileName);
-            bSuccess =
-               theExporter.Process(this, pRightTrack ? 2 : 1,
-                                    wxT("OGG"), uniqueTrackFileName.GetFullPath(), true,
-                                    pTrack->GetStartTime(), pTrack->GetEndTime());
-
-            if (!bSuccess)
-               // If only some exports succeed, the cleanup is not done here
-               // but trusted to the caller
-               break;
-         }
-      }
-
-      return bSuccess;
-   }
-#endif
-
 
 std::vector< std::shared_ptr< Track > >
 AudacityProject::AddImportedTracks(const wxString &fileName,
