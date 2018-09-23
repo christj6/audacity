@@ -62,7 +62,6 @@ simplifies construction of menu items.
 
 #include "import/ImportRaw.h"
 #include "export/Export.h"
-#include "export/ExportMultiple.h"
 #include "prefs/PrefsDialog.h"
 #include "prefs/PlaybackPrefs.h"
 #include "ShuttleGui.h"
@@ -189,10 +188,6 @@ void AudacityProject::CreateMenusAndCommands()
          AudioIONotBusyFlag | TimeSelectedFlag | WaveTracksSelectedFlag,
          AudioIONotBusyFlag | TimeSelectedFlag | WaveTracksSelectedFlag);
 
-      // Enable Export audio commands only when there are audio tracks.
-      c->AddItem(wxT("ExportMultiple"), XXO("Export &Multiple..."), FN(OnExportMultiple), wxT("Ctrl+Shift+L"),
-         AudioIONotBusyFlag | WaveTracksExistFlag,
-         AudioIONotBusyFlag | WaveTracksExistFlag);
       c->EndSubMenu();
       c->AddSeparator();
       c->BeginSubMenu(_("&Import"));
@@ -2450,14 +2445,6 @@ void AudacityProject::OnExportSelection(const CommandContext &WXUNUSED(context) 
    e.SetFileDialogTitle( _("Export Selected Audio") );
    e.Process(this, true, mViewInfo.selectedRegion.t0(),
       mViewInfo.selectedRegion.t1());
-}
-
-void AudacityProject::OnExportMultiple(const CommandContext &WXUNUSED(context) )
-{
-   ExportMultiple em(this);
-
-   wxGetApp().SetMissingAliasedFileWarningShouldShow(true);
-   em.ShowModal();
 }
 
 void AudacityProject::OnPreferences(const CommandContext &WXUNUSED(context) )

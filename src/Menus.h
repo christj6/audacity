@@ -144,7 +144,6 @@ void OnExport(const wxString & Format);
 void OnExportAudio(const CommandContext &context );
 void OnExportWav(const CommandContext &context );
 void OnExportSelection(const CommandContext &context );
-void OnExportMultiple(const CommandContext &context );
 
 void OnPreferences(const CommandContext &context );
 void OnReloadPreferences(const CommandContext &context );

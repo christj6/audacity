@@ -33,7 +33,7 @@ class LibraryPrefs final : public PrefsPanel
 
  private:
    void Populate();
-   void SetMP3VersionText(bool prompt = false);
+   void SetMP3VersionText();
    void SetFFmpegVersionText();
 
    void OnMP3FindButton(wxCommandEvent & e);

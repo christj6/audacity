@@ -203,9 +203,6 @@
     <ClCompile Include="..\..\..\src\export\Export.cpp">
       <Filter>src\export</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\export\ExportMultiple.cpp">
-      <Filter>src\export</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\export\ExportPCM.cpp">
       <Filter>src\export</Filter>
     </ClCompile>
@@ -773,9 +770,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\export\Export.h">
-      <Filter>src\export</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\export\ExportMultiple.h">
       <Filter>src\export</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\export\ExportPCM.h">

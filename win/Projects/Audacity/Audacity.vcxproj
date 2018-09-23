@@ -224,7 +224,6 @@
     <ClCompile Include="..\..\..\src\widgets\PopupMenuTable.cpp" />
     <ClCompile Include="..\..\..\src\WrappedType.cpp" />
     <ClCompile Include="..\..\..\src\export\Export.cpp" />
-    <ClCompile Include="..\..\..\src\export\ExportMultiple.cpp" />
     <ClCompile Include="..\..\..\src\export\ExportPCM.cpp" />
     <ClCompile Include="..\..\..\src\import\Import.cpp" />
     <ClCompile Include="..\..\..\src\import\ImportFFmpeg.cpp" />
@@ -435,7 +434,6 @@
     <ClInclude Include="..\..\..\src\WaveTrack.h" />
     <ClInclude Include="..\..\..\src\WrappedType.h" />
     <ClInclude Include="..\..\..\src\export\Export.h" />
-    <ClInclude Include="..\..\..\src\export\ExportMultiple.h" />
     <ClInclude Include="..\..\..\src\export\ExportPCM.h" />
     <ClInclude Include="..\..\..\src\import\Import.h" />
     <ClInclude Include="..\..\..\src\import\ImportFFmpeg.h" />

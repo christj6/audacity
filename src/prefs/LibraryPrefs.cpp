@@ -160,7 +160,7 @@ void LibraryPrefs::PopulateOrExchange(ShuttleGui & S)
 
 /// Sets the a text area on the dialog to have the name
 /// of the MP3 Library version.
-void LibraryPrefs::SetMP3VersionText(bool prompt)
+void LibraryPrefs::SetMP3VersionText()
 {
    mMP3Version->SetName(mMP3Version->GetLabel()); // fix for bug 577 (NVDA/Narrator screen readers do not read static text in dialogs)
 }
@@ -169,7 +169,7 @@ void LibraryPrefs::SetMP3VersionText(bool prompt)
 /// tell us where the MP3 library is.
 void LibraryPrefs::OnMP3FindButton(wxCommandEvent & WXUNUSED(event))
 {
-   SetMP3VersionText(true);
+   SetMP3VersionText();
 }
 
 /// Opens help on downloading a suitable MP3 library is.
