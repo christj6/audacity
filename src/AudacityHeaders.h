@@ -49,7 +49,6 @@
 #include "DirManager.h"
 #include "Envelope.h"
 #include "FileFormats.h"
-#include "ImageManipulation.h"
 #include "Internat.h"
 #include "Mix.h"
 #include "Prefs.h"

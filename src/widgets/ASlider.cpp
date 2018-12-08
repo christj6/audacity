@@ -64,7 +64,6 @@ or ASlider.
 #include "Ruler.h"
 
 #include "../AColor.h"
-#include "../ImageManipulation.h"
 #include "../Project.h"
 #include "../ShuttleGui.h"
 

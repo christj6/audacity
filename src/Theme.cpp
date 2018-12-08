@@ -79,7 +79,6 @@ can't be.
 #include "FileNames.h"
 #include "Prefs.h"
 #include "AColor.h"
-#include "ImageManipulation.h"
 #include "widgets/ErrorDialog.h"
 
 // JKC: First get the MAC specific images.

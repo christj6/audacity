@@ -59,7 +59,6 @@
 #include "../AColor.h"
 #include "../AllThemeResources.h"
 #include "../AudioIO.h"
-#include "../ImageManipulation.h"
 #include "../Prefs.h"
 #include "../Project.h"
 #include "../Theme.h"
